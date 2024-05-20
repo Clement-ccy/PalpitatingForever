@@ -5,6 +5,9 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'eslint:recommended'
   ],
+  'globals': {
+    "requestAnimationFrame": "writable"
+  },
   parserOptions: {
     ecmaVersion: 'latest'
   }
