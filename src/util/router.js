@@ -1,9 +1,4 @@
-import './assets/main.css'
-import { createMemoryHistory, createRouter } from 'vue-router'
-import { createApp } from 'vue'
-import App from './App.vue'
-
-const routes = [
+export const routes = [
     // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
     {
         path: '/:pathMatch(.*)*',
@@ -31,14 +26,3 @@ const routes = [
         component: () => import('@/components/ContactPage.vue')
     },
 ]
-
-const router = createRouter({
-    history: createMemoryHistory(),
-    routes,
-})
-
-createApp(App)
-    .use(router)
-    .mount('#app')
-
-

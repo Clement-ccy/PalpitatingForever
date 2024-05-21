@@ -1,16 +1,13 @@
 <script setup>
 import CoverComponent from './components/CoverComponent.vue'
 import TopMenu from './components/TopMenu.vue'
-import MainContent from './components/MainContent.vue'
 </script>
 
 <template>
   <CoverComponent/>
   <TopMenu />
-  
-
   <main>
-    <MainContent />
+    <RouterView />
   </main>
 </template>
 

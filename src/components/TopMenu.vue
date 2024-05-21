@@ -2,10 +2,10 @@
   <nav class="top-menu" :style="{ transform: topMenuTransform }">
     <ul>
       <span style="margin-right: 30vw">PalpitatingForever</span>
-      <li><a href="#portfolio">Portfolio</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#blog">Blog</a></li>
-      <li><a href="#contact">Contact</a></li>
+      <li><a @click="goto('/portfolio')">Portfolio</a></li>
+      <li><a @click="goto('/about')">About</a></li>
+      <li><a @click="goto('/blog')">Blog</a></li>
+      <li><a @click="goto('/contact')">Contact</a></li>
     </ul>
     <hr />
   </nav>
@@ -32,6 +32,9 @@ export default {
       } else {
         this.topMenuTransform = "translateY(-100%)";
       }
+    },
+    goto(url){
+      this.$router.push(url);
     },
   },
 };
