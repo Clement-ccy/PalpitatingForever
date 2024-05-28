@@ -1,5 +1,7 @@
 <template>
-    <div></div>
+    <div class="blogPage">
+        <div>这是blogpage</div>
+    </div>
 </template>
 
 <script>
@@ -8,3 +10,9 @@ export default{
     
 }
 </script>
+
+<style>
+.blogPage{
+    height: 200vh;
+}
+</style>

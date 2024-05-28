@@ -1,13 +1,16 @@
 <script setup>
-import CoverComponent from './components/CoverComponent.vue'
 import TopMenu from './components/TopMenu.vue'
 </script>
 
 <template>
-  <CoverComponent/>
   <TopMenu />
   <main>
-    <RouterView />
+
+    <RouterView v-slot="{ Component }">
+      <transition name="fade">
+        <component :is="Component" />
+      </transition>
+    </RouterView>
   </main>
 </template>
 

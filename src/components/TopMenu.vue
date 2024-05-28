@@ -16,6 +16,7 @@ export default {
   name: "TopMenu",
   data() {
     return {
+      ifportfolio: true,
       topMenuTransform: "translateY(-100%)",
     };
   },
@@ -27,14 +28,27 @@ export default {
   },
   methods: {
     handleScroll() {
-      if (window.scrollY > 200) {
+      if (this.ifportfolio === true) {
+        if (window.scrollY > 200) {
+          this.topMenuTransform = "translateY(0)";
+        } else {
+          this.topMenuTransform = "translateY(-100%)";
+        }
+      }
+      else {
         this.topMenuTransform = "translateY(0)";
-      } else {
+      }
+
+    },
+    goto(url) {
+      this.$router.push(url);
+      if (url === "/portfolio") {
+        this.ifportfolio = true;
         this.topMenuTransform = "translateY(-100%)";
       }
-    },
-    goto(url){
-      this.$router.push(url);
+      else {
+        this.ifportfolio = false;
+      }
     },
   },
 };
@@ -64,9 +78,11 @@ export default {
   display: inline-block;
   margin: 0 10px;
 }
+
 .top-menu span {
-    font-size: 1.333rem;
+  font-size: 1.333rem;
 }
+
 .top-menu a {
   color: var(--c-text-selected);
   text-decoration: none;
