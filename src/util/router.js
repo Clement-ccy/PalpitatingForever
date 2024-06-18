@@ -27,6 +27,10 @@ const routes = [
         path: '/contact',
         component: () => import('@/components/ContactPage.vue')
     },
+    {
+        path: '/styleguide',
+        component: () => import('@/components/StyleGuide.vue')
+    },
 ]
 
 const router = createRouter({

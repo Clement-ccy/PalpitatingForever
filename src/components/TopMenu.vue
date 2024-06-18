@@ -5,7 +5,7 @@
       <li><a @click="goto('/portfolio')">Portfolio</a></li>
       <li><a @click="goto('/about')">About</a></li>
       <li><a @click="goto('/blog')">Blog</a></li>
-      <li><a @click="goto('/contact')">Contact</a></li>
+      <li><a @click="goto('/styleguide')">Contact</a></li>
     </ul>
     <hr />
   </nav>

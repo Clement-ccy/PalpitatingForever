@@ -30,25 +30,12 @@ body {
     background-color 0.5s;
   line-height: 1.6;
   font-family:
-    Inter,
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    Oxygen,
-    Ubuntu,
-    Cantarell,
-    'Fira Sans',
-    'Droid Sans',
-    'Helvetica Neue',
+    Montserrat,
     sans-serif;
-  font-size: 20px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 28px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
-
-hr {
-  border-bottom:none;
-  border-right:none;
 }
