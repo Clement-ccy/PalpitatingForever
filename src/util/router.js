@@ -1,35 +1,51 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
+import NotFound from '@/components/NotFound.vue'
+import TempPage from '@/views/TempPage.vue'
+import LoadingPage from '@/views/LoadingPage.vue'
+// import WhatIDoPage from '@/views/WhatIDoPage.vue'
+import WhoIAmPage from '@/views/WhoIAmPage.vue'
+import BlogPage from '@/views/BlogPage.vue'
+import StyleGuide from '@/components/StyleGuide.vue'
+
 
 const routes = [
     // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
     {
         path: '/:pathMatch(.*)*',
-        component: () => import('@/components/NotFound.vue')
+        component: NotFound
+        // component: () => import('@/components/NotFound.vue')
     },
     {
         path: '/',
-        component: () => import('@/components/PortfolioPage.vue')
+        redirect: '/whatido',
     },
     {
-        path: '/portfolio',
-        redirect:'/',
-        component: () => import('@/components/PortfolioPage.vue')
+        path: '/loading',
+        component: LoadingPage
+        // component: () => import('@/views/LoadingPage.vue')
     },
     {
-        path: '/about',
-        component: () => import('@/components/AboutPage.vue')
+        path: '/whatido',
+        component: TempPage,
+        menuPosition: 0
+        // component: () => import('@/views/TempPage.vue')
+    },
+    {
+        path: '/whoiam',
+        component: WhoIAmPage,
+        menuPosition: 1
+        // component: () => import('@/views/WhoIAmPage.vue')
     },
     {
         path: '/blog',
-        component: () => import('@/components/BlogPage.vue')
-    },
-    {
-        path: '/contact',
-        component: () => import('@/components/ContactPage.vue')
+        component: BlogPage,
+        menuPosition: 2
+        // component: () => import('@/views/BlogPage.vue')
     },
     {
         path: '/styleguide',
-        component: () => import('@/components/StyleGuide.vue')
+        component: StyleGuide
+        // component: () => import('@/components/StyleGuide.vue')
     },
 ]
 
@@ -38,9 +54,15 @@ const router = createRouter({
     scrollBehavior(to, from, savedPosition) {
         // 始终滚动到顶部
         return { top: 0 }
-      },
+    },
     history: createMemoryHistory(),
     routes,
 })
+router.afterEach((to, from) => {
+    const toDepth = to.path.split('/').length
+    const fromDepth = from.path.split('/').length
+    to.meta.transition = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+})
+
 
 export default router
