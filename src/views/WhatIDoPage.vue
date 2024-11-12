@@ -1,10 +1,11 @@
 <template>
+    <!-- <CoverComponent></CoverComponent> -->
     <div class="what-i-do">
         <!-- 页面内容 -->
         <!-- <video src="cover-video.mp4" autoplay muted loop></video> -->
         <section ref="section1" class="content-section">
             <h2>Section 1 做的方向简介</h2>
-            <p>一些关于项目方向的文字介绍
+            <p style="margin: 500px 300px;">一些关于项目方向的文字介绍
                 封面
                 做的方向简介+视频
                 能力点
@@ -40,7 +41,12 @@
 </template>
 
 <script>
+// import CoverComponent from '@/components/CoverComponent.vue';
+
 export default {
+    components:{
+        // CoverComponent
+    },
     mounted() {
         const options = {
             root: null,
@@ -68,7 +74,7 @@ export default {
 
 <style>
 .what-i-do {
-    position: relative;
+    padding: 50px;
 }
 
 video {

@@ -37,7 +37,14 @@ body {
   font-size: 16px;
   font-weight: 400;
   line-height: 28px;
+
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body::-webkit-scrollbar { 
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+  width: 0 !important 
 }

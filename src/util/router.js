@@ -1,8 +1,8 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
 import NotFound from '@/components/NotFound.vue'
-import TempPage from '@/views/TempPage.vue'
+// import TempPage from '@/views/TempPage.vue'
 import LoadingPage from '@/views/LoadingPage.vue'
-// import WhatIDoPage from '@/views/WhatIDoPage.vue'
+import WhatIDoPage from '@/views/WhatIDoPage.vue'
 import WhoIAmPage from '@/views/WhoIAmPage.vue'
 import BlogPage from '@/views/BlogPage.vue'
 import StyleGuide from '@/components/StyleGuide.vue'
@@ -26,7 +26,7 @@ const routes = [
     },
     {
         path: '/whatido',
-        component: TempPage,
+        component: WhatIDoPage,
         menuPosition: 0
         // component: () => import('@/views/TempPage.vue')
     },
@@ -61,7 +61,7 @@ const router = createRouter({
 router.afterEach((to, from) => {
     const toDepth = to.path.split('/').length
     const fromDepth = from.path.split('/').length
-    to.meta.transition = toDepth < fromDepth ? 'slide-right' : 'slide-left'
+    to.meta.transition = to.menuPosition < from.menuPosition ? 'slide-right' : 'slide-left'
 })
 
 

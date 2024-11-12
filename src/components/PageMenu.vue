@@ -23,7 +23,7 @@ export default {
   data() {
     return {
       menuState:'default',
-      isActive: true,
+      isActive: false,
       currentLabel: '123456',
     };
   },
@@ -40,16 +40,18 @@ export default {
       this.animateToActive();
     },
     resetMenu() {
+      this.menuState = "default"
       this.isActive = false;
       this.animateToDefault();
     },
     animateToActive() {
       // 使用 GSAP 实现弹性变形到活动状态
-      gsap.to(".menu", { duration: 0.5, height: "80px", ease: "elastic.out(1, 0.5)" });
+      this.menuState = "breadCrumb"
+      gsap.to(".menu", { duration: 0.5, height: "60px", ease: "elastic.out(1, 0.5)" });
     },
     animateToDefault() {
       // 使用 GSAP 实现弹性变形回到默认状态
-      gsap.to(".menu", { duration: 0.5, height: "60px", ease: "elastic.out(1, 0.5)" });
+      gsap.to(".menu", { duration: 0.5, height: "80px", ease: "elastic.out(1, 0.5)" });
     },
   },
 };

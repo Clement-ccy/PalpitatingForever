@@ -81,8 +81,8 @@ export function startSakura() {
     requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame;
     var canvas = document.createElement('canvas'), cxt;
     canvas.height = window.innerHeight;
-    canvas.width = window.innerWidth;
-    canvas.setAttribute('style', 'position: absolute;left: 0;top: 0;pointer-events: none;z-index:10;');
+    canvas.width = document.documentElement.clientWidth;
+    canvas.setAttribute('style', 'position: absolute;pointer-events: none;z-index:10;aspect-ratio:None');
     canvas.setAttribute('id', 'canvas_sakura');
     document.getElementsByClassName('cover')[0].appendChild(canvas);
     cxt = canvas.getContext('2d');
