@@ -1,6 +1,6 @@
 <template>
   <PageLoader v-if="showLoader" @loadOver="loadOver"></PageLoader>
-  <router-view class="content" @navigateTo="navigateTo" @activateMenu="activateMenu" @deactivateMenu="deactivateMenu"
+  <router-view class="content" @navigateTo="navigateTo" @activateMenu="activateMenu" @deactivateMenu="resetMenu"
     v-slot="{ Component, route }">
     <!-- 使用任何自定义过渡和回退到 `fade` -->
     <transition :name="route.meta.transition || 'fade'">
@@ -75,7 +75,7 @@ export default {
     activateMenu(label) {
       this.$refs.menu.activateMenu(label);
     },
-    deactivateMenu() {
+    resetMenu() {
       this.$refs.menu.resetMenu();
     },
   },

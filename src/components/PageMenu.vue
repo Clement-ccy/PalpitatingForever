@@ -7,11 +7,11 @@
     </div>
     <div v-else-if="menuState === 'breadCrumb'" class="menu-active-content">
       <span class="content-label">{{ currentLabel }}</span>
-      <button @click="resetMenu" class="back-button">返回</button>
+      <button @click="resetMenu()" class="back-button">返回</button>
     </div>
     <div v-else-if="menuState === 'contact'" class="menu-active-content">
       <span class="content-label">{{ currentLabel }}</span>
-      <button @click="resetMenu" class="back-button">返回</button>
+      <button @click="resetMenu()" class="back-button">返回</button>
     </div>
   </div>
 </template>

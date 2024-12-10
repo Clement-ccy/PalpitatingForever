@@ -12,12 +12,12 @@
         <!-- <video src="cover-video.mp4" autoplay muted loop></video> -->
         <section ref="section1" class="content-section">
             <h2 class="tag">Section 1 做的方向简介</h2>
-            <p style="margin: 500px 300px;">我主要进行数字处理方案和流程体验的设计，能够在符合个人宗旨的条件下进行创意和技术的融合。
+            <p class="text-to-animate">我主要进行数字处理方案和流程体验的设计，能够在符合个人宗旨的条件下进行创意和技术的融合。
             </p>
         </section>
         <section ref="section2" class="content-section">
             <h2 class="tag">Section 2 精通</h2>
-            <p>能够增强产品表现的技能
+            <p class="text-to-animate">能够增强产品表现的技能
                 查看能力细节
                 用户体验
                 创意设计
@@ -37,7 +37,7 @@
         </section>
         <section ref="section3" class="content-section">
             <h2 class="tag">Section 3 工作路径</h2>
-            <p>见面->倾听需求->提出疑问->思考->寻找参考->头脑风暴->筛选总结->设计->设计->开发->呈现->现场复现->跟进->总结阶段性成果->支持->维护->迭代
+            <p class="text-to-animate">见面->倾听需求->提出疑问->思考->寻找参考->头脑风暴->筛选总结->设计->设计->开发->呈现->现场复现->跟进->总结阶段性成果->支持->维护->迭代
                 我工作经历的描述
                 查看详细
             </p>
@@ -88,14 +88,14 @@
         </section>
         <section ref="section5" class="content-section">
             <h2>Section 5 我的奖项</h2>
-            <p>从xxx起，在xxxx领域获得了很多奖项
+            <p class="text-to-animate">从xxx起，在xxxx领域获得了很多奖项
                 Xxx几次xxx几次
                 查看详细
             </p>
         </section>
         <section ref="section6" class="content-section">
             <h2>Section 6 合作单位</h2>
-            <p>从xxx起，在xxxx领域获得了很多奖项
+            <p class="text-to-animate">从xxx起，在xxxx领域获得了很多奖项
                 Xxx几次xxx几次
                 查看详细
             </p>
@@ -106,12 +106,41 @@
 
 <script>
 // import CoverComponent from '@/components/CoverComponent.vue';
-
+import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { SplitText } from '@/js/splitText';
+gsap.registerPlugin(ScrollTrigger, SplitText);
 export default {
     components: {
         // CoverComponent
     },
     mounted() {
+
+        const texts = document.querySelectorAll('.text-to-animate');
+        
+        texts.forEach((text) => {
+            new SplitText(text, { type: "chars" })
+            // 创建动画
+            gsap.fromTo(
+                text.querySelectorAll(".aki__char"), // 动画目标
+                {
+                    opacity: 0, // 初始不透明度
+                    y: 50, // 初始位置向下偏移
+                },
+                {
+                    opacity: 1, // 结束时完全可见
+                    y: 0, // 最终位置居中
+                    duration: 1,
+                    stagger: 0.1, // 每个字的动画间隔
+                    scrollTrigger: {
+                        trigger: text,
+                        start: "top 90%", // 当顶部到达视口80%位置时触发
+                        end: "top 80%",
+                        scrub: true, // 随着滚动进度播放动画
+                    },
+                }
+            );
+        });
         const options = {
             root: null,
             threshold: 0.5,
@@ -149,6 +178,11 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.text-to-animate{
+    display: inline;
+    margin-top:300px;
 }
 
 video {
