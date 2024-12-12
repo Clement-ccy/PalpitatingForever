@@ -42,12 +42,14 @@ export default {
 
 <style>
 .loading-page {
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
     height: 100vh;
     background-color: #000;
+    z-index: 1;
 }
 
 .loader {
