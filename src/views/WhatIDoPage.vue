@@ -2,7 +2,7 @@
     <!-- <CoverComponent></CoverComponent> -->
     <main class="what-i-do">
         <!-- 封面 -->
-        <section class="whatido-cover">
+        <section class="cover">
             <div class="container">
                 <div class="hello">
                     <span>Palpitating</span>
@@ -13,7 +13,7 @@
                 陈承烨, a fresh-things-exploiter born in 2003 from China.
             </div>
             <div class="spline">
-                <img src="../assets/image/ye.gif" />
+                <img src="../assets/images/cover.jpeg" style="display: block; height: 100%;" />
                 <!-- <canvas></canvas> -->
             </div>
         </section>
@@ -21,30 +21,94 @@
         <section class="intro">
             <div class="wrapper">
                 <div class="showreel-container">
-                    <div class="video-btn">
-                        <div class="video-container">
-                            <!-- <video src="cover-video.mp4" autoplay playsinline muted loop></video> -->
-                        </div>
-                        <button class="video-btn-play" type="button" aria-label="Play the video">
-                            <span>Play Showreel </span>
-                            <svg width="50" height="63" viewBox="0 0 50 63" fill="none" data-v-000e7669=""
-                                data-v-cfe672e9="">
-                                <path
-                                    d="M47.916 27.6418C50.6939 29.2456 50.6939 33.255 47.916 34.8587L7.29102 58.3136C4.51323 59.9174 1.04102 57.9128 1.04102 54.7053L1.04102 7.79542C1.04102 4.58792 4.51323 2.58325 7.29102 4.18701L47.916 27.6418Z"
-                                    fill="white" data-v-cfe672e9=""></path>
-                            </svg>
-                        </button>
-                    </div>
+                    <div class="showreel">
+                        <div class="video-btn">
+                            <div class="video-container">
+                                <video src="../assets/videos/Dogu.mp4" autoplay playsinline muted loop></video>
+                            </div>
+                            <button class="video-btn-play" type="button" aria-label="Play the video">
+                                <span style="font-weight: 900;">Play Showreel </span>
+                                <div class="btn">
+                                    <span class="icon">
+                                        <svg width="50" height="63" viewBox="0 0 50 63" fill="none" data-v-000e7669=""
+                                            data-v-cfe672e9="">
+                                            <path
+                                                d="M47.916 27.6418C50.6939 29.2456 50.6939 33.255 47.916 34.8587L7.29102 58.3136C4.51323 59.9174 1.04102 57.9128 1.04102 54.7053L1.04102 7.79542C1.04102 4.58792 4.51323 2.58325 7.29102 4.18701L47.916 27.6418Z"
+                                                fill="white" data-v-cfe672e9=""></path>
+                                        </svg>
+                                    </span>
+                                </div>
 
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="content">
+                    <div class="inner">
+                        <div class="text-to-animate">
+                            <p>我主要进行数字处理方案和流程体验的设计，能够在符合个人宗旨的条件下进行创意和技术的融合。</p>
+                            <p>&nbsp;</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <section class="pf-services">
-            <h2 class="tag">Section 1 做的方向简介</h2>
-            <p class="text-to-animate">
-                我主要进行数字处理方案和流程体验的设计，能够在符合个人宗旨的条件下进行创意和技术的融合。
-            </p>
+            <div class="container">
+                <div class="headline">
+                    <h2 class="tag">
+                        <span>我精通的</span>
+                    </h2>
+                    <p>能够作用于产品和研究的技能</p>
+                    <a class="link">
+                        <span>了解更多能力细节</span>
+                    </a>
+                </div>
+                <div class="services-list">
+                    <!--[-->
+                    <div class="service">
+                        <a href="/en/what-we-do/service/user-experience">
+                            <span>User Experience</span>
+                        </a>
+                    </div>
+                    <div class="service">
+                        <a href="/en/what-we-do/service/creative-design">
+                            <span>Creative Design</span>
+                            </a>
+                        </div>
+                    <div class="service">
+                        <a href="/en/what-we-do/service/web-developement">
+                            <span>Web developement</span>
+                        </a>
+                    </div>
+                    <div class="service"><a href="/en/what-we-do/service/extranet-intranet"><span>Extranet /
+                                intranet</span>
+                            </a>
+                        </div>
+                    <div class="service">
+                        <a href="/en/what-we-do/service/e-commerce">
+                        <span>E-commerce</span>
+                    </a>
+                    </div>
+                    <div class="service">
+                        <a href="/en/what-we-do/service/data">
+                            <span>Data</span>
+                        </a>
+                    </div>
+                    <div class="service">
+                        <a href="/en/what-we-do/service/digital-strategy">
+                            <span>Digital Strategy</span>
+                        </a>
+                    </div>
+                    <!--]-->
+                    <div class="service">
+                        <a href="/en/what-we-do/our-expertises">…</a>
+                    </div>
+                    <div class="services-hover">
+                    </div>
+                </div>
+            </div>
         </section>
         <section class="content-section">
             <h2 class="tag">Section 2 精通</h2>
@@ -176,7 +240,7 @@ export default {
         });
     },
     beforeUnmount() {
-        
+
     },
     methods: {
         // handleIntersect(entries) {
@@ -192,42 +256,4 @@ export default {
 };
 </script>
 
-<style>
-section {
-    width: 100%;
-    min-height: 100vh;
-}
-
-.what-i-do {
-    padding: 50px;
-}
-
-.spline {
-    align-items: center;
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    /* left: 50%; */
-    position: absolute;
-    top: 0;
-    width: 100%;
-    z-index: -1;
-}
-
-.whatido-cover {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.text-to-animate {
-    display: inline;
-    margin-top: 300px;
-}
-
-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-</style>
+<style src="../css/WhatIDoPage.css"></style>

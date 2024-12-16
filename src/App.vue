@@ -12,8 +12,8 @@
 
 <script>
 // import { gsap, ScrollTrigger, ScrollSmoother } from "gsap";
-import PageLoader from './components/PageLoader.vue';
-import PageMenu from './components/PageMenu.vue';
+import PageLoader from './components/commonComponents/PageLoader.vue';
+import PageMenu from './components/commonComponents/PageMenu.vue';
 
 export default {
   components: {
