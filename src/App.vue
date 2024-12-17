@@ -1,5 +1,6 @@
 <template>
   <PageLoader v-if="showLoader" @loadOver="loadOver"></PageLoader>
+  <PageHeader></PageHeader>
   <router-view class="content" @navigateTo="navigateTo" @activateMenu="activateMenu" @deactivateMenu="resetMenu"
     v-slot="{ Component, route }">
     <!-- 使用任何自定义过渡和回退到 `fade` -->
@@ -12,12 +13,14 @@
 
 <script>
 // import { gsap, ScrollTrigger, ScrollSmoother } from "gsap";
+import PageHeader from './components/commonComponents/PageHeader.vue';
 import PageLoader from './components/commonComponents/PageLoader.vue';
 import PageMenu from './components/commonComponents/PageMenu.vue';
 
 export default {
   components: {
     PageLoader,
+    PageHeader,
     PageMenu,
   },
   data() {
@@ -27,36 +30,6 @@ export default {
     };
   },
   mounted() {
-    // Object fade-in & fade-out
-    // ScrollTrigger.create({
-    //   trigger: ".fade-element",
-    //   start: "top center",
-    //   end: "bottom center",
-    //   onEnter: () => {
-    //     gsap.to(".fade-element", {
-    //       duration: 0.5,
-    //       opacity: 1
-    //     });
-    //   },
-    //   onLeave: () => {
-    //     gsap.to(".fade-element", {
-    //       duration: 0.5,
-    //       opacity: 0
-    //     });
-    //   }
-    // });
-    // Smooth Scroll
-    // gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
-
-    // ScrollTrigger.normalizeScroll(true)
-
-    // // create the smooth scroller FIRST!
-    // // eslint-disable-next-line no-unused-vars
-    // let smoother = ScrollSmoother.create({
-    //   smooth: 2,
-    //   effects: true,
-    //   normalizeScroll: true
-    // });
   },
   methods: {
     // Loader Visibility Setting
@@ -82,30 +55,5 @@ export default {
 };
 </script>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
-
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
+<style>
 </style>
