@@ -1,6 +1,8 @@
 <template>
-  <div class="menu">
-    <div class="float"></div>
+  <div ref="menu" class="menu">
+    <div class="float">
+      
+    </div>
     <div v-if="menuState === 'default'" class="menu-buttons">
       <button @click="changeContent('/whatido')">What I Do</button>
       <button @click="changeContent('/whoiam')">Who I Am</button>
@@ -31,32 +33,48 @@ export default {
     console.log("Menu component mounted");
   },
   methods: {
+    animateMenuWidth() {
+      const menuElement = this.$refs.menu;
+      // 获取 menu 当前宽度
+      const currentWidth = menuElement.offsetWidth;
+      
+      // 动画效果，根据当前内容的大小调整宽度
+      gsap.to(menuElement, {
+        duration: 0.4, // 动画持续时间
+        width: currentWidth + 'px', // 设置为当前宽度，可以替换为特定宽度
+        ease: 'power2.out' // 缓动效果
+      });
+    },
     changeContent(page) {
+      // 路由跳转或者内容变化逻辑
       this.$emit('changeMenu', page);
+    },
+    resetMenu() {
+      this.menuState = 'default';
     },
     activateMenu(label) {
       this.currentLabel = label;
-
       // 使用 GSAP 实现弹性变形到活动状态
-      gsap.to(".menu", {
-        duration: 0.5,
-        width: "calc-size(auto)",
-        ease: "elastic.out(1, 0.5)",
-        onStart: () => {
+      gsap.fromTo(".menu", {
+        width: this.$refs.menu.offsetWidth + 'px',
+        onComplete: () => {
           this.menuState = "breadCrumb"
         }
-      });
-    },
-    resetMenu() {
-      this.menuState = "default"
-
-      // 使用 GSAP 实现弹性变形回到默认状态
-      gsap.to(".menu", {
+      },
+      {
+        width: 'auto',
         duration: 0.5,
-        width: "calc-size(auto)",
-        ease: "elastic.out(1, 0.5)"
+        ease: "elastic.out(1, 0.5)",
       });
     },
+  },
+  watch: {
+    // menuState(newState, oldState) {
+    //   // 等待 DOM 更新后动画化
+    //   this.$nextTick(() => {
+    //     this.animateMenuWidth();
+    //   });
+    // }
   },
 };
 </script>
@@ -74,6 +92,7 @@ export default {
   border-radius: 10px;
   color: rgb(184, 53, 53);
   overflow: hidden;
+  padding: 1.7361111111vw;
   height: 60px;
   width: auto;
   display: flex;
@@ -88,6 +107,7 @@ export default {
 .menu-active-content {
   display: flex;
   align-items: center;
+  margin:20px;
 }
 
 .content-label {

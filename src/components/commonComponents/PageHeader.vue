@@ -183,6 +183,10 @@ header .links .link {
     z-index: 1;
 }
 
+.LangSwitch>ul>li {
+    list-style-type: none;
+}
+
 .LangSwitch>ul .link {
     color: #fff;
     display: inline-block;
