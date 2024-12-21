@@ -49,7 +49,7 @@ export default {
       // 路由跳转或者内容变化逻辑
       this.$emit('changeMenu', page);
     },
-    resetMenu() {
+    deactivateMenu() {
       this.menuState = 'default';
     },
     activateMenu(label) {
@@ -84,7 +84,7 @@ export default {
   /* interpolate-size: allow-keywords; */
   /* transition: 0.5s; */
   position: fixed;
-  z-index: 99999;
+  z-index: 9999;
   bottom: 20px;
   left: 50%;
   transform: translateX(-50%);

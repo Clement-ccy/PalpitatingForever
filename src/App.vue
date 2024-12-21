@@ -1,7 +1,7 @@
 <template>
   <PageLoader v-if="showLoader" @loadOver="loadOver"></PageLoader>
   <PageHeader></PageHeader>
-  <router-view class="content" @navigateTo="navigateTo" @activateMenu="activateMenu" @deactivateMenu="resetMenu"
+  <router-view class="content" @navigateTo="navigateTo" @activateMenu="activateMenu" @deactivateMenu="deactivateMenu"
     v-slot="{ Component, route }">
     <!-- 使用任何自定义过渡和回退到 `fade` -->
     <transition :name="route.meta.transition || 'fade'">
@@ -12,7 +12,6 @@
 </template>
 
 <script>
-// import { gsap, ScrollTrigger, ScrollSmoother } from "gsap";
 import PageHeader from './components/commonComponents/PageHeader.vue';
 import PageLoader from './components/commonComponents/PageLoader.vue';
 import PageMenu from './components/commonComponents/PageMenu.vue';
@@ -46,10 +45,15 @@ export default {
       this.showMenu = state;
     },
     activateMenu(label) {
-      this.$refs.menu.activateMenu(label);
+      // use this.$nextTick to use $refs.xxx.method after DOM Created
+      this.$nextTick(() => {
+        this.$refs.menu.activateMenu(label);
+      })
     },
-    resetMenu() {
-      this.$refs.menu.resetMenu();
+    deactivateMenu() {
+      this.$nextTick(() => {
+        this.$refs.menu.deactivateMenu();
+      })  
     },
   },
 };
