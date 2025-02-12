@@ -20,13 +20,13 @@
 
 <script>
 // 页内组件引入
-import WIDCover from '../components/WhatIDoPageComponents/WIDCover.vue';
-import WIDIntro from '../components/WhatIDoPageComponents/WIDIntro.vue';
-import WIDServices from '../components/WhatIDoPageComponents/WIDServices.vue';
-import WIDApproach from '../components/WhatIDoPageComponents/WIDApproach.vue';
-import WIDWorks from '@/components/WhatIDoPageComponents/WIDWorks.vue';
-import WIDAwards from '@/components/WhatIDoPageComponents/WIDAwards.vue';
-import WIDRelationship from '@/components/WhatIDoPageComponents/WIDRelationship.vue';
+import WIDCover from '../components/WhatIdoPageComponents/WIDCover.vue';
+import WIDIntro from '../components/WhatIdoPageComponents/WIDIntro.vue';
+import WIDServices from '../components/WhatIdoPageComponents/WIDServices.vue';
+import WIDApproach from '../components/WhatIdoPageComponents/WIDApproach.vue';
+import WIDWorks from '../components/WhatIdoPageComponents/WIDWorks.vue';
+import WIDAwards from '../components/WhatIdoPageComponents/WIDAwards.vue';
+import WIDRelationship from '../components/WhatIdoPageComponents/WIDRelationship.vue';
 // 插件引入
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";

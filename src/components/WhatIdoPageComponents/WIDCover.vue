@@ -42,6 +42,8 @@
 
 .cover .container .hello{
     width: 85%;
+    display: flex;
+    justify-content: center;
 }
 
 .cover .container .hello span{

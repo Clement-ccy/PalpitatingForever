@@ -1,5 +1,17 @@
 @import './base.css';
 
+ol, ul {
+  list-style: none;
+}
+
+span {
+  display: inline-block;
+}
+
+section.--g {
+  background: #f4f4f4;
+}
+
 .tag {
   align-items: center;
   display: inline-flex;

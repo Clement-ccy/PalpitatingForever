@@ -1,6 +1,6 @@
 /* semantic color variables and font variables for this project */
 :root {
-  --c-background: rgb(245, 245, 245);
+  --c-background: #fff;
 
   --c-border: rgba(0, 0, 0, 0.1);
   --color-border-hover: rgba(0, 0, 0, 0.2);
@@ -37,7 +37,7 @@ body {
   font-size: 1.7361111111vw;
   font-weight: 400;
   line-height: 28px;
-
+  letter-spacing: -.025em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

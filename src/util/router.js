@@ -1,11 +1,11 @@
 import { createMemoryHistory, createRouter } from 'vue-router'
-import NotFound from '@/components/NotFound.vue'
+import NotFound from '@/views/NotFound.vue'
 // import TempPage from '@/views/TempPage.vue'
 import LoadingPage from '@/views/LoadingPage.vue'
 import WhatIDoPage from '@/views/WhatIDoPage.vue'
 import WhoIAmPage from '@/views/WhoIAmPage.vue'
 import BlogPage from '@/views/BlogPage.vue'
-import StyleGuide from '@/components/StyleGuide.vue'
+import StyleGuide from '@/views/StyleGuide.vue'
 
 
 const routes = [
