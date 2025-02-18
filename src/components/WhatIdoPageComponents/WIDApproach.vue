@@ -170,12 +170,88 @@
             </div>
             <a href="/en/what-we-do/our-approach" class="link"><span>查看更详细的工作方式</span></a>
         </div>
-        <p class="text-to-animate">见面->倾听需求->提出疑问->思考->寻找参考->头脑风暴->筛选总结->设计->设计->开发->呈现->现场复现->跟进->总结阶段性成果->支持->维护->迭代
-            我工作经历的描述 查看详细
-        </p>
     </section>
 </template>
 
 <script></script>
 
-<style></style>
+<style scoped>
+.pf-approach {
+    text-align: center;
+}
+
+.pf-approach .tag {
+    margin-bottom: 6.9444444444vw;
+}
+
+.pf-approach .keywords {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5vw;
+    justify-content: center;
+    row-gap: 2.025462963vw;
+}
+
+.pf-approach .keywords .keyword {
+    align-items: center;
+    display: flex;
+    font-size: 9vw;
+    font-weight: 400;
+    gap: 5vw;
+    justify-content: space-between;
+    transition: transform .84scubic-bezier(.36,.33,0,1), opacity .48scubic-bezier(.36,.33,0,1);
+    font-size: 4vw;
+    gap: 5vw;
+}
+
+.pf-approach .keywords .keyword span {
+    display: block;
+    line-height: .8;
+}
+
+.pf-approach .keywords .keyword .icon {
+    display: block;
+    max-width: 6vw;
+    min-width: 6vw;
+    transform: rotate(-90deg);
+    transition: transform .48scubic-bezier(.36,.33,0,1), opacity .48scubic-bezier(.36,.33,0,1);
+    max-width: 3.7615740741vw;
+    min-width: 3.7615740741vw;
+    line-height: .8;
+}
+
+.pf-approach .content {
+    margin-left: 37.5vw;
+    margin-top: 9.2592592593vw;
+    max-width: 45.8333333333vw;
+    text-align: left;
+}
+
+.link {
+    display: inline-flex;
+    font-size: 1.125rem;
+    margin-top: 2.5rem;
+    padding-bottom: .3em;
+    position: relative;
+    margin-top: 4.6296296296vw;
+    padding-bottom: .3em;
+    font-size: 1.2731481481vw;
+}
+
+.link:after {
+    border-bottom: .0625rem solid #181717;
+    content: "";
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 92%;
+    transform: scaleX(1);
+    transition: transform .42s cubic-bezier(.36,.33,0,1);
+    width: 100%;
+}
+
+.link:hover:after {
+  transform: scaleX(0.1); /* 悬停状态下缩放为 0 */
+}
+</style>

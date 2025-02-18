@@ -1,5 +1,10 @@
 @import './base.css';
 
+a, code {
+  color: inherit;
+  text-decoration: none;
+}
+
 ol, ul {
   list-style: none;
 }
@@ -10,6 +15,10 @@ span {
 
 section.--g {
   background: #f4f4f4;
+}
+
+img, svg {
+  display: block;
 }
 
 .tag {
@@ -30,4 +39,27 @@ section.--g {
   display: block;
   height: .625rem;
   width: .625rem;
+}
+
+.icon {
+  aspect-ratio: 1;
+  position: relative;
+}
+
+button {
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+  font-size: 16px;
+  /* margin: 0 15px; */
+}
+
+button:hover {
+  text-decoration: underline;
+}
+
+.wysiwyg-content {
+  display: grid;
+  grid-gap: 1.2em;
 }

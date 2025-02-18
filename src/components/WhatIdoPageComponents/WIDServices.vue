@@ -6,7 +6,7 @@
                     <span>我精通的</span>
                 </h2>
                 <p>能够作用于产品和研究的技能</p>
-                <a class="link">
+                <a class="link" href="">
                     <span>了解更多能力细节</span>
                 </a>
             </div>
@@ -86,7 +86,7 @@
 <script>
 </script>
 
-<style>
+<style scoped>
 .pf-services .container {
     align-items: flex-start;
     display: flex;
@@ -108,7 +108,50 @@
     perspective: 1000px;
     position: relative;
     width: 100%;
+    max-width: 58.3333333333vw;
     transform: translate(0%, 0.8249%) translate3d(0px, 0px, 0px);
 }
 
+.pf-services .services-list .service {
+    font-size: 9vw;
+    line-height: 1.1;
+    position: relative;
+    width: 100%;
+    z-index: 10;
+    font-size: 5.787037037vw;
+}
+
+.pf-services .headline p {
+    font-size: 7.7vw;
+    line-height: 1.1;
+    font-size: 1.9675925926vw;
+}
+
+.pf-services .link {
+    display: block;
+    display: inline-flex;
+    font-size: 1.125rem;
+    margin-top: 2.5rem;
+    padding-bottom: .3em;
+    position: relative;
+    font-size: 1.2731481481vw;
+    margin-top: 4.6296296296vw;
+    padding-bottom: .3em;
+}
+
+.link:after {
+    border-bottom: .0625rem solid #181717;
+    content: "";
+    display: block;
+    left: 0;
+    position: absolute;
+    top: 92%;
+    transform: scaleX(1);
+    transition: transform .42s cubic-bezier(.36,.33,0,1);
+    width: 100%;
+}
+
+.link:hover:after {
+  transform: scaleX(0.1); /* 悬停状态下缩放为 0 */
+}
 </style>

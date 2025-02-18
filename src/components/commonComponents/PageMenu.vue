@@ -111,7 +111,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .menu {
   /* interpolate-size: allow-keywords; */
   /* transition: 0.5s; */
@@ -214,8 +214,6 @@ export default {
 }
 
 .icon {
-  aspect-ratio: 1;
-  position: relative;
   min-width: 50% !important;
 }
 
@@ -244,18 +242,5 @@ export default {
   padding: 5px 10px;
   cursor: pointer;
   transition: all .48s cubic-bezier(.36, .33, 0, 1), opacity .24s cubic-bezier(.36, .33, 0, 1);
-}
-
-button {
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  font-size: 16px;
-  /* margin: 0 15px; */
-}
-
-button:hover {
-  text-decoration: underline;
 }
 </style>

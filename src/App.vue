@@ -8,10 +8,12 @@
       <component :is="Component" :key="route.path" />
     </transition>
   </router-view>
+  <PageFooter></PageFooter>
   <PageMenu v-if="showMenu" ref="menu" @changeMenu="navigateTo" />
 </template>
 
 <script>
+import PageFooter from './components/commonComponents/PageFooter.vue';
 import PageHeader from './components/commonComponents/PageHeader.vue';
 import PageLoader from './components/commonComponents/PageLoader.vue';
 import PageMenu from './components/commonComponents/PageMenu.vue';
@@ -21,6 +23,7 @@ export default {
     PageLoader,
     PageHeader,
     PageMenu,
+    PageFooter,
   },
   data() {
     return {
