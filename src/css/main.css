@@ -21,6 +21,17 @@ img, svg {
   display: block;
 }
 
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+input {
+  background: none;
+  border: none;
+  outline: none;
+}
+
 .tag {
   align-items: center;
   display: inline-flex;

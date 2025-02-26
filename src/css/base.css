@@ -29,14 +29,12 @@ body {
   transition:
     color 0.5s,
     background-color 0.5s;
-  line-height: 1.6;
   font-family:
     Montserrat,
     sans-serif;
   /* font-size: 16px; */
   font-size: 1.7361111111vw;
   font-weight: 400;
-  line-height: 28px;
   letter-spacing: -.025em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;

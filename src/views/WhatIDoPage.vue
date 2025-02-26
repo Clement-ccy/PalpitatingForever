@@ -12,8 +12,6 @@
         <WIDWorks></WIDWorks>
         <!-- 我的奖项 -->
         <WIDAwards></WIDAwards>
-        <!-- 与我有联系的 -->
-        <WIDRelationship></WIDRelationship>
         <!-- 其他内容 -->
     </main>
 </template>
@@ -26,7 +24,6 @@ import WIDServices from '@/components/WhatIDoPageComponents/WIDServices.vue';
 import WIDApproach from '@/components/WhatIDoPageComponents/WIDApproach.vue';
 import WIDWorks from '@/components/WhatIDoPageComponents/WIDWorks.vue';
 import WIDAwards from '@/components/WhatIDoPageComponents/WIDAwards.vue';
-import WIDRelationship from '@/components/WhatIDoPageComponents/WIDRelationship.vue';
 // 插件引入
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -41,7 +38,6 @@ export default {
         WIDApproach,
         WIDWorks,
         WIDAwards,
-        WIDRelationship,
     },
     mounted() {
         // 获取要渲染透明度变化的文字

@@ -1,5 +1,5 @@
 <template>
-    <section class="intro">
+    <section class="pf-intro">
         <div class="wrapper">
             <div class="showreel-container">
                 <div class="showreel">
@@ -40,18 +40,18 @@
 </script>
 
 <style>
-.intro {
+.pf-intro {
     margin-top: -3.4722222222vw;
     padding-top: 0;
     position: relative;
     z-index: 100;
 }
 
-.intro .wrapper {
+.pf-intro .wrapper {
     position:relative;
 }
 
-.intro .wrapper .showreel-container {
+.pf-intro .wrapper .showreel-container {
     aspect-ratio: 16 / 9;
     position: relative;
     width: 100%;
@@ -61,7 +61,7 @@
     width: calc(100% + 4.16667vw) !important;
 }
 
-.intro .wrapper .showreel-container .showreel {
+.pf-intro .wrapper .showreel-container .showreel {
     height: 100%;
     width: 100%;
     margin: 0 0 0 auto;
@@ -71,7 +71,7 @@
     top: 0;
 }
 
-.intro .showreel-container .showreel .video-btn {
+.pf-intro .showreel-container .showreel .video-btn {
     cursor: pointer;
     height: 100%;
     left: 0;
@@ -80,7 +80,7 @@
     width: 100%;
 }
 
-.intro .showreel-container .showreel .video-container {
+.pf-intro .showreel-container .showreel .video-container {
     aspect-ratio: 16 / 9;
     background: #181717;
     border-radius: .625rem;
@@ -104,7 +104,7 @@
     width: 100%;
 }
 
-.intro .showreel-container .showreel .video-btn-play {
+.pf-intro .showreel-container .showreel .video-btn-play {
     position: absolute;
     right: 0;
     justify-content: center;
@@ -149,16 +149,16 @@
     aspect-ratio: .7936507937;
 }
 
-.intro .wrapper .content {
+.pf-intro .wrapper .content {
     padding-top: 100vh;
     max-width: 58.3333333333vw;
 }
 
-.intro .wrapper .content .inner {
+.pf-intro .wrapper .content .inner {
     position: relative;
 }
 
-.intro .wrapper .content .text-to-animate {
+.pf-intro .wrapper .content .text-to-animate {
     display: grid;
     grid-gap: 1.2em;
     line-height: 1.7;

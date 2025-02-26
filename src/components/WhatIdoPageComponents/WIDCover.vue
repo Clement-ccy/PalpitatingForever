@@ -1,5 +1,5 @@
 <template>
-    <section class="cover">
+    <section class="pf-cover">
         <div class="container">
             <div class="hello">
                 <span>Palpitating</span>
@@ -21,7 +21,7 @@
 </script>
 
 <style>
-.cover {
+.pf-cover {
     align-items: center;
     background: #fff;
     color: #181717;
@@ -32,7 +32,7 @@
     position: relative;
 }
 
-.cover .container {
+.pf-cover .container {
     align-items: center;
     display: flex;
     justify-content: center;
@@ -40,13 +40,13 @@
     width: 100%;
 }
 
-.cover .container .hello{
+.pf-cover .container .hello{
     width: 85%;
     display: flex;
     justify-content: center;
 }
 
-.cover .container .hello span{
+.pf-cover .container .hello span{
     color: #fff !important;
     mix-blend-mode: difference;
     position: relative;
@@ -55,7 +55,7 @@
     line-height: 1;
 }
 
-.cover .legendes {
+.pf-cover .legendes {
     align-items: flex-end;
     display: flex;
     justify-content: space-between;
@@ -71,7 +71,7 @@
     padding: 0 4.1666666667vw;
 }
 
-.cover .spline {
+.pf-cover .spline {
     align-items: center;
     display: flex;
     height: 100%;
