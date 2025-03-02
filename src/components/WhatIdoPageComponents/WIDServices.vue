@@ -108,7 +108,7 @@
     perspective: 1000px;
     position: relative;
     width: 100%;
-    max-width: 58.3333333333vw;
+    max-width: 48.3333333333vw;
     transform: translate(0%, 0.8249%) translate3d(0px, 0px, 0px);
 }
 

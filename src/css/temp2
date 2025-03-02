@@ -1,0 +1,79 @@
+<template>
+    <section class="pf-work">
+        <div class="headline">
+            <h2 class="tag"><span>我的作品</span></h2>
+            <marqueeComponent></marqueeComponent>
+        </div>
+
+        <div class="filters-1">
+            <button class="checkbox">
+                <div class="checkbox__custom">
+                    <span>全部</span>
+                    <sup>21</sup>
+                </div>
+            </button>
+            <label class="checkbox">
+                <input type="checkbox" name="category" value="productDesign" />
+                <div class="checkbox__custom">
+                    <span>产品设计</span>
+                    <sup>1</sup>
+                </div>
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="category" value="research" />
+                <div class="checkbox__custom">
+                    <span>研究</span>
+                    <sup>6</sup>
+                </div>
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="category" value="music" />
+                <div class="checkbox__custom">
+                    <span>音乐</span>
+                    <sup>3</sup>
+                </div>
+            </label>
+            <label class="checkbox">
+                <input type="checkbox" name="category" value="photograph" />
+                <div class="checkbox__custom">
+                    <span>摄影</span>
+                    <sup>11</sup>
+                </div>
+            </label>
+        </div>
+        <div class="projects-grid">
+            <div>
+                <div class="projects-grid-item">
+                    <a href="" class="project-thumb-preview">
+                        <div class="cover">
+                            <img src="https://api.wokine.com/wp-content/uploads/2023/12/artfx-thumb-768x402.jpg" alt="" loading="lazy">
+                        </div>
+                        <h3 class="title">AFREX</h3>
+                        <div class="tags">
+                            <ul class="industries">
+                                <li>Anime</li>
+                            </ul>
+                            <div class="separator">✦</div>
+                            <ul class="categories">
+                                <li>Web Design</li>
+                            </ul>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div>
+            </div>
+            <div></div>
+        </div>
+    </section>
+</template>
+
+<script>
+import marqueeComponent from '../basicComponents/marqueeComponent.vue'
+
+export default {
+    components: {
+        marqueeComponent,
+    }
+}
+</script>

@@ -5,66 +5,48 @@
             <marqueeComponent></marqueeComponent>
         </div>
 
-        <div class="filters-1">
-            <button class="checkbox">
-                <div class="checkbox__custom">
+        <div class="filters-1" v-if="loaded">
+            <button class="checkbox" @click="selectAll">
+                <div class="checkbox__custom" :class="{ '--checked': selectedCategories.length === 0 }">
                     <span>全部</span>
-                    <sup>21</sup>
+                    <sup>{{ totalCount }}</sup>
                 </div>
             </button>
-            <label class="checkbox">
-                <input type="checkbox" name="category" value="productDesign" />
-                <div class="checkbox__custom">
-                    <span>产品设计</span>
-                    <sup>1</sup>
-                </div>
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="category" value="research" />
-                <div class="checkbox__custom">
-                    <span>研究</span>
-                    <sup>6</sup>
-                </div>
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="category" value="music" />
-                <div class="checkbox__custom">
-                    <span>音乐</span>
-                    <sup>3</sup>
-                </div>
-            </label>
-            <label class="checkbox">
-                <input type="checkbox" name="category" value="photograph" />
-                <div class="checkbox__custom">
-                    <span>摄影</span>
-                    <sup>11</sup>
+            <label class="checkbox" v-for="category in categories" :key="category.value">
+                <input type="checkbox" v-model="selectedCategories" :value="category.value" hidden>
+                <div class="checkbox__custom" :class="{ '--checked': selectedCategories.includes(category.value) }">
+                    <span>{{ category.name }}</span>
+                    <sup>{{ category.count }}</sup>
                 </div>
             </label>
         </div>
-        <div class="projects-grid">
+
+        <div class="projects-grid" v-if="loaded">
             <div>
-                <div class="projects-grid-item">
-                    <a href="" class="project-thumb-preview">
+                <div v-for="article in filteredArticles" :key="article.id" class="projects-grid-item">
+                    <a :href="article.url" class="project-thumb-preview" target="_blank">
                         <div class="cover">
-                            <img src="https://api.wokine.com/wp-content/uploads/2023/12/artfx-thumb-768x402.jpg" alt="" loading="lazy">
+                            <img :src="article.cover" :alt="article.title" loading="lazy">
                         </div>
-                        <h3 class="title">AFREX</h3>
+                        <h3 class="title">{{ article.title }}</h3>
                         <div class="tags">
                             <ul class="industries">
-                                <li>Anime</li>
+                                <li v-for="industry in article.industries" :key="industry">{{ industry }}</li>
                             </ul>
-                            <div class="separator">✦</div>
+                            <div class="separator" v-if="article.industries.length && article.categories.length">✦
+                            </div>
                             <ul class="categories">
-                                <li>Web Design</li>
+                                <li v-for="category in article.categories" :key="category">{{ category }}</li>
                             </ul>
                         </div>
                     </a>
                 </div>
             </div>
-            <div>
-            </div>
+            <div></div>
             <div></div>
         </div>
+
+        <div v-else class="loading">Loading...</div>
     </section>
 </template>
 
@@ -74,11 +56,125 @@ import marqueeComponent from '../basicComponents/marqueeComponent.vue'
 export default {
     components: {
         marqueeComponent,
+    },
+    data() {
+        return {
+            loaded: false,
+            allArticles: [],
+            categories: [],
+            selectedCategories: [],
+            totalCount: 0
+        }
+    },
+    computed: {
+        filteredArticles() {
+            if (!this.selectedCategories.length) return this.allArticles
+            return this.allArticles.filter(article =>
+                article.categories.some(cat => this.selectedCategories.includes(cat))
+            )
+        }
+    },
+    async created() {
+        await this.fetchNotionData()
+        this.calculateCategories()
+        this.loaded = true
+    },
+    methods: {
+        async fetchNotionData() {
+            try {
+                let hasMore = true
+                let nextCursor = null
+
+                while (hasMore) {
+                    const response = await fetch(`/notion-api/v1/databases/${import.meta.env.VITE_DATABASE_ID}/query`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: nextCursor ? JSON.stringify({ start_cursor: nextCursor }) : null
+                    })
+
+                    const data = await response.json()
+                    this.processResults(data.results)
+
+                    hasMore = data.has_more
+                    nextCursor = data.next_cursor
+                }
+            } catch (error) {
+                console.error('Error fetching Notion data:', error)
+            }
+        },
+
+        processResults(results) {
+            results.forEach(page => {
+                const properties = page.properties
+
+                // 处理标题
+                const title = properties.Name?.title?.[0]?.plain_text || 'Untitled'
+
+                // 处理分类
+                const category = properties.Categories?.select?.name
+                    ? [properties.Categories.select.name]
+                    : []
+                // （添加标准化转换）
+                // const rawCategory = properties.Categories?.select?.name || ''
+                // const category = rawCategory
+                //     ? [rawCategory.toLowerCase().replace(/\s+/g, '')]
+                //     : []
+
+                // 处理行业（注意字段名称拼写检查）
+                const industry = properties.Industries?.select?.name
+                    ? [properties.Industries.select.name]
+                    : []
+
+                const article = {
+                    id: page.id,
+                    title: title,
+                    cover: this.getCoverImage(page.cover),
+                    categories: category,
+                    industries: industry,
+                    url: page.url
+                }
+
+                this.allArticles.push(article)
+            })
+        },
+
+        getCoverImage(cover) {
+            if (!cover) return 'https://fakeimg.pl/540x300'
+            return cover.type === 'external'
+                ? cover.external.url
+                : cover.file.url
+        },
+
+        calculateCategories() {
+            const categoryMap = new Map()
+
+            this.allArticles.forEach(article => {
+                article.categories.forEach(cat => {
+                    const count = categoryMap.get(cat) || 0
+                    categoryMap.set(cat, count + 1)
+                })
+            })
+
+            this.categories = Array.from(categoryMap).map(([name, count]) => ({
+                name,
+                value: name,
+                // value: name.toLowerCase().replace(/\s+/g, ''),  // 添加标准化
+                count
+            }))
+
+            this.totalCount = this.allArticles.length
+        },
+
+        selectAll() {
+            this.selectedCategories = []
+        }
     }
 }
 </script>
 
-<style>
+<style scoped>
 .pf-work {
     background: #181717;
     color: #fff;
@@ -138,11 +234,14 @@ export default {
     background-color: #fff;
 }
 
-.checkbox input:checked+.checkbox__custom, .checkbox.--checked .checkbox__custom, html:not(.--touch) .checkbox:hover .checkbox__custom {
+.checkbox input:checked+.checkbox__custom,
+.checkbox .checkbox__custom.--checked,
+html:not(.--touch) .checkbox:hover .checkbox__custom {
     opacity: 1;
 }
 
-.checkbox input:checked+.checkbox__custom:before, .--d .checkbox.--checked .checkbox__custom:before {
+.checkbox input:checked+.checkbox__custom:before,
+.checkbox .checkbox__custom.--checked:before {
     background: #fff;
 }
 
@@ -173,7 +272,7 @@ export default {
 
 .pf-work .projects-grid .projects-grid-item {
     min-width: 100%;
-    transition: opacity 1.2scubic-bezier(.36,.33,0,1);
+    transition: opacity 1.2scubic-bezier(.36, .33, 0, 1);
 }
 
 .project-thumb-preview {
@@ -197,7 +296,7 @@ export default {
     margin-bottom: 1.25rem;
     overflow: hidden;
     position: relative;
-    transition: transform .48s cubic-bezier(.36,.33,0,1);
+    transition: transform .48s cubic-bezier(.36, .33, 0, 1);
     width: 100%;
     margin-bottom: 1.1574074074vw;
     background: #0b0b0b;
@@ -211,7 +310,7 @@ export default {
     object-fit: cover;
     position: absolute;
     top: 0;
-    transition: opacity .42scubic-bezier(.36,.33,0,1);
+    transition: opacity .42scubic-bezier(.36, .33, 0, 1);
     width: 100%;
 }
 
