@@ -46,8 +46,8 @@
             </div>
             <nav class="LangSwitch">
                 <ul>
-                    <li><a class="link --min" :class="--current" href="/">zh-CN</a></li>
-                    <li><a class="link --min" :class="--current" href="/en">en</a></li>
+                    <li><a class="link --min" :class="{ '--current': isZHCN }" href="/">zh-CN</a></li>
+                    <li><a class="link --min" :class="{ '--current': !isZHCN }" href="/en">en</a></li>
                 </ul>
                 <div class="mask"></div>
             </nav>
@@ -56,6 +56,13 @@
 </template>
 
 <script>
+export default {
+    data() {
+        return {
+            isZHCN: true
+        }
+    }
+}
 </script>
 
 <style>

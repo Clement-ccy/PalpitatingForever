@@ -1,68 +1,69 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
-import NotFound from '@/views/NotFound.vue'
+import { createWebHistory, createRouter } from "vue-router";
+// import { createMemoryHistory, createRouter } from 'vue-router'
+import NotFound from "@/views/NotFound.vue";
 // import TempPage from '@/views/TempPage.vue'
-import LoadingPage from '@/views/LoadingPage.vue'
-import WhatIDoPage from '@/views/WhatIDoPage.vue'
-import WhoIAmPage from '@/views/WhoIAmPage.vue'
-import BlogPage from '@/views/BlogPage.vue'
-import StyleGuide from '@/views/StyleGuide.vue'
-
+import LoadingPage from "@/views/LoadingPage.vue";
+import WhatIDoPage from "@/views/WhatIDoPage.vue";
+import WhoIAmPage from "@/views/WhoIAmPage.vue";
+import BlogPage from "@/views/BlogPage.vue";
+import StyleGuide from "@/views/StyleGuide.vue";
 
 const routes = [
     // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
     {
-        path: '/:pathMatch(.*)*',
-        component: NotFound
+        path: "/:pathMatch(.*)*",
+        component: NotFound,
         // component: () => import('@/components/NotFound.vue')
     },
     {
-        path: '/',
-        redirect: '/whatido',
+        path: "/",
+        redirect: "/whatido",
     },
     {
-        path: '/loading',
-        component: LoadingPage
+        path: "/loading",
+        component: LoadingPage,
         // component: () => import('@/views/LoadingPage.vue')
     },
     {
-        path: '/whatido',
+        path: "/whatido",
         component: WhatIDoPage,
-        menuPosition: 0
+        menuPosition: 0,
         // component: () => import('@/views/TempPage.vue')
     },
     {
-        path: '/whoiam',
+        path: "/whoiam",
         component: WhoIAmPage,
-        menuPosition: 1
+        menuPosition: 1,
         // component: () => import('@/views/WhoIAmPage.vue')
     },
     {
-        path: '/blog',
+        path: "/blog",
         component: BlogPage,
-        menuPosition: 2
+        menuPosition: 2,
         // component: () => import('@/views/BlogPage.vue')
     },
     {
-        path: '/styleguide',
-        component: StyleGuide
+        path: "/styleguide",
+        component: StyleGuide,
         // component: () => import('@/components/StyleGuide.vue')
     },
-]
+];
 
 const router = createRouter({
     // eslint-disable-next-line no-unused-vars
     scrollBehavior(to, from, savedPosition) {
         // 始终滚动到顶部
-        return { top: 0 }
+        return { top: 0 };
     },
-    history: createMemoryHistory(),
+    history: createWebHistory(),
+    // history: createMemoryHistory(),
     routes,
-})
+});
 router.afterEach((to, from) => {
-    const toDepth = to.path.split('/').length
-    const fromDepth = from.path.split('/').length
-    to.meta.transition = to.menuPosition < from.menuPosition ? 'slide-right' : 'slide-left'
-})
+    // const toDepth = to.path.split('/').length
+    // const fromDepth = from.path.split('/').length
+    to.meta.transition =
+        to.menuPosition < from.menuPosition ? "slide-right" : "slide-left";
+});
 
-
-export default router
+export default router;

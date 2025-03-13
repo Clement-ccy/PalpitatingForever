@@ -1,5 +1,5 @@
 <template>
-    <section class="pf-approach">
+    <section class="wid-approach">
         <h2 class="tag">
             <span>工作路径</span>
         </h2>
@@ -176,15 +176,15 @@
 <script></script>
 
 <style scoped>
-.pf-approach {
+.wid-approach {
     text-align: center;
 }
 
-.pf-approach .tag {
+.wid-approach .tag {
     margin-bottom: 6.9444444444vw;
 }
 
-.pf-approach .keywords {
+.wid-approach .keywords {
     align-items: center;
     display: flex;
     flex-wrap: wrap;
@@ -193,7 +193,7 @@
     row-gap: 2.025462963vw;
 }
 
-.pf-approach .keywords .keyword {
+.wid-approach .keywords .keyword {
     align-items: center;
     display: flex;
     font-size: 9vw;
@@ -205,12 +205,12 @@
     gap: 5vw;
 }
 
-.pf-approach .keywords .keyword span {
+.wid-approach .keywords .keyword span {
     display: block;
     line-height: .8;
 }
 
-.pf-approach .keywords .keyword .icon {
+.wid-approach .keywords .keyword .icon {
     display: block;
     max-width: 6vw;
     min-width: 6vw;
@@ -221,7 +221,7 @@
     line-height: .8;
 }
 
-.pf-approach .content {
+.wid-approach .content {
     margin-left: 37.5vw;
     margin-top: 9.2592592593vw;
     max-width: 45.8333333333vw;

@@ -1,53 +1,68 @@
 <template>
-    <div class="who-i-am">
-        <section ref="section1" class="content-section">
-            <h2>Section 1 年龄 + 座右铭</h2>
-            <p style="margin: 500px 300px;">一些关于项目方向的文字介绍
-                封面
-                做的方向简介+视频
-                asdmvj
-                做事流程
-                我的作品
-                曾合作单位
-            </p>
-        </section>
-        <section ref="section2" class="content-section timeline">
-            <h2>Section 2 我的成长历程</h2>
-            <p style="margin: 500px 300px;">一些关于项目方向的文字介绍
-                asdasf
-                ndsaj
-                能力点
-                做事流程
-                我的作品
-                曾合作单位
-            </p>
-        </section>
-        <section ref="section3" class="content-section responsibilities">
-            <h2>Section 3 我的社会责任</h2>
-            <p style="margin: 500px 300px;">一些关于项目方向的文字介绍
-                封面
-                做的方向简介+视频
-                能力点
-                asdlkn
-                vmdufhg
-                曾合作单位
-            </p>
-        </section>
-    </div>
+    <main class="who-i-am">
+        <WIACover />
+        <WIAIntro />
+        <WIAExperience />
+        <WIAInterest />
+        <WIAResponsibility />
+    </main>
 </template>
 
 <script>
-import { gsap } from "gsap";
+import WIACover from "@/components/WhoIAmPageComponents/WIACover.vue";
+import WIAIntro from "@/components/WhoIAmPageComponents/WIAIntro.vue";
+import WIAExperience from "@/components/WhoIAmPageComponents/WIAExperience.vue";
+import WIAInterest from "@/components/WhoIAmPageComponents/WIAInterest.vue";
+import WIAResponsibility from "@/components/WhoIAmPageComponents/WIAResponsibility.vue";
+
+// 插件引入
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { SplitText } from "@/js/splitText";
+gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default {
+    components: {
+        WIACover,
+        WIAIntro,
+        WIAExperience,
+        WIAInterest,
+        WIAResponsibility,
+    },
     mounted() {
-        gsap.from(".timeline", { opacity: 0, x: -100, duration: 1 });
+        // 获取要渲染透明度变化的文字
+        const texts = document.querySelectorAll(".text-to-animate");
+
+        texts.forEach((text) => {
+            new SplitText(text, { type: "chars" });
+            // 创建动画
+            gsap.fromTo(
+                text.querySelectorAll(".aki__char"), // 动画目标
+                {
+                    opacity: 0.1, // 初始不透明度
+                    y: 5, // 初始位置向下偏移
+                },
+                {
+                    opacity: 1, // 结束时完全可见
+                    y: 0, // 最终位置居中
+                    duration: 1,
+                    stagger: 0.1, // 每个字的动画间隔
+                    scrollTrigger: {
+                        trigger: text,
+                        start: "top 80%", // 当顶部到达视口80%位置时触发
+                        end: "top 50%",
+                        invalidateOnRefresh: true,
+                        scrub: true, // 随着滚动进度播放动画
+                    },
+                }
+            );
+        });
     },
 };
 </script>
 
 <style>
-.who-i-am {
+/* .who-i-am {
     padding: 50px;
-}
+} */
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <section class="pf-work">
+    <section class="wid-work">
         <div class="headline">
             <h2 class="tag"><span>我的作品</span></h2>
             <marqueeComponent></marqueeComponent>
@@ -175,7 +175,7 @@ export default {
 </script>
 
 <style scoped>
-.pf-work {
+.wid-work {
     background: #181717;
     color: #fff;
 }
@@ -184,7 +184,7 @@ export default {
     background-color: #fff;
 }
 
-.pf-work .filters-1 {
+.wid-work .filters-1 {
     align-items: flex-start;
     display: flex;
     flex-wrap: wrap;
@@ -192,7 +192,7 @@ export default {
     padding: 2.8935185185vw 0;
 }
 
-.pf-work .filters-1 .checkbox {
+.wid-work .filters-1 .checkbox {
     white-space: nowrap;
     cursor: pointer;
     position: relative;
@@ -255,14 +255,14 @@ html:not(.--touch) .checkbox:hover .checkbox__custom {
     font-size: .5em;
 }
 
-.pf-work .projects-grid {
+.wid-work .projects-grid {
     align-items: flex-start;
     display: flex;
     flex-wrap: wrap;
     gap: 1.25rem;
 }
 
-.pf-work .projects-grid>* {
+.wid-work .projects-grid>* {
     align-items: flex-start;
     display: flex;
     flex: 1;
@@ -270,7 +270,7 @@ html:not(.--touch) .checkbox:hover .checkbox__custom {
     gap: 2.8935185185vw;
 }
 
-.pf-work .projects-grid .projects-grid-item {
+.wid-work .projects-grid .projects-grid-item {
     min-width: 100%;
     transition: opacity 1.2scubic-bezier(.36, .33, 0, 1);
 }

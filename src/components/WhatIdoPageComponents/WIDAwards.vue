@@ -15,21 +15,21 @@
                     <a href="" target="_blank" class="price">
                         <span class="logo">NCDA</span>
                         <span class="count">
-                            <font _mstmutation="1">x</font>
+                            <span>x</span>
                             <span class="number">2</span>
                         </span>
                     </a>
                     <a href="" target="_blank" class="price">
                         <span class="logo">3Ds</span>
                         <span class="count">
-                            <font _mstmutation="1">x</font>
+                            <span>x</span>
                             <span class="number">1</span>
                         </span>
                     </a>
                     <a href="" target="_blank" class="price">
                         <span class="logo">CCDCE</span>
                         <span class="count">
-                            <font _mstmutation="1">x</font>
+                            <span>x</span>
                             <span class="number">1</span>
                         </span>
                     </a>

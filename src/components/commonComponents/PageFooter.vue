@@ -17,8 +17,8 @@
           <p>我主要进行数字处理方案和流程体验的设计，能够在符合个人宗旨的条件下进行创意和技术的融合。</p>
           <nav class="LangSwitch">
             <ul>
-              <li><a class="link --min" :class="--current" href="/">zh-CN</a></li>
-              <li><a class="link --min" :class="--current" href="/en">en</a></li>
+              <li><a class="link --min" :class="{ '--current': isZHCN }" href="/">zh-CN</a></li>
+              <li><a class="link --min" :class="{ '--current': !isZHCN }" href="/en">en</a></li>
             </ul>
             <div class="mask"></div>
           </nav>
@@ -206,6 +206,11 @@
 
 <script>
 export default {
+  data() {
+    return {
+      isZHCN: true
+    }
+  },
   methods: {
     toggleLanguage() {
       // 实现语言切换逻辑
@@ -515,8 +520,8 @@ footer .secondary>.more {
 }
 
 footer .secondary>.more>nav ul {
-    align-items: center;
-    display: flex;
-    gap: .625rem;
+  align-items: center;
+  display: flex;
+  gap: .625rem;
 }
 </style>

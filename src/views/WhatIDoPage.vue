@@ -30,6 +30,11 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { SplitText } from "@/js/splitText";
 gsap.registerPlugin(ScrollTrigger, SplitText);
 export default {
+    // 添加路由守卫
+    // beforeRouteLeave(to, from, next) {
+    //     this.cleanupAnimations()
+    //     next()
+    // },
     components: {
         // CoverComponent
         WIDCover,
@@ -61,15 +66,21 @@ export default {
                         trigger: text,
                         start: "top 80%", // 当顶部到达视口80%位置时触发
                         end: "top 50%",
+                        invalidateOnRefresh: true,
                         scrub: true, // 随着滚动进度播放动画
                     },
                 }
             );
         });
-        this.createMenuChangeTrigger(".pf-services","我精通的");
-        this.createMenuChangeTrigger(".pf-approach","我的工作路径");
+        this.createMenuChangeTrigger(".wid-services", "我精通的");
+        this.createMenuChangeTrigger(".wid-approach", "我的工作路径");
     },
     beforeUnmount() {
+        // 全局清理 (保险措施)
+        // ScrollTrigger.getAll().forEach(st => {
+        //     if (!st.vars.trigger?.closest('body')) st.kill()
+        // })
+        // ScrollTrigger.clearMatchMedia()
 
     },
     methods: {
@@ -82,6 +93,7 @@ export default {
                 //   endTrigger: "#otherID",
                 end: "bottom 50%",
                 // scrub: true,
+                invalidateOnRefresh: true,
                 onToggle: (self) => {
                     if (self.isActive) {
                         this.$emit("activateMenu", label);
@@ -91,8 +103,11 @@ export default {
                     }
                 },
             });
-        }
-
+        },
+        // cleanupAnimations() {
+        //     // 全局清理（可选）
+        //     ScrollTrigger.getAll().forEach(trigger => trigger.kill())
+        // }
         // handleIntersect(entries) {
         //   entries.forEach((entry) => {
         //     if (entry.isIntersecting) {
@@ -107,15 +122,8 @@ export default {
 </script>
 
 <style>
-section {
-    width: 100%;
-    min-height: 100vh;
-    padding: 11.5740740741vw 4.1666666667vw;
-}
-
 .text-to-animate {
     display: inline;
-    margin-top: 300px;
 }
 
 video {

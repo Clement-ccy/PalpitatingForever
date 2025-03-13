@@ -1,5 +1,5 @@
 <template>
-    <section class="pf-services --g">
+    <section class="wid-services --g">
         <div class="container">
             <div class="headline">
                 <h2 class="tag">
@@ -87,7 +87,7 @@
 </script>
 
 <style scoped>
-.pf-services .container {
+.wid-services .container {
     align-items: flex-start;
     display: flex;
     flex-wrap: wrap;
@@ -95,13 +95,13 @@
     justify-content: space-between;
 }
 
-.pf-services .headline {
+.wid-services .headline {
     max-width: 20.8333333333vw;
     position: sticky;
     top: 8.1018518519vw;
 }
 
-.pf-services .services-list {
+.wid-services .services-list {
     align-items: flex-start;
     display: flex;
     flex-wrap: wrap;
@@ -112,7 +112,7 @@
     transform: translate(0%, 0.8249%) translate3d(0px, 0px, 0px);
 }
 
-.pf-services .services-list .service {
+.wid-services .services-list .service {
     font-size: 9vw;
     line-height: 1.1;
     position: relative;
@@ -121,13 +121,13 @@
     font-size: 5.787037037vw;
 }
 
-.pf-services .headline p {
+.wid-services .headline p {
     font-size: 7.7vw;
     line-height: 1.1;
     font-size: 1.9675925926vw;
 }
 
-.pf-services .link {
+.wid-services .link {
     display: block;
     display: inline-flex;
     font-size: 1.125rem;

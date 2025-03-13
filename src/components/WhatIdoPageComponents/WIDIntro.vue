@@ -1,5 +1,5 @@
 <template>
-    <section class="pf-intro">
+    <section class="wid-intro">
         <div class="wrapper">
             <div class="showreel-container">
                 <div class="showreel">
@@ -37,21 +37,84 @@
 </template>
 
 <script>
+// 插件引入
+import gsap from "gsap";
+import { CustomEase } from "gsap/all";
+gsap.registerPlugin(CustomEase);
+
+export default {
+    mounted() {
+        const showreel = document.querySelector(".showreel-container");
+        const wrapper = document.querySelector(".wid-intro .wrapper");
+        // const content = document.querySelector(".wid-intro .content");
+
+        const getAnimParams = () => {
+            const showreelRect = showreel.getBoundingClientRect();
+            const wrapperRect = wrapper.getBoundingClientRect();
+            // const contentRect = content.getBoundingClientRect();
+
+            // const endY1 = contentRect.y - showreelRect.bottom + showreelRect.height * 0.8
+            const endX = wrapperRect.right - showreelRect.right;
+            const endY = wrapperRect.bottom - showreelRect.bottom + showreelRect.height * 0.8;
+            // console.log(wrapperRect.bottom)
+            // console.log(showreelRect.bottom)
+            // console.log(contentRect.y)
+            return {
+                // y1: endY1,
+                x: endX,
+                y: endY,
+                // scale: scaleFactor,
+                // width: `${scaleFactor * 100}%`,
+                // height: `${scaleFactor * 100}%`
+            };
+        }
+
+        gsap.to(
+            ".showreel", // 动画目标
+            {
+                keyframes: {
+                    "0%": { x: 0, y: 0, width:"100%", height:"100%" },
+                    "30%": { x: () => getAnimParams().x * 0.3, y: () => getAnimParams().y*0.3, width:"70%", height:"70%"},
+                    "80%": { x: () => getAnimParams().x * 0.7, y: () => getAnimParams().y*0.8, width:"30%", height:"30%"},
+                    "100%": { x: () => getAnimParams().x, y: () => getAnimParams().y, width:"20%", height:"20%", ease: "power1.out" },
+                },
+                // x: () => getAnimParams().x,
+                // y: () => getAnimParams().y,
+                // width: "20%",
+                // height: "20%",
+                
+                scrollTrigger: {
+                    trigger: ".wrapper",
+                    start: "top top", // 当顶部到达视口80%位置时触发
+                    end: "bottom 90%",
+                    scrub: true, // 随着滚动进度播放动画
+                    pinSpacing: true,
+                    invalidateOnRefresh: true,
+                },
+            }
+        );
+
+        // 窗口大小变化时刷新
+        // window.addEventListener("resize", () => {
+        //     ScrollTrigger.refresh();
+        // });
+    }
+}
 </script>
 
 <style>
-.pf-intro {
+.wid-intro {
     margin-top: -3.4722222222vw;
     padding-top: 0;
     position: relative;
     z-index: 100;
 }
 
-.pf-intro .wrapper {
-    position:relative;
+.wid-intro .wrapper {
+    position: relative;
 }
 
-.pf-intro .wrapper .showreel-container {
+.wid-intro .wrapper .showreel-container {
     aspect-ratio: 16 / 9;
     position: relative;
     width: 100%;
@@ -61,7 +124,8 @@
     width: calc(100% + 4.16667vw) !important;
 }
 
-.pf-intro .wrapper .showreel-container .showreel {
+.wid-intro .wrapper .showreel-container .showreel {
+
     height: 100%;
     width: 100%;
     margin: 0 0 0 auto;
@@ -71,7 +135,7 @@
     top: 0;
 }
 
-.pf-intro .showreel-container .showreel .video-btn {
+.wid-intro .showreel-container .showreel .video-btn {
     cursor: pointer;
     height: 100%;
     left: 0;
@@ -80,13 +144,13 @@
     width: 100%;
 }
 
-.pf-intro .showreel-container .showreel .video-container {
+.wid-intro .showreel-container .showreel .video-container {
     aspect-ratio: 16 / 9;
     background: #181717;
     border-radius: .625rem;
     overflow: hidden;
     position: relative;
-    transition: transform .48s cubic-bezier(.36,.33,0,1);
+    transition: transform .48s cubic-bezier(.36, .33, 0, 1);
     width: 100%;
     height: 100%;
     background: 0;
@@ -104,7 +168,7 @@
     width: 100%;
 }
 
-.pf-intro .showreel-container .showreel .video-btn-play {
+.wid-intro .showreel-container .showreel .video-btn-play {
     position: absolute;
     right: 0;
     justify-content: center;
@@ -149,16 +213,16 @@
     aspect-ratio: .7936507937;
 }
 
-.pf-intro .wrapper .content {
+.wid-intro .wrapper .content {
     padding-top: 100vh;
     max-width: 58.3333333333vw;
 }
 
-.pf-intro .wrapper .content .inner {
+.wid-intro .wrapper .content .inner {
     position: relative;
 }
 
-.pf-intro .wrapper .content .text-to-animate {
+.wid-intro .wrapper .content .text-to-animate {
     display: grid;
     grid-gap: 1.2em;
     line-height: 1.7;

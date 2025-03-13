@@ -13,6 +13,12 @@ span {
   display: inline-block;
 }
 
+section {
+  width: 100%;
+  min-height: 100vh;
+  padding: 11.5740740741vw 4.1666666667vw;
+}
+
 section.--g {
   background: #f4f4f4;
 }

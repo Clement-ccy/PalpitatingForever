@@ -25,6 +25,21 @@ export default {
     PageMenu,
     PageFooter,
   },
+  watch: {
+    $route() {
+      // 等待 DOM 更新
+      this.$nextTick(() => {
+        // 双保险同步
+        window.dispatchEvent(new Event('resize'))
+        window.dispatchEvent(new Event('scroll'))
+
+        // 关键性能优化
+        // requestAnimationFrame(() => {
+        //   ScrollTrigger.refresh(true)
+        // })
+      })
+    }
+  },
   data() {
     return {
       showLoader: true,
@@ -56,11 +71,10 @@ export default {
     deactivateMenu() {
       this.$nextTick(() => {
         this.$refs.menu.deactivateMenu();
-      })  
+      })
     },
   },
 };
 </script>
 
-<style>
-</style>
+<style></style>
