@@ -10,7 +10,7 @@
             陈承烨, a fresh-things-exploiter born in 2003 from China.
         </div>
         <div class="spline">
-            <img src="../../assets/images/cover.jpeg" style="display: block; height: 100%;" />
+            <img src="@/assets/images/cover.jpeg" style="display: block; height: 100%;" />
             <!-- <canvas></canvas> -->
         </div>
     </section>
