@@ -116,7 +116,7 @@ export default {
 .horizontal-scroll {
     display: flex;
     height: 100vh;
-    will-change: transform;
+    /* will-change: transform; */
 }
 
 .timeline-panel {
