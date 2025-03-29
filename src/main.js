@@ -1,5 +1,6 @@
 import './css/main.css'
-import router from './util/router'
+import 'lenis/dist/lenis.css'
+import router from './utils/router'
 import { createApp } from 'vue'
 import App from './App.vue'
 

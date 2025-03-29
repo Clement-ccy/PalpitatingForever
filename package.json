@@ -12,6 +12,7 @@
   "dependencies": {
     "dotenv": "^16.4.7",
     "gsap": "^3.12.5",
+    "lenis": "^1.2.3",
     "sass": "^1.79.4",
     "vue": "^3.4.21",
     "vue-router": "^4.3.2"

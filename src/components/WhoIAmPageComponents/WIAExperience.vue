@@ -58,7 +58,7 @@ export default {
                 end: () => "+=" + (container.offsetWidth - window.innerWidth),
                 scrub: 1,
                 pin: true,
-                anticipatePin: 1
+                // anticipatePin: 1
             }
         })
 
@@ -103,7 +103,6 @@ export default {
     left: 10%;
     z-index: 10;
     color: white;
-    font-size: 3rem;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
