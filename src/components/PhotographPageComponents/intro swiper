@@ -1,13 +1,27 @@
 <template>
-  <!-- 预览区域 -->
   <section class="recent-preview">
-    <!-- 图片容器 -->
-    <div class="panels">
-      <div
+    <!-- 主轮播 -->
+    <swiper
+      class="panels"
+      :direction="'vertical'"
+      :loop="false"
+      :slides-per-view="1"
+      :space-between="0"
+      :mousewheel="true"
+      :modules="modules"
+      :effect="'creative'"
+      :creative-effect="{
+        prev: { translate: [0, '-20%', -1] },
+        next: { translate: [0, '100%', 0] },
+      }"
+      @swiper="onSwiper"
+      @slide-change="onSlideChange"
+    >
+      <swiper-slide
         v-for="(album, index) in pictureAlbums"
-        :key="index"
         class="panel"
-        :class="['panel-' + index, { active: currentIndex === index }]"
+        :key="index"
+        :class="['panel-' + index]"
         :id="'panel-' + index"
       >
         <div class="clip">
@@ -18,7 +32,7 @@
           </h1>
           <button class="cta-button" @click="scrollToPanel">Learn More</button>
         </div>
-        <span class="tint"></span>
+        <!-- <span class="tint"></span> -->
         <div class="picture-album-background">
           <img :src="album.cover" :alt="album.name" />
         </div>
@@ -26,49 +40,37 @@
           <span class="activeSlide">{{ index + 1 }}</span> /
           <span class="slideTotal">{{ pictureAlbums.length }}</span>
         </span>
-      </div>
-    </div>
-
-    <div class="picture-album-preview">
-      <div
-        v-for="(pictureAlbum, index) in pictureAlbums"
-        :key="index"
-        class="picture-album-item"
-        :style="{ '--delay': index * 0.1 + 's' }"
-        @mouseenter="handleHover(index)"
-        @mouseleave="handleHover(null)"
-        @click="selectAlbum(index)"
-      >
-        <div class="item-container" :class="{ active: currentIndex === index }">
-          <div class="picture-album-cover">
-            <img :src="pictureAlbum.cover" :alt="pictureAlbum.name" />
-          </div>
-          <div class="information-group">
-            <div class="picture-album-name">{{ pictureAlbum.name }}</div>
-            <div class="picture-album-type">{{ pictureAlbum.type }}</div>
-            <div class="picture-album-location">
-              {{ pictureAlbum.location }}
-            </div>
-            <div class="picture-album-time">{{ pictureAlbum.time }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="selector" :style="selectorStyle">Explode</div>
-    </div>
+      </swiper-slide>
+    </swiper>
   </section>
 </template>
 
 <script>
-import { gsap } from "gsap";
-import { ScrollTrigger, ScrollToPlugin } from "gsap/all";
-gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Mousewheel,EffectCreative } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-creative";
 
 export default {
+  components: {
+    Swiper,
+    SwiperSlide,
+  },
+  setup() {
+    const onSwiper = (swiper) => {
+      console.log(swiper);
+    };
+    const onSlideChange = () => {
+      console.log("slide change");
+    };
+    return {
+      onSwiper,
+      onSlideChange,
+      modules: [Mousewheel, EffectCreative],
+    };
+  },
   data() {
     return {
-      currentIndex: 0,
-      currentHoverIndex: null,
-      isScrolling: false,
       pictureAlbums: [
         {
           name: "Cuffs of Mother",
@@ -101,79 +103,6 @@ export default {
       ],
     };
   },
-  mounted() {
-    this.initScrollTriggers();
-    window.addEventListener("wheel", this.handleWheel, { passive: false });
-  },
-  beforeUnmount() {
-    window.removeEventListener("wheel", this.handleWheel);
-  },
-  computed: {
-    selectorStyle() {
-      const targetIndex = this.currentHoverIndex ?? this.currentIndex;
-      return {
-        width: `${100 / this.pictureAlbums.length}%`,
-        left: `${(targetIndex * 100) / this.pictureAlbums.length}%`,
-        transition: this.currentHoverIndex
-          ? "all 0.3s ease"
-          : "all 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
-      };
-    },
-  },
-  methods: {
-    handleHover(index) {
-      this.currentHoverIndex = index;
-    },
-    selectAlbum(index) {
-      this.switchPanel(index);
-      this.currentHoverIndex = null;
-    },
-    handleWheel(event) {
-      event.preventDefault();
-      if (this.isScrolling) return;
-
-      const delta = Math.sign(event.deltaY);
-      const newIndex = this.currentIndex + (delta > 0 ? 1 : -1);
-      this.switchPanel(newIndex);
-    },
-    switchPanel(newIndex) {
-      newIndex = Math.max(0, Math.min(newIndex, this.pictureAlbums.length - 1));
-      if (newIndex === this.currentIndex) return;
-
-      this.isScrolling = true;
-      this.currentIndex = newIndex;
-
-      // 使用动态计算位置的方式
-      const target = document.querySelector(`#panel-${newIndex}`);
-      const targetPosition = target.offsetTop;
-
-      gsap.to(window, {
-        duration: 1,
-        ease: "power2.inOut",
-        scrollTo: {
-          y: targetPosition,
-          autoKill: false,
-        },
-        onComplete: () => (this.isScrolling = false),
-      });
-    },
-    initScrollTriggers() {
-      const sections = gsap.utils.toArray(".panel");
-
-      sections.forEach((panel) => {
-        gsap.to(panel, {
-          yPercent: 100,
-          ease: "none",
-          scrollTrigger: {
-            trigger: panel,
-            start: "bottom bottom",
-            end: "bottom top",
-            scrub: true,
-          },
-        });
-      });
-    },
-  },
 };
 </script>
 
@@ -183,7 +112,7 @@ export default {
 
   .panels {
     width: 100%;
-
+    height: 100vh;
     .panel {
       width: 100%;
       height: 100vh;
@@ -196,7 +125,7 @@ export default {
         position: absolute;
         width: 70vw;
         text-align: left;
-        z-index: 2;
+        z-index: 1;
 
         .serial-number {
           font-size: 10rem;

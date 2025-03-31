@@ -18,7 +18,7 @@
           </h1>
           <button class="cta-button" @click="scrollToPanel">Learn More</button>
         </div>
-        <span class="tint"></span>
+        <!-- <span class="tint"></span> -->
         <div class="picture-album-background">
           <img :src="album.cover" :alt="album.name" />
         </div>
@@ -126,6 +126,7 @@ export default {
     },
     selectAlbum(index) {
       this.switchPanel(index);
+      //   this.currentIndex = index;
       this.currentHoverIndex = null;
     },
     handleWheel(event) {
@@ -152,12 +153,14 @@ export default {
         ease: "power2.inOut",
         scrollTo: {
           y: targetPosition,
+          //   y: `#panel-${newIndex}`,
           autoKill: false,
         },
         onComplete: () => (this.isScrolling = false),
       });
     },
     initScrollTriggers() {
+      // const panels = document.querySelector('.panels')
       const sections = gsap.utils.toArray(".panel");
 
       sections.forEach((panel) => {
@@ -173,6 +176,23 @@ export default {
         });
       });
     },
+
+    // handleScrollChange(index) {
+    //   if (index >= 0 && index < this.pictureAlbums.length) {
+    //     this.currentIndex = index;
+    //   }
+    // },
+
+    // scrollToPanel() {
+    //   gsap.to(window, {
+    //     duration: 1,
+    //     ease: "none",
+    //     scrollTo: {
+    //       y: "#panel-2",
+    //       autoKill: false,
+    //     },
+    //   });
+    // },
   },
 };
 </script>
@@ -196,7 +216,7 @@ export default {
         position: absolute;
         width: 70vw;
         text-align: left;
-        z-index: 2;
+        z-index: 1;
 
         .serial-number {
           font-size: 10rem;
