@@ -338,7 +338,7 @@ export default {
       bottom: 0;
       height: 100%;
       background: rgba(255, 255, 255, 0.2);
-      border-radius: 8px 8px 0 0;
+      border-radius: 1rem 1rem 0 0;
       z-index: -1;
       transition-property: left, width;
       display: flex;

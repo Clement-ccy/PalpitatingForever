@@ -1,14 +1,14 @@
 <template>
     <div class="marquee">
-                <div class="marquee-inner">
-                    <!-- 原始内容翻倍实现无缝衔接 -->
-                    <span>My Works</span>
-                    <span>My Works</span>
-                    <span>My Works</span>
-                    <span>My Works</span>
-                    <span>My Works</span>
-                </div>
-            </div>
+        <div class="marquee-inner">
+            <!-- 原始内容翻倍实现无缝衔接 -->
+            <span>My Works</span>
+            <span>My Works</span>
+            <span>My Works</span>
+            <span>My Works</span>
+            <span>My Works</span>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -93,9 +93,11 @@ const switchDirection = (isDown) => {
 onMounted(() => {
     setupMarquee()
     window.addEventListener('scroll', handleScroll)
+    console.log('Marquee component mounted')
 })
 
 onBeforeUnmount(() => {
+    console.log('Marquee component unmounted')
     window.removeEventListener('scroll', handleScroll)
     forwardAnim?.kill()
     backwardAnim?.kill()
@@ -127,6 +129,6 @@ onBeforeUnmount(() => {
 .marquee-inner {
     display: inline-flex;
     transform: translateX(-50%);
-    transform: translate3d(0,0,0);
+    transform: translate3d(0, 0, 0);
 }
 </style>

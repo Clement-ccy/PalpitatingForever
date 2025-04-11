@@ -1,11 +1,19 @@
 /* semantic color variables and font variables for this project */
 :root {
+  /* Background Colors */
   --c-background: #fff;
   --bg-secondary: #ffffff;
 
+  /* Border Settings */
   --c-border: rgba(0, 0, 0, 0.1);
   --color-border-hover: rgba(0, 0, 0, 0.2);
 
+  --shadow: 0 0 0 1px rgba(0, 0, 0, 0.1), 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-hover: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 4px 8px rgba(0, 0, 0, 0.2);
+
+  /* Text Font */
+  
+  /* Text Colors */
   --c-text-selected: rgba(0, 0, 0, 0.9);
   --c-text-transparent: rgba(0, 0, 0, 0.2);
 

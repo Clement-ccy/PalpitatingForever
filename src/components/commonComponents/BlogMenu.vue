@@ -55,7 +55,7 @@ export default {
 .nav-left {
     display: flex;
     align-items: center;
-    padding: 2rem 4rem;
+    padding: 2rem 6rem;
     gap: 3rem;
 }
 
