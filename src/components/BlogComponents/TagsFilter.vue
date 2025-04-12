@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, watchEffect } from 'vue'
+import { ref, watchEffect } from 'vue'
 
 const props = defineProps({
   modelValue: {

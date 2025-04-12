@@ -3,7 +3,7 @@
   /* Background Colors */
   --c-background: #fff;
   --bg-secondary: #ffffff;
-
+  --c-background-dark:#181717;
   /* Border Settings */
   --c-border: rgba(0, 0, 0, 0.1);
   --color-border-hover: rgba(0, 0, 0, 0.2);

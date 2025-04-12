@@ -3,13 +3,8 @@
   <section class="recent-preview">
     <!-- 图片容器 -->
     <div class="panels">
-      <div
-        v-for="(album, index) in pictureAlbums"
-        :key="index"
-        class="panel"
-        :class="['panel-' + index, { active: currentIndex === index }]"
-        :id="'panel-' + index"
-      >
+      <div v-for="(album, index) in pictureAlbums" :key="index" class="panel"
+        :class="['panel-' + index, { active: currentIndex === index }]" :id="'panel-' + index">
         <div class="clip">
           <div class="serial-number">0{{ index + 1 }}</div>
           <h1 class="main-title">
@@ -30,15 +25,9 @@
     </div>
 
     <div class="picture-album-preview">
-      <div
-        v-for="(pictureAlbum, index) in pictureAlbums"
-        :key="index"
-        class="picture-album-item"
-        :style="{ '--delay': index * 0.1 + 's' }"
-        @mouseenter="handleHover(index)"
-        @mouseleave="handleHover(null)"
-        @click="selectAlbum(index)"
-      >
+      <div v-for="(pictureAlbum, index) in pictureAlbums" :key="index" class="picture-album-item"
+        :style="{ '--delay': index * 0.1 + 's' }" @mouseenter="handleHover(index)" @mouseleave="handleHover(null)"
+        @click="emitSelectAlbum(index)">
         <div class="item-container" :class="{ active: currentIndex === index }">
           <div class="picture-album-cover">
             <img :src="pictureAlbum.cover" :alt="pictureAlbum.name" />
@@ -64,49 +53,25 @@ import { ScrollTrigger, ScrollToPlugin } from "gsap/all";
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
 export default {
+  props: { // 添加 props 定义
+    pictureAlbums: {
+      type: Array,
+      required: true,
+      default: () => [] // 提供一个默认值以防万一，虽然 required: true
+    }
+  },
   data() {
     return {
       currentIndex: 0,
       currentHoverIndex: null,
       isScrolling: false,
-      pictureAlbums: [
-        {
-          name: "Cuffs of Mother",
-          cover: "src/assets/images/adventure-bg0.jpg",
-          type: "Scenery",
-          location: "(Indians)",
-          time: "2025.03.27",
-        },
-        {
-          name: "The Verdon",
-          cover: "src/assets/images/adventure-bg1.jpg",
-          type: "Scenery",
-          location: "(France)",
-          time: "2025.03.27",
-        },
-        {
-          name: "Gorge",
-          cover: "src/assets/images/adventure-bg2.jpg",
-          type: "Scenery",
-          location: "(France)",
-          time: "2025.03.27",
-        },
-        {
-          name: "The Dolomites",
-          cover: "src/assets/images/adventure-bg3.jpg",
-          type: "Scenery",
-          location: "(Reb)",
-          time: "2025.03.27",
-        },
-      ],
     };
   },
   mounted() {
     this.initScrollTriggers();
-    window.addEventListener("wheel", this.handleWheel, { passive: false });
   },
   beforeUnmount() {
-    window.removeEventListener("wheel", this.handleWheel);
+    ScrollTrigger.getAll().forEach(trigger => trigger.kill());
   },
   computed: {
     selectorStyle() {
@@ -124,40 +89,45 @@ export default {
     handleHover(index) {
       this.currentHoverIndex = index;
     },
-    selectAlbum(index) {
-      this.switchPanel(index);
-      this.currentHoverIndex = null;
+    emitSelectAlbum(index) { // 新增方法用于触发事件
+      this.$emit('select-album', index);
     },
-    handleWheel(event) {
-      event.preventDefault();
-      if (this.isScrolling) return;
-
-      const delta = Math.sign(event.deltaY);
-      const newIndex = this.currentIndex + (delta > 0 ? 1 : -1);
-      this.switchPanel(newIndex);
-    },
-    switchPanel(newIndex) {
-      newIndex = Math.max(0, Math.min(newIndex, this.pictureAlbums.length - 1));
-      if (newIndex === this.currentIndex) return;
+    switchPanel(newIndex) { // 此方法现在由父组件调用
+      // 边界检查由父组件完成，这里直接使用传入的 newIndex
+      if (this.isScrolling) return; // 防止重复触发或在动画中触发(newIndex === this.currentIndex ||)
 
       this.isScrolling = true;
-      this.currentIndex = newIndex;
+      this.currentIndex = newIndex; // 更新内部状态以驱动UI
 
-      // 使用动态计算位置的方式
-      const target = document.querySelector(`#panel-${newIndex}`);
-      const targetPosition = target.offsetTop;
+      // 使用 GSAP 滚动到目标面板
+      const target = document.querySelector(`#panel-${newIndex}`); // 确保 ID 选择器正确
+      if (!target) {
+        console.error(`Panel with id #panel-${newIndex} not found.`);
+        this.isScrolling = false;
+        return;
+      }
+      const targetPosition = target.offsetTop; // 获取目标面板的顶部位置
 
       gsap.to(window, {
-        duration: 1,
-        ease: "power2.inOut",
+        duration: 1, // 动画持续时间
+        ease: "power2.inOut", // 缓动效果
         scrollTo: {
-          y: targetPosition,
-          autoKill: false,
+          y: targetPosition, // 滚动到目标位置
+          autoKill: true, // 自动终止冲突的滚动动画
         },
-        onComplete: () => (this.isScrolling = false),
+        onComplete: () => {
+          this.isScrolling = false; // 动画完成后解除滚动锁定
+          this.$emit('animation-complete'); // 触发动画完成事件
+        },
+        onInterrupt: () => {
+          // 如果动画被中断（例如用户快速滚动），也需要考虑解除锁定
+          // 但为了防止与父组件的 isScrolling 冲突，暂时不在子组件处理中断
+          // this.isScrolling = false;
+        }
       });
     },
     initScrollTriggers() {
+      // 这个方法设置的是每个 panel 内部元素的视差滚动效果，与主滚动切换逻辑关系不大，可以保留
       const sections = gsap.utils.toArray(".panel");
 
       sections.forEach((panel) => {

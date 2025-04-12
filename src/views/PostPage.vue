@@ -15,7 +15,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { getPage } from '@/api/notion'
+import { getPage } from '@/utils/notion'
 import NotionRenderer from '@/components/BlogComponents/NotionRenderer.vue'
 
 const route = useRoute()
