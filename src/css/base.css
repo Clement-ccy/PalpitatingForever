@@ -42,8 +42,8 @@ body {
   font-family:
     Montserrat,
     sans-serif;
-  /* font-size: 16px; */
-  font-size: 1.7361111111vw;
+  font-size: 16px;
+  /* font-size: 1.7361111111vw; */
   font-weight: 400;
   letter-spacing: -.025em;
   text-rendering: optimizeLegibility;

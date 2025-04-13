@@ -15,7 +15,7 @@
         </div>
         <span class="tint"></span>
         <div class="picture-album-background">
-          <img :src="album.cover" :alt="album.name" />
+          <img :src="album.cover" :alt="album.name"/>
         </div>
         <span class="note">
           <span class="activeSlide">{{ index + 1 }}</span> /

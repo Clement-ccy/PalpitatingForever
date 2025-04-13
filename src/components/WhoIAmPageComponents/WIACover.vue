@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import marqueeComponent from "@/components/basicComponents/marqueeComponent.vue"
+import marqueeComponent from "@/components/StaticComponents/marqueeComponent.vue"
 import gsap from 'gsap'
 // import { Flip } from 'gsap/Flip'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'

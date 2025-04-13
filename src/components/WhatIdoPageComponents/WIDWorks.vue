@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import marqueeComponent from '../basicComponents/marqueeComponent.vue'
+import marqueeComponent from '@/components/StaticComponents/marqueeComponent.vue'
 
 export default {
     components: {

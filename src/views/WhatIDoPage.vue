@@ -28,7 +28,7 @@ import WIDAwards from '@/components/WhatIdoPageComponents/WIDAwards.vue';
 // 插件引入
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { SplitText } from '@/js/splitText';
+import { SplitText } from '@/utils/splitText';
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 export default {

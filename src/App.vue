@@ -20,6 +20,7 @@
     @changeMenu="navigateTo"
   />
   <BlogMenu v-if="showMenu && menuType === 'blog'" />
+  <MusicPlayer></MusicPlayer>
 </template>
 
 <script>
@@ -28,11 +29,12 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 // import Lenis from "lenis";
 
-import PageFooter from "./components/commonComponents/PageFooter.vue";
-import PageHeader from "./components/commonComponents/PageHeader.vue";
-import PageLoader from "./components/commonComponents/PageLoader.vue";
-import PageMenu from "./components/commonComponents/PageMenu.vue";
-import BlogMenu from "./components/commonComponents/BlogMenu.vue";
+import PageFooter from "@/components/AppComponents/PageFooter.vue";
+import PageHeader from "./components/AppComponents/PageHeader.vue";
+import PageLoader from "./components/AppComponents/PageLoader.vue";
+import PageMenu from "./components/AppComponents/PageMenu.vue";
+import BlogMenu from "./components/AppComponents/BlogMenu.vue";
+import MusicPlayer from "./components/AppComponents/MusicPlayer.vue";
 
 export default {
   components: {
@@ -41,6 +43,7 @@ export default {
     PageMenu,
     PageFooter,
     BlogMenu,
+    MusicPlayer,
   },
   watch: {
     $route(to, from) {
