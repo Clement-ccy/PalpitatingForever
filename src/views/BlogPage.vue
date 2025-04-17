@@ -8,91 +8,43 @@
 
     <!-- 中间内容区域 -->
     <main class="blog-content">
-      <SearchFilter class="search-bar" />
-      <div class="post-list">
+      <!-- <SearchFilter class="search-bar" /> -->
+      <div class="post-list" v-if="!isLoading && !error">
         <article v-for="post in filteredPosts" :key="post.id" class="post-item">
-          <div class="post-image" :style="{ backgroundImage: `url(${getRandomCover()})` }"></div>
+          <div class="post-image" :style="{ backgroundImage: `url(${post.coverImage})` }"></div>
           <div class="post-content">
             <h3>{{ post.title }}</h3>
             <p class="excerpt">{{ post.excerpt }}</p>
             <div class="meta">
-              <time>{{ post.date }}</time>
+              <time>{{ formatDate(post.lastEditedTime) }}</time> <!-- Added formatting -->
               <span class="tags">{{ post.tags.join(', ') }}</span>
             </div>
           </div>
         </article>
       </div>
+      <div v-else-if="isLoading" class="loading">Loading...</div>
+      <div v-else class="error">{{ error }}</div>
     </main>
   </section>
 </template>
 
 <script>
-import CardProfile from '@/components/BlogComponents/CardProfile.vue'
-import SearchFilter from '@/components/BlogComponents/SearchFilter.vue'
-import TagsFilter from '@/components/BlogComponents/TagsFilter.vue'
+import CardProfile from '@/components/BlogComponents/CardProfile.vue';
+import TagsFilter from '@/components/BlogComponents/TagsFilter.vue';
+import { queryBlogsDatabase } from '@/utils/notion.js'; // Import the notion utility
 
 export default {
   components: {
-    SearchFilter,
     TagsFilter,
     CardProfile
   },
   data() {
     return {
-      posts: [
-        {
-          id: 1,
-          title: 'Vue3组合式API实践',
-          excerpt: '探索Vue3组合式API在大型项目中的应用...',
-          date: '2025-03-15',
-          tags: ['Vue', '前端工程']
-        },
-        {
-          id: 2,
-          title: 'Vue3组合式API实践',
-          excerpt: '探索Vue3组合式API在大型项目中的应用...',
-          date: '2025-03-15',
-          tags: ['Vue', '前端工程']
-        },
-        {
-          id: 3,
-          title: 'Vue3组合式API实践',
-          excerpt: '探索Vue3组合式API在大型项目中的应用...',
-          date: '2025-03-15',
-          tags: ['Vue', '前端工程']
-        },
-        {
-          id: 4,
-          title: 'Vue3组合式API实践',
-          excerpt: '探索Vue3组合式API在大型项目中的应用...',
-          date: '2025-03-15',
-          tags: ['Vue', '前端工程']
-        },
-        {
-          id: 5,
-          title: 'Vue3组合式API实践',
-          excerpt: '探索Vue3组合式API在大型项目中的应用...',
-          date: '2025-03-15',
-          tags: ['Vue', '前端工程']
-        },
-        {
-          id: 6,
-          title: 'Vue3组合式API实践',
-          excerpt: '探索Vue3组合式API在大型项目中的应用...',
-          date: '2025-03-15',
-          tags: ['Vue', '前端工程']
-        },
-        {
-          id: 7,
-          title: 'Vue3组合式API实践',
-          excerpt: '探索Vue3组合式API在大型项目中的应用...',
-          date: '2025-03-15',
-          tags: ['Vue', '前端工程']
-        },
-        // 更多文章...
-      ],
-      allTags: ['Vue', 'JavaScript', 'CSS', '动画', '性能优化'],
-      selectedTags: []
+      posts: [], // Initialize posts as empty
+      allTags: [], // Will be populated dynamically
+      selectedTags: [],
+      isLoading: true, // Add a loading state
+      error: null // Add an error state
     }
   },
   computed: {
@@ -103,24 +55,34 @@ export default {
       )
     }
   },
+  async mounted() { // Make mounted async
+    this.isLoading = true;
+    this.error = null;
+    try {
+      // Fetch data using the utility function
+      const blogPosts = await queryBlogsDatabase();
+      console.log('Notion Response in Component:', blogPosts);
+      this.posts = blogPosts;
+      // Dynamically generate allTags from fetched posts
+      const tagsSet = new Set(this.posts.flatMap(post => post.tags || [])); // Use flatMap and handle potential missing tags
+      this.allTags = [...tagsSet]; // Convert Set to array and sort alphabetically
+    } catch (err) {
+      console.error('Error fetching or processing Notion data:', err);
+      this.error = 'Failed to load blog posts.';
+    } finally {
+      this.isLoading = false;
+    }
+  },
   methods: {
+    // Add a date formatting method
+    formatDate(dateString) {
+      if (!dateString) return '';
+      const options = { year: 'numeric', month: 'long', day: 'numeric' };
+      return new Date(dateString).toLocaleDateString(undefined, options);
+    },
     handleFilter(selectedTags) {
       this.selectedTags = selectedTags;
     },
-    getRandomCover() {
-      const covers = [
-        '/src/assets/images/cover-1.jpg',
-        '/src/assets/images/cover-2.jpg',
-        '/src/assets/images/cover-3.jpg',
-        '/src/assets/images/cover-4.jpg',
-        '/src/assets/images/cover-5.jpg',
-        '/src/assets/images/cover-6.jpg',
-        '/src/assets/images/cover-7.jpg',
-        '/src/assets/images/cover-8.jpg',
-        '/src/assets/images/cover-9.jpg'
-      ];
-      return covers[Math.floor(Math.random() * covers.length)];
-    }
   }
 }
 </script>

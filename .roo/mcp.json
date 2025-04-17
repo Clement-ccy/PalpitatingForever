@@ -1,3 +1,27 @@
 {
-  "mcpServers": {}
+  "mcpServers": {
+    "notionApi": {
+      "command": "node",
+      "args": ["c:\\Users\\PalpitatingForever\\AppData\\Roaming\\npm\\node_modules\\@notionhq\\notion-mcp-server\\bin\\cli.mjs"],
+      "env": {
+        "OPENAPI_MCP_HEADERS": "{\"Authorization\": \"Bearer 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\", \"Notion-Version\": \"2022-06-28\"}"
+      }
+    },
+    "mcp-installer": {
+      "command": "node",
+      "args": ["c:\\Users\\PalpitatingForever\\AppData\\Roaming\\npm\\node_modules\\@anaisbetts\\mcp-installer\\lib\\index.mjs"],
+      "transportType": "stdio"
+    },
+    "filesystem": {
+      "autoApprove": [],
+      "disabled": false,
+      "timeout": 60,
+      "command": "node",
+      "args": [
+        "c:\\Users\\PalpitatingForever\\AppData\\Roaming\\npm\\node_modules\\@modelcontextprotocol\\server-filesystem\\dist\\index.js",
+        "D:\\Repo\\FrontEnd\\PalpitatingForever"
+      ],
+      "transportType": "stdio"
+    }
+  }
 }

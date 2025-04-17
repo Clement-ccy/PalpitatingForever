@@ -1,21 +1,10 @@
 import { createWebHistory, createRouter } from "vue-router";
-// import { createMemoryHistory, createRouter } from 'vue-router'
-import NotFound from "@/views/NotFound.vue";
-import TempPage from "@/views/TempPage.vue";
-import WhatIDoPage from "@/views/WhatIDoPage.vue";
-import WhoIAmPage from "@/views/WhoIAmPage.vue";
-import BlogPage from "@/views/BlogPage.vue";
-import StyleGuide from "@/views/StyleGuide.vue";
-import PostPage from "@/views/PostPage.vue";
-import PhotographPage from "@/views/PhotographPage.vue";
-import MusicPage from "@/views/MusicPage.vue";
 
 const routes = [
   // 将匹配所有内容并将其放在 `$route.params.pathMatch` 下
   {
     path: "/:pathMatch(.*)*",
-    component: NotFound,
-    // component: () => import('@/components/NotFound.vue')
+    component: () => import('@/views/NotFound.vue')
   },
   {
     path: "/",
@@ -23,61 +12,55 @@ const routes = [
   },
   {
     path: "/whatido",
-    component: WhatIDoPage,
+    component: () => import("@/views/WhatIDoPage.vue"),
     meta: {
       belongsTo: "profile",
       menuPosition: 0,
     },
-    // component: () => import('@/views/TempPage.vue')
   },
   {
     path: "/whoiam",
-    component: WhoIAmPage,
+    component: () => import("@/views/WhoIAmPage.vue"),
     meta: {
       belongsTo: "profile",
       menuPosition: 1,
     },
-    // component: () => import('@/views/WhoIAmPage.vue')
   },
   {
     path: "/blog",
-    component: BlogPage,
+    component: () => import("@/views/BlogPage.vue"),
     meta: {
       belongsTo: "blog",
       menuPosition: 0,
     },
-    // component: () => import('@/views/BlogPage.vue')
   },
   {
     path: "/photograph",
-    component: PhotographPage,
+    component: () => import("@/views/PhotographPage.vue"),
     meta: {
       belongsTo: "blog",
       menuPosition: 1,
     },
-    // component: () => import('@/views/BlogPage.vue')
   },
   {
     path: "/music",
-    component: MusicPage,
+    component: () => import("@/views/MusicPage.vue"),
     meta: {
       belongsTo: "blog",
       menuPosition: 2,
     },
-    // component: () => import('@/views/BlogPage.vue')
   },
   {
     path: "/styleguide",
-    component: StyleGuide,
-    // component: () => import('@/components/StyleGuide.vue')
+    component: () => import("@/views/StyleGuide.vue"),
   },
   {
-    path: "/blogs/:id",
-    component: PostPage,
+    path: "/blog/:id",
+    component: () => import("@/views/PostPage.vue"),
   },
   {
     path: "/test",
-    component: TempPage,
+    component: () => import("@/views/TempPage.vue"),
   },
 ];
 

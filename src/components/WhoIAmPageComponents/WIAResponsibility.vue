@@ -261,7 +261,7 @@ export default {
     height: 100%;
     pointer-events: none;
     z-index: -1;
-    background: url('@/src/assets/images/pieces.png');
+    background: url('@/assets/images/pieces.png');
     animation: float 40s linear infinite;
 }
 

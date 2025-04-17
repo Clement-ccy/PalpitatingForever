@@ -28,7 +28,7 @@ const props = defineProps({
   }
 })
 
-const emit = defineEmits(['update:modelValue'])
+const emit = defineEmits(['filter']) // Changed event name
 const selectedTags = ref([...props.modelValue])
 
 const toggleTag = (tag) => {
@@ -38,7 +38,7 @@ const toggleTag = (tag) => {
   } else {
     selectedTags.value.push(tag)
   }
-  emit('update:modelValue', selectedTags.value)
+  emit('filter', selectedTags.value) // Emit 'filter' event
 }
 
 watchEffect(() => {
