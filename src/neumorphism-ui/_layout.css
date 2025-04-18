@@ -1,0 +1,20 @@
+/* neumorphism-ui/_layout.css */
+@import './_variables.css';
+
+/* Basic container */
+.neum-container {
+  width: 90%;
+  max-width: 1200px; /* Example max-width */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Page Layering Notes:
+   - Background Layer: Defined by body background in _base.css
+   - Panel Layer: Styles defined in _panel.css (e.g., .neum-panel)
+   - Content Layer: Standard elements styled in _typography.css, _components/* etc.
+   - Overlay Layer: Styles defined in _glassmorphism.css (e.g., .glass-overlay)
+   Layering is primarily controlled by background, box-shadow, and potentially z-index.
+*/

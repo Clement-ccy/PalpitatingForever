@@ -4,7 +4,7 @@
       <button 
         v-for="tag in availableTags" 
         :key="tag"
-        class="tag-item"
+        class="tag-item neum-button"
         :class="{ 'active': selectedTags.includes(tag) }"
         @click="toggleTag(tag)"
       >
@@ -58,24 +58,26 @@ watchEffect(() => {
 }
 
 .tag-item {
-  padding: 0.5rem 1rem;
-  border: 1px solid #e5e7eb;
-  border-radius: 2rem;
-  background: white;
-  color: #6b7280;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  /* padding handled by neum-button, adjust if needed */
+  /* border handled by neum-button shadow */
+  /* border-radius handled by neum-button */
+  /* background handled by neum-button */
+  /* color handled by neum-button */
+  /* cursor handled by neum-button */
+  /* transition handled by neum-button */
 }
 
-.tag-item:hover {
-  background: #f3f4f6;
-  transform: translateY(-1px);
-}
+/* Remove hover style - handled by neum-button */
+/* .tag-item:hover { ... } */
 
 .tag-item.active {
-  background: #3b82f6;
-  color: white;
-  border-color: #3b82f6;
+  /* Apply inset shadow like neum-button:active */
+  box-shadow:
+    inset var(--positionX) var(--positionY) var(--blur) var(--darkColor),
+    inset var(--positionXOpposite) var(--positionYOpposite) var(--blur) var(--lightColor);
+  color: var(--textEmphasis); /* Ensure text color is still readable */
+  /* Remove background/border overrides */
+  background: var(--baseColor); /* Ensure background matches */
 }
 
 .tag-fade-move,

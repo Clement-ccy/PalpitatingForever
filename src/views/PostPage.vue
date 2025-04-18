@@ -1,5 +1,5 @@
 <template>
-    <section class="post-container">
+    <section class="post-container neum-panel">
         <div v-if="isLoading">Loading post...</div>
         <div v-else-if="error" class="error-message">
             Failed to load post: {{ error.message }}
@@ -9,7 +9,7 @@
             <div class="meta">
                 <span>{{ formattedDate }}</span>
                 <div class="tags" v-if="postData.tags && postData.tags.length">
-                    <span v-for="tag in postData.tags" :key="tag" class="tag">{{ tag }}</span>
+                    <span v-for="tag in postData.tags" :key="tag" class="tag neum-button">{{ tag }}</span>
                 </div>
             </div>
 
@@ -76,9 +76,9 @@ onMounted(async () => {
 
 <style scoped>
 .post-container {
-    max-width: 800px;
-    margin: 2rem auto;
-    padding: 1rem;
+    max-width: 800px; /* Keep max-width */
+    margin: 2rem auto; /* Keep margin */
+    /* Remove padding - handled by neum-panel */
 }
 
 .meta {
@@ -96,10 +96,10 @@ onMounted(async () => {
 }
 
 .tag {
-    background-color: #eee;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-    font-size: 0.8em;
+    /* Remove background, padding, radius - handled by neum-button */
+    font-size: 0.8em; /* Keep font-size adjustment */
+    /* Adjust neum-button padding if needed via specificity or new class */
+    /* Example: padding: 0.1em 0.4em; */
 }
 
 .error-message {

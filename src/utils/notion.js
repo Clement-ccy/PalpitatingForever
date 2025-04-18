@@ -176,6 +176,7 @@ async function queryBlogsDatabase() {
         let hasMore = true;
         let nextCursor = null;
         const databaseId = import.meta.env.VITE_NOTION_BLOGS_DATABASE_ID; // Use correct variable name
+        console.log(import.meta.env);
         if (!databaseId) {
             console.error('Error: VITE_NOTION_BLOGS_DATABASE_ID environment variable is not set.');
             return [];
@@ -186,8 +187,9 @@ async function queryBlogsDatabase() {
             const response = await fetch(`/notion-api/v1/databases/${databaseId}/query`, {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${import.meta.env.VITE_NOTION_APIKEY}`,
+                    'Notion-Version': '2022-06-28',
                     'Content-Type': 'application/json',
-                    'Notion-Version': '2022-06-28'
                 },
                 body: nextCursor ? JSON.stringify({ start_cursor: nextCursor }) : JSON.stringify({})
             });
@@ -233,8 +235,9 @@ async function queryWorksDatabase() {
             const response = await fetch(`/notion-api/v1/databases/${databaseId}/query`, {
                 method: 'POST',
                 headers: {
+                    'Authorization': `Bearer ${import.meta.env.VITE_NOTION_APIKEY}`,
+                    'Notion-Version': '2022-06-28',
                     'Content-Type': 'application/json',
-                    'Notion-Version': '2022-06-28'
                 },
                 body: nextCursor ? JSON.stringify({ start_cursor: nextCursor }) : JSON.stringify({})
             });
@@ -285,8 +288,9 @@ async function queryPageBlocks(blockId) {
             const response = await fetch(apiUrl, {
                 method: 'GET',
                 headers: {
+                    'Authorization': `Bearer ${import.meta.env.VITE_NOTION_APIKEY}`,
+                    'Notion-Version': '2022-06-28',
                     'Content-Type': 'application/json',
-                    'Notion-Version': '2022-06-28'
                 }
             });
 
@@ -317,44 +321,43 @@ async function queryPageBlocks(blockId) {
 * @returns {BlogPost} - 返回包含页面数据的 Promise 对象，如果出错则返回 null。原始页面对象将直接从 API 返回。
 */
 async function retrieveBlogPage(pageId) {
-   if (!pageId) {
-       console.error('Error: pageId is required for retrievePage.');
-       return null;
-   }
+    if (!pageId) {
+        console.error('Error: pageId is required for retrievePage.');
+        return null;
+    }
 
-   try {
-       console.log(`Notion API is called to retrieve page data for page ID: ${pageId}...`);
-       const apiUrl = `/notion-api/v1/pages/${pageId}`;
+    try {
+        console.log(`Notion API is called to retrieve page data for page ID: ${pageId}...`);
+        const apiUrl = `/notion-api/v1/pages/${pageId}`;
+        const response = await fetch(apiUrl, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${import.meta.env.VITE_NOTION_APIKEY}`,
+                'Notion-Version': '2022-06-28',
+                'Content-Type': 'application/json',
+            }
+        });
 
-       const response = await fetch(apiUrl, {
-           method: 'GET',
-           headers: {
-               'Content-Type': 'application/json',
-               'Notion-Version': '2022-06-28'
-               // 通常获取页面不需要 Authorization，除非你的代理需要
-           }
-       });
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error(`Error fetching Notion page data for ${pageId}:`, response.status, errorData);
+            // 对于 404 Not Found，可能需要特殊处理或仅记录日志而不是抛出错误
+            if (response.status === 404) {
+                console.warn(`Page with ID ${pageId} not found.`);
+                return null;
+            }
+            throw new Error(`Notion API Error (Page Retrieve): ${response.status} - ${errorData.message || 'Unknown error'}`);
+        }
 
-       if (!response.ok) {
-           const errorData = await response.json();
-           console.error(`Error fetching Notion page data for ${pageId}:`, response.status, errorData);
-           // 对于 404 Not Found，可能需要特殊处理或仅记录日志而不是抛出错误
-           if (response.status === 404) {
-               console.warn(`Page with ID ${pageId} not found.`);
-               return null;
-           }
-           throw new Error(`Notion API Error (Page Retrieve): ${response.status} - ${errorData.message || 'Unknown error'}`);
-       }
+        const pageData = await response.json();
+        const processedBlogPage = processPageProperties(pageData); // 处理页面属性
+        console.log(`Successfully retrieved data for page ID ${pageId}.`);
+        return processedBlogPage; // 返回完整的页面对象
 
-       const pageData = await response.json();
-       const processedBlogPage = processPageProperties(pageData); // 处理页面属性
-       console.log(`Successfully retrieved data for page ID ${pageId}.`);
-       return processedBlogPage; // 返回完整的页面对象
-
-   } catch (error) {
-       console.error(`Error in retrievePage for page ID ${pageId}:`, error);
-       return null; // 返回 null 表示失败
-   }
+    } catch (error) {
+        console.error(`Error in retrievePage for page ID ${pageId}:`, error);
+        return null; // 返回 null 表示失败
+    }
 }
 
 // Export all functions at the end

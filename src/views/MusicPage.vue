@@ -10,7 +10,7 @@
       >
         <div class="cover-container">
           <img
-            :src="`src/assets/images/${album.cover}`"
+            :src="`@/assets/images/${album.cover}`"
             :alt="album.title"
             class="album-cover"
           />

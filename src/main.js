@@ -1,4 +1,5 @@
-import './css/main.css'
+// import './css/main.css' // Comment out or remove old CSS
+import './neumorphism-ui/neumorphism.css' // Import the new Neumorphism UI library
 import 'lenis/dist/lenis.css'
 import router from './utils/router'
 import { createApp } from 'vue'

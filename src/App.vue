@@ -21,6 +21,7 @@
   />
   <BlogMenu v-if="showMenu && menuType === 'blog'" />
   <MusicPlayer></MusicPlayer>
+  <ThemeController /> <!-- Add the theme controller component -->
 </template>
 
 <script>
@@ -35,6 +36,7 @@ import PageLoader from "./components/AppComponents/PageLoader.vue";
 import PageMenu from "./components/AppComponents/PageMenu.vue";
 import BlogMenu from "./components/AppComponents/BlogMenu.vue";
 import MusicPlayer from "./components/AppComponents/MusicPlayer.vue";
+import ThemeController from "./components/ThemeController.vue"; // Import the new component
 
 export default {
   components: {
@@ -44,6 +46,7 @@ export default {
     PageFooter,
     BlogMenu,
     MusicPlayer,
+    ThemeController, // Register the new component
   },
   watch: {
     $route(to, from) {

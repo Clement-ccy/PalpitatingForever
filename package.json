@@ -10,7 +10,6 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
-    "dotenv": "^16.4.7",
     "gsap": "^3.12.5",
     "highlight.js": "^11.11.1",
     "katex": "^0.16.22",

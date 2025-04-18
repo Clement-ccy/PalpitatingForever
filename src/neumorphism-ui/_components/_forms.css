@@ -1,0 +1,56 @@
+/* neumorphism-ui/_components/_forms.css */
+@import '../_variables.css';
+
+/* Base Neumorphism Input Style (Inset) */
+.neum-input {
+  display: block;
+  width: 100%;
+  padding: 0.8em 1.2em;
+  border-radius: var(--radius); /* Use new radius variable */
+  background: var(--baseColor); /* Use theme base color */
+  color: var(--textNormal); /* Use theme text color */
+  font-family: var(--neum-font-family);
+  transition: box-shadow var(--neum-transition-speed) ease;
+
+  /* Default Inset Shadow using new variables */
+  /* Using slightly smaller distance/blur for inputs */
+  box-shadow:
+    inset calc(var(--positionX) * 0.8) calc(var(--positionY) * 0.8) calc(var(--blur) * 0.8) var(--darkColor),
+    inset calc(var(--positionXOpposite) * 0.8) calc(var(--positionYOpposite) * 0.8) calc(var(--blur) * 0.8) var(--lightColor);
+}
+
+/* Focus State (Subtle change) */
+.neum-input:focus {
+  outline: none;
+  /* Slightly deeper inset */
+   box-shadow:
+    inset var(--positionX) var(--positionY) var(--blur) var(--darkColor),
+    inset var(--positionXOpposite) var(--positionYOpposite) var(--blur) var(--lightColor);
+}
+
+/* Placeholder Styles */
+.neum-input::placeholder {
+  color: var(--textSubdued); /* Use theme variable */
+  opacity: 0.8;
+}
+
+/* Disabled State */
+.neum-input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+   /* Flatter inset shadow */
+   box-shadow:
+    inset calc(var(--positionX) * 0.4) calc(var(--positionY) * 0.4) calc(var(--blur) * 0.4) var(--darkColor),
+    inset calc(var(--positionXOpposite) * 0.4) calc(var(--positionYOpposite) * 0.4) calc(var(--blur) * 0.4) var(--lightColor);
+}
+
+/* Basic Label Styling (Optional) */
+.neum-label {
+  display: block;
+  margin-bottom: 0.5em;
+  color: var(--textSubdued); /* Use theme variable */
+  font-size: 0.9em;
+  font-weight: 500;
+}
+
+/* Dark mode styles are now handled by the variable overrides in _variables.css */

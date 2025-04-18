@@ -1,10 +1,7 @@
 import { fileURLToPath, URL } from 'node:url'
 
 import { defineConfig } from 'vite'
-import dotenv from 'dotenv'
 import vue from '@vitejs/plugin-vue'
-
-dotenv.config()
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,12 +20,7 @@ export default defineConfig({
         target: 'https://api.notion.com',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/notion-api/, ''),
-        headers: {
-          'Authorization': `Bearer ${process.env.VITE_NOTION_KEY}`,
-          'Notion-Version': '2022-06-28',
-          'Content-Type': 'application/json'
-        }
-      }
+      },
     }
   }
 })

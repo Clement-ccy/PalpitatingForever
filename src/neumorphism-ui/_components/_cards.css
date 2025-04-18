@@ -1,0 +1,39 @@
+/* neumorphism-ui/_components/_cards.css */
+@import '../_variables.css';
+
+/* Base Neumorphism Card Style */
+.neum-card {
+  padding: 1.5em;
+  border-radius: var(--radius); /* Use new radius variable */
+  background: var(--baseColor); /* Use theme base color */
+  overflow: hidden;
+  transition: box-shadow var(--neum-transition-speed) ease;
+
+  /* Default Neumorphism Shadow (Convex/Raised - using new variables) */
+  /* Using slightly larger distance/blur for cards compared to buttons */
+  box-shadow:
+    calc(var(--positionX) * 1.2) calc(var(--positionY) * 1.2) calc(var(--blur) * 1.2) var(--darkColor),
+    calc(var(--positionXOpposite) * 1.2) calc(var(--positionYOpposite) * 1.2) calc(var(--blur) * 1.2) var(--lightColor);
+}
+
+/* Optional: Hover effect for cards (e.g., lift slightly more) */
+.neum-card:hover {
+   box-shadow:
+    calc(var(--positionX) * 1.5) calc(var(--positionY) * 1.5) calc(var(--blur) * 1.5) var(--darkColor),
+    calc(var(--positionXOpposite) * 1.5) calc(var(--positionYOpposite) * 1.5) calc(var(--blur) * 1.5) var(--lightColor);
+}
+
+/* Optional: Inset Card Style */
+.neum-card--inset {
+  box-shadow:
+    inset calc(var(--positionX) * 1.2) calc(var(--positionY) * 1.2) calc(var(--blur) * 1.2) var(--darkColor),
+    inset calc(var(--positionXOpposite) * 1.2) calc(var(--positionYOpposite) * 1.2) calc(var(--blur) * 1.2) var(--lightColor);
+}
+
+.neum-card--inset:hover {
+   box-shadow:
+    inset calc(var(--positionX) * 1.5) calc(var(--positionY) * 1.5) calc(var(--blur) * 1.5) var(--darkColor),
+    inset calc(var(--positionXOpposite) * 1.5) calc(var(--positionYOpposite) * 1.5) calc(var(--blur) * 1.5) var(--lightColor);
+}
+
+/* Dark mode styles are now handled by the variable overrides in _variables.css */

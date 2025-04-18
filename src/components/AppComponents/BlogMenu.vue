@@ -11,7 +11,7 @@
                     {{ item.text }}
                 </router-link>
             </div>
-            <label class="menu-toggle" for="menu">
+            <label class="menu-toggle neum-button" for="menu">
                 <svg t="1743072726418" class="icon" viewBox="0 0 1024 1024" version="1.1"
                     xmlns="http://www.w3.org/2000/svg" p-id="2646">
                     <path
@@ -68,11 +68,9 @@ export default {
 label.menu-toggle {
     position: relative;
     line-height: 0px;
-    display: block;
-    margin-left: 1rem;
-    padding: 2rem;
-    border-left: solid #fff 0.48px;
-    transition: background-color .48s cubic-bezier(.36, .33, 0, 1);
+    display: block; /* Keep display block */
+    margin-left: 1rem; /* Keep margin */
+    /* Remove padding, border, transition - handled by neum-button */
 
     .icon {
         width: 2rem;
@@ -80,9 +78,10 @@ label.menu-toggle {
     }
 }
 
-label.menu-toggle:hover {
+/* Remove hover style - handled by neum-button */
+/* label.menu-toggle:hover {
     background-color: #dddddd93;
-}
+} */
 
 .brand {
     font-size: 1.5rem;
