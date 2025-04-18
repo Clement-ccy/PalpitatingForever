@@ -4,7 +4,7 @@
             <marqueeComponent class="marquee-title"></marqueeComponent>
             <div class="gallery">
                 <div v-for="(_, index) in 9" :key="index" class="gallery-item" :data-index="index + 1">
-                    <img :src="`@/assets/images/cover-${index + 1}.jpg`" alt="Cover image" class="gallery-image" />
+                    <img :src="`/src/assets/images/cover-${index + 1}.jpg`" alt="Cover image" class="gallery-image" />
                 </div>
             </div>
         </div>
@@ -14,7 +14,6 @@
 <script>
 import marqueeComponent from "@/components/StaticComponents/marqueeComponent.vue"
 import gsap from 'gsap'
-// import { Flip } from 'gsap/Flip'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 export default {

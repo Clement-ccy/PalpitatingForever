@@ -1,7 +1,7 @@
 <template>
   <section class="blog-container">
     <!-- 左侧个人信息栏 -->
-    <aside class="sidebar neum-panel--inset">
+    <aside class="sidebar">
       <CardProfile />
       <TagsFilter :availableTags="allTags" @filter="handleFilter" />
     </aside>
@@ -126,7 +126,6 @@ export default {
   grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   grid-auto-rows: minmax(300px, auto);
   grid-auto-flow: dense;
-  border-top: 1px solid #000;
   padding: 0.5rem;
   grid-gap: 0.5rem;
   .wide {

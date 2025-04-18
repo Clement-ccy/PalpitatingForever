@@ -14,52 +14,8 @@
   border: 1px solid rgba(255, 255, 255, 0.4); /* Light mode border */
 
   /* Optional: Subtle shadow to lift it slightly */
-   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
   /* Ensure text is readable */
   color: var(--textEmphasis); /* Use theme emphasis color */
-}
-
-/* Dark Mode Glassmorphism Adjustments */
-@media (prefers-color-scheme: dark) {
-  .glass-overlay {
-    /* Darker semi-transparent background */
-    background-color: rgba(50, 50, 53, 0.4); /* Dark mode base (adjust alpha) */
-    /* Darker border */
-    border: 1px solid rgba(67, 67, 71, 0.5); /* Dark mode border (adjust alpha) */
-     /* Dark mode shadow might need adjustment if desired */
-     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-  }
-}
-
-/* Optional: Class-based dark mode override */
-/*
-body.dark-mode .glass-overlay {
-  background-color: rgba(50, 50, 53, 0.4);
-  border: 1px solid rgba(67, 67, 71, 0.5);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-}
-*/
-
-/* Example Usage: Modal */
-.neum-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 1000; /* Ensure it's above other content */
-  min-width: 300px;
-  max-width: 80vw;
-}
-
-.neum-modal-backdrop {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.2); /* Dimmed background */
-  z-index: 999; /* Below modal, above content */
-  backdrop-filter: blur(2px); /* Optional slight blur on backdrop */
-  -webkit-backdrop-filter: blur(2px);
 }

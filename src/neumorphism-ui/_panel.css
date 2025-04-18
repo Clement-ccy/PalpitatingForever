@@ -1,31 +1,28 @@
 /* neumorphism-ui/_panel.css */
-@import './_variables.css';
+@import "./_variables.css";
 
-/* General Panel Style (Convex/Raised) */
+/* General Panel Style (Flat) */
 /* This can be used for general content areas, sidebars, etc. */
 .neum-panel {
-  padding: 1.5em 2em; /* Example padding */
   border-radius: var(--radius);
   background: var(--baseColor);
   transition: box-shadow var(--neum-transition-speed) ease;
 
   /* Default Convex Shadow */
-  box-shadow:
-    var(--positionX) var(--positionY) var(--blur) var(--darkColor),
-    var(--positionXOpposite) var(--positionYOpposite) var(--blur) var(--lightColor);
+  box-shadow: var(--positionX) var(--positionY) var(--blur) var(--darkColor),
+    var(--positionXOpposite) var(--positionYOpposite) var(--blur)
+      var(--lightColor);
 }
 
-/* Optional: Inset Panel Style (Concave/Pressed) */
+/* Optional: Inset Panel Style (Pressed) */
 .neum-panel--inset {
-  padding: 1.5em 2em;
   border-radius: var(--radius);
   background: var(--baseColor);
   transition: box-shadow var(--neum-transition-speed) ease;
 
   /* Inset Shadow */
-  box-shadow:
-    inset var(--positionX) var(--positionY) var(--blur) var(--darkColor),
-    inset var(--positionXOpposite) var(--positionYOpposite) var(--blur) var(--lightColor);
+  box-shadow: inset var(--positionX) var(--positionY) var(--blur)
+      var(--darkColor),
+    inset var(--positionXOpposite) var(--positionYOpposite) var(--blur)
+      var(--lightColor);
 }
-
-/* Dark mode styles are handled by variable overrides */

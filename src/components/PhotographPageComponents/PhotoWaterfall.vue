@@ -193,7 +193,7 @@ img {
 .photo-waterfall {
   padding-left: 6rem;
   padding-right: 6rem;
-  background: var(--c-background-dark);
+  background: var(--baseColor);
   padding-bottom: 0;
   color: white; /* 如果需要文字颜色 */
   min-height: 100vh; /* 保持最小高度 */

@@ -5,7 +5,7 @@
       <div
         v-for="(album, index) in albums"
         :key="index"
-        class="album-card"
+        class="album-card neum-card"
         @click="handlePlay(album)"
       >
         <div class="cover-container">
@@ -88,10 +88,8 @@ const handlePlay = (album) => {
 <style scoped>
 .music-container {
   position: relative;
-  max-width: 1440px;
   margin: 0 auto;
   display: flex;
-  justify-content: center;
   flex-direction: column;
   align-items: center;
 }
@@ -107,18 +105,13 @@ const handlePlay = (album) => {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
-  width: 65vw;
+  width: 100%;
 }
 
 .album-card {
-  background: var(--bg-secondary);
-  border-radius: 0px;
   overflow: hidden;
   transition: transform 0.3s ease;
   cursor: pointer;
-  border-width: 1px;
-  border-bottom-color: black;
-  border-bottom-style: solid;
 }
 
 .album-card:hover {

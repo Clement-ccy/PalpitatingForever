@@ -1,12 +1,25 @@
 /* neumorphism-ui/_components/_buttons.css */
 @import '../_variables.css';
 
+/* 
+待办：
+1. 总计创建n种按钮样式：
+   - neum-button：基础按钮（用于普通按钮等地方）
+   - neum-button--outline：Outline按钮（用于轮廓按钮等地方）
+   - neum-button--soft：Soft按钮（中心和边缘是离散的）
+   - neum-button--radio：Radio buttons按钮（用于单选器等地方）
+   - neum-button--checkbox：Checkbox buttons按钮（用于复选器等地方）
+   - neum-button--toggle：Toggle switches按钮（用于标签等地方）
+   - neum-button--choice：Choice chips按钮（用于选择器等地方）
+   - neum-button--icon：Icon buttons按钮（用于图标等地方）
+   - neum-button--fab：Floating action buttons按钮（用于悬浮按钮等地方）
+
+*/
 /* Base Neumorphism Button Style */
 .neum-button {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 0.8em 1.5em;
   border-radius: var(--radius); /* Use new radius variable */
   background: var(--baseColor); /* Use theme base color */
   color: var(--textNormal); /* Use theme text color */
@@ -30,8 +43,8 @@
   color: var(--textEmphasis);
   /* Example: Slightly adjust distance/blur for hover */
   box-shadow:
-    calc(var(--positionX) * 1.1) calc(var(--positionY) * 1.1) calc(var(--blur) * 1.1) var(--darkColor),
-    calc(var(--positionXOpposite) * 1.1) calc(var(--positionYOpposite) * 1.1) calc(var(--blur) * 1.1) var(--lightColor);
+    calc(var(--positionX) * 1.2) calc(var(--positionY) * 1.2) calc(var(--blur) * 1.2) var(--darkColor),
+    calc(var(--positionXOpposite) * 1.2) calc(var(--positionYOpposite) * 1.2) calc(var(--blur) * 1.2) var(--lightColor);
 }
 
 /* Active State (Pressed/Inset) */
@@ -52,5 +65,3 @@
     calc(var(--positionX) * 0.5) calc(var(--positionY) * 0.5) calc(var(--blur) * 0.5) var(--darkColor),
     calc(var(--positionXOpposite) * 0.5) calc(var(--positionYOpposite) * 0.5) calc(var(--blur) * 0.5) var(--lightColor);
 }
-
-/* Dark mode styles are now handled by the variable overrides in _variables.css */

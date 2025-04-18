@@ -58,13 +58,7 @@ watchEffect(() => {
 }
 
 .tag-item {
-  /* padding handled by neum-button, adjust if needed */
-  /* border handled by neum-button shadow */
-  /* border-radius handled by neum-button */
-  /* background handled by neum-button */
-  /* color handled by neum-button */
-  /* cursor handled by neum-button */
-  /* transition handled by neum-button */
+  padding:0.5rem 1rem;
 }
 
 /* Remove hover style - handled by neum-button */

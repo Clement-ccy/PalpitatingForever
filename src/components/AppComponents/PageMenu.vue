@@ -7,6 +7,8 @@
             <button @click="changeContent('/whatido')">What I Do</button>
             <button @click="changeContent('/whoiam')">Who I Am</button>
             <button @click="changeContent('/blog')">Blog</button>
+            <button @click="changeContent('/photograph')">Photograph</button>
+            <button @click="changeContent('/music')">Music</button>
           </ul>
           <button class="menu-btn --talk">
             <div class="inner">

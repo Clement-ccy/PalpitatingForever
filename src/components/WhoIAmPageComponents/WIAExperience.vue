@@ -30,11 +30,11 @@ export default {
     data() {
         return {
             timeline: [
-                { year: '2003', event: 'Born in Shanghai', image: '@/assets/images/2003.png' },
-                { year: '2009', event: 'Started primary school', image: '@/assets/images/2009.jpg' },
-                { year: '2015', event: 'Entered middle school', image: '@/assets/images/2015.jpg' },
-                { year: '2018', event: 'Graduated high school', image: '@/assets/images/2018.png' },
-                { year: '2021', event: 'University enrollment', image: '@/assets/images/2021.png' }
+                { year: '2003', event: 'Born in Shanghai', image: 'src/assets/images/2003.png' },
+                { year: '2009', event: 'Started primary school', image: 'src/assets/images/2009.jpg' },
+                { year: '2015', event: 'Entered middle school', image: 'src/assets/images/2015.jpg' },
+                { year: '2018', event: 'Graduated high school', image: 'src/assets/images/2018.png' },
+                { year: '2021', event: 'University enrollment', image: 'src/assets/images/2021.png' }
             ]
         }
     },

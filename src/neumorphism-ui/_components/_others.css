@@ -1,0 +1,28 @@
+.icon {
+  aspect-ratio: 1;
+  position: relative;
+}
+
+.emerging-content {
+  display: grid;
+  grid-gap: 1.2em;
+}
+
+.tag {
+  align-items: center;
+  display: inline-flex;
+  font: 900 .625rem Moderat, sans-serif;
+  gap: .625rem;
+  justify-content: center;
+  letter-spacing: .02em;
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+}
+.tag:before {
+  background: var(--baseColor);
+  border-radius: 25%;
+  content: "";
+  display: block;
+  height: .625rem;
+  width: .625rem;
+}

@@ -1,5 +1,6 @@
 /* neumorphism-ui/_base.css */
 @import './_variables.css';
+@import url('https:////at.alicdn.com/t/c/font_4882498_fyrbsc1y9c.css'); /* Import icon-font*/
 
 /* Basic Reset */
 *,
@@ -18,23 +19,40 @@ html {
 body {
   /* Font Setting */
   font-family: var(--neum-font-family);
-  line-height: 1.6;
+  line-height: 1;
   /* Global Color Setting */
   background-color: var(--baseColor);
   color: var(--textNormal);
   transition: background-color var(--neum-transition-speed) ease, color var(--neum-transition-speed) ease;
+  /* Render Setting */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Layout Setting */
   min-height: 100vh;
   max-width: 100vw;
-  overflow-x: hidden; /* Prevent horizontal scroll */
+  /* Scroll Setting */
+  overflow-x: hidden;
+}
+
+body::-webkit-scrollbar { 
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+  width: 0 !important 
 }
 
 /* Basic element styling */
-a {
+a, code {
   color: inherit;
   text-decoration: none;
+}
+
+ol, ul {
+  list-style: none;
+}
+
+span {
+  display: inline-block;
 }
 
 img,
@@ -61,5 +79,3 @@ select {
   outline: none;
 }
 
-/* Dark mode is now handled by the @media query in _variables.css */
-/* which overrides the default theme variables used above. */

@@ -1,21 +1,19 @@
 /* neumorphism-ui/neumorphism.css */
 /* Main entry point for the Neumorphism UI library */
+@import './_base.css';          /* Import Base Styles (includes variables and typography via _base.css) */
+@import './_typography.css';    /* Import typography styles */
+@import './_layout.css';        /* Import Layout Styles */
 
-/* Import Base Styles (includes variables and typography via _base.css) */
-@import './_base.css';
-@import './_typography.css'; /* Import typography styles */
 
-/* Import Layout Styles */
-/* @import './_layout.css'; */
-
-/* Import Panel Styles */
-@import './_panel.css';
+@import './_panel.css';         /* Import Panel Styles */
+@import './_glassmorphism.css'; /* Import Glassmorphism Styles */
 
 /* Import Component Styles */
-/* @import './_components/_buttons.css'; */
-/* @import './_components/_cards.css'; */
-/* @import './_components/_forms.css'; */
+@import './_components/_buttons.css';
+@import './_components/_cards.css';
+@import './_components/_forms.css';
+@import './_components/_others.css';
+
 /* ... other components */
 
-/* Import Glassmorphism Styles */
-@import './_glassmorphism.css';
+

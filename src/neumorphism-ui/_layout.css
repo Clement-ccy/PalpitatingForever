@@ -1,14 +1,11 @@
 /* neumorphism-ui/_layout.css */
-@import './_variables.css';
+@import "./_variables.css";
 
 /* Basic container */
-.neum-container {
-  width: 90%;
-  max-width: 1200px; /* Example max-width */
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 15px;
-  padding-right: 15px;
+section {
+  width: 100%;
+  min-height: 100vh;
+  padding: 11.5740740741vw 4.1666666667vw;
 }
 
 /* Page Layering Notes:

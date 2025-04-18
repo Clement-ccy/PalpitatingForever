@@ -175,6 +175,7 @@ export default {
         }
 
         .main-title {
+          color:var(--textOpposite); ;
           font-size: 4.5vw;
           font-weight: 400;
           line-height: 1.1;

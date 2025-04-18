@@ -1,98 +1,105 @@
 <template>
   <div class="theme-controller neum-panel--inset">
-    <h4>Theme Controller</h4>
-    <div class="control-group">
-      <label for="baseColor">Base Color:</label>
-      <input type="color" id="baseColorPicker" v-model="baseColor" />
-      <input type="text" id="baseColorHex" v-model="baseColor" size="7" />
-      <!-- Basic HEX display/input -->
-    </div>
-    <div class="control-group">
-      <label for="angle">Angle:</label>
-      <input type="range" id="angle" min="0" max="360" v-model.number="angle" />
-      <span>{{ angle }}°</span>
-    </div>
-    <div class="control-group">
-      <label for="size">Size:</label>
-      <input type="range" id="size" min="10" max="410" v-model.number="size" />
-      <!-- Adjust max based on page sizes -->
-      <span>{{ size }}px</span>
-    </div>
-    <div class="control-group">
-      <label for="radius">Radius:</label>
-      <input
-        type="range"
-        id="radius"
-        min="0"
-        :max="maxRadius"
-        v-model.number="radius"
-      />
-      <!-- Adjust max based on typical sizes -->
-      <span>{{ radius }}px</span>
-    </div>
-    <div class="control-group">
-      <label for="distance">Distance:</label>
-      <input
-        type="range"
-        id="distance"
-        min="5"
-        max="50"
-        v-model.number="distance"
-      />
-      <span>{{ distance }}px</span>
-    </div>
-    <div class="control-group">
-      <label for="blur">Blur:</label>
-      <input type="range" id="blur" min="0" max="100" v-model.number="blur" />
-      <span>{{ blur }}px</span>
-    </div>
-    <div class="control-group">
-      <label for="colorDifference">Color Diff:</label>
-      <input
-        type="range"
-        id="colorDifference"
-        min="0.01"
-        max="0.5"
-        step="0.01"
-        v-model.number="colorDifference"
-      />
-      <span>{{ colorDifference.toFixed(2) }}</span>
-    </div>
-    <div class="control-group">
-      <label for="gradient">Gradient:</label>
-      <input type="checkbox" id="gradient" v-model="gradient" />
-    </div>
-    <div
-      class="control-group"
-      style="flex-direction: column; align-items: flex-start"
+    <h4 @click="toggleExpand" class="controller-title">
+      <span v-if="isExpanded">Theme Controller</span>
+      <span class="toggle-icon" :class="{ expanded: isExpanded }">▼</span>
+    </h4>
+    <transition-group
+      tag="div"
+      name="control-items"
+      class="controls-items"
+      v-if="isExpanded"
     >
-      <label for="shape" style="flex-basis: 0">Shape: {{ shape }}</label>
-      <div class="shape-buttons">
-        <button @click="setShape('flat')" :class="{ active: shape === 'flat' }">
-          Flat
-        </button>
-        <button
-          @click="setShape('concave')"
-          :class="{ active: shape === 'concave' }"
-        >
-          Concave
-        </button>
-        <button
-          @click="setShape('convex')"
-          :class="{ active: shape === 'convex' }"
-        >
-          Convex
-        </button>
-        <button
-          @click="setShape('pressed')"
-          :class="{ active: shape === 'pressed' }"
-        >
-          Pressed
-        </button>
+      <div class="control-group" key="baseColor">
+        <label for="baseColor">Base Color:</label>
+        <input type="color" id="baseColorPicker" v-model="baseColor" />
+        <input type="text" id="baseColorHex" v-model="baseColor" size="7" />
       </div>
-    </div>
-
-    <!-- Add more controls for other variables if needed -->
+      <div class="control-group" key="angle">
+        <label for="angle">Angle:</label>
+        <input type="range" id="angle" min="0" max="360" v-model.number="angle" />
+        <span>{{ angle }}°</span>
+      </div>
+      <div class="control-group" key="size">
+        <label for="size">Size:</label>
+        <input type="range" id="size" min="10" max="410" v-model.number="size" />
+        <span>{{ size }}px</span>
+      </div>
+      <div class="control-group" key="radius">
+        <label for="radius">Radius:</label>
+        <input
+          type="range"
+          id="radius"
+          min="0"
+          :max="maxRadius"
+          v-model.number="radius"
+        />
+        <span>{{ radius }}px</span>
+      </div>
+      <div class="control-group" key="distance">
+        <label for="distance">Distance:</label>
+        <input
+          type="range"
+          id="distance"
+          min="5"
+          max="50"
+          v-model.number="distance"
+        />
+        <span>{{ distance }}px</span>
+      </div>
+      <div class="control-group" key="blur">
+        <label for="blur">Blur:</label>
+        <input type="range" id="blur" min="0" max="100" v-model.number="blur" />
+        <span>{{ blur }}px</span>
+      </div>
+      <div class="control-group" key="colorDifference">
+        <label for="colorDifference">Color Diff:</label>
+        <input
+          type="range"
+          id="colorDifference"
+          min="0.01"
+          max="0.5"
+          step="0.01"
+          v-model.number="colorDifference"
+        />
+        <span>{{ colorDifference.toFixed(2) }}</span>
+      </div>
+      <div class="control-group" key="gradient">
+        <label for="gradient">Gradient:</label>
+        <input type="checkbox" id="gradient" v-model="gradient" />
+      </div>
+      <div
+        class="control-group"
+        key="shape"
+        style="flex-direction: column; align-items: flex-start"
+      >
+        <label for="shape" style="flex-basis: 0">Shape: {{ shape }}</label>
+        <div class="shape-buttons">
+          <button @click="setShape('flat')" :class="{ active: shape === 'flat' }">
+            Flat
+          </button>
+          <button
+            @click="setShape('concave')"
+            :class="{ active: shape === 'concave' }"
+          >
+            Concave
+          </button>
+          <button
+            @click="setShape('convex')"
+            :class="{ active: shape === 'convex' }"
+          >
+            Convex
+          </button>
+          <button
+            @click="setShape('pressed')"
+            :class="{ active: shape === 'pressed' }"
+          >
+            Pressed
+          </button>
+        </div>
+      </div>
+      <!-- Add more controls for other variables if needed -->
+    </transition-group>
   </div>
 </template>
 
@@ -108,9 +115,13 @@ const colorDifference = ref(0.15); // Factor for light/dark shadow color differe
 const blur = ref(20); // This is the blur radius of the shadow
 
 const shape = ref("flat"); // Default shape for the neumorphic effect (flat, concave, convex, pressed)
-const baseColor = ref("#EAE7E0"); // Default base color
+// const baseColor = ref("#EAE7E0"); // Default base color
+const baseColor = ref("#4d4b47"); 
 const angle = ref(45); // Default light source angle in degrees
 const gradient = ref(true); // Enable/disable gradient effect
+
+// --- Expand/Collapse State ---
+const isExpanded = ref(false); // Default to collapsed
 
 // --- Helper Functions ---
 function colorLuminance(hex, lum) {
@@ -169,6 +180,10 @@ const setShape = (newShape) => {
   shape.value = newShape;
   // Optionally, update a CSS variable or class on the body/root if needed
   // document.documentElement.setAttribute('data-shape', newShape);
+};
+
+const toggleExpand = () => {
+  isExpanded.value = !isExpanded.value;
 };
 
 // --- Watchers for reactive adjustments ---
@@ -283,16 +298,36 @@ watchEffect(() => {
   right: 20px;
   padding: 15px 20px;
   z-index: 1001; /* Ensure it's above most content */
-  min-width: 320px;
+  /* min-width: 320px; */
   background: var(--baseColor); /* Use theme background */
   border-radius: var(--radius); /* Use theme radius */
+  transition: all 0.3s ease-in-out; /* Add transition for smooth size change */
 }
 
-.theme-controller h4 {
+.theme-controller h4.controller-title {
   margin-top: 0;
-  margin-bottom: 15px;
   color: var(--textEmphasis);
   text-align: center;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none; /* Prevent text selection on click */
+}
+
+.controller-title .toggle-icon {
+  display: inline-block;
+  transition: transform 0.3s ease-in-out;
+  font-size: 0.8em;
+}
+
+.controller-title .toggle-icon.expanded {
+  transform: rotate(180deg);
+}
+
+.controls-items {
+  overflow: hidden; /* Needed for smooth height transition */
+  /* max-height calculation will be handled by transition classes */
 }
 
 .control-group {
@@ -381,4 +416,46 @@ watchEffect(() => {
   min-width: 45px; /* Ensure space for value */
   text-align: right;
 }
+
+/* Transition for control items */
+.control-items-enter-active,
+.control-items-leave-active {
+  transition: all 0.5s ease-out; /* Overall transition duration */
+}
+
+.control-items-enter-active .control-group,
+.control-items-leave-active .control-group {
+  transition: opacity 0.3s ease-out, transform 0.4s ease-out;
+}
+
+.control-items-enter-from .control-group,
+.control-items-leave-to .control-group {
+  opacity: 0;
+  transform: translateY(-10px); /* Start from slightly above */
+}
+
+/* Staggered delay for entering items */
+.control-items-enter-active .control-group:nth-child(1) { transition-delay: 0.05s; }
+.control-items-enter-active .control-group:nth-child(2) { transition-delay: 0.1s; }
+.control-items-enter-active .control-group:nth-child(3) { transition-delay: 0.15s; }
+.control-items-enter-active .control-group:nth-child(4) { transition-delay: 0.2s; }
+.control-items-enter-active .control-group:nth-child(5) { transition-delay: 0.25s; }
+.control-items-enter-active .control-group:nth-child(6) { transition-delay: 0.3s; }
+.control-items-enter-active .control-group:nth-child(7) { transition-delay: 0.35s; }
+.control-items-enter-active .control-group:nth-child(8) { transition-delay: 0.4s; }
+.control-items-enter-active .control-group:nth-child(9) { transition-delay: 0.45s; }
+/* Add more if needed */
+
+/* Staggered delay for leaving items (reverse order might feel more natural) */
+.control-items-leave-active .control-group:nth-child(1) { transition-delay: 0.45s; }
+.control-items-leave-active .control-group:nth-child(2) { transition-delay: 0.4s; }
+.control-items-leave-active .control-group:nth-child(3) { transition-delay: 0.35s; }
+.control-items-leave-active .control-group:nth-child(4) { transition-delay: 0.3s; }
+.control-items-leave-active .control-group:nth-child(5) { transition-delay: 0.25s; }
+.control-items-leave-active .control-group:nth-child(6) { transition-delay: 0.2s; }
+.control-items-leave-active .control-group:nth-child(7) { transition-delay: 0.15s; }
+.control-items-leave-active .control-group:nth-child(8) { transition-delay: 0.1s; }
+.control-items-leave-active .control-group:nth-child(9) { transition-delay: 0.05s; }
+/* Add more if needed */
+
 </style>

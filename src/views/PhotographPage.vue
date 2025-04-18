@@ -42,28 +42,28 @@ export default {
       pictureAlbums: [
         {
           name: "Cuffs of Mother",
-          cover: "@/assets/images/adventure-bg0.jpg",
+          cover: "./src/assets/images/adventure-bg0.jpg",
           type: "Scenery",
           location: "(Indians)",
           time: "2025.03.27",
         },
         {
           name: "The Verdon",
-          cover: "@/assets/images/adventure-bg1.jpg",
+          cover: "./src/assets/images/adventure-bg1.jpg",
           type: "Scenery",
           location: "(France)",
           time: "2025.03.27",
         },
         {
           name: "Gorge",
-          cover: "@/assets/images/adventure-bg2.jpg",
+          cover: "./src/assets/images/adventure-bg2.jpg",
           type: "Scenery",
           location: "(France)",
           time: "2025.03.27",
         },
         {
           name: "The Dolomites",
-          cover: "@/assets/images/adventure-bg3.jpg",
+          cover: "./src/assets/images/adventure-bg3.jpg",
           type: "Scenery",
           location: "(Reb)",
           time: "2025.03.27",

@@ -13,8 +13,6 @@
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--neum-font-family);
   color: var(--textEmphasis); /* Use theme variable */
-  margin-top: 1.5em;
-  margin-bottom: 0.8em;
   line-height: 1;
   font-weight: 400; /* Assuming the font is regular weight */
 }
@@ -28,7 +26,6 @@ h6 { font-size: 1rem; }
 
 p {
   color: var(--textNormal); /* Use theme variable */
-  margin-bottom: 1em;
 }
 
 a {
@@ -42,12 +39,14 @@ a:hover {
 }
 
 ul, ol {
-  margin-bottom: 1em;
-  padding-left: 1.5em; /* Indent lists */
+  list-style: none; /* Remove default list styles */
+  /* margin-bottom: 1em;
+  padding-left: 1.5em; */
 }
 
 li {
-  margin-bottom: 0.5em;
+  color: var(--textNormal); /* Use theme variable */
+  /* margin-bottom: 0.5em; */
 }
 
 /* Content Hierarchy Classes (Optional but recommended) */
@@ -60,6 +59,3 @@ li {
 .text-subdued {
   color: var(--textSubdued); /* Use theme variable */
 }
-
-/* Dark mode is now handled by the @media query in _variables.css */
-/* which overrides the default theme variables used above. */

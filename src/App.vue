@@ -1,6 +1,6 @@
 <template>
   <PageLoader v-if="showLoader" @loadOver="loadOver"></PageLoader>
-  <!-- <PageHeader></PageHeader> -->
+  <PageHeader></PageHeader>
   <router-view
     class="content"
     @navigateTo="navigateTo"
@@ -13,13 +13,13 @@
       <component :is="Component" :key="route.path" />
     </transition>
   </router-view>
-  <!-- <PageFooter></PageFooter> -->
+  <PageFooter></PageFooter>
   <PageMenu
-    v-if="showMenu && menuType === 'profile'"
+    v-if="showMenu"
     ref="menu"
     @changeMenu="navigateTo"
   />
-  <BlogMenu v-if="showMenu && menuType === 'blog'" />
+  <!-- <BlogMenu v-if="showMenu && menuType === 'blog'" /> -->
   <MusicPlayer></MusicPlayer>
   <ThemeController /> <!-- Add the theme controller component -->
 </template>
@@ -36,7 +36,7 @@ import PageLoader from "./components/AppComponents/PageLoader.vue";
 import PageMenu from "./components/AppComponents/PageMenu.vue";
 import BlogMenu from "./components/AppComponents/BlogMenu.vue";
 import MusicPlayer from "./components/AppComponents/MusicPlayer.vue";
-import ThemeController from "./components/ThemeController.vue"; // Import the new component
+import ThemeController from "./components/AppComponents/ThemeController.vue"; // Import the new component
 
 export default {
   components: {
@@ -53,7 +53,7 @@ export default {
       console.log("当前页面路由：" + to.path);
       console.log("页面菜单位置：" + to.meta.belongsTo);
       console.log("上一个路由：" + from.path);
-      this.menuType = to.meta.belongsTo;
+      // this.menuType = to.meta.belongsTo;
       // 等待 DOM 更新
       this.$nextTick(() => {
         // 双保险同步

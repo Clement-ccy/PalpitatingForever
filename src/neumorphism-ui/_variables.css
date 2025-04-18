@@ -2,40 +2,36 @@
 /* Updated based on adamgiebl/neumorphism structure and pre-calculated colors */
 
 :root {
-  /* --- Variables --- */
+  /* --- Variables (will be overridden by JS) --- */
   --baseColor: #EAE7E0; /* Our chosen beige */
-  /* Light/Dark shadow colors are now calculated and set via JavaScript */
-  /* --lightColor: ...; */
-  /* --darkColor: ...; */
-  /* Gradient colors are now calculated and set via JavaScript */
-  /* --firstGradientColor: ...; */
-  /* --secondGradientColor: ...; */
-
-  /* Text colors are now calculated and set via JavaScript */
-  /* --textEmphasis: ...; */
-  /* --textNormal: ...; */
-  /* --textSubdued: ...; */
-  /* --textOppsite: ...; */
-  /* Dark theme text colors are also handled dynamically if needed */
-
+  /* Light/Dark shadow colors */
+  --lightColor: #ffffff;
+  --darkColor: #c7c4be;
+  /* Gradient colors */
+  --firstGradientColor: #EAE7E0;
+  --secondGradientColor: #EAE7E0;
+  /* Text colors */
+  --textEmphasis: #2e2e2e;
+  --textNormal: #333333;
+  --textSubdued: #383838;
+  --textOppsite: #ffffff;
 
   /* --- Common Neumorphism Parameters --- */
-  /* Default Light Source Angle (will be overridden by JS) */
-  /* --angle: 145deg; */
+  /* Default Light Source Angle */
+  --angle: 45deg;
 
-  /* Default Size & Derived Values (Adjust as needed) */
-  --size: 150px; /* Example default size */
-  --radius: 30px; /* Example default radius */
-  --distance: 15px; /* Example distance (size * 0.1) */
-  --blur: 30px; /* Example blur (size * 0.2) */
+  /* Default Size & Derived Values */
+  --size: 150px;
+  --radius: 30px;
+  --distance: 15px;
+  --blur: 30px;
 
   /* Calculate position based on distance (simple approximation) */
-  /* For 145deg angle, both X and Y are positive for dark shadow, negative for light */
   /* Position variables are now calculated and set via JavaScript in ThemeController.vue */
-  /* --positionX: ...px; */
-  /* --positionY: ...px; */
-  /* --positionXOpposite: ...px; */
-  /* --positionYOpposite: ...px; */
+  --positionX: 7.07px;
+  --positionY: 7.07px;
+  --positionXOpposite: -7.07px;
+  --positionYOpposite: -7.07px;
 
   /* Other common variables */
   --neum-transition-speed: 0.2s; /* Slightly faster transition */
