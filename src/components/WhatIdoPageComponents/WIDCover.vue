@@ -81,7 +81,6 @@
     top: 0;
     width: 100%;
     position: absolute;
-    z-index: 10;
     background-color:#01082e ;
 }
 </style>

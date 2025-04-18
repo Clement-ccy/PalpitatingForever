@@ -96,6 +96,7 @@ export default {
 
 <style scoped>
 .blog-container {
+  background-color: var(--baseColor);
   display: flex;
   justify-content: center;
   padding-left: 6rem;

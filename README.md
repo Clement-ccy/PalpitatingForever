@@ -51,7 +51,7 @@ This project implements a Neumorphism UI theme located in `src/neumorphism-ui/`.
 *   `_panel.css`: Panel styles.
 *   `_typography.css`: Text styles.
 *   `_components/`: Styles for specific components (buttons, cards, forms).
-*   `_glassmorphism.css`: (Optional) Glassmorphism effect styles.
+*   `_glassmorphism.css`: Glassmorphism effect styles.
 
 ### Theme Controller (`src/components/ThemeController.vue`)
 

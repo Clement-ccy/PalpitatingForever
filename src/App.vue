@@ -2,13 +2,14 @@
   <PageLoader v-if="showLoader" @loadOver="loadOver"></PageLoader>
   <PageHeader></PageHeader>
   <router-view
-    class="content"
+    class="router-content"
     @navigateTo="navigateTo"
     @activateMenu="activateMenu"
     @deactivateMenu="deactivateMenu"
     v-slot="{ Component, route }"
   >
     <!-- 使用任何自定义过渡和回退到 `fade` -->
+    <!-- 添加 @enter 和 @leave 钩子来控制动画时机 -->
     <transition :name="route.meta.transition || 'fade'">
       <component :is="Component" :key="route.path" />
     </transition>
@@ -121,4 +122,93 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+/* Global Transition Styles */
+.router-content {
+  /* position: relative; */
+  /* width: 100vh; */
+  /* overflow: hidden; */
+}
+
+/* Fade Transition (Default) */
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+
+/* Slide Up Transition (Entering PostPage) */
+.slide-up-enter-active {
+  transition: transform 0.5s;
+}
+.slide-up-leave-active {
+  transition: transform 0.5s;
+  /* Keep the leaving element in place while the new one slides up */
+  position: absolute; /* Ensure it stays in flow */
+}
+.slide-up-enter-from {
+  transform: translateY(100%);
+}
+.slide-up-leave-to {
+   /* The leaving element doesn't move, it's covered */
+  transform: translateY(0);
+}
+
+
+/* Slide Down Transition (Leaving PostPage) */
+/* Note: Leave transitions apply to the element *leaving* the view. */
+/* The 'slide-down' name is applied to the *entering* component (BlogPage) */
+/* when coming *from* PostPage. We need CSS for when BlogPage enters */
+/* with the 'slide-down' transition name. */
+.slide-down-enter-active {
+  transition: transform 0.5s;
+   /* Keep the entering element (BlogPage) in place */
+  position: absolute;
+}
+.slide-down-leave-active {
+  transition: transform 0.5s;
+}
+.slide-down-enter-from {
+  /* Entering element (BlogPage) starts in its final position */
+  transform: translateY(0);
+}
+.slide-down-leave-to {
+  /* Leaving element (PostPage) slides down */
+  transform: translateY(100%);
+}
+
+
+/* Slide Left Transition (Moving to the right in menu) */
+.slide-left-enter-active {
+  transition: transform 0.5s;
+}
+.slide-left-leave-active {
+  transition: transform 0.5s;
+  position: absolute; /* Keep leaving element in flow */
+}
+.slide-left-enter-from {
+  transform: translateX(100%);
+}
+.slide-left-leave-to {
+  transform: translateX(-50%);
+}
+
+/* Slide Right Transition (Moving to the left in menu) */
+.slide-right-enter-active {
+  transition: transform 0.5s;
+}
+.slide-right-leave-active {
+  transition: transform 0.5s;
+  position: absolute; /* Keep leaving element in flow */
+}
+.slide-right-enter-from {
+  transform: translateX(-100%);
+}
+.slide-right-leave-to {
+  transform: translateX(50%);
+}
+
+</style>
