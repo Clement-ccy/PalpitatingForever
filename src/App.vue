@@ -1,214 +1,98 @@
-<template>
-  <PageLoader v-if="showLoader" @loadOver="loadOver"></PageLoader>
-  <PageHeader></PageHeader>
-  <router-view
-    class="router-content"
-    @navigateTo="navigateTo"
-    @activateMenu="activateMenu"
-    @deactivateMenu="deactivateMenu"
-    v-slot="{ Component, route }"
-  >
-    <!-- 使用任何自定义过渡和回退到 `fade` -->
-    <!-- 添加 @enter 和 @leave 钩子来控制动画时机 -->
-    <transition :name="route.meta.transition || 'fade'">
-      <component :is="Component" :key="route.path" />
-    </transition>
-  </router-view>
-  <PageFooter></PageFooter>
-  <PageMenu
-    v-if="showMenu"
-    ref="menu"
-    @changeMenu="navigateTo"
-  />
-  <!-- <BlogMenu v-if="showMenu && menuType === 'blog'" /> -->
-  <MusicPlayer></MusicPlayer>
-  <ThemeController /> <!-- Add the theme controller component -->
-</template>
+<script setup>
+// Import global components
+import ControlPanel from '@/components/global/ControlPanel.vue';
+import AudioPlayer from '@/components/global/AudioPlayer.vue'; // Uncomment AudioPlayer
+// import TheHeader from '@/components/layout/TheHeader.vue';
+// import TheFooter from '@/components/layout/TheFooter.vue';
 
-<script>
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-gsap.registerPlugin(ScrollTrigger);
-// import Lenis from "lenis";
+// Import base styles
+import '@/pf-ui/pf-ui.scss'; // Assuming pf-ui.scss is the main entry point
 
-import PageFooter from "@/components/AppComponents/PageFooter.vue";
-import PageHeader from "./components/AppComponents/PageHeader.vue";
-import PageLoader from "./components/AppComponents/PageLoader.vue";
-import PageMenu from "./components/AppComponents/PageMenu.vue";
-import BlogMenu from "./components/AppComponents/BlogMenu.vue";
-import MusicPlayer from "./components/AppComponents/MusicPlayer.vue";
-import ThemeController from "./components/AppComponents/ThemeController.vue"; // Import the new component
+// Smooth scrolling initialization (if using Lenis)
+import { onMounted, onUnmounted } from 'vue';
+import Lenis from 'lenis';
 
-export default {
-  components: {
-    PageLoader,
-    PageHeader,
-    PageMenu,
-    PageFooter,
-    BlogMenu,
-    MusicPlayer,
-    ThemeController, // Register the new component
-  },
-  watch: {
-    $route(to, from) {
-      console.log("当前页面路由：" + to.path);
-      console.log("页面菜单位置：" + to.meta.belongsTo);
-      console.log("上一个路由：" + from.path);
-      // this.menuType = to.meta.belongsTo;
-      // 等待 DOM 更新
-      this.$nextTick(() => {
-        // 双保险同步
-        window.dispatchEvent(new Event("resize"));
-        window.dispatchEvent(new Event("scroll"));
-        // 关键性能优化
-        requestAnimationFrame(() => {
-          ScrollTrigger.refresh(true);
-        });
-      });
-    },
-  },
-  data() {
-    return {
-      showLoader: true,
-      showMenu: false,
-      menuType: "profile",
-    };
-  },
-  mounted() {
-    // Initialize Lenis
-    // const lenis = new Lenis({
-    //   autoRaf: true,
-    // });
-    // Listen for the scroll event and log the event data
-    // lenis.on("scroll", () => {
-    //   // ScrollTrigger.update
-    //   // console.log(e);
-    // });
-    // Add Lenis's requestAnimationFrame (raf) method to GSAP's ticker
-    // This ensures Lenis's smooth scroll animation updates on each GSAP tick
-    // gsap.ticker.add((time) => {
-    //   lenis.raf(time * 1000); // Convert time from seconds to milliseconds
-    // });
+let lenis;
+const initSmoothScroll = () => {
+  lenis = new Lenis({
+    // Options: https://github.com/studio-freight/lenis
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothTouch: false, // Disable for touch devices for native feel
+    touchMultiplier: 2,
+  });
 
-    // Disable lag smoothing in GSAP to prevent any delay in scroll animations
-    // gsap.ticker.lagSmoothing(0);
-  },
-  methods: {
-    // Loader Visibility Setting
-    loadOver() {
-      this.showLoader = false;
-      this.setMenuState(true);
-    },
-    // Global Router Push
-    navigateTo(page) {
-      this.$router.push(page);
-    },
-    // Menu State & Animation
-    setMenuState(state) {
-      this.showMenu = state;
-    },
-    activateMenu(label) {
-      // use this.$nextTick to use $refs.xxx.method after DOM Created
-      this.$nextTick(() => {
-        this.$refs.menu.activateMenu(label);
-      });
-    },
-    deactivateMenu() {
-      this.$nextTick(() => {
-        this.$refs.menu.deactivateMenu();
-      });
-    },
-  },
+  function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+  requestAnimationFrame(raf);
 };
+
+onMounted(() => {
+  initSmoothScroll();
+});
+
+onUnmounted(() => {
+  if (lenis) {
+    lenis.destroy(); // Clean up Lenis instance
+  }
+});
+
 </script>
 
-<style>
-/* Global Transition Styles */
-.router-content {
-  /* position: relative; */
-  /* width: 100vh; */
-  /* overflow: hidden; */
+<template>
+  <div id="app-container">
+    <!-- Optional Global Header -->
+    <!-- <TheHeader /> -->
+
+    <!-- Global Control Panel -->
+    <ControlPanel />
+
+    <main id="main-content">
+      <router-view v-slot="{ Component, route }">
+        <transition name="page-fade" mode="out-in">
+          <!-- Use route.fullPath as key for proper transitions on param changes -->
+          <component :is="Component" :key="route.fullPath" />
+        </transition>
+      </router-view>
+    </main>
+
+    <!-- Optional Global Footer -->
+    <!-- <TheFooter /> -->
+
+    <!-- Global Audio Player (Positioning handled via CSS) -->
+    <AudioPlayer /> <!-- Uncomment AudioPlayer -->
+  </div>
+</template>
+
+<style lang="scss">
+/* Base styles for the app container and transitions */
+#app-container {
+  /* Basic reset or global layout styles can go here */
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
-/* Fade Transition (Default) */
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
+#main-content {
+  flex-grow: 1; // Ensure main content takes available space
 }
-.fade-enter-from,
-.fade-leave-to {
+
+/* Basic Page Transition */
+.page-fade-enter-active,
+.page-fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.page-fade-enter-from,
+.page-fade-leave-to {
   opacity: 0;
 }
 
-/* Slide Up Transition (Entering PostPage) */
-.slide-up-enter-active {
-  transition: transform 0.5s;
-}
-.slide-up-leave-active {
-  transition: transform 0.5s;
-  /* Keep the leaving element in place while the new one slides up */
-  position: absolute; /* Ensure it stays in flow */
-}
-.slide-up-enter-from {
-  transform: translateY(100%);
-}
-.slide-up-leave-to {
-   /* The leaving element doesn't move, it's covered */
-  transform: translateY(0);
-}
+/* Add more sophisticated transitions using GSAP later */
 
-
-/* Slide Down Transition (Leaving PostPage) */
-/* Note: Leave transitions apply to the element *leaving* the view. */
-/* The 'slide-down' name is applied to the *entering* component (BlogPage) */
-/* when coming *from* PostPage. We need CSS for when BlogPage enters */
-/* with the 'slide-down' transition name. */
-.slide-down-enter-active {
-  transition: transform 0.5s;
-   /* Keep the entering element (BlogPage) in place */
-  position: absolute;
-}
-.slide-down-leave-active {
-  transition: transform 0.5s;
-}
-.slide-down-enter-from {
-  /* Entering element (BlogPage) starts in its final position */
-  transform: translateY(0);
-}
-.slide-down-leave-to {
-  /* Leaving element (PostPage) slides down */
-  transform: translateY(100%);
-}
-
-
-/* Slide Left Transition (Moving to the right in menu) */
-.slide-left-enter-active {
-  transition: transform 0.5s;
-}
-.slide-left-leave-active {
-  transition: transform 0.5s;
-  position: absolute; /* Keep leaving element in flow */
-}
-.slide-left-enter-from {
-  transform: translateX(100%);
-}
-.slide-left-leave-to {
-  transform: translateX(-50%);
-}
-
-/* Slide Right Transition (Moving to the left in menu) */
-.slide-right-enter-active {
-  transition: transform 0.5s;
-}
-.slide-right-leave-active {
-  transition: transform 0.5s;
-  position: absolute; /* Keep leaving element in flow */
-}
-.slide-right-enter-from {
-  transform: translateX(-100%);
-}
-.slide-right-leave-to {
-  transform: translateX(50%);
-}
+/* Import global styles defined in pf-ui */
+/* @import '@/pf-ui/pf-ui.scss'; // Already imported in script setup is better for HMR */
 
 </style>

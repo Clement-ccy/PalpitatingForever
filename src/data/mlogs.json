@@ -1,0 +1,113 @@
+[
+  {
+    "id": "1e3ec12a-acd9-806c-b666-c70d46cdef80",
+    "object": "page",
+    "title": "敦煌韵",
+    "audioFile": null,
+    "roles": [
+      "作曲 (Composer)",
+      "作词 (Lyricist)",
+      "编曲 (Arranger)",
+      "制作人 (Producer)",
+      "录音师 (Recording Engineer)",
+      "混音师 (Mixing Engineer)",
+      "母带工程师 (Mastering Engineer)",
+      "演奏者 (Performer)",
+      "演唱者 (Vocalist)"
+    ],
+    "genre": [
+      "流行 (Pop)",
+      "摇滚 (Rock)",
+      "电子 (Electronic)",
+      "嘻哈 (Hip Hop)",
+      "古典 (Classical)",
+      "爵士 (Jazz)",
+      "民谣 (Folk)",
+      "氛围音乐 (Ambient)",
+      "影视配乐 (Soundtrack)",
+      "世界音乐 (World Music)",
+      "实验音乐 (Experimental)"
+    ],
+    "artwork": {
+      "name": "2003.png",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/09215030-69eb-475d-96e2-cd2dd6ddd468/2003.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YE2GXF2R%2F20250429%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250429T125757Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEPT%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQC7J0M23kNHJfirJDSSg1B9YFdS5Nk7HlYIaHy1mT8qaAIhAIJbVLYLoI5k9juGIXxEFhWVCKGecnL7ey1UECegarVIKogECI3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igz4VQE7%2BAq1COKTQOgq3AMjTHJ7tEgKAqyHtRoI0%2F5gCb1wGKJ64thbvcVCT8EKrKsIY1gDzV090SL9sAyv9ubVI%2FSZZ7BlCrxuR87lwa%2BpRjazsPkNRrzhbcvhS%2BitUxXn7NtYefUQ1rjXhOQxwkHQP4h8c9quH0NT5Pg3rBqe%2FMyR%2BDW85c3yRqLbC0NMar2me5XRDmmpAR%2BsdlxOkUYVZ%2FZRsehwDTWT%2BPfwCu%2FxVKPsxsT7ybp%2F00aSPfVZm44UsHCVPjtzBK4%2Fwbd9Z6f7SwXdQHMVoLc9Ff9g0zL12IVJViLh0j%2B7UIEEiZtzCIWcK0dr%2FP56YwKMGB%2FOIfpaIF8NZmqKMUtj1FMSGnoafQcnEhH4LzBgkSj1S5CSeuog3Nj%2FkcqQca4A8zVLvOMtPlBSSMaG47eB8NeMaB3x544RFkZhj1zfD8VLHqXUJCjwT2bgVLsXl%2FzczdWPIh3XMZ3nmMgPs81Qfw3TgzoL8p%2Bip3VouG0JywkvzHy9Y%2B90Y%2B%2FzASrjxJ8KNsEFwwLfughmqZawYUFISJE6RP%2FSqaPlSjC%2FzaK0hkKGfOfQRjkT5Ov1uM2SMUIgEP%2Bo4KdmP0NZpYnLZyTTZSBkG6HX%2FFX26Jhe1h6iLdt4CYlI4ZiUy79yrHhXgLZPQjDp%2BsLABjqkAeTgTWyGlGlDnkfGIdng%2F5Y61Q3Ws0uu4Z6CCNhO6JZ8EA%2BBatoMvhzntn%2BJn9nuGBwpXCo96rIiXk2IdxfAsFvM9MqbBBqtpk0YWSd3kc1vis7SqBxxGjb3H3R3bpMtQ4G%2B50Yk8sntLkMWcxxvXqvNVdRQ6nYIJyYOGl9zIdqfEDfZMP%2FNz59tPHQIFlzbDTapJJtU1Zfo1cgn4toJ1C6vgj7I&X-Amz-Signature=42246830eaf446709af2c08bec8a7642bf76b1d113b5a43a76a5877d76a91f98&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "type": "file"
+    },
+    "vibe": [
+      "欢快 (Upbeat)",
+      "忧伤 (Melancholic)",
+      "平静 (Peaceful)",
+      "史诗 (Epic)",
+      "浪漫 (Romantic)",
+      "紧张 (Suspenseful)",
+      "驱动感 (Driving)",
+      "治愈 (Healing)",
+      "复古 (Retro)",
+      "未来感 (Futuristic)"
+    ],
+    "key": "C",
+    "mode": "小调 (Minor)",
+    "bpm": 180,
+    "timeSignature": [
+      {
+        "type": "text",
+        "text": {
+          "content": "4/4",
+          "link": null
+        },
+        "annotations": {
+          "bold": false,
+          "italic": false,
+          "strikethrough": false,
+          "underline": false,
+          "code": false,
+          "color": "default"
+        },
+        "plain_text": "4/4",
+        "href": null
+      }
+    ],
+    "instrumentation": [
+      "钢琴 (Piano)",
+      "键盘 (Keyboard)",
+      "合成器 (Synthesizer)",
+      "原声吉他 (Acoustic Guitar)",
+      "电吉他 (Electric Guitar)",
+      "贝斯 (Bass)",
+      "鼓组 (Drum Kit)",
+      "鼓机 (Drum Machine)",
+      "人声 (Vocals)",
+      "弦乐 (Strings)",
+      "管乐 (Brass/Woodwinds)",
+      "采样 (Samples)"
+    ],
+    "completionDate": {
+      "start": "2025-04-28",
+      "end": null,
+      "time_zone": null
+    },
+    "album": [
+      {
+        "type": "text",
+        "text": {
+          "content": "Give up",
+          "link": null
+        },
+        "annotations": {
+          "bold": false,
+          "italic": false,
+          "strikethrough": false,
+          "underline": false,
+          "code": false,
+          "color": "default"
+        },
+        "plain_text": "Give up",
+        "href": null
+      }
+    ],
+    "collaborators": [],
+    "lyricsFile": null,
+    "lastEditedTime": "2025-04-28T17:44:00.000Z",
+    "createdTime": "2025-04-28T17:15:00.000Z"
+  }
+]

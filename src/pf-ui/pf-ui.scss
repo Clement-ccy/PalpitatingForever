@@ -1,0 +1,111 @@
+// src/pf-ui/pf-ui.scss
+
+// -----------------------------------------------------------------------------
+// PF UI - Main Stylesheet Entry Point
+// -----------------------------------------------------------------------------
+
+// 1. Import Core Variables (Required by other partials)
+// Note: We use @use for Sass Modules. Variables are accessed via namespace (e.g., var.$variable-name)
+@use "variables" as var;
+
+// 2. Import Base Layout Styles
+@use "layout";
+
+// 3. Import Base Typography Styles
+@use "typographism";
+
+// 4. Import Animation Styles (Placeholder - create _animations.scss later)
+// @use "animations";
+
+// 5. Import Component Styles (Placeholder - create component styles later)
+// Example: @use "components/button";
+// Example: @use "components/card";
+
+// 6. Import Styles for Notion Blocks (Placeholder - create _notion-blocks.scss later)
+// @use "notion-blocks";
+
+// 7. Define CSS Variables for Theming
+// These variables will be used throughout the application and can be toggled for theme switching.
+:root {
+  // --- Light Theme (Default) ---
+
+  // Backgrounds
+  --bg-primary: #{var.$light-bg};
+  --bg-secondary: #{var.$light-bg-secondary};
+  // Add more background variations if needed (e.g., tertiary, quaternary)
+
+  // Text Colors
+  --text-primary: #{var.$light-text-primary};
+  --text-secondary: #{var.$light-text-secondary};
+  --text-tertiary: #{var.$light-text-tertiary};
+  --text-disabled: #{rgba(var.$light-text-primary, 0.3)}; // Example disabled text
+
+  --text-opposite-primary: #{var.$dark-text-primary};
+  --text-opposite-secondary: #{var.$dark-text-secondary};
+  --text-opposite-tertiary: #{var.$dark-text-tertiary};
+  --text-opposite-disabled: #{rgba(var.$dark-text-primary, 0.3)}; // Example disabled text
+
+  // Accent Colors
+  --accent-primary: #{var.$light-accent-primary};
+  // Add more accent variations if needed (e.g., secondary accent)
+
+  // Separators / Borders
+  --separator-primary: #{var.$light-separator};
+  // Add more separator variations if needed
+
+  // Fills (for control backgrounds, etc.)
+  --fill-primary: #{var.$light-fill-primary};
+  // Add more fill variations if needed
+
+  // Other semantic colors (optional)
+  --color-success: #34c759; // Example success color (Apple Green)
+  --color-warning: #ffcc00; // Example warning color (Apple Yellow)
+  --color-error: #ff3b30;   // Example error color (Apple Red)
+  --color-info: #{var.$light-accent-primary}; // Use primary accent for info
+
+  // --- Define other global variables if needed ---
+  // e.g., global border radius, default transition
+  --global-radius: #{var.$radius-md};
+  --global-transition: all #{var.$transition-duration-normal} #{var.$transition-timing-function};
+}
+
+// --- Dark Theme ---
+// Apply dark theme variables when the 'data-theme' attribute is set to 'dark' on html or body
+// Or use prefers-color-scheme media query as a base or fallback
+[data-theme="dark"] {
+  // Backgrounds
+  --bg-primary: #{var.$dark-bg};
+  --bg-secondary: #{var.$dark-bg-secondary};
+
+  // Text Colors
+  --text-primary: #{var.$dark-text-primary};
+  --text-secondary: #{var.$dark-text-secondary};
+  --text-tertiary: #{var.$dark-text-tertiary};
+  --text-disabled: #{rgba(var.$dark-text-primary, 0.3)};
+
+  // Accent Colors
+  --accent-primary: #{var.$dark-accent-primary};
+
+  // Separators / Borders
+  --separator-primary: #{var.$dark-separator};
+
+  // Fills
+  --fill-primary: #{var.$dark-fill-primary};
+
+  // Other semantic colors (adjust for dark mode contrast if needed)
+  --color-success: #30d158; // Slightly brighter green
+  --color-warning: #ffd60a; // Slightly brighter yellow
+  --color-error: #ff453a;   // Slightly brighter red
+  --color-info: #{var.$dark-accent-primary};
+}
+
+// 8. Import Custom Font Face (if not handled elsewhere)
+@font-face {
+  font-family: '字由芳华体'; // Must match $font-family-custom variable
+  src: url('@/assets/fonts/字由芳华体.ttf') format('truetype'); // Use Vite alias '@'
+  font-weight: normal; // Specify weight if known, otherwise 'normal'
+  font-style: normal; // Specify style if known, otherwise 'normal'
+  font-display: swap; // Use swap for better perceived performance
+}
+
+// Add any other global overrides or utility classes here if necessary
