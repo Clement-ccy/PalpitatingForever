@@ -30,15 +30,15 @@ const color = props.block.callout.color; // e.g., "gray_background"
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 .notion-callout {
   display: flex;
   align-items: flex-start; // Align icon top with text
-  gap: var.$space-md;
-  padding: var.$space-lg var.$space-xl;
-  border-radius: var.$radius-sm;
-  margin: var.$space-lg 0;
+  gap: var(--space-md);
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: var(--radius-sm);
+  margin: var(--space-lg) 0;
   background-color: var(--bg-secondary); // Default background
 
   // Add specific styles based on Notion color names if needed

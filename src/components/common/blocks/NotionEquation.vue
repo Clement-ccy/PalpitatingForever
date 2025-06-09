@@ -67,12 +67,12 @@ watch(() => props.block.equation?.expression, (newExpression) => {
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 .notion-equation {
   overflow-x: auto; // Allow scrolling for long equations
-  padding: var.$space-sm 0;
-  margin: var.$space-md 0;
+  padding: var(--space-sm) 0;
+  margin: var(--space-md) 0;
   text-align: center; // Center block equations
 
   // KaTeX styles are imported globally or scoped via :deep() if needed
@@ -84,17 +84,17 @@ watch(() => props.block.equation?.expression, (newExpression) => {
 
 .katex-error {
     color: var(--color-error);
-    font-size: var.$font-size-caption1;
-    margin-top: var.$space-xs;
+    font-size: var(--font-size-caption1);
+    margin-top: var(--space-xs);
     text-align: center; // Keep error centered
     white-space: pre-wrap; // Ensure error message wraps
 
     pre { // Style for raw expression shown on error
-        margin-top: var.$space-xs;
-        font-family: var.$font-family-mono;
+        margin-top: var(--space-xs);
+        font-family: var(--font-family-mono);
         background-color: var(--bg-secondary);
-        padding: var.$space-xs var.$space-sm;
-        border-radius: var.$radius-sm;
+        padding: var(--space-xs) var(--space-sm);
+        border-radius: var(--radius-sm);
         display: inline-block; // Keep it centered
         text-align: left;
     }

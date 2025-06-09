@@ -77,16 +77,16 @@ watch(() => route.params.slug, findAlbumTracks);
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 .track-list {
-  margin-top: var.$space-xl;
+  margin-top: var(--space-xl);
   ul {
     list-style: none;
     padding-left: 0;
   }
   li {
-    padding: var.$space-sm 0;
+    padding: var(--space-sm) 0;
     border-bottom: 1px solid var(--separator-primary);
     &:last-child {
       border-bottom: none;
@@ -97,6 +97,6 @@ watch(() => route.params.slug, findAlbumTracks);
 .error-message {
   color: var(--color-error);
   text-align: center;
-  padding: var.$space-xxxl 0;
+  padding: var(--space-xxxl) 0;
 }
 </style>

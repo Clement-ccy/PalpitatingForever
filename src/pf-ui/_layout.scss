@@ -1,8 +1,6 @@
 // src/pf-ui/_layout.scss
-@use "variables" as var; // Use the variables defined in _variables.scss
-
 // -----------------------------------------------------------------------------
-// Base Layout Styles
+// Base Layout Styles (CSS Variables Based)
 // -----------------------------------------------------------------------------
 
 *,
@@ -17,21 +15,27 @@
 }
 
 html {
-  font-size: var.$base-font-size; // Set base font size for rem units
+  font-size: 16px; // Set base font size for rem units
   scroll-behavior: smooth; // Enable smooth scrolling for anchor links (can be overridden by JS like Lenis)
   height: 100%; // Ensure html takes full height
 }
 
+html::-webkit-scrollbar { 
+  -ms-overflow-style: none;
+  overflow: -moz-scrollbars-none;
+  width: 0 !important 
+}
+
 body {
   min-height: 100%; // Ensure body takes at least full viewport height
-  line-height: var.$line-height-normal; // Set default line height
-  font-family: var.$font-family-custom; // Apply custom font stack
-  // Apply base text and background colors using CSS variables (defined later)
+  line-height: var(--line-height-normal); // Set default line height
+  font-family: var(--font-family-custom); // Apply custom font stack
+  // Apply base text and background colors using CSS variables
   color: var(--text-primary);
   background-color: var(--bg-primary);
   // Add transition for color/background changes (theme switching)
-  transition: background-color var.$transition-duration-normal var.$transition-timing-function,
-              color var.$transition-duration-normal var.$transition-timing-function;
+  transition: background-color var(--transition-duration-normal) var(--transition-timing-function),
+              color var(--transition-duration-normal) var(--transition-timing-function);
 }
 
 // --- Container ---
@@ -39,17 +43,9 @@ body {
 
 .container {
   width: 100%;
-  max-width: var.$container-max-width;
+  max-width: var(--container-max-width);
   margin-left: auto;
   margin-right: auto;
-  padding-left: var.$space-xl; // Add horizontal padding (e.g., 16px)
-  padding-right: var.$space-xl;
-
-  // Optional: Adjust padding for smaller screens
-  @media (max-width: var.$breakpoint-sm) {
-    padding-left: var.$space-lg; // e.g., 12px
-    padding-right: var.$space-lg;
-  }
 }
 
 // --- Basic Section Spacing ---
@@ -57,51 +53,6 @@ body {
 
 section,
 .section { // Allow using <section> tag or a class
-  padding-top: var.$space-xxxxl; // e.g., 48px
-  padding-bottom: var.$space-xxxxl;
-
-  @media (max-width: var.$breakpoint-md) {
-    padding-top: var.$space-xxxl; // e.g., 32px
-    padding-bottom: var.$space-xxxl;
-  }
+  padding-top: var(--space-xxxl);
+  padding-bottom: var(--space-xxxl);
 }
-
-// --- Basic Grid (Optional Example) ---
-// Simple flexbox-based grid system
-
-.grid {
-  display: grid;
-  gap: var.$space-xl; // Default gap (e.g., 16px)
-
-  // Example column definitions (adjust as needed)
-  &--cols-1 { grid-template-columns: 1fr; }
-  &--cols-2 { grid-template-columns: repeat(2, 1fr); }
-  &--cols-3 { grid-template-columns: repeat(3, 1fr); }
-  &--cols-4 { grid-template-columns: repeat(4, 1fr); }
-  // Add responsive variations
-  @media (max-width: var.$breakpoint-md) {
-    &--cols-md-2 { grid-template-columns: repeat(2, 1fr); }
-    &--cols-md-1 { grid-template-columns: 1fr; }
-  }
-   @media (max-width: var.$breakpoint-sm) {
-    &--cols-sm-1 { grid-template-columns: 1fr; }
-  }
-}
-
-// --- Visually Hidden ---
-// Hide element visually but keep it accessible to screen readers
-
-.visually-hidden {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
-}
-
-// --- Other Layout Helpers ---
-// Add more as needed, e.g., .flex-center, .stack, etc.

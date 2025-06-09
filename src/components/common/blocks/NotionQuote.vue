@@ -18,4 +18,7 @@ const props = defineProps({
 
 <style scoped lang="scss">
 /* Add specific blockquote styles here if needed beyond global 'blockquote' styles */
+blockquote {
+  margin: 12px 0;
+}
 </style>

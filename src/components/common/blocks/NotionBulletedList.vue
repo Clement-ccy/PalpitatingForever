@@ -38,6 +38,6 @@ ul {
   // Base styles are in _typographism.scss
   // Add specific styles for the list container if needed
   // e.g., adjust margin/padding based on level
-  // padding-left: calc(var.$space-xxl + #{props.level} * var.$space-xl); // Example dynamic padding
+  // padding-left: calc(var(--space-xxl) + #{props.level} * var(--space-xl)); // Example dynamic padding
 }
 </style>

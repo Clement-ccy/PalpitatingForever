@@ -13,6 +13,7 @@ export const useAudioStore = defineStore('audio', () => {
   const volume = ref(0.75);
   const isMuted = ref(false); // Optional: Mute state
   const loopMode = ref('none'); // 'none', 'track', 'playlist'
+  const isPlayerVisible = ref(true); // Control player visibility
 
   // --- Getters (Computed) ---
   const hasTrack = computed(() => !!currentTrack.value);
@@ -129,6 +130,14 @@ export const useAudioStore = defineStore('audio', () => {
       // If at the beginning and no loop, do nothing or maybe restart current track?
   }
 
+  function togglePlayerVisibility() {
+    isPlayerVisible.value = !isPlayerVisible.value;
+  }
+
+  function setPlayerVisibility(visible) {
+    isPlayerVisible.value = visible;
+  }
+
   // --- Return state and actions ---
   return {
     // State
@@ -141,6 +150,7 @@ export const useAudioStore = defineStore('audio', () => {
     volume,
     isMuted,
     loopMode,
+    isPlayerVisible,
     // Getters
     hasTrack,
     canPlayNext,
@@ -159,5 +169,7 @@ export const useAudioStore = defineStore('audio', () => {
     setLoopMode,
     nextTrack,
     prevTrack,
+    togglePlayerVisibility,
+    setPlayerVisibility,
   };
 });

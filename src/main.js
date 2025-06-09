@@ -20,6 +20,7 @@ import mermaid from 'mermaid';
 import router from './router' // Correct the router import path
 import { createApp } from 'vue'
 import { createPinia } from 'pinia' // Import Pinia
+import VueKonva from 'vue-konva'; // Import vue-konva
 import App from './App.vue'
 
 // Register the languages you need
@@ -46,5 +47,6 @@ mermaid.initialize({
 });
 
 app.use(pinia); // Use Pinia
+app.use(VueKonva); // Use vue-konva
 app.use(router);
 app.mount('#app');

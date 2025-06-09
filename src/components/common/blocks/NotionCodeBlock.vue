@@ -94,24 +94,24 @@ watch([codeContent, language], () => {
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 .notion-code-block {
   position: relative; // For potential copy button positioning
-  margin: var.$space-lg 0; // Add margin to the block itself
+  margin: var(--space-lg) 0; // Add margin to the block itself
 
   pre, .mermaid-container { // Apply common styles to both
     margin-bottom: 0; // Remove margin if caption exists below
     background-color: var(--bg-secondary); // Ensure background
-    padding: var.$space-lg var.$space-xl;
-    border-radius: var.$radius-md;
+    padding: var(--space-lg) var(--space-xl);
+    border-radius: var(--radius-md);
     overflow-x: auto;
-    font-size: var.$font-size-footnote; // Consistent font size
+    font-size: var(--font-size-footnote); // Consistent font size
   }
 
   .mermaid-container {
       // Specific styles for mermaid container
-      padding: var.$space-lg; // Mermaid might need padding inside
+      padding: var(--space-lg); // Mermaid might need padding inside
       line-height: 0; // Prevent extra space from initial text node
       text-align: center; // Center diagram by default
 
@@ -130,7 +130,7 @@ watch([codeContent, language], () => {
           padding: 0;
           margin: 0;
           text-align: left;
-          font-size: var.$font-size-caption1;
+          font-size: var(--font-size-caption1);
           white-space: pre-wrap;
       }
   }
@@ -142,11 +142,11 @@ watch([codeContent, language], () => {
   }
 
   figcaption {
-    font-size: var.$font-size-caption1;
+    font-size: var(--font-size-caption1);
     color: var(--text-secondary);
     text-align: center;
-    margin-top: var.$space-sm;
-    padding: 0 var.$space-xl; // Match pre padding
+    margin-top: var(--space-sm);
+    padding: 0 var(--space-xl); // Match pre padding
   }
 
   // Add styles for copy button later

@@ -55,26 +55,26 @@ const bodyRows = computed(() => {
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 .notion-table-wrapper {
   overflow-x: auto; // Allow horizontal scrolling for wide tables
-  margin: var.$space-lg 0;
+  margin: var(--space-lg) 0;
   max-width: 100%;
   border: 1px solid var(--separator-primary); // Add border to wrapper for better scroll context
-  border-radius: var.$radius-sm; // Optional radius for wrapper
+  border-radius: var(--radius-sm); // Optional radius for wrapper
 }
 
 table {
   width: 100%; // Make table take full width of wrapper
   border-collapse: collapse; // Collapse borders
   border-spacing: 0;
-  font-size: var.$font-size-footnote; // Tables often use smaller text
+  font-size: var(--font-size-footnote); // Tables often use smaller text
   // border: 1px solid var(--separator-primary); // Outer border moved to wrapper
 
   th, td {
     border: 1px solid var(--separator-primary); // Cell borders
-    padding: var.$space-sm var.$space-md;
+    padding: var(--space-sm) var(--space-md);
     text-align: left;
     vertical-align: top; // Align content to top
     // Ensure rich text inside doesn't add extra margins
@@ -86,7 +86,7 @@ table {
   thead {
     background-color: var(--bg-secondary); // Header background
     th {
-      font-weight: var.$font-weight-semibold; // Bolder header text
+      font-weight: var(--font-weight-semibold); // Bolder header text
       vertical-align: middle; // Center header text vertically
       position: sticky; // Make header sticky within the wrapper
       top: 0; // Stick to the top of the wrapper
@@ -98,9 +98,9 @@ table {
   tbody {
     tr:nth-child(even) {
       // Optional: Zebra striping for readability
-      // background-color: rgba(var.$light-text-primary, 0.03);
+      // background-color: rgba(var(--light-text-primary), 0.03);
       // [data-theme="dark"] & {
-      //    background-color: rgba(var.$dark-text-primary, 0.05);
+      //    background-color: rgba(var(--dark-text-primary), 0.05);
       // }
     }
   }

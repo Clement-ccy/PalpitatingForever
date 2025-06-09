@@ -2,48 +2,28 @@
   {
     "id": "1e3ec12a-acd9-806c-b666-c70d46cdef80",
     "object": "page",
-    "title": "敦煌韵",
-    "audioFile": null,
+    "title": "予感 - 羊文学",
+    "audioFile": {
+      "name": "予感 - 羊文学.mp3",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/5880fe32-4d58-40b5-b402-2a3b245ce6e4/%E4%BA%88%E6%84%9F_-_%E7%BE%8A%E6%96%87%E5%AD%A6.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TTYJFZ5P%2F20250609%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250609T150546Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDePqV1R8nY8SFJ86r%2FW1gquHexIYVln5r5ZTT%2FCjsAewIhANzJG3jMGvnhaGqosmwW5V7C6mE9TYqFFZnLmkyyF73GKogECKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9vzgtmWPSR1Mkyr4q3AOV7aI47qUfgibOb1DhQQLj46eI%2B3%2BvqTXgCB62LA267d2%2FJyt%2BMGZDXT8Mp1pwbjB9vGobYrnptTN%2BCS2M%2B5pxqg5nT9xkWrvK51pKKEtHseKc8gDYMXiu%2Fm1Blffi8hxHnlwU3%2FLLhJzJXhklrcK2Q3bYVYEMXNee8uPoU4f%2FDGz%2FW31Y3XiFvO9XomE0SywNpN43GsTY9%2FN8YOkAR9LTpEe90rnd8xJA2zpofUvbm5Z5bkL%2BHc3LoltDrSKhTMyaimC5M0%2BRB3C5tW9ejLtbOPTO3zjI2GFrCf%2FR5bQtrmlJtIWSWn9DcEzfhOxsNY17h6luMkwJf6IE747o%2F%2BZxXBLKZM3yxKgZTfbTblLL3L8UtyF7uf276gxjjzaSRetTCtLvb756w5hlWqTr%2FuEpTZLNe0%2BlWuOGGhf1XMngkquc6V14PlQiPq0vtZGmu0JMdOR0aAKwv%2FKh5MjENjIaqTN9HzpurB7GGbP0QF%2BbZn7sx9xUwJi%2FnjhwyU8KqazvO7nz%2B9S%2FeB6I2r3dy1W3VRDzyqfPHgmQU5LZJeqcfLHI4abjalFDLbBSul%2BrHjLL3zAl0TdX5sjFg02PYx4r1OwYq%2BaHOWHgmb%2FwKk%2BDnV0oAea7sqGOeqC54jCB75vCBjqkAYF5IbfVC7GJ6uaRJKII1hHntxfn7caQ%2F9i%2BMMJBLrJGYE0I1VmG20Wymm6FYX6myBCSAoFDJZsAz75iC0VShOS3Hpf0H1%2FONT%2BREhF%2BLK6wbsVX%2FkOIH8eJJ5EX46lEWX82qQts3VW9Wt%2BDeK6tpfcOF6K0U5%2BXxoiHcDX7no%2B9Xi64C8d%2FLGqaHMLwilaQnn8e6MTzWW7C8EQdScckJUpZdHFY&X-Amz-Signature=f3719da4fd1b147209ab72e670c4cdb3fec0ddca859f2c3ea673444b8ba233c4&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "type": "file"
+    },
     "roles": [
-      "作曲 (Composer)",
-      "作词 (Lyricist)",
-      "编曲 (Arranger)",
-      "制作人 (Producer)",
-      "录音师 (Recording Engineer)",
-      "混音师 (Mixing Engineer)",
-      "母带工程师 (Mastering Engineer)",
       "演奏者 (Performer)",
       "演唱者 (Vocalist)"
     ],
     "genre": [
       "流行 (Pop)",
-      "摇滚 (Rock)",
-      "电子 (Electronic)",
-      "嘻哈 (Hip Hop)",
-      "古典 (Classical)",
-      "爵士 (Jazz)",
-      "民谣 (Folk)",
-      "氛围音乐 (Ambient)",
-      "影视配乐 (Soundtrack)",
-      "世界音乐 (World Music)",
-      "实验音乐 (Experimental)"
+      "电子 (Electronic)"
     ],
     "artwork": {
-      "name": "2003.png",
-      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/09215030-69eb-475d-96e2-cd2dd6ddd468/2003.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466YE2GXF2R%2F20250429%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250429T125757Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEPT%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQC7J0M23kNHJfirJDSSg1B9YFdS5Nk7HlYIaHy1mT8qaAIhAIJbVLYLoI5k9juGIXxEFhWVCKGecnL7ey1UECegarVIKogECI3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igz4VQE7%2BAq1COKTQOgq3AMjTHJ7tEgKAqyHtRoI0%2F5gCb1wGKJ64thbvcVCT8EKrKsIY1gDzV090SL9sAyv9ubVI%2FSZZ7BlCrxuR87lwa%2BpRjazsPkNRrzhbcvhS%2BitUxXn7NtYefUQ1rjXhOQxwkHQP4h8c9quH0NT5Pg3rBqe%2FMyR%2BDW85c3yRqLbC0NMar2me5XRDmmpAR%2BsdlxOkUYVZ%2FZRsehwDTWT%2BPfwCu%2FxVKPsxsT7ybp%2F00aSPfVZm44UsHCVPjtzBK4%2Fwbd9Z6f7SwXdQHMVoLc9Ff9g0zL12IVJViLh0j%2B7UIEEiZtzCIWcK0dr%2FP56YwKMGB%2FOIfpaIF8NZmqKMUtj1FMSGnoafQcnEhH4LzBgkSj1S5CSeuog3Nj%2FkcqQca4A8zVLvOMtPlBSSMaG47eB8NeMaB3x544RFkZhj1zfD8VLHqXUJCjwT2bgVLsXl%2FzczdWPIh3XMZ3nmMgPs81Qfw3TgzoL8p%2Bip3VouG0JywkvzHy9Y%2B90Y%2B%2FzASrjxJ8KNsEFwwLfughmqZawYUFISJE6RP%2FSqaPlSjC%2FzaK0hkKGfOfQRjkT5Ov1uM2SMUIgEP%2Bo4KdmP0NZpYnLZyTTZSBkG6HX%2FFX26Jhe1h6iLdt4CYlI4ZiUy79yrHhXgLZPQjDp%2BsLABjqkAeTgTWyGlGlDnkfGIdng%2F5Y61Q3Ws0uu4Z6CCNhO6JZ8EA%2BBatoMvhzntn%2BJn9nuGBwpXCo96rIiXk2IdxfAsFvM9MqbBBqtpk0YWSd3kc1vis7SqBxxGjb3H3R3bpMtQ4G%2B50Yk8sntLkMWcxxvXqvNVdRQ6nYIJyYOGl9zIdqfEDfZMP%2FNz59tPHQIFlzbDTapJJtU1Zfo1cgn4toJ1C6vgj7I&X-Amz-Signature=42246830eaf446709af2c08bec8a7642bf76b1d113b5a43a76a5877d76a91f98&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "name": "our hope.jpg",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/516496e6-4e36-49e6-b4f9-9fd40fed5270/our_hope.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TTYJFZ5P%2F20250609%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250609T150546Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDePqV1R8nY8SFJ86r%2FW1gquHexIYVln5r5ZTT%2FCjsAewIhANzJG3jMGvnhaGqosmwW5V7C6mE9TYqFFZnLmkyyF73GKogECKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9vzgtmWPSR1Mkyr4q3AOV7aI47qUfgibOb1DhQQLj46eI%2B3%2BvqTXgCB62LA267d2%2FJyt%2BMGZDXT8Mp1pwbjB9vGobYrnptTN%2BCS2M%2B5pxqg5nT9xkWrvK51pKKEtHseKc8gDYMXiu%2Fm1Blffi8hxHnlwU3%2FLLhJzJXhklrcK2Q3bYVYEMXNee8uPoU4f%2FDGz%2FW31Y3XiFvO9XomE0SywNpN43GsTY9%2FN8YOkAR9LTpEe90rnd8xJA2zpofUvbm5Z5bkL%2BHc3LoltDrSKhTMyaimC5M0%2BRB3C5tW9ejLtbOPTO3zjI2GFrCf%2FR5bQtrmlJtIWSWn9DcEzfhOxsNY17h6luMkwJf6IE747o%2F%2BZxXBLKZM3yxKgZTfbTblLL3L8UtyF7uf276gxjjzaSRetTCtLvb756w5hlWqTr%2FuEpTZLNe0%2BlWuOGGhf1XMngkquc6V14PlQiPq0vtZGmu0JMdOR0aAKwv%2FKh5MjENjIaqTN9HzpurB7GGbP0QF%2BbZn7sx9xUwJi%2FnjhwyU8KqazvO7nz%2B9S%2FeB6I2r3dy1W3VRDzyqfPHgmQU5LZJeqcfLHI4abjalFDLbBSul%2BrHjLL3zAl0TdX5sjFg02PYx4r1OwYq%2BaHOWHgmb%2FwKk%2BDnV0oAea7sqGOeqC54jCB75vCBjqkAYF5IbfVC7GJ6uaRJKII1hHntxfn7caQ%2F9i%2BMMJBLrJGYE0I1VmG20Wymm6FYX6myBCSAoFDJZsAz75iC0VShOS3Hpf0H1%2FONT%2BREhF%2BLK6wbsVX%2FkOIH8eJJ5EX46lEWX82qQts3VW9Wt%2BDeK6tpfcOF6K0U5%2BXxoiHcDX7no%2B9Xi64C8d%2FLGqaHMLwilaQnn8e6MTzWW7C8EQdScckJUpZdHFY&X-Amz-Signature=93dab955be92235d72d0aa80b1fa92d416eba788b0d93684df04f224c3e25f49&X-Amz-SignedHeaders=host&x-id=GetObject",
       "type": "file"
     },
     "vibe": [
-      "欢快 (Upbeat)",
       "忧伤 (Melancholic)",
-      "平静 (Peaceful)",
-      "史诗 (Epic)",
-      "浪漫 (Romantic)",
-      "紧张 (Suspenseful)",
-      "驱动感 (Driving)",
-      "治愈 (Healing)",
-      "复古 (Retro)",
-      "未来感 (Futuristic)"
+      "平静 (Peaceful)"
     ],
     "key": "C",
     "mode": "小调 (Minor)",
@@ -68,18 +48,11 @@
       }
     ],
     "instrumentation": [
-      "钢琴 (Piano)",
-      "键盘 (Keyboard)",
-      "合成器 (Synthesizer)",
       "原声吉他 (Acoustic Guitar)",
       "电吉他 (Electric Guitar)",
       "贝斯 (Bass)",
-      "鼓组 (Drum Kit)",
       "鼓机 (Drum Machine)",
-      "人声 (Vocals)",
-      "弦乐 (Strings)",
-      "管乐 (Brass/Woodwinds)",
-      "采样 (Samples)"
+      "人声 (Vocals)"
     ],
     "completionDate": {
       "start": "2025-04-28",
@@ -106,8 +79,88 @@
       }
     ],
     "collaborators": [],
-    "lyricsFile": null,
-    "lastEditedTime": "2025-04-28T17:44:00.000Z",
+    "lyricsFile": {
+      "name": "予感 - 羊文学.lrc",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/dff9ecda-c91d-4e8c-a39b-019e3763f7fe/%E4%BA%88%E6%84%9F_-_%E7%BE%8A%E6%96%87%E5%AD%A6.lrc?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TTYJFZ5P%2F20250609%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250609T150546Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDePqV1R8nY8SFJ86r%2FW1gquHexIYVln5r5ZTT%2FCjsAewIhANzJG3jMGvnhaGqosmwW5V7C6mE9TYqFFZnLmkyyF73GKogECKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9vzgtmWPSR1Mkyr4q3AOV7aI47qUfgibOb1DhQQLj46eI%2B3%2BvqTXgCB62LA267d2%2FJyt%2BMGZDXT8Mp1pwbjB9vGobYrnptTN%2BCS2M%2B5pxqg5nT9xkWrvK51pKKEtHseKc8gDYMXiu%2Fm1Blffi8hxHnlwU3%2FLLhJzJXhklrcK2Q3bYVYEMXNee8uPoU4f%2FDGz%2FW31Y3XiFvO9XomE0SywNpN43GsTY9%2FN8YOkAR9LTpEe90rnd8xJA2zpofUvbm5Z5bkL%2BHc3LoltDrSKhTMyaimC5M0%2BRB3C5tW9ejLtbOPTO3zjI2GFrCf%2FR5bQtrmlJtIWSWn9DcEzfhOxsNY17h6luMkwJf6IE747o%2F%2BZxXBLKZM3yxKgZTfbTblLL3L8UtyF7uf276gxjjzaSRetTCtLvb756w5hlWqTr%2FuEpTZLNe0%2BlWuOGGhf1XMngkquc6V14PlQiPq0vtZGmu0JMdOR0aAKwv%2FKh5MjENjIaqTN9HzpurB7GGbP0QF%2BbZn7sx9xUwJi%2FnjhwyU8KqazvO7nz%2B9S%2FeB6I2r3dy1W3VRDzyqfPHgmQU5LZJeqcfLHI4abjalFDLbBSul%2BrHjLL3zAl0TdX5sjFg02PYx4r1OwYq%2BaHOWHgmb%2FwKk%2BDnV0oAea7sqGOeqC54jCB75vCBjqkAYF5IbfVC7GJ6uaRJKII1hHntxfn7caQ%2F9i%2BMMJBLrJGYE0I1VmG20Wymm6FYX6myBCSAoFDJZsAz75iC0VShOS3Hpf0H1%2FONT%2BREhF%2BLK6wbsVX%2FkOIH8eJJ5EX46lEWX82qQts3VW9Wt%2BDeK6tpfcOF6K0U5%2BXxoiHcDX7no%2B9Xi64C8d%2FLGqaHMLwilaQnn8e6MTzWW7C8EQdScckJUpZdHFY&X-Amz-Signature=42f4a5910da29b6a2d1f09ada0f675562f1d30b985b847cfb5b0a8a3dc9bc6da&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "type": "file"
+    },
+    "lastEditedTime": "2025-05-05T09:12:00.000Z",
     "createdTime": "2025-04-28T17:15:00.000Z"
+  },
+  {
+    "id": "20aec12a-acd9-80f6-992e-edc813ee2936",
+    "object": "page",
+    "title": "君に聴かせたかった歌 - H△G",
+    "audioFile": {
+      "name": "君に聴かせたかった歌 - H△G.mp3",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/9cc2f073-1ea7-4645-ab20-1ac73fcd03fb/%E5%90%9B%E3%81%AB%E8%81%B4%E3%81%8B%E3%81%9B%E3%81%9F%E3%81%8B%E3%81%A3%E3%81%9F%E6%AD%8C_-_HG.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TTYJFZ5P%2F20250609%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250609T150546Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDePqV1R8nY8SFJ86r%2FW1gquHexIYVln5r5ZTT%2FCjsAewIhANzJG3jMGvnhaGqosmwW5V7C6mE9TYqFFZnLmkyyF73GKogECKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9vzgtmWPSR1Mkyr4q3AOV7aI47qUfgibOb1DhQQLj46eI%2B3%2BvqTXgCB62LA267d2%2FJyt%2BMGZDXT8Mp1pwbjB9vGobYrnptTN%2BCS2M%2B5pxqg5nT9xkWrvK51pKKEtHseKc8gDYMXiu%2Fm1Blffi8hxHnlwU3%2FLLhJzJXhklrcK2Q3bYVYEMXNee8uPoU4f%2FDGz%2FW31Y3XiFvO9XomE0SywNpN43GsTY9%2FN8YOkAR9LTpEe90rnd8xJA2zpofUvbm5Z5bkL%2BHc3LoltDrSKhTMyaimC5M0%2BRB3C5tW9ejLtbOPTO3zjI2GFrCf%2FR5bQtrmlJtIWSWn9DcEzfhOxsNY17h6luMkwJf6IE747o%2F%2BZxXBLKZM3yxKgZTfbTblLL3L8UtyF7uf276gxjjzaSRetTCtLvb756w5hlWqTr%2FuEpTZLNe0%2BlWuOGGhf1XMngkquc6V14PlQiPq0vtZGmu0JMdOR0aAKwv%2FKh5MjENjIaqTN9HzpurB7GGbP0QF%2BbZn7sx9xUwJi%2FnjhwyU8KqazvO7nz%2B9S%2FeB6I2r3dy1W3VRDzyqfPHgmQU5LZJeqcfLHI4abjalFDLbBSul%2BrHjLL3zAl0TdX5sjFg02PYx4r1OwYq%2BaHOWHgmb%2FwKk%2BDnV0oAea7sqGOeqC54jCB75vCBjqkAYF5IbfVC7GJ6uaRJKII1hHntxfn7caQ%2F9i%2BMMJBLrJGYE0I1VmG20Wymm6FYX6myBCSAoFDJZsAz75iC0VShOS3Hpf0H1%2FONT%2BREhF%2BLK6wbsVX%2FkOIH8eJJ5EX46lEWX82qQts3VW9Wt%2BDeK6tpfcOF6K0U5%2BXxoiHcDX7no%2B9Xi64C8d%2FLGqaHMLwilaQnn8e6MTzWW7C8EQdScckJUpZdHFY&X-Amz-Signature=205aa0e9a628ca5ff7450d5b8aeea52d6f4b4a52b223d3ef7e85b355895d0b68&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "type": "file"
+    },
+    "roles": [
+      "演唱者 (Vocalist)"
+    ],
+    "genre": [
+      "流行 (Pop)"
+    ],
+    "artwork": {
+      "name": "君に聴かせたかった歌 - H△G.jpg",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/68fa5d38-fad3-4c1c-9d14-132dde312ea9/%E5%90%9B%E3%81%AB%E8%81%B4%E3%81%8B%E3%81%9B%E3%81%9F%E3%81%8B%E3%81%A3%E3%81%9F%E6%AD%8C_-_HG.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TTYJFZ5P%2F20250609%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250609T150546Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDePqV1R8nY8SFJ86r%2FW1gquHexIYVln5r5ZTT%2FCjsAewIhANzJG3jMGvnhaGqosmwW5V7C6mE9TYqFFZnLmkyyF73GKogECKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9vzgtmWPSR1Mkyr4q3AOV7aI47qUfgibOb1DhQQLj46eI%2B3%2BvqTXgCB62LA267d2%2FJyt%2BMGZDXT8Mp1pwbjB9vGobYrnptTN%2BCS2M%2B5pxqg5nT9xkWrvK51pKKEtHseKc8gDYMXiu%2Fm1Blffi8hxHnlwU3%2FLLhJzJXhklrcK2Q3bYVYEMXNee8uPoU4f%2FDGz%2FW31Y3XiFvO9XomE0SywNpN43GsTY9%2FN8YOkAR9LTpEe90rnd8xJA2zpofUvbm5Z5bkL%2BHc3LoltDrSKhTMyaimC5M0%2BRB3C5tW9ejLtbOPTO3zjI2GFrCf%2FR5bQtrmlJtIWSWn9DcEzfhOxsNY17h6luMkwJf6IE747o%2F%2BZxXBLKZM3yxKgZTfbTblLL3L8UtyF7uf276gxjjzaSRetTCtLvb756w5hlWqTr%2FuEpTZLNe0%2BlWuOGGhf1XMngkquc6V14PlQiPq0vtZGmu0JMdOR0aAKwv%2FKh5MjENjIaqTN9HzpurB7GGbP0QF%2BbZn7sx9xUwJi%2FnjhwyU8KqazvO7nz%2B9S%2FeB6I2r3dy1W3VRDzyqfPHgmQU5LZJeqcfLHI4abjalFDLbBSul%2BrHjLL3zAl0TdX5sjFg02PYx4r1OwYq%2BaHOWHgmb%2FwKk%2BDnV0oAea7sqGOeqC54jCB75vCBjqkAYF5IbfVC7GJ6uaRJKII1hHntxfn7caQ%2F9i%2BMMJBLrJGYE0I1VmG20Wymm6FYX6myBCSAoFDJZsAz75iC0VShOS3Hpf0H1%2FONT%2BREhF%2BLK6wbsVX%2FkOIH8eJJ5EX46lEWX82qQts3VW9Wt%2BDeK6tpfcOF6K0U5%2BXxoiHcDX7no%2B9Xi64C8d%2FLGqaHMLwilaQnn8e6MTzWW7C8EQdScckJUpZdHFY&X-Amz-Signature=1868a96793d0889174469d452e28eb7959f4841293281e1eb438522e6b17bb5b&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "type": "file"
+    },
+    "vibe": [],
+    "key": null,
+    "mode": null,
+    "bpm": null,
+    "timeSignature": [],
+    "instrumentation": [],
+    "completionDate": null,
+    "album": [],
+    "collaborators": [],
+    "lyricsFile": {
+      "name": "君に聴かせたかった歌 - H△G.lrc",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/57bd86b0-a791-49bb-9105-91c4339d351a/%E5%90%9B%E3%81%AB%E8%81%B4%E3%81%8B%E3%81%9B%E3%81%9F%E3%81%8B%E3%81%A3%E3%81%9F%E6%AD%8C_-_HG.lrc?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TTYJFZ5P%2F20250609%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250609T150546Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDePqV1R8nY8SFJ86r%2FW1gquHexIYVln5r5ZTT%2FCjsAewIhANzJG3jMGvnhaGqosmwW5V7C6mE9TYqFFZnLmkyyF73GKogECKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9vzgtmWPSR1Mkyr4q3AOV7aI47qUfgibOb1DhQQLj46eI%2B3%2BvqTXgCB62LA267d2%2FJyt%2BMGZDXT8Mp1pwbjB9vGobYrnptTN%2BCS2M%2B5pxqg5nT9xkWrvK51pKKEtHseKc8gDYMXiu%2Fm1Blffi8hxHnlwU3%2FLLhJzJXhklrcK2Q3bYVYEMXNee8uPoU4f%2FDGz%2FW31Y3XiFvO9XomE0SywNpN43GsTY9%2FN8YOkAR9LTpEe90rnd8xJA2zpofUvbm5Z5bkL%2BHc3LoltDrSKhTMyaimC5M0%2BRB3C5tW9ejLtbOPTO3zjI2GFrCf%2FR5bQtrmlJtIWSWn9DcEzfhOxsNY17h6luMkwJf6IE747o%2F%2BZxXBLKZM3yxKgZTfbTblLL3L8UtyF7uf276gxjjzaSRetTCtLvb756w5hlWqTr%2FuEpTZLNe0%2BlWuOGGhf1XMngkquc6V14PlQiPq0vtZGmu0JMdOR0aAKwv%2FKh5MjENjIaqTN9HzpurB7GGbP0QF%2BbZn7sx9xUwJi%2FnjhwyU8KqazvO7nz%2B9S%2FeB6I2r3dy1W3VRDzyqfPHgmQU5LZJeqcfLHI4abjalFDLbBSul%2BrHjLL3zAl0TdX5sjFg02PYx4r1OwYq%2BaHOWHgmb%2FwKk%2BDnV0oAea7sqGOeqC54jCB75vCBjqkAYF5IbfVC7GJ6uaRJKII1hHntxfn7caQ%2F9i%2BMMJBLrJGYE0I1VmG20Wymm6FYX6myBCSAoFDJZsAz75iC0VShOS3Hpf0H1%2FONT%2BREhF%2BLK6wbsVX%2FkOIH8eJJ5EX46lEWX82qQts3VW9Wt%2BDeK6tpfcOF6K0U5%2BXxoiHcDX7no%2B9Xi64C8d%2FLGqaHMLwilaQnn8e6MTzWW7C8EQdScckJUpZdHFY&X-Amz-Signature=ab0aab9557dbea01a154d5b7e49475272793cf2c0f1bf543acf2c05f294df28a&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "type": "file"
+    },
+    "lastEditedTime": "2025-06-06T20:54:00.000Z",
+    "createdTime": "2025-06-06T20:53:00.000Z"
+  },
+  {
+    "id": "1eaec12a-acd9-809b-bba1-df084c6c2573",
+    "object": "page",
+    "title": "星見る頃を過ぎても - H△G",
+    "audioFile": {
+      "name": "星見る頃を過ぎても - H△G.mp3",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/cb587b00-6fbb-4274-b6ee-79f635fc0a00/%E6%98%9F%E8%A6%8B%E3%82%8B%E9%A0%83%E3%82%92%E9%81%8E%E3%81%8E%E3%81%A6%E3%82%82_-_HG.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TTYJFZ5P%2F20250609%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250609T150546Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDePqV1R8nY8SFJ86r%2FW1gquHexIYVln5r5ZTT%2FCjsAewIhANzJG3jMGvnhaGqosmwW5V7C6mE9TYqFFZnLmkyyF73GKogECKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9vzgtmWPSR1Mkyr4q3AOV7aI47qUfgibOb1DhQQLj46eI%2B3%2BvqTXgCB62LA267d2%2FJyt%2BMGZDXT8Mp1pwbjB9vGobYrnptTN%2BCS2M%2B5pxqg5nT9xkWrvK51pKKEtHseKc8gDYMXiu%2Fm1Blffi8hxHnlwU3%2FLLhJzJXhklrcK2Q3bYVYEMXNee8uPoU4f%2FDGz%2FW31Y3XiFvO9XomE0SywNpN43GsTY9%2FN8YOkAR9LTpEe90rnd8xJA2zpofUvbm5Z5bkL%2BHc3LoltDrSKhTMyaimC5M0%2BRB3C5tW9ejLtbOPTO3zjI2GFrCf%2FR5bQtrmlJtIWSWn9DcEzfhOxsNY17h6luMkwJf6IE747o%2F%2BZxXBLKZM3yxKgZTfbTblLL3L8UtyF7uf276gxjjzaSRetTCtLvb756w5hlWqTr%2FuEpTZLNe0%2BlWuOGGhf1XMngkquc6V14PlQiPq0vtZGmu0JMdOR0aAKwv%2FKh5MjENjIaqTN9HzpurB7GGbP0QF%2BbZn7sx9xUwJi%2FnjhwyU8KqazvO7nz%2B9S%2FeB6I2r3dy1W3VRDzyqfPHgmQU5LZJeqcfLHI4abjalFDLbBSul%2BrHjLL3zAl0TdX5sjFg02PYx4r1OwYq%2BaHOWHgmb%2FwKk%2BDnV0oAea7sqGOeqC54jCB75vCBjqkAYF5IbfVC7GJ6uaRJKII1hHntxfn7caQ%2F9i%2BMMJBLrJGYE0I1VmG20Wymm6FYX6myBCSAoFDJZsAz75iC0VShOS3Hpf0H1%2FONT%2BREhF%2BLK6wbsVX%2FkOIH8eJJ5EX46lEWX82qQts3VW9Wt%2BDeK6tpfcOF6K0U5%2BXxoiHcDX7no%2B9Xi64C8d%2FLGqaHMLwilaQnn8e6MTzWW7C8EQdScckJUpZdHFY&X-Amz-Signature=f720a95322305209639eaf51c27c75c61cdeb2088ee8ced358d10f7409555116&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "type": "file"
+    },
+    "roles": [
+      "演唱者 (Vocalist)"
+    ],
+    "genre": [
+      "流行 (Pop)"
+    ],
+    "artwork": {
+      "name": "声 ~VOCALOID Cover Album~.jpeg",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/73391b92-394c-4b3e-86ba-e183a8a0d21c/%E5%A3%B0_VOCALOID_Cover_Album.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TTYJFZ5P%2F20250609%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250609T150546Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDePqV1R8nY8SFJ86r%2FW1gquHexIYVln5r5ZTT%2FCjsAewIhANzJG3jMGvnhaGqosmwW5V7C6mE9TYqFFZnLmkyyF73GKogECKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9vzgtmWPSR1Mkyr4q3AOV7aI47qUfgibOb1DhQQLj46eI%2B3%2BvqTXgCB62LA267d2%2FJyt%2BMGZDXT8Mp1pwbjB9vGobYrnptTN%2BCS2M%2B5pxqg5nT9xkWrvK51pKKEtHseKc8gDYMXiu%2Fm1Blffi8hxHnlwU3%2FLLhJzJXhklrcK2Q3bYVYEMXNee8uPoU4f%2FDGz%2FW31Y3XiFvO9XomE0SywNpN43GsTY9%2FN8YOkAR9LTpEe90rnd8xJA2zpofUvbm5Z5bkL%2BHc3LoltDrSKhTMyaimC5M0%2BRB3C5tW9ejLtbOPTO3zjI2GFrCf%2FR5bQtrmlJtIWSWn9DcEzfhOxsNY17h6luMkwJf6IE747o%2F%2BZxXBLKZM3yxKgZTfbTblLL3L8UtyF7uf276gxjjzaSRetTCtLvb756w5hlWqTr%2FuEpTZLNe0%2BlWuOGGhf1XMngkquc6V14PlQiPq0vtZGmu0JMdOR0aAKwv%2FKh5MjENjIaqTN9HzpurB7GGbP0QF%2BbZn7sx9xUwJi%2FnjhwyU8KqazvO7nz%2B9S%2FeB6I2r3dy1W3VRDzyqfPHgmQU5LZJeqcfLHI4abjalFDLbBSul%2BrHjLL3zAl0TdX5sjFg02PYx4r1OwYq%2BaHOWHgmb%2FwKk%2BDnV0oAea7sqGOeqC54jCB75vCBjqkAYF5IbfVC7GJ6uaRJKII1hHntxfn7caQ%2F9i%2BMMJBLrJGYE0I1VmG20Wymm6FYX6myBCSAoFDJZsAz75iC0VShOS3Hpf0H1%2FONT%2BREhF%2BLK6wbsVX%2FkOIH8eJJ5EX46lEWX82qQts3VW9Wt%2BDeK6tpfcOF6K0U5%2BXxoiHcDX7no%2B9Xi64C8d%2FLGqaHMLwilaQnn8e6MTzWW7C8EQdScckJUpZdHFY&X-Amz-Signature=aec07b071a0a71fb81b48718ec66cc0d058f6add9045092a4d37ca254bd25223&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "type": "file"
+    },
+    "vibe": [
+      "忧伤 (Melancholic)"
+    ],
+    "key": null,
+    "mode": null,
+    "bpm": null,
+    "timeSignature": [],
+    "instrumentation": [],
+    "completionDate": null,
+    "album": [],
+    "collaborators": [],
+    "lyricsFile": {
+      "name": "星見る頃を過ぎても - H△G.lrc",
+      "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/7f70e9ce-3b38-49ab-9e89-c3209752779a/%E6%98%9F%E8%A6%8B%E3%82%8B%E9%A0%83%E3%82%92%E9%81%8E%E3%81%8E%E3%81%A6%E3%82%82_-_HG.lrc?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466TTYJFZ5P%2F20250609%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20250609T150546Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEM%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDePqV1R8nY8SFJ86r%2FW1gquHexIYVln5r5ZTT%2FCjsAewIhANzJG3jMGvnhaGqosmwW5V7C6mE9TYqFFZnLmkyyF73GKogECKj%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1Igx9vzgtmWPSR1Mkyr4q3AOV7aI47qUfgibOb1DhQQLj46eI%2B3%2BvqTXgCB62LA267d2%2FJyt%2BMGZDXT8Mp1pwbjB9vGobYrnptTN%2BCS2M%2B5pxqg5nT9xkWrvK51pKKEtHseKc8gDYMXiu%2Fm1Blffi8hxHnlwU3%2FLLhJzJXhklrcK2Q3bYVYEMXNee8uPoU4f%2FDGz%2FW31Y3XiFvO9XomE0SywNpN43GsTY9%2FN8YOkAR9LTpEe90rnd8xJA2zpofUvbm5Z5bkL%2BHc3LoltDrSKhTMyaimC5M0%2BRB3C5tW9ejLtbOPTO3zjI2GFrCf%2FR5bQtrmlJtIWSWn9DcEzfhOxsNY17h6luMkwJf6IE747o%2F%2BZxXBLKZM3yxKgZTfbTblLL3L8UtyF7uf276gxjjzaSRetTCtLvb756w5hlWqTr%2FuEpTZLNe0%2BlWuOGGhf1XMngkquc6V14PlQiPq0vtZGmu0JMdOR0aAKwv%2FKh5MjENjIaqTN9HzpurB7GGbP0QF%2BbZn7sx9xUwJi%2FnjhwyU8KqazvO7nz%2B9S%2FeB6I2r3dy1W3VRDzyqfPHgmQU5LZJeqcfLHI4abjalFDLbBSul%2BrHjLL3zAl0TdX5sjFg02PYx4r1OwYq%2BaHOWHgmb%2FwKk%2BDnV0oAea7sqGOeqC54jCB75vCBjqkAYF5IbfVC7GJ6uaRJKII1hHntxfn7caQ%2F9i%2BMMJBLrJGYE0I1VmG20Wymm6FYX6myBCSAoFDJZsAz75iC0VShOS3Hpf0H1%2FONT%2BREhF%2BLK6wbsVX%2FkOIH8eJJ5EX46lEWX82qQts3VW9Wt%2BDeK6tpfcOF6K0U5%2BXxoiHcDX7no%2B9Xi64C8d%2FLGqaHMLwilaQnn8e6MTzWW7C8EQdScckJUpZdHFY&X-Amz-Signature=8754fdc7241b6b4b3a397d1973b9bfc0584722d33596b4630cefad60b31b956f&X-Amz-SignedHeaders=host&x-id=GetObject",
+      "type": "file"
+    },
+    "lastEditedTime": "2025-05-05T09:09:00.000Z",
+    "createdTime": "2025-05-05T07:56:00.000Z"
   }
 ]

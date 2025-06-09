@@ -32,7 +32,7 @@ const hasChildren = props.block.has_children && props.block.bulleted_list_item.c
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 li {
   // Base styles are in _typographism.scss
@@ -43,7 +43,7 @@ li {
   // Add indentation or specific styling for nested lists
   // This div wrapper might not be ideal, styling direct ul/ol might be better
   // if list grouping is implemented in the parent renderer.
-  margin-left: var.$space-xl; // Example indentation
-  margin-top: var.$space-xs; // Space before nested list
+  margin-left: var(--space-xl); // Example indentation
+  margin-top: var(--space-xs); // Space before nested list
 }
 </style>

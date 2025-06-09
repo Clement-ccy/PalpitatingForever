@@ -58,8 +58,7 @@ async function fetchBlocksRecursive(blockId) {
     return blocks;
   } catch (error) {
       console.error(`❌ Error fetching blocks for ID ${blockId}:`, error.message);
-      // Depending on severity, you might want to return [] or re-throw
-      return []; // Return empty array on error for this block level
+      return [];
   }
 }
 
@@ -88,22 +87,16 @@ async function getAllPagesFromDatabase(databaseId, filter, sorts) {
     return pages;
   } catch (error) {
     console.error(`❌ Error querying database ${databaseId}:`, error.message);
-    return []; // Return empty on error
+    return [];
   }
 }
 
 /**
  * Safely gets a property value from a Notion page properties object.
- * Handles different property types and potential null/undefined values.
- * @param {object} properties - The Notion page properties object.
- * @param {string} propName - The name of the property.
- * @param {'title'|'rich_text'|'select'|'multi_select'|'date'|'files'|'status'|'checkbox'|'number'|'url'|'email'|'phone_number'} type - The expected property type.
- * @returns {*} - The extracted property value or a default value (e.g., '', [], null).
  */
 function getPropertyValue(properties, propName, type) {
     const prop = properties?.[propName];
     if (!prop) {
-        // Return appropriate default based on type
         switch (type) {
             case 'title': return '';
             case 'rich_text': return [];
@@ -113,23 +106,19 @@ function getPropertyValue(properties, propName, type) {
             default: return null;
         }
     }
-
     try {
         switch (type) {
             case 'title':
                 return prop.title?.[0]?.plain_text || '';
             case 'rich_text':
-                // Return the full rich_text array for frontend rendering flexibility
                 return prop.rich_text || [];
             case 'select':
                 return prop.select?.name || null;
             case 'multi_select':
                 return prop.multi_select?.map(item => item.name) || [];
             case 'date':
-                // Return object with start/end, might be useful
                 return prop.date ? { start: prop.date.start, end: prop.date.end, time_zone: prop.date.time_zone } : null;
             case 'files':
-                 // Return array of file objects (handle 'file' vs 'external')
                 return prop.files?.map(file => ({
                     name: file.name,
                     url: file.type === 'file' ? file.file?.url : file.external?.url,
@@ -140,7 +129,7 @@ function getPropertyValue(properties, propName, type) {
             case 'checkbox':
                 return prop.checkbox || false;
             case 'number':
-                return prop.number; // Can be null
+                return prop.number;
             case 'url':
                 return prop.url || null;
             case 'email':
@@ -153,8 +142,7 @@ function getPropertyValue(properties, propName, type) {
         }
     } catch (error) {
         console.error(`Error accessing property "${propName}" of type "${type}":`, error);
-        // Return appropriate default on error
-         switch (type) {
+        switch (type) {
             case 'title': return '';
             case 'rich_text': return [];
             case 'multi_select': return [];
@@ -165,6 +153,23 @@ function getPropertyValue(properties, propName, type) {
     }
 }
 
+/**
+ * Generates a URL-friendly slug from a string.
+ * @param {string} text - The text to slugify.
+ * @returns {string} - The slugified string.
+ */
+function slugify(text) {
+  if (!text) return '';
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w-]+/g, '') // Remove all non-word chars but hyphens
+    .replace(/--+/g, '-') // Replace multiple - with single -
+    .substring(0, 75); // Truncate to a reasonable length
+}
+
 
 // --- Main Data Fetching Logic ---
 
@@ -172,7 +177,6 @@ async function fetchData() {
   console.log('🚀 Starting data fetch from Notion...');
 
   try {
-    // Ensure output directory exists
     await fs.mkdir(OUTPUT_DIR, { recursive: true });
 
     // --- 1. Fetch Blogs ---
@@ -180,45 +184,35 @@ async function fetchData() {
     const blogFilter = {
        or: [
         { property: 'Status', status: { equals: '需更新 (Needs Update)' } },
-        { property: 'Status', status: { equals: '归档 (Archived)' } },
+        { property: 'Status', status: { equals: '发布 (Published)' } },
       ]
     };
-    const blogSorts = [
-      {
-        property: 'Publish Date', // Use English property name
-        direction: 'descending',
-      },
-    ];
+    const blogSorts = [{ property: 'Publish Date', direction: 'descending' }];
     const blogPages = await getAllPagesFromDatabase(BLOGS_DATABASE_ID, blogFilter, blogSorts);
     const processedBlogs = await Promise.all(blogPages.map(async (page) => {
       const props = page.properties;
-      const title = getPropertyValue(props, 'Name', 'title'); // Assuming 'Title' is correct
-      const mainCategory = getPropertyValue(props, 'Main Category', 'select'); // Use English name
-      // Generate slug: category/post-title
-      const categorySlug = mainCategory || 'uncategorized';
-      const titleSlug = title || page.id;
+      const title = getPropertyValue(props, 'Name', 'title');
+      const mainCategory = getPropertyValue(props, 'Main Category', 'select');
+      const categorySlug = slugify(mainCategory || 'uncategorized');
+      const titleSlug = slugify(title || page.id);
       const slug = `${categorySlug}/${titleSlug}`;
-
       console.log(`  -> Fetching blocks for blog: ${title}`);
-      const blocks = await fetchBlocksRecursive(page.id); // Fetch blocks for each blog post
-
+      const blocks = await fetchBlocksRecursive(page.id);
       return {
         id: page.id,
-        object: 'page', // Add object type for clarity
+        object: 'page',
         title: title,
-        slug: slug, // Generated slug
-        status: getPropertyValue(props, 'Status', 'status'), // English name
+        slug: slug,
+        status: getPropertyValue(props, 'Status', 'status'),
         mainCategory: mainCategory,
-        subCategory: getPropertyValue(props, 'Subcategory', 'select'), // English name
-        tags: getPropertyValue(props, 'Tags', 'multi_select'), // English name
-        coverImage: getPropertyValue(props, 'Cover Image', 'files')?.[0] || null, // English name
-        excerpt: getPropertyValue(props, 'Excerpt', 'rich_text'), // English name
-        publishDate: getPropertyValue(props, 'Publish Date', 'date'), // English name
+        subCategory: getPropertyValue(props, 'Subcategory', 'select'),
+        tags: getPropertyValue(props, 'Tags', 'multi_select'),
+        coverImage: getPropertyValue(props, 'Cover Image', 'files')?.[0] || null,
+        excerpt: getPropertyValue(props, 'Excerpt', 'rich_text'),
+        publishDate: getPropertyValue(props, 'Publish Date', 'date'),
         lastEditedTime: page.last_edited_time,
         createdTime: page.created_time,
-        blocks: blocks, // Store the fetched block structure
-        // Store raw properties if needed for debugging or advanced use cases
-        // rawProperties: props,
+        blocks: blocks,
       };
     }));
     await fs.writeFile(path.join(OUTPUT_DIR, 'blogs.json'), JSON.stringify(processedBlogs, null, 2));
@@ -226,7 +220,7 @@ async function fetchData() {
 
     // --- 2. Fetch Works ---
     console.log('🎨 Fetching Works...');
-     const worksFilter = { // Example: Fetch only featured or completed works
+     const worksFilter = {
        or: [
           { property: 'Featured', checkbox: { equals: true } },
           { property: 'Project Status', status: { equals: '发布 (Published)' } },
@@ -240,16 +234,16 @@ async function fetchData() {
         return {
             id: page.id,
             object: 'page',
-            title: getPropertyValue(props, 'Name', 'title'), // English name
-            status: getPropertyValue(props, 'Project Status', 'status'), // English name
-            mainVisual: getPropertyValue(props, 'Main Visual', 'files')?.[0] || null, // English name
-            category: getPropertyValue(props, 'Project Category', 'select'), // English name
-            tags: getPropertyValue(props, 'Tags', 'multi_select'), // English name
-            skillsUsed: getPropertyValue(props, 'Skills Used', 'multi_select'), // English name
-            completionDate: getPropertyValue(props, 'Finish Date', 'date'), // English name
-            description: getPropertyValue(props, 'Project Description', 'rich_text'), // English name
-            context: getPropertyValue(props, 'Context', 'rich_text'), // English name
-            featured: getPropertyValue(props, 'Featured', 'checkbox'), // English name
+            title: getPropertyValue(props, 'Name', 'title'),
+            status: getPropertyValue(props, 'Project Status', 'status'),
+            mainVisual: getPropertyValue(props, 'Main Visual', 'files')?.[0] || null,
+            category: getPropertyValue(props, 'Project Category', 'select'),
+            tags: getPropertyValue(props, 'Tags', 'multi_select'),
+            skillsUsed: getPropertyValue(props, 'Skills Used', 'multi_select'),
+            completionDate: getPropertyValue(props, 'Finish Date', 'date'),
+            description: getPropertyValue(props, 'Project Description', 'rich_text'),
+            context: getPropertyValue(props, 'Context', 'rich_text'),
+            featured: getPropertyValue(props, 'Featured', 'checkbox'),
             lastEditedTime: page.last_edited_time,
             createdTime: page.created_time,
         };
@@ -259,52 +253,63 @@ async function fetchData() {
 
     // --- 3. Fetch Plogs ---
     console.log('📸 Fetching Plogs...');
-    const plogSorts = [ { property: 'Date', direction: 'descending' } ]; // Use English property name
-    const plogPages = await getAllPagesFromDatabase(PLOGS_DATABASE_ID, undefined, plogSorts); // Use undefined for filter
-    const processedPlogs = plogPages.map((page) => {
+    const plogSorts = [ { property: 'Date', direction: 'descending' } ];
+    const plogPages = await getAllPagesFromDatabase(PLOGS_DATABASE_ID, undefined, plogSorts);
+    const processedPlogs = await Promise.all(plogPages.map(async (page) => {
         const props = page.properties;
+        const title = getPropertyValue(props, 'Name', 'title');
+        const dateObj = getPropertyValue(props, 'Date', 'date');
+        const dateString = dateObj?.start?.replace(/-/g, '') || 'nodate'; // YYYYMMDD or 'nodate'
+        const titleSlug = slugify(title || page.id);
+        const plogSlug = `${dateString}-${titleSlug}`;
+
+        console.log(`  -> Fetching blocks for plog: ${title || page.id}`);
+        const blocks = await fetchBlocksRecursive(page.id);
+
         return {
             id: page.id,
             object: 'page',
-            title: getPropertyValue(props, 'Name', 'title'), // English name
-            imageFile: getPropertyValue(props, 'Main Visual', 'files')?.[0] || null, // English name
-            category: getPropertyValue(props, 'Category', 'multi_select'), // English name
-            location: getPropertyValue(props, 'Location', 'rich_text'), // English name
-            date: getPropertyValue(props, 'Date', 'date'), // English name
-            tags: getPropertyValue(props, 'Tags', 'multi_select'), // English name
-            featured: getPropertyValue(props, 'Featured', 'checkbox'), // English name
-            notes: getPropertyValue(props, 'Notes', 'rich_text'), // English name
+            title: title,
+            slug: plogSlug, // Add the generated slug
+            imageFile: getPropertyValue(props, 'Main Visual', 'files')?.[0] || null,
+            category: getPropertyValue(props, 'Category', 'multi_select'),
+            location: getPropertyValue(props, 'Location', 'rich_text'),
+            date: dateObj,
+            tags: getPropertyValue(props, 'Tags', 'multi_select'),
+            featured: getPropertyValue(props, 'Featured', 'checkbox'),
+            notes: getPropertyValue(props, 'Notes', 'rich_text'),
+            blocks: blocks,
             lastEditedTime: page.last_edited_time,
             createdTime: page.created_time,
         };
-    });
+    }));
     await fs.writeFile(path.join(OUTPUT_DIR, 'plogs.json'), JSON.stringify(processedPlogs, null, 2));
     console.log(`✅ Successfully fetched ${processedPlogs.length} plogs.`);
 
     // --- 4. Fetch Mlogs ---
     console.log('🎵 Fetching Mlogs...');
-    const mlogSorts = [ { property: 'Completion Date', direction: 'descending' } ]; // Use English property name
-    const mlogPages = await getAllPagesFromDatabase(MLOGS_DATABASE_ID, undefined, mlogSorts); // Use undefined for filter
+    const mlogSorts = [ { property: 'Completion Date', direction: 'descending' } ];
+    const mlogPages = await getAllPagesFromDatabase(MLOGS_DATABASE_ID, undefined, mlogSorts);
     const processedMlogs = mlogPages.map((page) => {
         const props = page.properties;
         return {
             id: page.id,
             object: 'page',
-            title: getPropertyValue(props, 'Name', 'title'), // English name
-            audioFile: getPropertyValue(props, 'Audio File', 'files')?.[0] || null, // English name
-            roles: getPropertyValue(props, 'My Role', 'multi_select'), // English name
-            genre: getPropertyValue(props, 'Genre', 'multi_select'), // English name
-            artwork: getPropertyValue(props, 'Track Artwork', 'files')?.[0] || null, // English name
-            vibe: getPropertyValue(props, 'Vibe', 'multi_select'), // English name
-            key: getPropertyValue(props, 'Key', 'select'), // English name
-            mode: getPropertyValue(props, 'Mode', 'select'), // English name
-            bpm: getPropertyValue(props, 'BPM', 'number'), // English name (assuming BPM)
-            timeSignature: getPropertyValue(props, 'Time Signature', 'rich_text'), // English name
-            instrumentation: getPropertyValue(props, 'Instrumentation', 'multi_select'), // English name
-            completionDate: getPropertyValue(props, 'Completion Date', 'date'), // English name
-            album: getPropertyValue(props, 'Album', 'rich_text'), // English name
-            collaborators: getPropertyValue(props, 'Collaborators', 'rich_text'), // English name
-            lyricsFile: getPropertyValue(props, 'Lyrics File', 'files')?.[0] || null, // English name
+            title: getPropertyValue(props, 'Name', 'title'),
+            audioFile: getPropertyValue(props, 'Audio File', 'files')?.[0] || null,
+            roles: getPropertyValue(props, 'My Role', 'multi_select'),
+            genre: getPropertyValue(props, 'Genre', 'multi_select'),
+            artwork: getPropertyValue(props, 'Track Artwork', 'files')?.[0] || null,
+            vibe: getPropertyValue(props, 'Vibe', 'multi_select'),
+            key: getPropertyValue(props, 'Key', 'select'),
+            mode: getPropertyValue(props, 'Mode', 'select'),
+            bpm: getPropertyValue(props, 'BPM', 'number'),
+            timeSignature: getPropertyValue(props, 'Time Signature', 'rich_text'),
+            instrumentation: getPropertyValue(props, 'Instrumentation', 'multi_select'),
+            completionDate: getPropertyValue(props, 'Completion Date', 'date'),
+            album: getPropertyValue(props, 'Album', 'rich_text'),
+            collaborators: getPropertyValue(props, 'Collaborators', 'rich_text'),
+            lyricsFile: getPropertyValue(props, 'Lyrics File', 'files')?.[0] || null,
             lastEditedTime: page.last_edited_time,
             createdTime: page.created_time,
         };
@@ -316,7 +321,7 @@ async function fetchData() {
 
   } catch (error) {
     console.error('❌ Fatal error during Notion data fetch:', error);
-    process.exit(1); // Exit with error code
+    process.exit(1);
   }
 }
 

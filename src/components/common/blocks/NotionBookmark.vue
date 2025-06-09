@@ -60,16 +60,16 @@ const displayUrl = computed(() => {
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 .notion-bookmark-wrapper {
-    margin: var.$space-lg 0;
+    margin: var(--space-lg) 0;
 }
 
 a.notion-bookmark {
   display: flex;
   border: 1px solid var(--separator-primary);
-  border-radius: var.$radius-sm;
+  border-radius: var(--radius-sm);
   overflow: hidden;
   text-decoration: none;
   color: inherit; // Inherit text color
@@ -82,7 +82,7 @@ a.notion-bookmark {
 }
 
 .bookmark-content {
-  padding: var.$space-lg var.$space-xl;
+  padding: var(--space-lg) var(--space-xl);
   flex-grow: 1;
   display: flex;
   flex-direction: column;
@@ -91,18 +91,18 @@ a.notion-bookmark {
 }
 
 .bookmark-title {
-  font-weight: var.$font-weight-medium;
-  margin-bottom: var.$space-xs;
+  font-weight: var(--font-weight-medium);
+  margin-bottom: var(--space-xs);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; // Add ellipsis for long titles
-  font-size: var.$font-size-body; // Use body size for title
+  font-size: var(--font-size-body); // Use body size for title
 }
 
 .bookmark-description {
-  font-size: var.$font-size-footnote;
+  font-size: var(--font-size-footnote);
   color: var(--text-secondary);
-  margin-bottom: var.$space-md;
+  margin-bottom: var(--space-md);
   // Limit description lines
   display: -webkit-box;
   -webkit-line-clamp: 2; // Show max 2 lines
@@ -116,8 +116,8 @@ a.notion-bookmark {
 .bookmark-link {
   display: flex;
   align-items: center;
-  gap: var.$space-sm;
-  font-size: var.$font-size-caption1;
+  gap: var(--space-sm);
+  font-size: var(--font-size-caption1);
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
@@ -148,18 +148,18 @@ a.notion-bookmark {
 }
 
 .bookmark-caption {
-    font-size: var.$font-size-caption1;
+    font-size: var(--font-size-caption1);
     color: var(--text-secondary);
     text-align: left; // Align caption with the block
-    margin-top: var.$space-sm;
-    padding: 0 var.$space-xs;
+    margin-top: var(--space-sm);
+    padding: 0 var(--space-xs);
 }
 
 .notion-unsupported { // Copied from NotionUnsupported for consistency
   border: 1px dashed var(--color-warning);
-  padding: var.$space-md;
-  margin: var.$space-lg 0;
-  font-size: var.$font-size-caption1;
+  padding: var(--space-md);
+  margin: var(--space-lg) 0;
+  font-size: var(--font-size-caption1);
   color: var(--text-secondary);
 }
 </style>

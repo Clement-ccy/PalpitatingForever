@@ -11,7 +11,7 @@
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var; // Import variables for use in scoped styles
+
 
 .not-found {
   text-align: center;
@@ -22,24 +22,24 @@
   align-items: center;
 
   h1 {
-    margin-bottom: var.$space-md;
+    margin-bottom: var(--space-md);
   }
 
   p {
     color: var(--text-secondary);
-    margin-bottom: var.$space-xl;
+    margin-bottom: var(--space-xl);
   }
 
   a {
     // Add button-like styling if desired
     // Example:
-    // padding: var.$space-sm var.$space-lg;
+    // padding: var(--space-sm) var(--space-lg);
     // background-color: var(--accent-primary);
     // color: white;
-    // border-radius: var.$radius-md;
+    // border-radius: var(--radius-md);
     // transition: background-color 0.2s ease;
     // &:hover {
-    //   background-color: darken(var.$light-accent-primary, 10%); // Adjust for dark mode too
+    //   background-color: darken(var(--light-accent-primary), 10%); // Adjust for dark mode too
     //   opacity: 1;
     // }
   }

@@ -46,10 +46,10 @@ const caption = computed(() => videoData.value?.caption);
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 figure.notion-video {
-  margin: var.$space-xl 0;
+  margin: var(--space-xl) 0;
 
   .video-wrapper {
     position: relative;
@@ -61,7 +61,7 @@ figure.notion-video {
     width: 100%; // Take full width
     overflow: hidden;
     background-color: #000; // Black background while loading
-    border-radius: var.$radius-md; // Optional radius
+    border-radius: var(--radius-md); // Optional radius
 
     video {
       position: absolute;
@@ -75,18 +75,18 @@ figure.notion-video {
   }
 
   figcaption {
-    font-size: var.$font-size-caption1;
+    font-size: var(--font-size-caption1);
     color: var(--text-secondary);
     text-align: center;
-    margin-top: var.$space-sm;
-    padding: 0 var.$space-md;
+    margin-top: var(--space-sm);
+    padding: 0 var(--space-md);
   }
 }
 .notion-unsupported { // Copied from NotionUnsupported for consistency
   border: 1px dashed var(--color-warning);
-  padding: var.$space-md;
-  margin: var.$space-lg 0;
-  font-size: var.$font-size-caption1;
+  padding: var(--space-md);
+  margin: var(--space-lg) 0;
+  font-size: var(--font-size-caption1);
   color: var(--text-secondary);
 }
 </style>

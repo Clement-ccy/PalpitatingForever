@@ -147,10 +147,10 @@ const renderedSegments = computed(() => {
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var; // Import variables if needed for specific styles
+
 
 /* Add styles for annotation classes if not covered globally */
-.font-bold { font-weight: var.$font-weight-bold; }
+.font-bold { font-weight: var(--font-weight-bold); }
 .italic { font-style: italic; }
 .underline { text-decoration: underline; }
 /* .inline-code { ... } // Style inline code if needed beyond global 'code' tag */
@@ -167,13 +167,13 @@ const renderedSegments = computed(() => {
 .notion-color-pink { color: pink; }
 .notion-color-red { color: red; }
 /* Add background color styles if needed */
-.notion-bg-gray_background { background-color: rgba(120, 120, 128, 0.1); padding: 0.1em 0.3em; border-radius: var.$radius-sm;}
+.notion-bg-gray_background { background-color: rgba(120, 120, 128, 0.1); padding: 0.1em 0.3em; border-radius: var(--radius-sm);}
 /* Add other background colors... */
 
 .notion-mention { // Style for mentions
-    background-color: rgba(var.$light-accent-primary, 0.1);
+    background-color: rgba(var(--light-accent-primary), 0.1);
     padding: 0.1em 0.3em;
-    border-radius: var.$radius-sm;
+    border-radius: var(--radius-sm);
     font-size: 0.9em; // Slightly smaller
     white-space: nowrap; // Prevent mentions from wrapping awkwardly
 }
@@ -197,9 +197,9 @@ a {
 // Style for inline KaTeX errors
 :deep(.katex-error-inline) { // Use :deep() if needed to target v-html content
     color: var(--color-error);
-    background-color: rgba(var.$light-accent-primary, 0.05); // Use a subtle error bg
+    background-color: rgba(var(--light-accent-primary), 0.05); // Use a subtle error bg
     padding: 0.1em 0.3em;
-    border-radius: var.$radius-sm;
-    font-family: var.$font-family-mono; // Use mono font for raw expression
+    border-radius: var(--radius-sm);
+    font-family: var(--font-family-mono); // Use mono font for raw expression
 }
 </style>

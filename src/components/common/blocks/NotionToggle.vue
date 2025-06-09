@@ -39,18 +39,18 @@ const isOpen = ref(false); // Toggles start closed by default
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 details.notion-toggle {
-  margin: var.$space-sm 0;
+  margin: var(--space-sm) 0;
 
   summary {
     cursor: pointer;
-    font-weight: var.$font-weight-medium; // Make summary slightly bolder
-    padding: var.$space-xs 0;
+    font-weight: var(--font-weight-medium); // Make summary slightly bolder
+    padding: var(--space-xs) 0;
     list-style: none; // Remove default marker in some browsers
     position: relative;
-    padding-left: var.$space-xl; // Space for custom marker
+    padding-left: var(--space-xl); // Space for custom marker
 
     // Hide default marker in Webkit browsers
     &::-webkit-details-marker {
@@ -61,7 +61,7 @@ details.notion-toggle {
       content: '▶';
       position: absolute;
       left: 0;
-      top: calc(var.$space-xs + 0.1em); // Adjust vertical alignment
+      top: calc(var(--space-xs) + 0.1em); // Adjust vertical alignment
       font-size: 0.8em;
       color: var(--text-secondary);
       transition: transform 0.2s ease;
@@ -79,11 +79,11 @@ details.notion-toggle {
 }
 
 .toggle-content {
-  padding-left: var.$space-xl; // Indent content same as marker space
-  margin-top: var.$space-sm;
+  padding-left: var(--space-xl); // Indent content same as marker space
+  margin-top: var(--space-sm);
   // Optional: Add a subtle border or background
   // border-left: 2px solid var(--separator-primary);
-  // padding-top: var.$space-sm;
-  // padding-bottom: var.$space-sm;
+  // padding-top: var(--space-sm);
+  // padding-bottom: var(--space-sm);
 }
 </style>

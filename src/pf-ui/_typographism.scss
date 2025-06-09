@@ -1,61 +1,59 @@
 // src/pf-ui/_typographism.scss
-@use "variables" as var; // Use the variables defined in _variables.scss
-
 // -----------------------------------------------------------------------------
-// Base Typography Styles
+// Base Typography Styles (CSS Variables Based)
 // -----------------------------------------------------------------------------
 
 // --- Headings ---
 // Define styles for h1-h6, inspired by HIG text styles
 
 h1, .h1 { // Corresponds roughly to Large Title
-  font-size: var.$font-size-large-title;
-  font-weight: var.$font-weight-bold;
-  line-height: var.$line-height-tight;
-  margin-bottom: var.$space-xl; // Add some space below headings
+  font-size: var(--font-size-large-title);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-bottom: var(--space-xl); // Add some space below headings
   letter-spacing: -0.02em; // Adjust letter spacing for larger sizes
 }
 
 h2, .h2 { // Corresponds roughly to Title 1
-  font-size: var.$font-size-title1;
-  font-weight: var.$font-weight-bold;
-  line-height: var.$line-height-tight;
-  margin-top: var.$space-xxxl; // Add more space above h2
-  margin-bottom: var.$space-lg;
+  font-size: var(--font-size-title1);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  margin-top: var(--space-xxxl); // Add more space above h2
+  margin-bottom: var(--space-lg);
   letter-spacing: -0.015em;
 }
 
 h3, .h3 { // Corresponds roughly to Title 2
-  font-size: var.$font-size-title2;
-  font-weight: var.$font-weight-bold; // Or semibold
-  line-height: var.$line-height-normal;
-  margin-top: var.$space-xxl;
-  margin-bottom: var.$space-md;
+  font-size: var(--font-size-title2);
+  font-weight: var(--font-weight-bold); // Or semibold
+  line-height: var(--line-height-normal);
+  margin-top: var(--space-xxl);
+  margin-bottom: var(--space-md);
   letter-spacing: -0.01em;
 }
 
 h4, .h4 { // Corresponds roughly to Title 3
-  font-size: var.$font-size-title3;
-  font-weight: var.$font-weight-semibold;
-  line-height: var.$line-height-normal;
-  margin-top: var.$space-xl;
-  margin-bottom: var.$space-sm;
+  font-size: var(--font-size-title3);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-sm);
 }
 
 h5, .h5 { // Corresponds roughly to Headline
-  font-size: var.$font-size-headline;
-  font-weight: var.$font-weight-semibold;
-  line-height: var.$line-height-normal;
-  margin-top: var.$space-lg;
-  margin-bottom: var.$space-xs;
+  font-size: var(--font-size-headline);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  margin-top: var(--space-lg);
+  margin-bottom: var(--space-xs);
 }
 
 h6, .h6 { // Corresponds roughly to Subhead
-  font-size: var.$font-size-subhead;
-  font-weight: var.$font-weight-semibold;
-  line-height: var.$line-height-normal;
-  margin-top: var.$space-md;
-  margin-bottom: var.$space-xxs;
+  font-size: var(--font-size-subhead);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-xxs);
   text-transform: uppercase; // Often used for subheadings
   letter-spacing: 0.05em;
   color: var(--text-secondary); // Subheadings often use secondary color
@@ -64,10 +62,10 @@ h6, .h6 { // Corresponds roughly to Subhead
 // --- Paragraphs & Body Text ---
 
 p, .body {
-  font-size: var.$font-size-body;
-  font-weight: var.$font-weight-regular;
-  line-height: var.$line-height-loose; // More line height for readability
-  margin-bottom: var.$space-lg; // Space between paragraphs
+  font-size: var(--font-size-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-loose); // More line height for readability
+  margin-bottom: var(--space-lg); // Space between paragraphs
   max-width: 75ch; // Limit line length for readability
 
   // Ensure last paragraph in a container doesn't have bottom margin
@@ -81,8 +79,8 @@ p, .body {
 a {
   color: var(--accent-primary); // Use accent color for links
   text-decoration: none; // Remove default underline
-  transition: color var.$transition-duration-fast var.$transition-timing-function,
-              opacity var.$transition-duration-fast var.$transition-timing-function;
+  transition: color var(--transition-duration-fast) var(--transition-timing-function),
+              opacity var(--transition-duration-fast) var(--transition-timing-function);
 
   &:hover,
   &:focus {
@@ -94,7 +92,7 @@ a {
   &:focus-visible {
       outline: 2px solid var(--accent-primary);
       outline-offset: 2px;
-      border-radius: var.$radius-sm;
+      border-radius: var(--radius-sm);
   }
 }
 
@@ -102,17 +100,17 @@ a {
 
 ul,
 ol {
-  margin-bottom: var.$space-lg;
-  padding-left: var.$space-xxl; // Indent lists
+  margin-bottom: var(--space-lg);
+  padding-left: var(--space-xxl); // Indent lists
 
   li {
-    margin-bottom: var.$space-xs; // Space between list items
-    padding-left: var.$space-sm; // Space between marker and text
+    margin-bottom: var(--space-xs); // Space between list items
+    padding-left: var(--space-sm); // Space between marker and text
 
     // Nested lists
     ul, ol {
-      margin-top: var.$space-sm;
-      margin-bottom: var.$space-sm;
+      margin-top: var(--space-sm);
+      margin-bottom: var(--space-sm);
     }
   }
 }
@@ -128,14 +126,14 @@ ol {
 // --- Blockquotes ---
 
 blockquote {
-  margin: var.$space-xl 0 var.$space-xl var.$space-xl;
-  padding: var.$space-lg var.$space-xl;
-  border-left: 4px solid var(--separator-primary); // Use correct variable
+  margin: var(--space-xl) 0 var(--space-xl) var(--space-xl);
+  padding: var(--space-lg) var(--space-xl);
+  border-left: 4px solid var(--separator-primary);
   color: var(--text-secondary);
   font-style: italic; // Often italicized
 
   p {
-    margin-bottom: var.$space-md; // Adjust paragraph spacing inside quote
+    margin-bottom: var(--space-md); // Adjust paragraph spacing inside quote
     max-width: none; // Remove line length limit inside quote if desired
     &:last-child {
       margin-bottom: 0;
@@ -144,9 +142,9 @@ blockquote {
 
   cite { // Style for the source/author
       display: block;
-      margin-top: var.$space-md;
+      margin-top: var(--space-md);
       font-style: normal;
-      font-size: var.$font-size-footnote;
+      font-size: var(--font-size-footnote);
       color: var(--text-tertiary);
       text-align: right;
   }
@@ -156,24 +154,24 @@ blockquote {
 
 // Inline code
 code {
-  font-family: var.$font-family-mono;
+  font-family: var(--font-family-mono);
   font-size: 0.9em; // Slightly smaller than surrounding text
   background-color: var(--fill-primary); // Subtle background
-  padding: var.$space-xxs var.$space-xs;
-  border-radius: var.$radius-sm;
+  padding: var(--space-xxs) var(--space-xs);
+  border-radius: var(--radius-sm);
   color: var(--text-secondary); // Adjust color if needed
 }
 
 // Preformatted text / Code blocks
 pre {
-  font-family: var.$font-family-mono;
-  font-size: var.$font-size-footnote; // Common size for code blocks
-  line-height: var.$line-height-normal;
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-footnote); // Common size for code blocks
+  line-height: var(--line-height-normal);
   background-color: var(--bg-secondary); // Different background for blocks
-  padding: var.$space-lg var.$space-xl;
-  border-radius: var.$radius-md;
+  padding: var(--space-lg) var(--space-xl);
+  border-radius: var(--radius-md);
   overflow-x: auto; // Enable horizontal scrolling for long lines
-  margin-bottom: var.$space-lg;
+  margin-bottom: var(--space-lg);
   color: var(--text-primary); // Ensure code text is readable
 
   code { // Reset inline code styles within pre
@@ -189,13 +187,13 @@ pre {
 
 hr { // Horizontal rule
   border: 0;
-  height: var.$border-width;
-  background-color: var(--separator-primary); // Use correct variable
-  margin: var.$space-xxxl 0; // Generous spacing
+  height: var(--border-width);
+  background-color: var(--separator-primary);
+  margin: var(--space-xxxl) 0; // Generous spacing
 }
 
 strong, b {
-  font-weight: var.$font-weight-bold;
+  font-weight: var(--font-weight-bold);
 }
 
 em, i {
@@ -203,7 +201,5 @@ em, i {
 }
 
 small {
-    font-size: var.$font-size-caption1;
+    font-size: var(--font-size-caption1);
 }
-
-// Add styles for other elements like tables, definition lists, etc. as needed

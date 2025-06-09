@@ -51,10 +51,10 @@ const isVideoEmbed = computed(() => {
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 figure.notion-embed {
-  margin: var.$space-xl 0;
+  margin: var(--space-xl) 0;
 
   .embed-wrapper {
     position: relative;
@@ -62,7 +62,7 @@ figure.notion-embed {
     // Default height or aspect ratio for non-video embeds
     height: 450px; // Example fixed height, adjust as needed
     background-color: var(--bg-secondary); // Placeholder background
-    border-radius: var.$radius-sm; // Optional
+    border-radius: var(--radius-sm); // Optional
     overflow: hidden; // Ensure iframe respects border radius
 
     iframe {
@@ -84,18 +84,18 @@ figure.notion-embed {
   }
 
   figcaption {
-    font-size: var.$font-size-caption1;
+    font-size: var(--font-size-caption1);
     color: var(--text-secondary);
     text-align: center;
-    margin-top: var.$space-sm;
-    padding: 0 var.$space-md;
+    margin-top: var(--space-sm);
+    padding: 0 var(--space-md);
   }
 }
 .notion-unsupported { // Copied from NotionUnsupported for consistency
   border: 1px dashed var(--color-warning);
-  padding: var.$space-md;
-  margin: var.$space-lg 0;
-  font-size: var.$font-size-caption1;
+  padding: var(--space-md);
+  margin: var(--space-lg) 0;
+  font-size: var(--font-size-caption1);
   color: var(--text-secondary);
 }
 </style>

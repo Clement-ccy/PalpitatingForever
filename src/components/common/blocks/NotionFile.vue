@@ -56,19 +56,19 @@ const caption = computed(() => fileData.value?.caption); // Keep caption for pot
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 .notion-file-wrapper {
-    margin: var.$space-md 0;
+    margin: var(--space-md) 0;
 }
 
 a.notion-file-link {
     display: inline-flex; // Align icon and text
     align-items: center;
-    gap: var.$space-sm;
-    padding: var.$space-sm var.$space-md;
+    gap: var(--space-sm);
+    padding: var(--space-sm) var(--space-md);
     border: 1px solid var(--separator-primary);
-    border-radius: var.$radius-sm;
+    border-radius: var(--radius-sm);
     background-color: var(--bg-secondary);
     color: var(--text-primary);
     text-decoration: none;
@@ -88,24 +88,24 @@ a.notion-file-link {
 }
 
 .file-name {
-    font-size: var.$font-size-body;
+    font-size: var(--font-size-body);
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .file-caption { // Style like other captions
-    font-size: var.$font-size-caption1;
+    font-size: var(--font-size-caption1);
     color: var(--text-secondary);
-    margin-top: var.$space-xs;
-    padding-left: var.$space-xs; // Slight indent
+    margin-top: var(--space-xs);
+    padding-left: var(--space-xs); // Slight indent
 }
 
 .notion-unsupported { // Copied from NotionUnsupported for consistency
   border: 1px dashed var(--color-warning);
-  padding: var.$space-md;
-  margin: var.$space-lg 0;
-  font-size: var.$font-size-caption1;
+  padding: var(--space-md);
+  margin: var(--space-lg) 0;
+  font-size: var(--font-size-caption1);
   color: var(--text-secondary);
 }
 </style>

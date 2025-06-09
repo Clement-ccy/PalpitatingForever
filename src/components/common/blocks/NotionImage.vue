@@ -30,26 +30,26 @@ const caption = props.block.image.caption;
 </template>
 
 <style scoped lang="scss">
-@use "@/pf-ui/variables" as var;
+
 
 figure.notion-image {
-  margin: var.$space-xl 0; // Consistent vertical margin
-
+  margin: var(--space-xl) 0; // Consistent vertical margin
+  
   img {
     max-width: 100%;
-    height: auto;
+    max-height: 600px;
     display: block; // Remove extra space below image
-    border-radius: var.$radius-md; // Optional: consistent radius
+    border-radius: var(--radius-md); // Optional: consistent radius
     margin-left: auto; // Center image if container is wider
     margin-right: auto;
   }
 
   figcaption {
-    font-size: var.$font-size-caption1;
+    font-size: var(--font-size-caption1);
     color: var(--text-secondary);
     text-align: center;
-    margin-top: var.$space-sm;
-    padding: 0 var.$space-md; // Add some padding
+    margin-top: var(--space-sm);
+    padding: 0 var(--space-md); // Add some padding
   }
 }
 </style>

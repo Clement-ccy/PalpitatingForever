@@ -126,11 +126,9 @@ const processedBlocks = computed(() => {
 </template>
 
 <style lang="scss">
-@use "@/pf-ui/variables" as var;
-
 .notion-blocks-container {
   > :deep(*) {
-      margin-bottom: var.$space-sm; // Default spacing between blocks
+      margin-bottom: var(--space-sm); // Default spacing between blocks
        &:last-child {
            margin-bottom: 0;
        }
@@ -138,7 +136,7 @@ const processedBlocks = computed(() => {
    // Adjust list margins if needed, considering items might have margins too
    > :deep(ul),
    > :deep(ol) {
-       margin-bottom: var.$space-lg;
+       margin-bottom: var(--space-lg);
        // Indentation is handled in _typographism.scss or list components
    }
 }
