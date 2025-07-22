@@ -167,6 +167,7 @@ const navigationMap = {
   "/blog": [
     { path: "/blog", label: "Index" },
     { path: "/blog/all", label: "All Posts" },
+    { path: "/blog/analytics", label: "Analytics" },
     { path: "/blog/about", label: "About" },
     { path: "/blog/links", label: "Links" },
     { path: "/blog/gear", label: "Gear" },

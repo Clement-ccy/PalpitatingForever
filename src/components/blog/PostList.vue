@@ -1,5 +1,6 @@
 <script setup>
 import TransitionLink from '@/components/common/TransitionLink.vue'
+import ReadingStats from '@/components/analytics/ReadingStats.vue'
 
 defineProps({
   posts: {
@@ -69,6 +70,22 @@ const formatDate = (dateString) => {
             <span class="article-meta-label">创建</span>
             <time>{{ formatDate(post.date) }}</time>
           </span>
+          <!-- Reading Statistics -->
+          <div class="post-reading-stats">
+            <ReadingStats
+              :post-id="post.id"
+              :post-title="post.title"
+              :post-category="post.category"
+              :post-slug="post.slug"
+              :show-views="true"
+              :show-read-status="true"
+              :show-reading-time="false"
+              :show-progress="false"
+              :show-hot="true"
+              :compact="true"
+              :auto-track="false"
+            />
+          </div>
         </div>
       </div>
     </div>
@@ -280,6 +297,17 @@ const formatDate = (dateString) => {
     
     .article-meta-label {
       margin-right: var(--space-xxs);
+    }
+  }
+  
+  .post-reading-stats {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    
+    @media (max-width: 768px) {
+      margin-left: 0;
+      margin-top: var(--space-xs);
     }
   }
 }

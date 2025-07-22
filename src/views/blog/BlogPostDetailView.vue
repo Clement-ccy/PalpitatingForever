@@ -4,6 +4,9 @@ import { useRoute } from 'vue-router';
 import blogsData from '@/data/blogs.json'; // Import the fetched blog data
 // Import the Notion block renderer component
 import NotionBlockRenderer from '@/components/common/NotionBlockRenderer.vue';
+// Import reading statistics component
+import ReadingStats from '@/components/analytics/ReadingStats.vue';
+import ReadingProgress from '@/components/analytics/ReadingProgress.vue';
 
 const props = defineProps({
   id: String, // Accept ID from route params
@@ -57,6 +60,26 @@ const findPost = () => {
   isLoading.value = false;
 };
 
+// Handle reading statistics events
+const onReadStatusChanged = (data) => {
+  console.log('📖 阅读状态变化:', data);
+  console.log(`文章 ${data.postId} 已标记为已读`);
+};
+
+const onViewTracked = (data) => {
+  console.log('👁️ 阅读量跟踪:', data);
+  console.log(`文章 ${data.postId} 当前总浏览量: ${data.views}`);
+};
+
+// Handle reading progress events
+const onProgressChanged = (data) => {
+  console.log('阅读进度变化:', data);
+};
+
+const onReadingComplete = (data) => {
+  console.log('阅读完成:', data);
+};
+
 // Fetch post when component mounts and when route params change
 // Using watch on route.params ensures reactivity if props aren't immediately updated
 watch(() => route.params, findPost, { immediate: true, deep: true }); // Use immediate: true to load on initial mount
@@ -65,6 +88,16 @@ watch(() => route.params, findPost, { immediate: true, deep: true }); // Use imm
 
 <template>
   <div class="container section blog-post-detail">
+    <!-- Reading Progress Bar -->
+    <ReadingProgress
+      v-if="post"
+      :post-id="post.id"
+      :show-percentage="false"
+      :is-fixed="true"
+      :auto-save="true"
+      @progress-changed="onProgressChanged"
+      @reading-complete="onReadingComplete"
+    />
     <div v-if="isLoading">正在加载文章...</div>
     <div v-else-if="error" class="error-message">{{ error }}</div>
     <article v-else-if="post">
@@ -76,6 +109,23 @@ watch(() => route.params, findPost, { immediate: true, deep: true }); // Use imm
           <span v-else>日期未知</span>
           <span v-if="post.mainCategory">分类: {{ post.mainCategory }}</span>
           <span v-if="post.tags && post.tags.length > 0">标签: {{ post.tags.join(', ') }}</span>
+        </div>
+        <!-- Reading statistics component -->
+        <div class="post-stats">
+          <ReadingStats
+            :post-id="post.id"
+            :post-title="post.title"
+            :post-category="post.mainCategory"
+            :post-slug="post.slug"
+            :show-views="true"
+            :show-read-status="true"
+            :show-reading-time="true"
+            :show-progress="true"
+            :show-hot="true"
+            :auto-track="true"
+            @read-status-changed="onReadStatusChanged"
+            @view-tracked="onViewTracked"
+          />
         </div>
       </header>
       <div class="post-content">
@@ -114,6 +164,12 @@ watch(() => route.params, findPost, { immediate: true, deep: true }); // Use imm
       margin-right: 0;
     }
   }
+}
+
+.post-stats {
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid var(--separator-secondary);
 }
 
 .post-content {

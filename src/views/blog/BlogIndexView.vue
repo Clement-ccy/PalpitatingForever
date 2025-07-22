@@ -1,5 +1,6 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, computed, onMounted } from 'vue'
+import { useBlogStore } from '@/stores/blog'
 import PageWrapper from '@/components/layout/PageWrapper.vue'
 import SkillIconsCard from '@/components/blog/SkillIconsCard.vue'
 import BannerContent from '@/components/blog/BannerContent.vue'
@@ -10,194 +11,86 @@ import PostList from '@/components/blog/PostList.vue'
 import BlogSidebar from '@/components/blog/BlogSidebar.vue'
 import BlogPagination from '@/components/blog/Pagination.vue'
 
-// 响应式数据
-const pageData = reactive({
-  // 技能图标数据
-  skills: [
-    { title: 'Vue.js', icon: '🖼️', color: '#4FC08D' },
-    { title: 'React', icon: '⚛️', color: '#61DAFB' },
-    { title: 'TypeScript', icon: '📘', color: '#3178C6' },
-    { title: 'Node.js', icon: '🟢', color: '#339933' },
-    { title: 'Python', icon: '🐍', color: '#3776AB' },
-    { title: 'Design', icon: '🎨', color: '#FF6B6B' },
-    { title: 'Photography', icon: '📷', color: '#FFA726' },
-    { title: 'Music', icon: '🎵', color: '#9C27B0' },
-    { title: 'Travel', icon: '✈️', color: '#2196F3' },
-    { title: 'Coffee', icon: '☕', color: '#8D6E63' },
-    { title: 'Books', icon: '📚', color: '#FF9800' },
-    { title: 'Games', icon: '🎮', color: '#E91E63' }
-  ],
-  
-  // 推荐文章数据
-  featuredPosts: [
-    {
-      id: 1,
-      title: '探索 Vue 3 的新特性',
-      excerpt: '深入了解 Vue 3 带来的 Composition API、性能提升和新功能',
-      cover: '/src/assets/images/cover-1.jpg',
-      category: '前端开发',
-      date: '2025-06-01',
-      recommended: true
-    },
-    {
-      id: 2,
-      title: '现代 CSS 布局技巧',
-      excerpt: '使用 Grid 和 Flexbox 创建响应式布局的最佳实践',
-      cover: '/src/assets/images/cover-2.jpg',
-      category: '前端开发',
-      date: '2025-05-28',
-      recommended: true
-    },
-    {
-      id: 3,
-      title: 'TypeScript 进阶指南',
-      excerpt: '掌握高级类型、泛型和装饰器等 TypeScript 特性',
-      cover: '/src/assets/images/cover-3.jpg',
-      category: '编程语言',
-      date: '2025-05-25',
-      recommended: true
-    },
-    {
-      id: 4,
-      title: '设计系统构建实践',
-      excerpt: '如何从零开始构建一套完整的设计系统',
-      cover: '/src/assets/images/cover-4.jpg',
-      category: '设计',
-      date: '2025-05-22',
-      recommended: true
-    },
-    {
-      id: 5,
-      title: '摄影构图技巧分享',
-      excerpt: '提升摄影作品质量的构图方法和实用技巧',
-      cover: '/src/assets/images/cover-5.jpg',
-      category: '摄影',
-      date: '2025-05-20',
-      recommended: true
-    }
-  ],
-  
-  // 分类数据
-  categories: [
-    { name: '精选', path: '/blog', active: true },
-    { name: '全部文章', path: '/blog/all' },
-    { name: '前端开发', path: '/blog/category/frontend' },
-    { name: '后端开发', path: '/blog/category/backend' },
-    { name: '设计', path: '/blog/category/design' },
-    { name: '摄影', path: '/blog/category/photography' },
-    { name: '生活随笔', path: '/blog/category/life' },
-    { name: '技术教程', path: '/blog/category/tutorial' },
-    { name: '产品思考', path: '/blog/category/product' }
-  ],
-  
-  // 最新文章数据
-  recentPosts: [
-    {
-      id: 7,
-      title: 'Mac如何将喜欢的视频作为屏幕保护程序？自定义Mac视频屏保，最新系统教程',
-      excerpt: '看到评论区有人问如何自定义屏保，这个屏保确实平常我也开着，但是没想过自定义，现在想来如果能自定义，我下一些高清视频做屏保也确实是一件美事。',
-      cover: '/src/assets/images/cover-7.jpg',
-      category: '经验分享',
-      date: '2025-05-23',
-      tags: ['教程', 'Mac'],
-      isNew: true,
-      isUnread: true
-    },
-    {
-      id: 8,
-      title: 'iPhone如何查看自己电话卡的上网优先级QCI？SIM卡的QCI查看教程',
-      excerpt: '刷视频的时候看到有人提到自己的SIM卡是QCI6的优先级。这个QCI是个啥呢？研究了一下，一般自己流量卡都会有网络优先级...',
-      cover: '/src/assets/images/cover-8.jpg',
-      category: '经验分享',
-      date: '2025-05-23',
-      tags: ['教程', 'iOS'],
-      isUnread: true
-    },
-    {
-      id: 9,
-      title: '如何让老旧打印机支持隔空打印，在Mac上搭建Airprint服务',
-      excerpt: '连接的打印机不支持隔空打印，手机没有办法打印，可以尝试搭建一个airprint服务。',
-      cover: '/src/assets/images/cover-9.jpg',
-      category: '经验分享',
-      date: '2025-05-12',
-      tags: ['教程', 'Mac', '办公'],
-      isUnread: true
-    }
-  ],
-  
-  // 热门文章
-  hotPosts: [
-    { title: 'Ice上手：Mac上免费开源的菜单栏管理工具，Bartender的免费平替', rank: 1 },
-    { title: 'Mac如何将喜欢的视频作为屏幕保护程序？自定义Mac视频屏保，最新系统教程', rank: 2 },
-    { title: 'Mac如何查看移动硬盘盒温度？查看SSD固态硬盘工作温度教程', rank: 3 },
-    { title: '我在2025年推荐的Mac软件', rank: 4 },
-    { title: '敲木鱼App - 打节拍敲音效解压神器', rank: 5 }
-  ],
-  
-  // 标签数据
-  tags: [
-    { name: '教程', count: 383 },
-    { name: '设计', count: 265 },
-    { name: '开发', count: 232 },
-    { name: '干货', count: 172 },
-    { name: 'Swift', count: 126 },
-    { name: '软件', count: 106 },
-    { name: '日常', count: 102 },
-    { name: 'Mac', count: 88 },
-    { name: 'Sketch', count: 80 },
-    { name: '热门', count: 71 },
-    { name: '必看', count: 70 },
-    { name: '网页前端', count: 61 }
-  ],
-  
-  // 作者信息
-  authorInfo: {
-    name: 'PalpitatingForever',
-    description: '分享技术与生活',
-    sayhi: '分享技术与生活的点点滴滴',
-    avatar: '/src/assets/images/PF.png'
-  },
-  
-  // 统计信息
-  stats: {
-    posts: 128,
-    days: 365,
-    words: '256.8k',
-    comments: 1024
-  }
-})
+// 使用博客 store
+const blogStore = useBlogStore()
 
 // 当前选中的分类
 const activeCategory = ref('精选')
 
 // 分页信息
-const pagination = reactive({
+const pagination = ref({
   currentPage: 1,
   totalPages: 10,
   basePath: '/blog'
 })
 
+// 计算属性 - 从 store 获取数据
+const pageData = computed(() => ({
+  skills: blogStore.skills,
+  featuredPosts: blogStore.featuredPosts,
+  categories: blogStore.categories,
+  recentPosts: blogStore.recentPosts,
+  hotPosts: blogStore.hotPosts,
+  tags: blogStore.tags,
+  authorInfo: blogStore.authorInfo,
+  stats: blogStore.stats
+}))
+
+// 获取当前分类的文章
+const currentPosts = computed(() => {
+  return blogStore.getPostsByCategory(activeCategory.value)
+})
+
+// 计算总页数
+const totalPages = computed(() => {
+  const postsPerPage = 10
+  return Math.ceil(currentPosts.value.length / postsPerPage)
+})
+
+// 获取当前页的文章
+const currentPagePosts = computed(() => {
+  const postsPerPage = 10
+  const start = (pagination.value.currentPage - 1) * postsPerPage
+  const end = start + postsPerPage
+  return currentPosts.value.slice(start, end)
+})
+
 // 页面挂载后的处理
-onMounted(() => {
-  // 可以在这里加载数据
+onMounted(async () => {
+  // 如果数据还没有加载，则重新加载
+  if (!blogStore.dataStatus.hasData && !blogStore.dataStatus.isLoading) {
+    console.log('📱 BlogIndexView: 重新加载博客数据...')
+    await blogStore.loadBlogData()
+  }
+  
+  // 更新分页信息
+  pagination.value.totalPages = totalPages.value
 })
 
 // 方法
 const handleCategoryChange = (category) => {
   activeCategory.value = category.name
-  // 可以在这里处理分类切换逻辑
-  console.log('Category changed to:', category.name)
+  // 重置到第一页
+  pagination.value.currentPage = 1
+  pagination.value.totalPages = totalPages.value
+  
+  console.log('分类切换到:', category.name, '文章数量:', currentPosts.value.length)
 }
 
 const handlePageChange = (page) => {
-  pagination.currentPage = page
-  // 可以在这里处理分页逻辑
-  console.log('Page changed to:', page)
+  pagination.value.currentPage = page
+  console.log('页面切换到:', page)
+}
+
+// 刷新数据
+const refreshData = async () => {
+  console.log('🔄 手动刷新数据...')
+  await blogStore.refreshData()
 }
 </script>
 
 <template>
-  <PageWrapper class="blog-index-page">
+  <PageWrapper class="blog-index-page" :class="{ loading: blogStore.dataStatus.isLoading }">
     <!-- 顶部横幅区域 -->
     <div class="home-top">
       <div class="recent-top-post-group">
@@ -230,12 +123,12 @@ const handlePageChange = (page) => {
         />
 
         <!-- 文章列表 -->
-        <PostList :posts="pageData.recentPosts" />
+        <PostList :posts="currentPagePosts" />
 
         <!-- 分页导航 -->
-        <BlogPagination 
+        <BlogPagination
           :current-page="pagination.currentPage"
-          :total-pages="pagination.totalPages"
+          :total-pages="totalPages"
           :base-path="pagination.basePath"
           @page-change="handlePageChange"
         />

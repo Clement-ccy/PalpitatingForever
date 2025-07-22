@@ -22,6 +22,8 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia' // Import Pinia
 import VueKonva from 'vue-konva'; // Import vue-konva
 import App from './App.vue'
+import { useBlogStore } from './stores/blog' // Import blog store
+import { useAnalyticsStore } from './stores/analytics' // Import analytics store
 
 // Register the languages you need
 hljs.registerLanguage('javascript', javascript);
@@ -49,4 +51,29 @@ mermaid.initialize({
 app.use(pinia); // Use Pinia
 app.use(VueKonva); // Use vue-konva
 app.use(router);
-app.mount('#app');
+
+// 预加载数据
+async function initializeApp() {
+  console.log('🚀 初始化应用数据...');
+  
+  try {
+    // 初始化博客数据
+    const blogStore = useBlogStore();
+    await blogStore.loadBlogData();
+    
+    // 初始化分析系统
+    const analyticsStore = useAnalyticsStore();
+    await analyticsStore.initialize();
+    
+    console.log('✅ 应用数据初始化完成');
+  } catch (error) {
+    console.error('❌ 应用数据初始化失败:', error);
+    // 即使数据加载失败，也要继续启动应用
+  }
+  
+  // 挂载应用
+  app.mount('#app');
+}
+
+// 启动应用
+initializeApp();

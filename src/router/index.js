@@ -8,6 +8,7 @@ const BlogAllPostsCanvasView = () => import('@/views/blog/BlogAllPostsCanvasView
 const BlogLinksView = () => import('@/views/blog/BlogLinksView.vue');
 const BlogGearView = () => import('@/views/blog/BlogGearView.vue');
 const BlogAboutView = () => import('@/views/blog/BlogAboutView.vue');
+const BlogAnalyticsView = () => import('@/views/blog/BlogAnalyticsView.vue');
 const BlogPostDetailView = () => import('@/views/blog/BlogPostDetailView.vue');
 const PlogIndexView = () => import('@/views/plog/PlogIndexView.vue');
 const PlogAllPhotosView = () => import('@/views/plog/PlogAllPhotosView.vue');
@@ -28,6 +29,7 @@ const routes = [
   { path: '/blog/links', name: 'BlogLinks', component: BlogLinksView },
   { path: '/blog/gear', name: 'BlogGear', component: BlogGearView },
   { path: '/blog/about', name: 'BlogAbout', component: BlogAboutView },
+  { path: '/blog/analytics', name: 'BlogAnalytics', component: BlogAnalyticsView },
   {
     path: '/blog/post/:id',
     name: 'BlogPostDetail',
