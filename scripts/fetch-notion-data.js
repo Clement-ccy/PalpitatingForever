@@ -183,6 +183,9 @@ async function fetchData() {
     console.log('📚 Fetching Blogs...');
     const blogFilter = {
        or: [
+        { property: 'Status', status: { equals: '构思 (Idea)' } },
+        { property: 'Status', status: { equals: '草稿 (Draft)' } },
+        { property: 'Status', status: { equals: '待发布 (Scheduled)' } },
         { property: 'Status', status: { equals: '需更新 (Needs Update)' } },
         { property: 'Status', status: { equals: '发布 (Published)' } },
       ]

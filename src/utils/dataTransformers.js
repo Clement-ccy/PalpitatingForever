@@ -55,7 +55,7 @@ export function transformBlogPost(notionPost) {
   const status = notionPost.status || '';
 
   // 判断文章状态
-  const isPublished = status === '发布 (Published)';
+  const isPublished = status === '发布 (Published)' || status === '需更新 (Needs Update)';
   const needsUpdate = status === '需更新 (Needs Update)';
   const isNew = new Date(notionPost.createdTime) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7天内创建
   const isUnread = true; // 可以根据用户阅读记录来设置
@@ -97,7 +97,7 @@ export function transformBlogPosts(notionPosts) {
   return notionPosts
     .map(transformBlogPost)
     .filter(post => post !== null)
-    .sort((a, b) => new Date(b.date) - new Date(a.date)); // 按发布日期降序排列
+    .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate)); // 按发布日期降序排列
 }
 
 /**

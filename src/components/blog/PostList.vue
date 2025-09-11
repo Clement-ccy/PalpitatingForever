@@ -12,7 +12,7 @@ defineProps({
 // 格式化日期
 const formatDate = (dateString) => {
   const date = new Date(dateString)
-  return `${date.getMonth() + 1}/${date.getDate()}`
+  return `${date.getFullYear()}.${date.getMonth() + 1}/${date.getDate()}`
 }
 </script>
 
