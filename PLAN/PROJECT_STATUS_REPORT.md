@@ -199,14 +199,14 @@ E --> F[Vue 组件消费]
 ## 📋 开发路线图
 
 ### Phase 1: 功能完善 (1-2周)
-- [ ] 完成剩余页面组件 (HomeView, BlogIndexView, PlogAllPhotosView, MlogIndexView)
-- [ ] 实现 PhotoWaterfall 瀑布流布局
-- [ ] 完善 AudioPlayer 音频播放功能
-- [ ] 添加页面切换动画
+- [x] 完成剩余页面组件 (HomeView, BlogIndexView, PlogAllPhotosView, MlogIndexView)
+- [x] 实现 PhotoWaterfall 瀑布流布局
+- [x] 完善 AudioPlayer 音频播放功能
+- [x] 添加页面切换动画
 
 ### Phase 2: 体验优化 (2-3周)
-- [ ] 移动端响应式适配
-- [ ] 滚动触发动画实现
+- [x] 移动端响应式适配
+- [x] 滚动触发动画实现
 - [ ] 性能监控和优化
 - [ ] 错误处理完善
 
