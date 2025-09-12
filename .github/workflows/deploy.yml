@@ -37,13 +37,19 @@ jobs:
       
     - name: Create .env with Github Secrets
       run: |
-        touch .env
-        echo "NODE_ENV=production" >> .env
+        echo "NODE_ENV=production" > .env
         echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
         echo "NOTION_BLOGS_DATABASE_ID=${{ secrets.NOTION_BLOGS_DATABASE_ID }}" >> .env
         echo "NOTION_WORKS_DATABASE_ID=${{ secrets.NOTION_WORKS_DATABASE_ID }}" >> .env
         echo "NOTION_PLOGS_DATABASE_ID=${{ secrets.NOTION_PLOGS_DATABASE_ID }}" >> .env
         echo "NOTION_MLOGS_DATABASE_ID=${{ secrets.NOTION_MLOGS_DATABASE_ID }}" >> .env
+
+    - name: Debug .env file
+      run: |
+        echo "Contents of .env file:"
+        cat .env
+        echo "Environment variables available to Node.js:"
+        node -e "console.log('NOTION_API_KEY:', process.env.NOTION_API_KEY ? 'SET' : 'NOT SET')"
 
     - name: Build project
       run: npm run build
