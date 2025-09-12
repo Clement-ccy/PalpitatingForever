@@ -39,24 +39,26 @@ jobs:
     - name: Install dependencies
       run: npm ci
       
-    - name: Setup environment variables
+    - name: Create .env with Github Secrets and run script
+      run: |
+        touch .env
+        echo NODE_ENV=$NODE_ENV >> .env
+        echo NOTION_API_KEY=$NOTION_API_KEY >> .env
+        echo NOTION_BLOGS_DATABASE_ID=$NOTION_BLOGS_DATABASE_ID >> .env
+        echo NOTION_WORKS_DATABASE_ID=$NOTION_WORKS_DATABASE_ID >> .env
+        echo NOTION_PLOGS_DATABASE_ID=$NOTION_PLOGS_DATABASE_ID >> .env
+        echo NOTION_MLOGS_DATABASE_ID=$NOTION_MLOGS_DATABASE_ID >> .env
+        npm run script-that-accesses-env-vars
       env:
+        NODE_ENV: production
         NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
         NOTION_BLOGS_DATABASE_ID: ${{ secrets.NOTION_BLOGS_DATABASE_ID }}
         NOTION_WORKS_DATABASE_ID: ${{ secrets.NOTION_WORKS_DATABASE_ID }}
         NOTION_PLOGS_DATABASE_ID: ${{ secrets.NOTION_PLOGS_DATABASE_ID }}
         NOTION_MLOGS_DATABASE_ID: ${{ secrets.NOTION_MLOGS_DATABASE_ID }}
-      run: |
-        echo "NOTION_API_KEY=$NOTION_API_KEY" >> .env
-        echo "NOTION_BLOGS_DATABASE_ID=$NOTION_BLOGS_DATABASE_ID" >> .env
-        echo "NOTION_WORKS_DATABASE_ID=$NOTION_WORKS_DATABASE_ID" >> .env
-        echo "NOTION_PLOGS_DATABASE_ID=$NOTION_PLOGS_DATABASE_ID" >> .env
-        echo "NOTION_MLOGS_DATABASE_ID=$NOTION_MLOGS_DATABASE_ID" >> .env
 
     - name: Build project
       run: npm run build
-      env:
-        NODE_ENV: production
         
     - name: Setup Pages
       uses: actions/configure-pages@v5

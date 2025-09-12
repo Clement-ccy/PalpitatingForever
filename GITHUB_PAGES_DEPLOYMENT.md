@@ -27,7 +27,10 @@
    - 添加以下 Repository secrets：
      ```
      NOTION_API_KEY=your_notion_api_key_here
-     NOTION_DATABASE_ID=your_notion_database_id_here
+     NOTION_BLOGS_DATABASE_ID=your_blogs_database_id_here
+     NOTION_WORKS_DATABASE_ID=your_works_database_id_here
+     NOTION_PLOGS_DATABASE_ID=your_plogs_database_id_here
+     NOTION_MLOGS_DATABASE_ID=your_mlogs_database_id_here
      ```
 
 ### 2. 分支保护（可选但推荐）
