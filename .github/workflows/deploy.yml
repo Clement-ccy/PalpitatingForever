@@ -21,46 +21,35 @@ jobs:
   # 构建作业
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
     - name: Checkout
       uses: actions/checkout@v4
       
-    - name: Setup Node.js ${{ matrix.node-version }}
+    - name: Setup Node.js
       uses: actions/setup-node@v4
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: '20'
         cache: 'npm'
         
     - name: Install dependencies
       run: npm ci
       
-    - name: Create .env with Github Secrets and run script
+    - name: Create .env with Github Secrets
       run: |
         touch .env
-        echo NODE_ENV=$NODE_ENV >> .env
-        echo NOTION_API_KEY=$NOTION_API_KEY >> .env
-        echo NOTION_BLOGS_DATABASE_ID=$NOTION_BLOGS_DATABASE_ID >> .env
-        echo NOTION_WORKS_DATABASE_ID=$NOTION_WORKS_DATABASE_ID >> .env
-        echo NOTION_PLOGS_DATABASE_ID=$NOTION_PLOGS_DATABASE_ID >> .env
-        echo NOTION_MLOGS_DATABASE_ID=$NOTION_MLOGS_DATABASE_ID >> .env
-      env:
-        NODE_ENV: production
-        NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
-        NOTION_BLOGS_DATABASE_ID: ${{ secrets.NOTION_BLOGS_DATABASE_ID }}
-        NOTION_WORKS_DATABASE_ID: ${{ secrets.NOTION_WORKS_DATABASE_ID }}
-        NOTION_PLOGS_DATABASE_ID: ${{ secrets.NOTION_PLOGS_DATABASE_ID }}
-        NOTION_MLOGS_DATABASE_ID: ${{ secrets.NOTION_MLOGS_DATABASE_ID }}
+        echo "NODE_ENV=production" >> .env
+        echo "NOTION_API_KEY=${{ secrets.NOTION_API_KEY }}" >> .env
+        echo "NOTION_BLOGS_DATABASE_ID=${{ secrets.NOTION_BLOGS_DATABASE_ID }}" >> .env
+        echo "NOTION_WORKS_DATABASE_ID=${{ secrets.NOTION_WORKS_DATABASE_ID }}" >> .env
+        echo "NOTION_PLOGS_DATABASE_ID=${{ secrets.NOTION_PLOGS_DATABASE_ID }}" >> .env
+        echo "NOTION_MLOGS_DATABASE_ID=${{ secrets.NOTION_MLOGS_DATABASE_ID }}" >> .env
 
     - name: Build project
       run: npm run build
         
     - name: Setup Pages
-      uses: actions/configure-pages@v5
+      uses: actions/configure-pages@v4
       
     - name: Upload artifact
       uses: actions/upload-pages-artifact@v3
