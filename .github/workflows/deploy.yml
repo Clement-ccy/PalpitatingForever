@@ -48,7 +48,6 @@ jobs:
         echo NOTION_WORKS_DATABASE_ID=$NOTION_WORKS_DATABASE_ID >> .env
         echo NOTION_PLOGS_DATABASE_ID=$NOTION_PLOGS_DATABASE_ID >> .env
         echo NOTION_MLOGS_DATABASE_ID=$NOTION_MLOGS_DATABASE_ID >> .env
-        npm run script-that-accesses-env-vars
       env:
         NODE_ENV: production
         NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
