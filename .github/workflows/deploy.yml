@@ -23,7 +23,6 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -56,12 +55,17 @@ jobs:
     - name: Build project
       run: npm run build
 
+    - name: Copy CNAME to dist
+      run: cp CNAME dist/
+
     - name: Debug build output
       run: |
         echo "Contents of dist directory:"
         ls -la dist/
         echo "Contents of dist/index.html:"
         head -20 dist/index.html
+        echo "CNAME file contents:"
+        cat dist/CNAME
         
     - name: Setup Pages
       uses: actions/configure-pages@v4
@@ -71,18 +75,14 @@ jobs:
       with:
         path: ./dist
 
-    - name: Deploy to GitHub Pages
-      id: deployment
-      uses: actions/deploy-pages@v4
-
   # 部署作业
-  # deploy:
-  #   environment:
-  #     name: github-pages
-  #     url: ${{ steps.deployment.outputs.page_url }}
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   steps:
-  #     - name: Deploy to GitHub Pages
-  #       id: deployment
-  #       uses: actions/deploy-pages@v4
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
