@@ -55,7 +55,7 @@ export function transformBlogPost(notionPost) {
   const status = notionPost.status || '';
 
   // 判断文章状态
-  const isPublished = status === '发布 (Published)';
+  const isPublished = status === '发布 (Published)' || status === '需更新 (Needs Update)';
   const needsUpdate = status === '需更新 (Needs Update)';
   const isNew = new Date(notionPost.createdTime) > new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7天内创建
   const isUnread = true; // 可以根据用户阅读记录来设置
@@ -97,7 +97,7 @@ export function transformBlogPosts(notionPosts) {
   return notionPosts
     .map(transformBlogPost)
     .filter(post => post !== null)
-    .sort((a, b) => new Date(b.date) - new Date(a.date)); // 按发布日期降序排列
+    .sort((a, b) => new Date(b.publishDate) - new Date(a.publishDate)); // 按发布日期降序排列
 }
 
 /**
@@ -224,4 +224,260 @@ function formatWordCount(count) {
     return (count / 1000).toFixed(1) + 'k';
   }
   return count.toString();
+}
+
+/**
+ * 提取富文本的纯文本内容（专用于 Gears 数据）
+ * @param {Array} richText - Notion 富文本数组
+ * @returns {string} 纯文本内容
+ */
+function extractGearsText(richText) {
+  if (!Array.isArray(richText)) return '';
+  return richText.map(item => item.plain_text || '').join('');
+}
+
+/**
+ * 转换单个装备数据
+ * @param {object} notionGears - Notion 装备数据
+ * @returns {object} 转换后的装备数据
+ */
+export function transformGearsItem(notionGears) {
+  if (!notionGears) return null;
+
+  const title = notionGears.title || '';
+  const specification = extractGearsText(notionGears.specification);
+  const description = extractGearsText(notionGears.description);
+  const category = notionGears.category || '其他';
+  const status = notionGears.status || '';
+  const coverImage = notionGears.coverImage?.url || null;
+  const productLink = notionGears.productLink || null;
+  const isExternalLink = notionGears.isExternalLink || false;
+  const hasReviewArticle = notionGears.reviewArticle && notionGears.reviewArticle.length > 0;
+  
+  // 根据规则生成 linkText 和最终链接
+  let linkText = '';
+  let finalLink = '';
+  let external = false;
+
+  if (hasReviewArticle) {
+    // 有测评文章，链接到内部文章
+    linkText = '查看文章';
+    // 这里需要根据实际的文章 ID 生成链接，暂时使用占位符
+    finalLink = `/blog/post/${notionGears.reviewArticle[0]?.id}`;
+    external = false;
+  } else if (productLink) {
+    // 有产品链接，根据 isExternalLink 决定文本
+    linkText = isExternalLink ? '详情' : '查看文章';
+    finalLink = productLink;
+    external = isExternalLink;
+  } else {
+    // 没有任何链接
+    linkText = '';
+    finalLink = '';
+    external = false;
+  }
+
+  return {
+    id: notionGears.id,
+    name: title,
+    specification,
+    description,
+    category,
+    status,
+    image: coverImage,
+    link: finalLink,
+    linkText,
+    external,
+    rating: notionGears.rating,
+    purchaseDate: notionGears.purchaseDate,
+    price: notionGears.price,
+    tags: notionGears.tags || [],
+    pros: extractGearsText(notionGears.pros),
+    cons: extractGearsText(notionGears.cons),
+    notes: extractGearsText(notionGears.notes),
+    lastEditedTime: notionGears.lastEditedTime,
+    createdTime: notionGears.createdTime,
+  };
+}
+
+/**
+ * 转换装备数据列表并按分类分组
+ * @param {Array} notionGearsData - Notion 装备数据数组
+ * @returns {object} 按分类分组的装备数据
+ */
+export function transformGearsData(notionGearsData) {
+  if (!Array.isArray(notionGearsData)) return {};
+  
+  const transformedItems = notionGearsData
+    .map(transformGearsItem)
+    .filter(item => item !== null);
+
+  // 按分类分组
+  const groupedData = transformedItems.reduce((categories, item) => {
+    const category = item.category || '其他';
+    if (!categories[category]) {
+      categories[category] = {
+        id: category.toLowerCase().replace(/\s+/g, '-'),
+        title: category,
+        description: getCategoryDescription(category),
+        items: []
+      };
+    }
+    categories[category].items.push(item);
+    return categories;
+  }, {});
+
+  // 转换为数组格式，匹配现有的数据结构
+  return Object.values(groupedData);
+}
+
+/**
+ * 获取分类描述
+ * @param {string} category - 分类名称
+ * @returns {string} 分类描述
+ */
+function getCategoryDescription(category) {
+  const descriptions = {
+    '生产力': '提升自己生产效率的硬件设备',
+    '出行': '用来出行的实物及设备',
+    '家庭娱乐': '用来娱乐的硬件设备',
+    '健康生活': '日常用的一些小的数码好物',
+    '其他': '其他类型的装备'
+  };
+  return descriptions[category] || '其他类型的装备';
+}
+
+/**
+ * 获取装备统计信息
+ * @param {Array} gearsData - 装备数据数组
+ * @returns {object} 统计信息
+ */
+export function getGearsStats(gearsData) {
+  if (!Array.isArray(gearsData)) return { total: 0, categories: 0, inUse: 0 };
+  
+  const categories = new Set();
+  let inUseCount = 0;
+  
+  gearsData.forEach(item => {
+    categories.add(item.category);
+    if (item.status === '使用中') {
+      inUseCount++;
+    }
+  });
+
+  return {
+    total: gearsData.length,
+    categories: categories.size,
+    inUse: inUseCount
+  };
+}
+
+/**
+ * 转换单个友链数据
+ * @param {object} notionLinks - Notion 友链数据
+ * @returns {object} 转换后的友链数据
+ */
+export function transformLinksItem(notionLinks) {
+  if (!notionLinks) return null;
+
+  const name = notionLinks.name || '';
+  const url = notionLinks.url || '';
+  const description = extractPlainText(notionLinks.description);
+  const category = notionLinks.category || '其他';
+  const status = notionLinks.status || 'active';
+  const avatar = notionLinks.avatar?.url || '/src/assets/images/PF.png';
+  const tags = Array.isArray(notionLinks.tags) ? notionLinks.tags : [];
+  const featured = notionLinks.featured || false;
+  const sortOrder = notionLinks.sortOrder || 0;
+
+  return {
+    id: notionLinks.id,
+    name,
+    url,
+    avatar,
+    description,
+    tags,
+    status,
+    category,
+    featured,
+    sortOrder,
+    lastChecked: notionLinks.lastChecked,
+    responseTime: notionLinks.responseTime,
+    lastEditedTime: notionLinks.lastEditedTime,
+    createdTime: notionLinks.createdTime,
+  };
+}
+
+/**
+ * 转换友链数据列表并按分类分组
+ * @param {Array} notionLinksData - Notion 友链数据数组
+ * @returns {object} 按分类分组的友链数据
+ */
+export function transformLinksData(notionLinksData) {
+  if (!Array.isArray(notionLinksData)) return {};
+  
+  const transformedItems = notionLinksData
+    .map(transformLinksItem)
+    .filter(item => item !== null)
+    .sort((a, b) => a.sortOrder - b.sortOrder); // 按 sortOrder 排序
+
+  // 按分类分组
+  const groupedData = transformedItems.reduce((categories, item) => {
+    const category = item.category || '其他';
+    if (!categories[category]) {
+      categories[category] = {
+        id: category.toLowerCase().replace(/\s+/g, '-'),
+        title: category,
+        description: getLinksCategoryDescription(category),
+        items: []
+      };
+    }
+    categories[category].items.push(item);
+    return categories;
+  }, {});
+
+  // 转换为数组格式，匹配现有的数据结构
+  return Object.values(groupedData);
+}
+
+/**
+ * 获取友链分类描述
+ * @param {string} category - 分类名称
+ * @returns {string} 分类描述
+ */
+function getLinksCategoryDescription(category) {
+  const descriptions = {
+    '技术博客': '专注于技术分享和编程开发的优质博客',
+    '设计资源': '优秀的设计师博客和设计资源网站',
+    '个人博客': '朋友们的个人博客，记录生活与思考',
+    '实用工具': '日常开发和生活中常用的在线工具',
+    '灵感启发': '激发创意思维和提供灵感的优质内容',
+    '其他': '其他类型的链接'
+  };
+  return descriptions[category] || '其他类型的链接';
+}
+
+/**
+ * 获取友链统计信息
+ * @param {Array} linksData - 友链数据数组
+ * @returns {object} 统计信息
+ */
+export function getLinksStats(linksData) {
+  if (!Array.isArray(linksData)) return { total: 0, categories: 0, active: 0 };
+  
+  const categories = new Set();
+  let activeCount = 0;
+  
+  linksData.forEach(item => {
+    categories.add(item.category);
+    if (item.status === 'active' || item.status === '正常') {
+      activeCount++;
+    }
+  });
+
+  return {
+    total: linksData.length,
+    categories: categories.size,
+    active: activeCount
+  };
 }

@@ -8,12 +8,18 @@ import {
   groupPostsByCategory,
   getCategories,
   getTags,
-  getBlogStats
+  getBlogStats,
+  transformGearsData,
+  getGearsStats,
+  transformLinksData,
+  getLinksStats
 } from '@/utils/dataTransformers';
 
 export const useBlogStore = defineStore('blog', () => {
   // 状态
-  const rawPosts = ref([]); // 原始 Notion 数据
+  const rawPosts = ref([]); // 原始 Notion 博客数据
+  const rawGears = ref([]); // 原始 Notion 装备数据
+  const rawLinks = ref([]); // 原始 Notion 友链数据
   const isLoading = ref(false);
   const error = ref(null);
   const lastUpdated = ref(null);
@@ -27,6 +33,14 @@ export const useBlogStore = defineStore('blog', () => {
   const tags = computed(() => getTags(publishedPosts.value));
   const stats = computed(() => getBlogStats(posts.value));
   const postsByCategory = computed(() => groupPostsByCategory(publishedPosts.value));
+
+  // 装备相关计算属性
+  const gearsCategories = computed(() => transformGearsData(rawGears.value));
+  const gearsStats = computed(() => getGearsStats(rawGears.value));
+
+  // 友链相关计算属性
+  const linksCategories = computed(() => transformLinksData(rawLinks.value));
+  const linksStats = computed(() => getLinksStats(rawLinks.value));
 
   // 热门文章 - 可以根据阅读量、点赞等指标计算
   const hotPosts = computed(() => {
@@ -72,10 +86,9 @@ export const useBlogStore = defineStore('blog', () => {
     error.value = null;
 
     try {
-      // 动态导入 JSON 数据
+      // 动态导入博客 JSON 数据
       const blogsModule = await import('@/data/blogs.json');
       rawPosts.value = blogsModule.default || blogsModule;
-      lastUpdated.value = new Date().toISOString();
       
       console.log(`✅ 成功加载 ${rawPosts.value.length} 篇博客文章`);
     } catch (err) {
@@ -84,6 +97,78 @@ export const useBlogStore = defineStore('blog', () => {
       
       // 如果加载失败，使用默认数据避免页面崩溃
       rawPosts.value = [];
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // 加载装备数据
+  async function loadGearsData() {
+    if (isLoading.value) return;
+    
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+      // 动态导入装备 JSON 数据
+      const gearsModule = await import('@/data/gears.json');
+      rawGears.value = gearsModule.default || gearsModule;
+      
+      console.log(`✅ 成功加载 ${rawGears.value.length} 个装备项目`);
+    } catch (err) {
+      error.value = `加载装备数据失败: ${err.message}`;
+      console.error('❌ 加载装备数据失败:', err);
+      
+      // 如果加载失败，使用默认数据避免页面崩溃
+      rawGears.value = [];
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // 加载友链数据
+  async function loadLinksData() {
+    if (isLoading.value) return;
+    
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+      // 动态导入友链 JSON 数据
+      const linksModule = await import('@/data/links.json');
+      rawLinks.value = linksModule.default || linksModule;
+      
+      console.log(`✅ 成功加载 ${rawLinks.value.length} 个友链项目`);
+    } catch (err) {
+      error.value = `加载友链数据失败: ${err.message}`;
+      console.error('❌ 加载友链数据失败:', err);
+      
+      // 如果加载失败，使用默认数据避免页面崩溃
+      rawLinks.value = [];
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // 加载所有数据
+  async function loadAllData() {
+    if (isLoading.value) return;
+    
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+      await Promise.all([
+        loadBlogData(),
+        loadGearsData(),
+        loadLinksData()
+      ]);
+      
+      lastUpdated.value = new Date().toISOString();
+      console.log('✅ 所有数据加载完成');
+    } catch (err) {
+      error.value = `加载数据失败: ${err.message}`;
+      console.error('❌ 加载数据失败:', err);
     } finally {
       isLoading.value = false;
     }
@@ -132,8 +217,8 @@ export const useBlogStore = defineStore('blog', () => {
 
   // 刷新数据
   async function refreshData() {
-    console.log('🔄 刷新博客数据...');
-    await loadBlogData();
+    console.log('🔄 刷新所有数据...');
+    await loadAllData();
   }
 
   // 获取数据状态信息
@@ -143,12 +228,16 @@ export const useBlogStore = defineStore('blog', () => {
     lastUpdated: lastUpdated.value,
     totalPosts: rawPosts.value.length,
     publishedCount: publishedPosts.value.length,
-    hasData: rawPosts.value.length > 0
+    totalGears: rawGears.value.length,
+    totalLinks: rawLinks.value.length,
+    hasData: rawPosts.value.length > 0 || rawGears.value.length > 0 || rawLinks.value.length > 0
   }));
 
   return {
     // 状态
     rawPosts,
+    rawGears,
+    rawLinks,
     isLoading,
     error,
     lastUpdated,
@@ -165,10 +254,17 @@ export const useBlogStore = defineStore('blog', () => {
     hotPosts,
     authorInfo,
     skills,
+    gearsCategories,
+    gearsStats,
+    linksCategories,
+    linksStats,
     dataStatus,
 
     // 方法
     loadBlogData,
+    loadGearsData,
+    loadLinksData,
+    loadAllData,
     refreshData,
     getPostById,
     getPostBySlug,

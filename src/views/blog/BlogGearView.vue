@@ -1,234 +1,29 @@
 <script setup>
-import { reactive } from 'vue'
+import { computed, onMounted } from 'vue'
+import { useBlogStore } from '@/stores/blog'
 import PageWrapper from '@/components/layout/PageWrapper.vue'
 import TransitionLink from '@/components/common/TransitionLink.vue'
 
-// 装备数据
-const gearData = reactive({
-  // 页面头部信息
-  header: {
-    tips: '我持有了什么',
-    title: '实物装备推荐（不一定是推荐）',
-    description: '来了解 PalpitatingForever 看测评购物的装备吧！这些装备都是我个人使用过的，可能会有一些主观评价。'
-  },
+// 使用 blog store
+const blogStore = useBlogStore()
 
-  // 装备分类
-  categories: [
-    {
-      id: 'productivity',
-      title: '生产力',
-      description: '提升自己生产效率的硬件设备',
-      items: [
-        {
-          name: 'MacBook Pro',
-          specification: 'M1Pro 32G / 1TB',
-          description: '屏幕显示效果好、色彩准确、对比度强、性能强劲、续航优秀。可以用来开发和设计。',
-          image: '/src/assets/images/cover-1.jpg',
-          link: '/blog/post/macbook-pro',
-          linkText: '查看文章'
-        },
-        {
-          name: 'iPhone 13 Pro',
-          specification: '白色 / 256G',
-          description: '第一代支持ProMotion的iPhone，A15性能优秀。',
-          image: '/src/assets/images/cover-2.jpg',
-          link: 'https://www.apple.com/iphone-13-pro/',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: '米物多模键盘85',
-          specification: '无线蓝牙',
-          description: '一款可以同时连接多个设备的键盘，适配windows和mac，按键中间空隙合适，圆形按键比较好看。',
-          image: '/src/assets/images/cover-3.jpg',
-          link: 'https://item.jd.com/100012980718.html',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: 'Logi Master 3s for Mac',
-          specification: '无线蓝牙',
-          description: '响应迅速，扩展能力强，很适合办公使用',
-          image: '/src/assets/images/cover-4.jpg',
-          link: '/blog/post/logi-master-3s',
-          linkText: '查看文章'
-        },
-        {
-          name: '品胜二合一无线充电支架',
-          specification: 'FYD-C20',
-          description: '充电的时候非常热，不过这个是MagSafe的通病，体验上来说配合iOS17的待机显示效果还是非常好。',
-          image: '/src/assets/images/cover-5.jpg',
-          link: 'http://www.pisen.com.cn/',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: '西部数据P10移动硬盘',
-          specification: '4TB',
-          description: '性能很不错的移动硬盘，比较喜欢西数这个品牌。',
-          image: '/src/assets/images/cover-6.jpg',
-          link: 'https://www.westerndigital.com/zh-cn/products/portable-drives/wd-black-p10-game-drive-usb-3-2-hdd',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: '固态移动硬盘套装',
-          specification: '梵想S690/2TBSSD ITGZ雷电硬盘盒/ASM2464',
-          description: 'TLC颗粒，我放在移动硬盘盒里作为mac的移动硬盘使用。相比于移动机械硬盘，不会因为等待移动硬盘唤醒而造成mac卡顿。',
-          image: '/src/assets/images/cover-7.jpg',
-          link: '/blog/post/ssd-enclosure',
-          linkText: '查看文章'
-        }
-      ]
-    },
-    {
-      id: 'travel',
-      title: '出行',
-      description: '用来出行的实物及设备',
-      items: [
-        {
-          name: '航宇之星双肩包',
-          specification: '标准版',
-          description: '造型炫酷，包的容量非常大，还有魔术贴位置，我贴上了鸡哥的头像。',
-          image: '/src/assets/images/cover-8.jpg',
-          link: 'https://detail.meizu.com/item/pasasjb.html',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: '魅族重塑斜挎包',
-          specification: '标准版',
-          description: '一款轻便小巧的斜挎包，虽然体积比较小，能放的东西少，但是非常好看。',
-          image: '/src/assets/images/cover-9.jpg',
-          link: 'https://detail.meizu.com/item/pandaerxkb.html',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: '黑鲨刀锋2',
-          specification: '黑色',
-          description: '体积特别小巧，金属外壳，有充电动画和iOS电量显示',
-          image: '/src/assets/images/cover-1.jpg',
-          link: '/blog/post/blackshark-blade2',
-          linkText: '查看文章'
-        },
-        {
-          name: '地平线8号行李箱',
-          specification: '前开门20寸登机箱',
-          description: '用起来感觉很结实，并且在移动的时候非常静音。外观非常好看。老罗推荐的。',
-          image: '/src/assets/images/cover-2.jpg',
-          link: 'http://www.level8.com.cn/',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: 'Apple Watch Series 7',
-          specification: '黑色',
-          description: '从S7开始支持超窄边框，颜值非常讨喜，是目前性价比最高的一代手表',
-          image: '/src/assets/images/cover-3.jpg',
-          link: 'https://www.apple.com.cn/watch/',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: 'AirPods Pro',
-          specification: '第二代',
-          description: '可以说是非常强的耳机了，还有好几次固件大幅度更新。apple生态只要有两个设备及以上，必入。',
-          image: '/src/assets/images/cover-4.jpg',
-          link: '/blog/post/airpods-pro',
-          linkText: '查看文章'
-        }
-      ]
-    },
-    {
-      id: 'entertainment',
-      title: '家庭娱乐',
-      description: '用来娱乐的硬件设备',
-      items: [
-        {
-          name: 'Windows台式机',
-          specification: 'i5 12600KF / 1060 3G',
-          description: '用来玩英雄联盟',
-          image: '/src/assets/images/cover-5.jpg',
-          link: '/blog/post/windows-desktop',
-          linkText: '查看文章'
-        },
-        {
-          name: '泰坦军团显示器',
-          specification: 'P2710R',
-          description: '很便宜的2k27寸180hz显示器',
-          image: '/src/assets/images/cover-6.jpg',
-          link: '/blog/post/titan-monitor',
-          linkText: '查看文章'
-        },
-        {
-          name: 'PICO 4',
-          specification: '128G',
-          description: '用来看视频和沉浸式观影的小设备，偶尔玩点VR游戏。',
-          image: '/src/assets/images/cover-7.jpg',
-          link: '/blog/post/pico-4',
-          linkText: '查看文章'
-        },
-        {
-          name: '极空间 Z2S',
-          specification: '酷狼4T & 紫盘4T / 4G',
-          description: '家庭影音中心，放置我的视频、影片和手机的照片备份。',
-          image: '/src/assets/images/cover-8.jpg',
-          link: '/blog/post/zspace-z2s',
-          linkText: '查看文章'
-        },
-        {
-          name: 'Apple TV 4K',
-          specification: '第六代 32G',
-          description: '访问极空间的视频，极空间支持 Apple TV 客户端，可以非常方便的访问，浏览记录多端同步。',
-          image: '/src/assets/images/cover-9.jpg',
-          link: 'https://www.apple.com/apple-tv-4k/',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: 'HomePod mini',
-          specification: '黑色',
-          description: '因为我的Apple TV连接到的是显示器，没有音响，所以就用HomePod来代替了。对于播放音乐能力来说不如小爱同学，但是音质好太多。',
-          image: '/src/assets/images/cover-1.jpg',
-          link: '/blog/post/homepod-mini',
-          linkText: '查看文章'
-        },
-        {
-          name: 'iPad Air 3',
-          specification: '64GB 玫瑰金',
-          description: '当时冲着屏幕大和屏幕显示效果买的。主要用来看bilibili。',
-          image: '/src/assets/images/cover-2.jpg',
-          link: 'https://www.apple.com.cn/ipad/',
-          linkText: '详情',
-          external: true
-        },
-        {
-          name: '友善r5s',
-          specification: '标准版',
-          description: '平常用于装载HomeAssistant，作为家庭自动化的中心。并通过Docker实现一些自动签到、Alist挂载等功能。',
-          image: '/src/assets/images/cover-3.jpg',
-          link: '/blog/post/friendlyarm-r5s',
-          linkText: '查看文章'
-        }
-      ]
-    },
-    {
-      id: 'lifestyle',
-      title: '健康生活',
-      description: '日常用的一些小的数码好物',
-      items: [
-        {
-          name: '米家桌面移动风扇',
-          specification: '标准版',
-          description: '可以摇头的小风扇，噪音不高，摇头避免吹得头疼',
-          image: '/src/assets/images/cover-4.jpg',
-          link: '/blog/post/mijia-fan',
-          linkText: '查看文章'
-        }
-      ]
-    }
-  ]
+// 页面头部信息
+const headerInfo = {
+  tips: '我持有了什么',
+  title: '实物装备推荐（不一定是推荐）',
+  description: '来了解 PalpitatingForever 看测评购物的装备吧！这些装备都是我个人使用过的，可能会有一些主观评价。'
+}
+
+// 从 store 获取装备分类数据
+const gearsCategories = computed(() => blogStore.gearsCategories)
+const isLoading = computed(() => blogStore.isLoading)
+const error = computed(() => blogStore.error)
+
+// 组件挂载时加载装备数据
+onMounted(async () => {
+  if (blogStore.rawGears.length === 0) {
+    await blogStore.loadGearsData()
+  }
 })
 
 // 复制装备名称
@@ -254,100 +49,120 @@ const shareEquipment = (item) => {
 
 <template>
   <PageWrapper class="gear-page">
-    <!-- 页面头部 -->
-    <div class="author-content author-content-item equipment single">
-      <div class="card-content">
-        <div class="author-content-item-tips">{{ gearData.header.tips }}</div>
-        <span class="author-content-item-title">{{ gearData.header.title }}</span>
-        <div class="content-bottom">
-          <div class="tips">{{ gearData.header.description }}</div>
-        </div>
-      </div>
+    <!-- 加载状态 -->
+    <div v-if="isLoading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>正在加载装备数据...</p>
     </div>
 
-    <!-- 装备列表 -->
-    <div class="equipment">
-      <div 
-        v-for="category in gearData.categories"
-        :key="category.id"
-        class="equipment-item"
-      >
-        <!-- 分类标题 -->
-        <h2 class="equipment-item-title">{{ category.title }}</h2>
-        <div class="equipment-item-description">{{ category.description }}</div>
+    <!-- 错误状态 -->
+    <div v-else-if="error" class="error-state">
+      <p>{{ error }}</p>
+      <button @click="blogStore.loadGearsData()" class="retry-button">重试</button>
+    </div>
 
-        <!-- 装备项目 -->
-        <div class="equipment-item-content">
-          <div 
-            v-for="item in category.items"
-            :key="item.name"
-            class="equipment-item-content-item"
-          >
-            <!-- 装备封面 -->
-            <div class="equipment-item-content-item-cover">
-              <img 
-                :src="item.image"
-                :alt="item.name"
-                class="equipment-item-content-item-image"
-                loading="lazy"
-              />
-            </div>
+    <!-- 正常内容 -->
+    <template v-else>
+      <!-- 页面头部 -->
+      <div class="author-content author-content-item equipment single">
+        <div class="card-content">
+          <div class="author-content-item-tips">{{ headerInfo.tips }}</div>
+          <span class="author-content-item-title">{{ headerInfo.title }}</span>
+          <div class="content-bottom">
+            <div class="tips">{{ headerInfo.description }}</div>
+          </div>
+        </div>
+      </div>
 
-            <!-- 装备信息 -->
-            <div class="equipment-item-content-item-info">
-              <!-- 装备名称 -->
-              <div 
-                class="equipment-item-content-item-name"
-                @click="copyEquipmentName(item.name)"
-                :title="`点击复制：${item.name}`"
-              >
-                {{ item.name }}
+      <!-- 装备列表 -->
+      <div class="equipment" v-if="gearsCategories.length > 0">
+        <div
+          v-for="category in gearsCategories"
+          :key="category.id"
+          class="equipment-item"
+        >
+          <!-- 分类标题 -->
+          <h2 class="equipment-item-title">{{ category.title }}</h2>
+          <div class="equipment-item-description">{{ category.description }}</div>
+
+          <!-- 装备项目 -->
+          <div class="equipment-item-content">
+            <div
+              v-for="item in category.items"
+              :key="item.id"
+              class="equipment-item-content-item"
+            >
+              <!-- 装备封面 -->
+              <div class="equipment-item-content-item-cover">
+                <img
+                  :src="item.image"
+                  :alt="item.name"
+                  class="equipment-item-content-item-image"
+                  loading="lazy"
+                />
               </div>
 
-              <!-- 规格参数 -->
-              <div class="equipment-item-content-item-specification">
-                {{ item.specification }}
-              </div>
-
-              <!-- 描述 -->
-              <div class="equipment-item-content-item-description">
-                {{ item.description }}
-              </div>
-
-              <!-- 工具栏 -->
-              <div class="equipment-item-content-item-toolbar">
-                <!-- 查看详情链接 -->
-                <TransitionLink
-                  v-if="!item.external"
-                  :to="item.link"
-                  class="equipment-item-content-item-link"
+              <!-- 装备信息 -->
+              <div class="equipment-item-content-item-info">
+                <!-- 装备名称 -->
+                <div
+                  class="equipment-item-content-item-name"
+                  @click="copyEquipmentName(item.name)"
+                  :title="`点击复制：${item.name}`"
                 >
-                  {{ item.linkText }}
-                </TransitionLink>
-                <a
-                  v-else
-                  :href="item.link"
-                  class="equipment-item-content-item-link"
-                  target="_blank"
-                  rel="external nofollow"
-                >
-                  {{ item.linkText }}
-                </a>
+                  {{ item.name }}
+                </div>
 
-                <!-- 分享按钮 -->
-                <button
-                  class="bber-reply"
-                  @click="shareEquipment(item)"
-                  :title="`分享${item.name}信息`"
-                >
-                  <i class="icon-chat"></i>
-                </button>
+                <!-- 规格参数 -->
+                <div class="equipment-item-content-item-specification">
+                  {{ item.specification }}
+                </div>
+
+                <!-- 描述 -->
+                <div class="equipment-item-content-item-description">
+                  {{ item.description }}
+                </div>
+
+                <!-- 工具栏 -->
+                <div class="equipment-item-content-item-toolbar" v-if="item.link && item.linkText">
+                  <!-- 查看详情链接 -->
+                  <TransitionLink
+                    v-if="!item.external"
+                    :to="item.link"
+                    class="equipment-item-content-item-link"
+                  >
+                    {{ item.linkText }}
+                  </TransitionLink>
+                  <a
+                    v-else
+                    :href="item.link"
+                    class="equipment-item-content-item-link"
+                    target="_blank"
+                    rel="external nofollow"
+                  >
+                    {{ item.linkText }}
+                  </a>
+
+                  <!-- 分享按钮 -->
+                  <button
+                    class="bber-reply"
+                    @click="shareEquipment(item)"
+                    :title="`分享${item.name}信息`"
+                  >
+                    <i class="icon-chat"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- 空状态 -->
+      <div v-else class="empty-state">
+        <p>暂无装备数据</p>
+      </div>
+    </template>
   </PageWrapper>
 </template>
 
@@ -728,5 +543,59 @@ const shareEquipment = (item) => {
     outline: 2px solid var(--accent-primary);
     outline-offset: 2px;
   }
+}
+
+// 加载状态样式
+.loading-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-xxxl);
+  color: var(--text-secondary);
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--bg-secondary);
+    border-top: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: var(--space-lg);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+// 错误状态样式
+.error-state {
+  text-align: center;
+  padding: var(--space-xxxl);
+  color: var(--text-secondary);
+  
+  .retry-button {
+    margin-top: var(--space-lg);
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--accent-primary);
+    color: white;
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: var(--global-transition);
+    
+    &:hover {
+      background: var(--accent-hover);
+    }
+  }
+}
+
+// 空状态样式
+.empty-state {
+  text-align: center;
+  padding: var(--space-xxxl);
+  color: var(--text-secondary);
 }
 </style>

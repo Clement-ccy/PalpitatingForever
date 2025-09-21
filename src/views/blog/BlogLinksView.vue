@@ -1,189 +1,205 @@
 <script setup>
-import { reactive, ref } from "vue";
+import { reactive, ref, computed, onMounted } from "vue";
 import PageWrapper from "@/components/layout/PageWrapper.vue";
 import TransitionLink from "@/components/common/TransitionLink.vue";
+import { useBlogStore } from "@/stores/blog.js";
+
+// 使用 blog store
+const blogStore = useBlogStore();
 
 // 复制成功提示
 const showCopySuccess = ref(false);
 const copySuccessMessage = ref('');
 
-// 友链数据
-const linksData = reactive({
-  // 页面头部信息
-  header: {
-    tips: "互联网好友",
-    title: "友情链接推荐",
-    description:
-      "这里汇集了我在互联网上认识的优秀朋友们，他们都有着非常不错的内容输出。每一个链接都值得你去探索和发现。",
-  },
+// 页面头部信息
+const headerData = reactive({
+  tips: "互联网好友",
+  title: "友情链接推荐",
+  description:
+    "这里汇集了我在互联网上认识的优秀朋友们，他们都有着非常不错的内容输出。每一个链接都值得你去探索和发现。",
+});
 
-  // 友链分类
-  categories: [
-    {
-      id: "tech-blogs",
-      title: "技术博客",
-      description: "专注于技术分享和编程开发的优质博客",
-      items: [
-        {
-          name: "Vue.js",
-          url: "https://vuejs.org",
-          avatar: "/src/assets/images/PF.png",
-          description: "渐进式 JavaScript 框架，用于构建用户界面",
-          tags: ["前端", "JavaScript", "Framework"],
-          status: "active",
-        },
-        {
-          name: "GitHub",
-          url: "https://github.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "全球最大的代码托管平台和开发者社区",
-          tags: ["开发", "代码托管", "开源"],
-          status: "active",
-        },
-        {
-          name: "MDN Web Docs",
-          url: "https://developer.mozilla.org",
-          avatar: "/src/assets/images/PF.png",
-          description: "Web 开发者最权威的技术文档和学习资源",
-          tags: ["文档", "Web", "教程"],
-          status: "active",
-        },
-        {
-          name: "Stack Overflow",
-          url: "https://stackoverflow.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "程序员问答社区，解决编程问题的最佳去处",
-          tags: ["问答", "编程", "社区"],
-          status: "active",
-        },
-      ],
-    },
-    {
-      id: "design-resources",
-      title: "设计资源",
-      description: "优秀的设计师博客和设计资源网站",
-      items: [
-        {
-          name: "Dribbble",
-          url: "https://dribbble.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "全球设计师作品展示和灵感分享平台",
-          tags: ["设计", "作品集", "灵感"],
-          status: "active",
-        },
-        {
-          name: "Behance",
-          url: "https://behance.net",
-          avatar: "/src/assets/images/PF.png",
-          description: "Adobe 旗下创意作品展示平台",
-          tags: ["创意", "作品", "设计师"],
-          status: "active",
-        },
-        {
-          name: "Figma",
-          url: "https://figma.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "协作式界面设计工具，团队设计的首选",
-          tags: ["UI设计", "协作", "工具"],
-          status: "active",
-        },
-      ],
-    },
-    {
-      id: "personal-blogs",
-      title: "个人博客",
-      description: "朋友们的个人博客，记录生活与思考",
-      items: [
-        {
-          name: "阮一峰的网络日志",
-          url: "https://ruanyifeng.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "知名技术博主，《ES6 标准入门》作者",
-          tags: ["技术", "教程", "思考"],
-          status: "active",
-        },
-        {
-          name: "廖雪峰的官方网站",
-          url: "https://liaoxuefeng.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "专注于IT技术教学的个人网站",
-          tags: ["教程", "Python", "JavaScript"],
-          status: "active",
-        },
-      ],
-    },
-    {
-      id: "tools-services",
-      title: "实用工具",
-      description: "日常开发和生活中常用的在线工具",
-      items: [
-        {
-          name: "Can I Use",
-          url: "https://caniuse.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "查询浏览器对各种Web特性的支持情况",
-          tags: ["工具", "兼容性", "查询"],
-          status: "active",
-        },
-        {
-          name: "JSON Formatter",
-          url: "https://jsonformatter.org",
-          avatar: "/src/assets/images/PF.png",
-          description: "在线JSON格式化和验证工具",
-          tags: ["JSON", "格式化", "在线工具"],
-          status: "active",
-        },
-        {
-          name: "RegExr",
-          url: "https://regexr.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "在线正则表达式学习、构建和测试工具",
-          tags: ["正则", "测试", "学习"],
-          status: "active",
-        },
-      ],
-    },
-    {
-      id: "inspiration",
-      title: "灵感启发",
-      description: "激发创意思维和提供灵感的优质内容",
-      items: [
-        {
-          name: "TED",
-          url: "https://ted.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "汇聚世界顶尖思想家的演讲平台",
-          tags: ["演讲", "思想", "启发"],
-          status: "active",
-        },
-        {
-          name: "Medium",
-          url: "https://medium.com",
-          avatar: "/src/assets/images/PF.png",
-          description: "高质量的写作和阅读社区平台",
-          tags: ["写作", "阅读", "思考"],
-          status: "active",
-        },
-      ],
-    },
+// 从 store 获取友链数据
+const linksCategories = computed(() => blogStore.linksCategories || []);
+const isLoading = computed(() => blogStore.isLoading);
+const error = computed(() => blogStore.error);
+
+// 友链申请信息（保持静态）
+const applicationData = reactive({
+  title: "友链申请",
+  description: "欢迎志同道合的朋友申请友情链接！",
+  requirements: [
+    "内容积极向上，无违法违规内容",
+    "网站可以正常访问，加载速度适中",
+    "定期更新内容，保持网站活跃",
+    "优先考虑原创内容的个人博客",
   ],
-
-  // 友链申请信息
-  application: {
-    title: "友链申请",
-    description: "欢迎志同道合的朋友申请友情链接！",
-    requirements: [
-      "内容积极向上，无违法违规内容",
-      "网站可以正常访问，加载速度适中",
-      "定期更新内容，保持网站活跃",
-      "优先考虑原创内容的个人博客",
-    ],
-    contact: {
-      email: "admin@example.com",
-      qq: "123456789",
-      wechat: "example_wechat",
-    },
+  contact: {
+    email: "admin@example.com",
+    qq: "123456789",
+    wechat: "example_wechat",
   },
+});
+
+// 备用静态数据（当没有 Notion 数据时使用）
+const fallbackCategories = [
+  {
+    id: "tech-blogs",
+    title: "技术博客",
+    description: "专注于技术分享和编程开发的优质博客",
+    items: [
+      {
+        name: "Vue.js",
+        url: "https://vuejs.org",
+        avatar: "/src/assets/images/PF.png",
+        description: "渐进式 JavaScript 框架，用于构建用户界面",
+        tags: ["前端", "JavaScript", "Framework"],
+        status: "active",
+      },
+      {
+        name: "GitHub",
+        url: "https://github.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "全球最大的代码托管平台和开发者社区",
+        tags: ["开发", "代码托管", "开源"],
+        status: "active",
+      },
+      {
+        name: "MDN Web Docs",
+        url: "https://developer.mozilla.org",
+        avatar: "/src/assets/images/PF.png",
+        description: "Web 开发者最权威的技术文档和学习资源",
+        tags: ["文档", "Web", "教程"],
+        status: "active",
+      },
+      {
+        name: "Stack Overflow",
+        url: "https://stackoverflow.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "程序员问答社区，解决编程问题的最佳去处",
+        tags: ["问答", "编程", "社区"],
+        status: "active",
+      },
+    ],
+  },
+  {
+    id: "design-resources",
+    title: "设计资源",
+    description: "优秀的设计师博客和设计资源网站",
+    items: [
+      {
+        name: "Dribbble",
+        url: "https://dribbble.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "全球设计师作品展示和灵感分享平台",
+        tags: ["设计", "作品集", "灵感"],
+        status: "active",
+      },
+      {
+        name: "Behance",
+        url: "https://behance.net",
+        avatar: "/src/assets/images/PF.png",
+        description: "Adobe 旗下创意作品展示平台",
+        tags: ["创意", "作品", "设计师"],
+        status: "active",
+      },
+      {
+        name: "Figma",
+        url: "https://figma.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "协作式界面设计工具，团队设计的首选",
+        tags: ["UI设计", "协作", "工具"],
+        status: "active",
+      },
+    ],
+  },
+  {
+    id: "personal-blogs",
+    title: "个人博客",
+    description: "朋友们的个人博客，记录生活与思考",
+    items: [
+      {
+        name: "阮一峰的网络日志",
+        url: "https://ruanyifeng.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "知名技术博主，《ES6 标准入门》作者",
+        tags: ["技术", "教程", "思考"],
+        status: "active",
+      },
+      {
+        name: "廖雪峰的官方网站",
+        url: "https://liaoxuefeng.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "专注于IT技术教学的个人网站",
+        tags: ["教程", "Python", "JavaScript"],
+        status: "active",
+      },
+    ],
+  },
+  {
+    id: "tools-services",
+    title: "实用工具",
+    description: "日常开发和生活中常用的在线工具",
+    items: [
+      {
+        name: "Can I Use",
+        url: "https://caniuse.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "查询浏览器对各种Web特性的支持情况",
+        tags: ["工具", "兼容性", "查询"],
+        status: "active",
+      },
+      {
+        name: "JSON Formatter",
+        url: "https://jsonformatter.org",
+        avatar: "/src/assets/images/PF.png",
+        description: "在线JSON格式化和验证工具",
+        tags: ["JSON", "格式化", "在线工具"],
+        status: "active",
+      },
+      {
+        name: "RegExr",
+        url: "https://regexr.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "在线正则表达式学习、构建和测试工具",
+        tags: ["正则", "测试", "学习"],
+        status: "active",
+      },
+    ],
+  },
+  {
+    id: "inspiration",
+    title: "灵感启发",
+    description: "激发创意思维和提供灵感的优质内容",
+    items: [
+      {
+        name: "TED",
+        url: "https://ted.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "汇聚世界顶尖思想家的演讲平台",
+        tags: ["演讲", "思想", "启发"],
+        status: "active",
+      },
+      {
+        name: "Medium",
+        url: "https://medium.com",
+        avatar: "/src/assets/images/PF.png",
+        description: "高质量的写作和阅读社区平台",
+        tags: ["写作", "阅读", "思考"],
+        status: "active",
+      },
+    ],
+  },
+];
+
+// 实际使用的分类数据
+const displayCategories = computed(() => {
+  return linksCategories.value.length > 0 ? linksCategories.value : fallbackCategories;
+});
+
+// 页面挂载时加载数据
+onMounted(async () => {
+  await blogStore.loadLinksData();
 });
 
 // 复制链接地址
@@ -214,16 +230,20 @@ const visitLink = (url) => {
 // 检查链接状态
 const checkLinkStatus = (item) => {
   // 这里可以实现链接状态检查逻辑
-  return item.status === "active";
+  return item.status === "active" || item.status === "正常";
 };
 
 // 获取状态显示文本
 const getStatusText = (status) => {
   const statusMap = {
     active: "正常",
+    "正常": "正常",
     inactive: "失效",
+    "失效": "失效",
     slow: "较慢",
+    "较慢": "较慢",
     checking: "检测中",
+    "检测中": "检测中",
   };
   return statusMap[status] || "未知";
 };
@@ -232,9 +252,13 @@ const getStatusText = (status) => {
 const getStatusClass = (status) => {
   const classMap = {
     active: "status-active",
+    "正常": "status-active",
     inactive: "status-inactive",
+    "失效": "status-inactive",
     slow: "status-slow",
+    "较慢": "status-slow",
     checking: "status-checking",
+    "检测中": "status-checking",
   };
   return classMap[status] || "status-unknown";
 };
@@ -244,15 +268,27 @@ const getStatusClass = (status) => {
   <PageWrapper class="links-page">
     <!-- 页面头部 -->
     <div class="links-header">
-      <div class="links-header-tips">{{ linksData.header.tips }}</div>
-      <h1 class="links-header-title">{{ linksData.header.title }}</h1>
-      <div class="links-header-description">{{ linksData.header.description }}</div>
+      <div class="links-header-tips">{{ headerData.tips }}</div>
+      <h1 class="links-header-title">{{ headerData.title }}</h1>
+      <div class="links-header-description">{{ headerData.description }}</div>
+    </div>
+
+    <!-- 加载状态 -->
+    <div v-if="isLoading" class="loading-state">
+      <div class="loading-spinner"></div>
+      <p>正在加载友链数据...</p>
+    </div>
+
+    <!-- 错误状态 -->
+    <div v-else-if="error" class="error-state">
+      <p>加载失败: {{ error }}</p>
+      <button @click="blogStore.loadLinksData()" class="retry-btn">重试</button>
     </div>
 
     <!-- 友链分类 -->
-    <div class="links-container">
+    <div v-else class="links-container">
       <div
-        v-for="category in linksData.categories"
+        v-for="category in displayCategories"
         :key="category.id"
         class="links-category"
       >
@@ -336,9 +372,9 @@ const getStatusClass = (status) => {
       <div class="application-card">
         <div class="application-header">
           <div class="application-tips">申请合作</div>
-          <h2 class="application-title">{{ linksData.application.title }}</h2>
+          <h2 class="application-title">{{ applicationData.title }}</h2>
           <div class="application-description">
-            {{ linksData.application.description }}
+            {{ applicationData.description }}
           </div>
         </div>
 
@@ -348,7 +384,7 @@ const getStatusClass = (status) => {
             <h3>申请要求</h3>
             <ul>
               <li
-                v-for="requirement in linksData.application.requirements"
+                v-for="requirement in applicationData.requirements"
                 :key="requirement"
               >
                 {{ requirement }}
@@ -363,10 +399,10 @@ const getStatusClass = (status) => {
               <div class="contact-item">
                 <span class="contact-icon">📧</span>
                 <span class="contact-label">邮箱：</span>
-                <span class="contact-value">{{ linksData.application.contact.email }}</span>
+                <span class="contact-value">{{ applicationData.contact.email }}</span>
                 <button
                   class="copy-contact-btn"
-                  @click="copyLink(linksData.application.contact.email)"
+                  @click="copyLink(applicationData.contact.email)"
                   title="复制邮箱地址"
                 >
                   📋
@@ -375,10 +411,10 @@ const getStatusClass = (status) => {
               <div class="contact-item">
                 <span class="contact-icon">💬</span>
                 <span class="contact-label">QQ：</span>
-                <span class="contact-value">{{ linksData.application.contact.qq }}</span>
+                <span class="contact-value">{{ applicationData.contact.qq }}</span>
                 <button
                   class="copy-contact-btn"
-                  @click="copyLink(linksData.application.contact.qq)"
+                  @click="copyLink(applicationData.contact.qq)"
                   title="复制QQ号码"
                 >
                   📋
@@ -387,10 +423,10 @@ const getStatusClass = (status) => {
               <div class="contact-item">
                 <span class="contact-icon">💚</span>
                 <span class="contact-label">微信：</span>
-                <span class="contact-value">{{ linksData.application.contact.wechat }}</span>
+                <span class="contact-value">{{ applicationData.contact.wechat }}</span>
                 <button
                   class="copy-contact-btn"
-                  @click="copyLink(linksData.application.contact.wechat)"
+                  @click="copyLink(applicationData.contact.wechat)"
                   title="复制微信号"
                 >
                   📋
@@ -449,6 +485,46 @@ const getStatusClass = (status) => {
   }
 }
 
+// 加载和错误状态
+.loading-state, .error-state {
+  text-align: center;
+  padding: var(--space-xxxxl);
+  
+  .loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--separator-secondary);
+    border-top: 3px solid var(--accent-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto var(--space-lg);
+  }
+  
+  p {
+    color: var(--text-secondary);
+    margin-bottom: var(--space-lg);
+  }
+  
+  .retry-btn {
+    background: var(--accent-primary);
+    color: var(--text-on-accent);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--space-sm) var(--space-lg);
+    cursor: pointer;
+    transition: var(--global-transition);
+    
+    &:hover {
+      background: var(--accent-secondary);
+    }
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
 // 友链容器
 .links-container {
   display: flex;
@@ -499,34 +575,15 @@ const getStatusClass = (status) => {
   position: relative;
   overflow: hidden;
   
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
-    opacity: 0;
-    transition: var(--global-transition);
-  }
-  
   &:hover {
     transform: translateY(-4px);
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
     border-color: var(--accent-primary);
-    
-    &::before {
-      opacity: 1;
-    }
   }
   
   &.link-inactive {
     opacity: 0.6;
-    
-    .link-status {
-      background: var(--color-error);
-    }
+    filter: grayscale(0.3);
   }
 }
 
@@ -535,14 +592,14 @@ const getStatusClass = (status) => {
   position: relative;
   width: 60px;
   height: 60px;
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
   
   .avatar-image {
     width: 100%;
     height: 100%;
     border-radius: var(--radius-md);
     object-fit: cover;
-    transition: var(--global-transition);
+    border: 2px solid var(--separator-secondary);
   }
   
   .link-status {
@@ -551,51 +608,47 @@ const getStatusClass = (status) => {
     right: -2px;
     width: 16px;
     height: 16px;
-    border-radius: var(--radius-full);
+    border-radius: 50%;
     border: 2px solid var(--bg-primary);
     
     &.status-active {
-      background: var(--color-success);
+      background: var(--color-green);
     }
     
     &.status-inactive {
-      background: var(--color-error);
+      background: var(--color-red);
     }
     
     &.status-slow {
-      background: var(--color-warning);
+      background: var(--color-orange);
     }
     
     &.status-checking {
-      background: var(--color-info);
-      animation: pulse 2s infinite;
+      background: var(--color-blue);
     }
-  }
-}
-
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
+    
+    &.status-unknown {
+      background: var(--color-gray);
+    }
   }
 }
 
 // 链接信息
 .link-info {
+  flex: 1;
+  
   .link-name {
     font-size: var(--font-size-headline);
     font-weight: var(--font-weight-semibold);
     color: var(--text-primary);
-    margin-bottom: var(--space-sm);
+    margin-bottom: var(--space-xs);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
   
   .link-description {
-    font-size: var(--font-size-subhead);
+    font-size: var(--font-size-callout);
     color: var(--text-secondary);
     line-height: var(--line-height-normal);
     margin-bottom: var(--space-md);
@@ -604,83 +657,64 @@ const getStatusClass = (status) => {
     -webkit-box-orient: vertical;
     overflow: hidden;
   }
-}
-
-// 标签
-.link-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-xs);
-  margin-bottom: var(--space-lg);
   
-  .link-tag {
-    font-size: var(--font-size-caption1);
-    color: var(--accent-primary);
-    background: var(--accent-hover);
-    padding: var(--space-xxs) var(--space-sm);
-    border-radius: var(--radius-sm);
-    border: 1px solid var(--accent-primary);
-    opacity: 0.8;
-    transition: var(--global-transition);
+  .link-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-lg);
     
-    &:hover {
-      opacity: 1;
-      background: var(--accent-active);
+    .link-tag {
+      background: var(--bg-secondary);
+      color: var(--text-secondary);
+      font-size: var(--font-size-caption2);
+      padding: var(--space-xs) var(--space-sm);
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--separator-secondary);
     }
   }
-}
-
-// 操作按钮
-.link-actions {
-  display: flex;
-  gap: var(--space-sm);
   
-  .link-action-btn {
+  .link-actions {
     display: flex;
-    align-items: center;
-    gap: var(--space-xs);
-    padding: var(--space-sm) var(--space-md);
-    border: none;
-    border-radius: var(--radius-md);
-    font-size: var(--font-size-subhead);
-    font-weight: var(--font-weight-medium);
-    cursor: pointer;
-    transition: var(--global-transition);
+    gap: var(--space-sm);
     
-    .btn-icon {
-      font-size: 16px;
-    }
-    
-    &.visit-btn {
-      background: var(--accent-primary);
-      color: white;
-      flex: 1;
-      justify-content: center;
+    .link-action-btn {
+      background: transparent;
+      border: 1px solid var(--separator-secondary);
+      border-radius: var(--radius-md);
+      padding: var(--space-sm) var(--space-md);
+      font-size: var(--font-size-caption1);
+      cursor: pointer;
+      transition: var(--global-transition);
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
       
-      &:hover {
-        background: var(--accent-secondary);
-        transform: translateY(-1px);
+      .btn-icon {
+        font-size: var(--font-size-caption2);
       }
       
-      &:active {
-        transform: translateY(0);
-      }
-    }
-    
-    &.copy-btn {
-      background: var(--fill-secondary);
-      color: var(--text-primary);
-      padding: var(--space-sm);
-      min-width: 44px;
-      justify-content: center;
-      
-      &:hover {
-        background: var(--fill-primary);
-        transform: translateY(-1px);
+      &.visit-btn {
+        color: var(--accent-primary);
+        border-color: var(--accent-primary);
+        flex: 1;
+        justify-content: center;
+        
+        &:hover {
+          background: var(--accent-primary);
+          color: var(--text-on-accent);
+        }
       }
       
-      &:active {
-        transform: translateY(0);
+      &.copy-btn {
+        color: var(--text-secondary);
+        min-width: 40px;
+        justify-content: center;
+        
+        &:hover {
+          background: var(--bg-secondary);
+          color: var(--text-primary);
+        }
       }
     }
   }
@@ -694,259 +728,162 @@ const getStatusClass = (status) => {
     background: var(--bg-primary);
     border-radius: var(--radius-lg);
     padding: var(--space-xxl);
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--shadow-sm);
     border: 1px solid var(--separator-secondary);
-  }
-  
-  .application-header {
-    text-align: center;
-    margin-bottom: var(--space-xxl);
     
-    .application-tips {
-      font-size: var(--font-size-caption1);
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: var(--space-sm);
-    }
-    
-    .application-title {
-      font-size: var(--font-size-title1);
-      font-weight: var(--font-weight-bold);
-      color: var(--text-primary);
-      margin-bottom: var(--space-lg);
-    }
-    
-    .application-description {
-      font-size: var(--font-size-callout);
-      color: var(--text-secondary);
-      line-height: var(--line-height-normal);
-    }
-  }
-  
-  .application-content {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: var(--space-xxl);
-    
-    @media (max-width: 768px) {
-      grid-template-columns: 1fr;
-      gap: var(--space-xl);
-    }
-  }
-  
-  .application-requirements,
-  .application-contact {
-    h3 {
-      font-size: var(--font-size-headline);
-      font-weight: var(--font-weight-semibold);
-      color: var(--text-primary);
-      margin-bottom: var(--space-lg);
-    }
-  }
-  
-  .application-requirements {
-    ul {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .application-header {
+      text-align: center;
+      margin-bottom: var(--space-xxl);
       
-      li {
-        font-size: var(--font-size-subhead);
+      .application-tips {
+        font-size: var(--font-size-caption1);
+        color: var(--accent-primary);
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: var(--space-sm);
+      }
+      
+      .application-title {
+        font-size: var(--font-size-title1);
+        font-weight: var(--font-weight-bold);
+        color: var(--text-primary);
+        margin-bottom: var(--space-md);
+      }
+      
+      .application-description {
+        font-size: var(--font-size-body);
         color: var(--text-secondary);
         line-height: var(--line-height-normal);
-        padding: var(--space-sm) 0;
-        border-bottom: 1px solid var(--separator-secondary);
-        position: relative;
-        padding-left: var(--space-xl);
-        
-        &::before {
-          content: '✓';
-          position: absolute;
-          left: 0;
-          color: var(--color-success);
-          font-weight: var(--font-weight-bold);
-        }
-        
-        &:last-child {
-          border-bottom: none;
-        }
       }
     }
-  }
-  
-  .contact-methods {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-lg);
     
-    .contact-item {
-      display: flex;
-      align-items: center;
-      gap: var(--space-md);
-      padding: var(--space-md);
-      background: var(--bg-secondary);
-      border-radius: var(--radius-md);
-      transition: var(--global-transition);
+    .application-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-xxl);
       
-      &:hover {
-        background: var(--fill-secondary);
+      @media (max-width: 768px) {
+        grid-template-columns: 1fr;
       }
       
-      .contact-icon {
-        font-size: 20px;
-        width: 32px;
-        text-align: center;
-      }
-      
-      .contact-label {
-        font-size: var(--font-size-subhead);
-        color: var(--text-secondary);
-        min-width: 50px;
-      }
-      
-      .contact-value {
-        font-size: var(--font-size-subhead);
+      h3 {
+        font-size: var(--font-size-headline);
+        font-weight: var(--font-weight-semibold);
         color: var(--text-primary);
-        font-weight: var(--font-weight-medium);
-        flex: 1;
+        margin-bottom: var(--space-lg);
       }
       
-      .copy-contact-btn {
-        background: var(--accent-primary);
-        color: white;
-        border: none;
-        padding: var(--space-xs);
-        border-radius: var(--radius-sm);
-        cursor: pointer;
-        font-size: 14px;
-        width: 32px;
-        height: 32px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: var(--global-transition);
-        
-        &:hover {
-          background: var(--accent-secondary);
-          transform: scale(1.05);
+      .application-requirements {
+        ul {
+          list-style: none;
+          padding: 0;
+          
+          li {
+            position: relative;
+            padding-left: var(--space-lg);
+            margin-bottom: var(--space-md);
+            font-size: var(--font-size-callout);
+            color: var(--text-secondary);
+            line-height: var(--line-height-normal);
+            
+            &::before {
+              content: "✓";
+              position: absolute;
+              left: 0;
+              color: var(--color-green);
+              font-weight: bold;
+            }
+          }
         }
-        
-        &:active {
-          transform: scale(0.95);
+      }
+      
+      .application-contact {
+        .contact-methods {
+          display: flex;
+          flex-direction: column;
+          gap: var(--space-lg);
+          
+          .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            background: var(--bg-secondary);
+            padding: var(--space-md);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--separator-secondary);
+            
+            .contact-icon {
+              font-size: var(--font-size-title3);
+            }
+            
+            .contact-label {
+              font-size: var(--font-size-callout);
+              color: var(--text-secondary);
+              min-width: 60px;
+            }
+            
+            .contact-value {
+              font-size: var(--font-size-callout);
+              color: var(--text-primary);
+              flex: 1;
+              font-family: monospace;
+            }
+            
+            .copy-contact-btn {
+              background: transparent;
+              border: none;
+              font-size: var(--font-size-body);
+              cursor: pointer;
+              padding: var(--space-xs);
+              border-radius: var(--radius-sm);
+              color: var(--text-secondary);
+              transition: var(--global-transition);
+              
+              &:hover {
+                background: var(--bg-tertiary);
+                color: var(--text-primary);
+              }
+            }
+          }
         }
       }
     }
   }
 }
 
-// 复制成功提示
+// 复制提示
 .copy-toast {
   position: fixed;
-  top: 20px;
-  right: 20px;
-  background: var(--bg-glass-strong);
-  backdrop-filter: var(--backdrop-blur);
+  top: 100px;
+  right: var(--space-xl);
+  background: var(--bg-primary);
   color: var(--text-primary);
   padding: var(--space-md) var(--space-lg);
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
   box-shadow: var(--shadow-lg);
+  border: 1px solid var(--separator-secondary);
   display: flex;
   align-items: center;
   gap: var(--space-sm);
-  z-index: var(--z-index-tooltip);
-  border: 1px solid var(--separator-primary);
+  z-index: 1000;
   
   .toast-icon {
-    font-size: 18px;
+    font-size: var(--font-size-body);
   }
   
   .toast-message {
-    font-size: var(--font-size-subhead);
-    font-weight: var(--font-weight-medium);
+    font-size: var(--font-size-callout);
   }
 }
 
-// Toast 动画
 .toast-enter-active,
 .toast-leave-active {
-  transition: all 0.3s ease;
+  transition: var(--global-transition);
 }
 
-.toast-enter-from {
-  opacity: 0;
-  transform: translateX(100%);
-}
-
+.toast-enter-from,
 .toast-leave-to {
   opacity: 0;
   transform: translateX(100%);
-}
-
-// 响应式调整
-@media (max-width: 768px) {
-  .links-page .page-content {
-    padding: var(--space-lg) var(--space-md);
-  }
-  
-  .links-header {
-    margin-bottom: var(--space-xxl);
-    
-    .links-header-title {
-      font-size: var(--font-size-title1);
-    }
-  }
-  
-  .links-container {
-    gap: var(--space-xxl);
-    margin-bottom: var(--space-xxl);
-  }
-  
-  .link-card {
-    padding: var(--space-md);
-  }
-  
-  .application-card {
-    padding: var(--space-xl);
-  }
-  
-  .copy-toast {
-    top: 10px;
-    right: 10px;
-    left: 10px;
-    padding: var(--space-sm) var(--space-md);
-    
-    .toast-message {
-      font-size: var(--font-size-caption1);
-    }
-  }
-}
-
-@media (max-width: 576px) {
-  .links-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .link-actions {
-    .link-action-btn {
-      padding: var(--space-sm);
-      font-size: var(--font-size-caption1);
-    }
-  }
-  
-  .contact-methods .contact-item {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-sm);
-    
-    .contact-label,
-    .contact-value {
-      width: 100%;
-    }
-    
-    .copy-contact-btn {
-      align-self: flex-end;
-    }
-  }
 }
 </style>

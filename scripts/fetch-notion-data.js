@@ -12,13 +12,15 @@ const BLOGS_DATABASE_ID = process.env.NOTION_BLOGS_DATABASE_ID;
 const WORKS_DATABASE_ID = process.env.NOTION_WORKS_DATABASE_ID;
 const PLOGS_DATABASE_ID = process.env.NOTION_PLOGS_DATABASE_ID;
 const MLOGS_DATABASE_ID = process.env.NOTION_MLOGS_DATABASE_ID;
+const GEARS_DATABASE_ID = process.env.NOTION_GEARS_DATABASE_ID;
+const LINKS_DATABASE_ID = process.env.NOTION_LINKS_DATABASE_ID;
 // Add Page IDs if needed for static pages like About, Links, Gear
 // const BLOG_ABOUT_PAGE_ID = process.env.NOTION_BLOG_ABOUT_PAGE_ID;
 
 const OUTPUT_DIR = path.resolve('src/data'); // Data output directory
 
 // --- Validate Configuration ---
-if (!NOTION_API_KEY || !BLOGS_DATABASE_ID || !WORKS_DATABASE_ID || !PLOGS_DATABASE_ID || !MLOGS_DATABASE_ID) {
+if (!NOTION_API_KEY || !BLOGS_DATABASE_ID || !WORKS_DATABASE_ID || !PLOGS_DATABASE_ID || !MLOGS_DATABASE_ID || !GEARS_DATABASE_ID || !LINKS_DATABASE_ID) {
   console.error('❌ Error: Please ensure NOTION_API_KEY and all DATABASE_IDs are set in your .env file.');
   process.exit(1);
 }
@@ -103,6 +105,7 @@ function getPropertyValue(properties, propName, type) {
             case 'multi_select': return [];
             case 'files': return [];
             case 'checkbox': return false;
+            case 'relation': return [];
             default: return null;
         }
     }
@@ -136,6 +139,10 @@ function getPropertyValue(properties, propName, type) {
                 return prop.email || null;
             case 'phone_number':
                 return prop.phone_number || null;
+            case 'relation':
+                return prop.relation?.map(rel => ({
+                    id: rel.id
+                })) || [];
             default:
                 console.warn(`Unsupported property type "${type}" for property "${propName}"`);
                 return null;
@@ -148,6 +155,7 @@ function getPropertyValue(properties, propName, type) {
             case 'multi_select': return [];
             case 'files': return [];
             case 'checkbox': return false;
+            case 'relation': return [];
             default: return null;
         }
     }
@@ -183,6 +191,9 @@ async function fetchData() {
     console.log('📚 Fetching Blogs...');
     const blogFilter = {
        or: [
+        { property: 'Status', status: { equals: '构思 (Idea)' } },
+        { property: 'Status', status: { equals: '草稿 (Draft)' } },
+        { property: 'Status', status: { equals: '待发布 (Scheduled)' } },
         { property: 'Status', status: { equals: '需更新 (Needs Update)' } },
         { property: 'Status', status: { equals: '发布 (Published)' } },
       ]
@@ -316,6 +327,78 @@ async function fetchData() {
     });
     await fs.writeFile(path.join(OUTPUT_DIR, 'mlogs.json'), JSON.stringify(processedMlogs, null, 2));
     console.log(`✅ Successfully fetched ${processedMlogs.length} mlogs.`);
+
+    // --- 5. Fetch Gears ---
+    console.log('⚙️ Fetching Gears...');
+    const gearsFilter = {
+      or: [
+        { property: 'Status', status: { equals: '使用中' } },
+        { property: 'Status', status: { equals: '已退役' } },
+        { property: 'Status', status: { equals: '计划购买' } },
+      ]
+    };
+    const gearsSorts = [
+      { property: 'Category', direction: 'ascending' },
+      { property: 'Purchase Date', direction: 'descending' }
+    ];
+    const gearsPages = await getAllPagesFromDatabase(GEARS_DATABASE_ID, gearsFilter, gearsSorts);
+    const processedGears = gearsPages.map((page) => {
+      const props = page.properties;
+      return {
+        id: page.id,
+        object: 'page',
+        title: getPropertyValue(props, 'Name', 'title'),
+        specification: getPropertyValue(props, 'Specification', 'rich_text'),
+        description: getPropertyValue(props, 'Description', 'rich_text'),
+        category: getPropertyValue(props, 'Category', 'select'),
+        status: getPropertyValue(props, 'Status', 'status'),
+        coverImage: getPropertyValue(props, 'Cover Image', 'files')?.[0] || null,
+        productLink: getPropertyValue(props, 'Product Link', 'url'),
+        isExternalLink: getPropertyValue(props, 'Is External Link', 'checkbox'),
+        rating: getPropertyValue(props, 'Rating', 'select'),
+        purchaseDate: getPropertyValue(props, 'Purchase Date', 'date'),
+        price: getPropertyValue(props, 'Price', 'number'),
+        tags: getPropertyValue(props, 'Tags', 'multi_select'),
+        reviewArticle: getPropertyValue(props, 'Review Article', 'relation'),
+        pros: getPropertyValue(props, 'Pros', 'rich_text'),
+        cons: getPropertyValue(props, 'Cons', 'rich_text'),
+        notes: getPropertyValue(props, 'Notes', 'rich_text'),
+        lastEditedTime: page.last_edited_time,
+        createdTime: page.created_time,
+      };
+    });
+    await fs.writeFile(path.join(OUTPUT_DIR, 'gears.json'), JSON.stringify(processedGears, null, 2));
+    console.log(`✅ Successfully fetched ${processedGears.length} gear items.`);
+
+    // --- 6. Fetch Links ---
+    console.log('🔗 Fetching Links...');
+    const linksSorts = [
+      { property: 'Category', direction: 'ascending' },
+      { property: 'Sort Order', direction: 'ascending' }
+    ];
+    const linksPages = await getAllPagesFromDatabase(LINKS_DATABASE_ID, undefined, linksSorts);
+    const processedLinks = linksPages.map((page) => {
+      const props = page.properties;
+      return {
+        id: page.id,
+        object: 'page',
+        name: getPropertyValue(props, 'Name', 'title'),
+        url: getPropertyValue(props, 'URL', 'url'),
+        description: getPropertyValue(props, 'Description', 'rich_text'),
+        category: getPropertyValue(props, 'Category', 'select'),
+        status: getPropertyValue(props, 'Status', 'status'),
+        avatar: getPropertyValue(props, 'Avatar', 'files')?.[0] || null,
+        tags: getPropertyValue(props, 'Tags', 'multi_select'),
+        featured: getPropertyValue(props, 'Featured', 'checkbox'),
+        sortOrder: getPropertyValue(props, 'Sort Order', 'number') || 0,
+        lastChecked: getPropertyValue(props, 'Last Checked', 'date'),
+        responseTime: getPropertyValue(props, 'Response Time', 'number'),
+        lastEditedTime: page.last_edited_time,
+        createdTime: page.created_time,
+      };
+    });
+    await fs.writeFile(path.join(OUTPUT_DIR, 'links.json'), JSON.stringify(processedLinks, null, 2));
+    console.log(`✅ Successfully fetched ${processedLinks.length} link items.`);
 
     console.log('🎉 Notion data fetch complete!');
 
