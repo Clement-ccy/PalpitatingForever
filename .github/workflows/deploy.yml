@@ -49,6 +49,8 @@ jobs:
         echo "NOTION_WORKS_DATABASE_ID=${{ secrets.NOTION_WORKS_DATABASE_ID }}" >> .env
         echo "NOTION_PLOGS_DATABASE_ID=${{ secrets.NOTION_PLOGS_DATABASE_ID }}" >> .env
         echo "NOTION_MLOGS_DATABASE_ID=${{ secrets.NOTION_MLOGS_DATABASE_ID }}" >> .env
+        echo "NOTION_GEARS_DATABASE_ID=${{ secrets.NOTION_GEARS_DATABASE_ID }}" >> .env
+        echo "NOTION_LINKS_DATABASE_ID=${{ secrets.NOTION_LINKS_DATABASE_ID }}" >> .env
 
     - name: Debug .env file
       run: |
