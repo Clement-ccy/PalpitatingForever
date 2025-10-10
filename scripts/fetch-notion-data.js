@@ -14,8 +14,6 @@ const PLOGS_DATABASE_ID = process.env.NOTION_PLOGS_DATABASE_ID;
 const MLOGS_DATABASE_ID = process.env.NOTION_MLOGS_DATABASE_ID;
 const GEARS_DATABASE_ID = process.env.NOTION_GEARS_DATABASE_ID;
 const LINKS_DATABASE_ID = process.env.NOTION_LINKS_DATABASE_ID;
-// Add Page IDs if needed for static pages like About, Links, Gear
-// const BLOG_ABOUT_PAGE_ID = process.env.NOTION_BLOG_ABOUT_PAGE_ID;
 
 const OUTPUT_DIR = path.resolve('src/data'); // Data output directory
 
@@ -80,12 +78,13 @@ async function getAllPagesFromDatabase(databaseId, filter, sorts) {
   let cursor = undefined;
   
   try {
+    console.log(`🔍 Querying database: ${databaseId}`);
     // 首先获取数据库的 datasource
     const databaseResponse = await notion.request({
       method: "get",
       path: `databases/${databaseId}`,
     });
-    
+
     const dataSources = databaseResponse.data_sources;
     if (!dataSources || dataSources.length === 0) {
       console.error(`❌ No data sources found for database ${databaseId}`);
