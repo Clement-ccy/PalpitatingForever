@@ -26,7 +26,10 @@ if (!NOTION_API_KEY || !BLOGS_DATABASE_ID || !WORKS_DATABASE_ID || !PLOGS_DATABA
 }
 
 // --- Notion Client Initialization ---
-const notion = new Client({ auth: NOTION_API_KEY });
+const notion = new Client({
+  auth: NOTION_API_KEY,
+  notionVersion: "2025-09-03"
+});
 
 // --- Helper Functions ---
 
@@ -66,6 +69,7 @@ async function fetchBlocksRecursive(blockId) {
 
 /**
  * Fetches all pages from a Notion database, handling pagination.
+ * Uses the new datasource API (Notion API version 2025-09-03).
  * @param {string} databaseId - The ID of the database to query.
  * @param {object} [filter] - Optional filter object for the query.
  * @param {Array<object>} [sorts] - Optional sorts array for the query.
@@ -74,18 +78,45 @@ async function fetchBlocksRecursive(blockId) {
 async function getAllPagesFromDatabase(databaseId, filter, sorts) {
   const pages = [];
   let cursor = undefined;
+  
   try {
+    // 首先获取数据库的 datasource
+    const databaseResponse = await notion.request({
+      method: "get",
+      path: `databases/${databaseId}`,
+    });
+    
+    const dataSources = databaseResponse.data_sources;
+    if (!dataSources || dataSources.length === 0) {
+      console.error(`❌ No data sources found for database ${databaseId}`);
+      return [];
+    }
+    
+    // 对于现有的单源数据库，使用第一个 data source
+    const dataSource = dataSources[0];
+    console.log(`📊 Using data source: ${dataSource.name} (${dataSource.id}) for database ${databaseId}`);
+    
+    // 使用新的 dataSources.query API
     do {
-      const { results, next_cursor } = await notion.databases.query({
-        database_id: databaseId,
+      const queryOptions = {
+        data_source_id: dataSource.id,
         start_cursor: cursor,
         page_size: 100,
-        filter: filter,
-        sorts: sorts,
-      });
+      };
+      
+      if (filter) {
+        queryOptions.filter = filter;
+      }
+      
+      if (sorts) {
+        queryOptions.sorts = sorts;
+      }
+      
+      const { results, next_cursor } = await notion.dataSources.query(queryOptions);
       pages.push(...results);
       cursor = next_cursor;
     } while (cursor);
+    
     return pages;
   } catch (error) {
     console.error(`❌ Error querying database ${databaseId}:`, error.message);
