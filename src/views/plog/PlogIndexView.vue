@@ -1,10 +1,15 @@
 <template>
   <div class="plog-index-view">
+    <!-- 加载状态 -->
+    <div v-if="isLoading" class="loading-container">
+      <div class="loading-spinner">加载中...</div>
+    </div>
+    
     <!-- 预览区域 -->
-    <section class="recent-preview">
+    <section v-else class="recent-preview">
       <!-- 图片容器 -->
       <div class="panels">
-        <div v-for="(album, index) in pictureAlbums" :key="index" class="panel"
+        <div v-for="(album, index) in pictureAlbums" :key="album.id" class="panel"
           :class="['panel-' + index, { active: currentIndex === index }]" :id="'panel-' + index">
           <div class="clip">
             <div class="serial-number">0{{ index + 1 }}</div>
@@ -26,7 +31,7 @@
       </div>
 
       <div class="picture-album-preview">
-        <div v-for="(pictureAlbum, index) in pictureAlbums" :key="index" class="picture-album-item"
+        <div v-for="(pictureAlbum, index) in pictureAlbums" :key="pictureAlbum.id" class="picture-album-item"
           :style="{ '--delay': index * 0.1 + 's' }" @mouseenter="handleHover(index)" @mouseleave="handleHover(null)"
           @click="switchToAlbum(index)">
           <div class="item-container" :class="{ active: currentIndex === index }">
@@ -56,6 +61,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger, ScrollToPlugin } from "gsap/all";
 import { ref, reactive, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useRouter } from 'vue-router';
+import { useBlogStore } from '@/stores/blog';
 
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
@@ -63,54 +69,52 @@ export default {
   name: 'PlogIndexView',
   setup() {
     const router = useRouter();
+    const blogStore = useBlogStore();
     
     // 响应式数据
     const currentIndex = ref(0);
     const currentHoverIndex = ref(null);
     const isScrolling = ref(false);
     
-    // 示例数据 - 实际项目中应该从 API 获取
-    const pictureAlbums = reactive([
-      {
-        id: 1,
-        name: '春日樱花',
-        type: '风景摄影',
-        location: '东京',
-        time: '2024年春',
-        cover: '/src/assets/images/cover-1.jpg'
-      },
-      {
-        id: 2,
-        name: '夏日海滨',
-        type: '人文摄影',
-        location: '冲绳',
-        time: '2024年夏',
-        cover: '/src/assets/images/cover-2.jpg'
-      },
-      {
-        id: 3,
-        name: '秋叶满山',
-        type: '风景摄影',
-        location: '京都',
-        time: '2024年秋',
-        cover: '/src/assets/images/cover-3.jpg'
-      },
-      {
-        id: 4,
-        name: '冬雪纷飞',
-        type: '艺术摄影',
-        location: '北海道',
-        time: '2024年冬',
-        cover: '/src/assets/images/cover-4.jpg'
-      }
-    ]);
+    // 转换 plog 数据为组件需要的格式，只显示最新的四个
+    const pictureAlbums = computed(() => {
+      return blogStore.plogs.slice(0, 4).map((plog) => {
+        // 提取日期年份
+        const year = plog.date?.start ? new Date(plog.date.start).getFullYear() : '';
+        
+        // 格式化日期显示
+        let timeDisplay = '';
+        if (plog.date?.start) {
+          const date = new Date(plog.date.start);
+          const month = date.getMonth() + 1;
+          timeDisplay = `${year}年${month}月`;
+        }
+        
+        // 获取分类或使用默认值
+        const category = plog.category && plog.category.length > 0 ? plog.category[0] : '摄影';
+        
+        // 获取位置信息
+        const location = plog.location && plog.location.length > 0 && plog.location[0].plain_text
+          ? plog.location[0].plain_text
+          : '未知地点';
+        
+        return {
+          id: plog.id,
+          name: plog.title || '未命名相册',
+          type: category,
+          location: location,
+          time: timeDisplay,
+          cover: plog.imageFile?.url || '/src/assets/images/placeholder-1.svg'
+        };
+      });
+    });
 
     // 计算属性
     const selectorStyle = computed(() => {
       const targetIndex = currentHoverIndex.value ?? currentIndex.value;
       return {
-        width: `${100 / pictureAlbums.length}%`,
-        left: `${(targetIndex * 100) / pictureAlbums.length}%`,
+        width: `${100 / pictureAlbums.value.length}%`,
+        left: `${(targetIndex * 100) / pictureAlbums.value.length}%`,
         transition: currentHoverIndex.value
           ? "all 0.3s ease"
           : "all 0.6s cubic-bezier(0.22, 1, 0.36, 1)",
@@ -181,7 +185,7 @@ export default {
         if (!isScrolling.value) {
           const scrollProgress = container.scrollTop / window.innerHeight;
           const newIndex = Math.round(scrollProgress);
-          if (newIndex >= 0 && newIndex < pictureAlbums.length && newIndex !== currentIndex.value) {
+          if (newIndex >= 0 && newIndex < pictureAlbums.value.length && newIndex !== currentIndex.value) {
             currentIndex.value = newIndex;
             console.log('Index updated to:', newIndex, 'scroll position:', container.scrollTop);
           }
@@ -215,10 +219,10 @@ export default {
           currentIndex: currentIndex.value,
           direction,
           newIndex,
-          totalAlbums: pictureAlbums.length
+          totalAlbums: pictureAlbums.value.length
         });
         
-        if (newIndex >= 0 && newIndex < pictureAlbums.length) {
+        if (newIndex >= 0 && newIndex < pictureAlbums.value.length) {
           switchToAlbum(newIndex);
         } else {
           // 如果超出范围，立即解锁
@@ -253,7 +257,10 @@ export default {
     // 生命周期
     let cleanupScrollTriggers = null;
     
-    onMounted(() => {
+    onMounted(async () => {
+      // 加载 plog 数据
+      await blogStore.loadPlogsData();
+      
       cleanupScrollTriggers = initScrollTriggers();
       // 禁用 Lenis 平滑滚动
       disableLenis();
@@ -288,7 +295,8 @@ export default {
       selectorStyle,
       handleHover,
       switchToAlbum,
-      viewAlbumDetail
+      viewAlbumDetail,
+      isLoading: computed(() => blogStore.isLoading)
     };
   }
 };
@@ -305,6 +313,25 @@ export default {
   z-index: 1;
   overflow-y: auto;
   overflow-x: hidden;
+}
+
+.loading-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--bg);
+  z-index: 1000;
+}
+
+.loading-spinner {
+  font-size: 1.2rem;
+  color: var(--textNormal);
+  opacity: 0.8;
 }
 
 .recent-preview {

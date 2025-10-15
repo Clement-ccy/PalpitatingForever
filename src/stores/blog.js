@@ -20,6 +20,7 @@ export const useBlogStore = defineStore('blog', () => {
   const rawPosts = ref([]); // 原始 Notion 博客数据
   const rawGears = ref([]); // 原始 Notion 装备数据
   const rawLinks = ref([]); // 原始 Notion 友链数据
+  const rawPlogs = ref([]); // 原始 Notion plog 数据
   const isLoading = ref(false);
   const error = ref(null);
   const lastUpdated = ref(null);
@@ -41,6 +42,11 @@ export const useBlogStore = defineStore('blog', () => {
   // 友链相关计算属性
   const linksCategories = computed(() => transformLinksData(rawLinks.value));
   const linksStats = computed(() => getLinksStats(rawLinks.value));
+
+  // plog 相关计算属性
+  const plogs = computed(() => rawPlogs.value || []);
+  const featuredPlogs = computed(() => plogs.value.filter(plog => plog.featured));
+  const recentPlogs = computed(() => plogs.value.slice(0, 8));
 
   // 热门文章 - 可以根据阅读量、点赞等指标计算
   const hotPosts = computed(() => {
@@ -150,6 +156,30 @@ export const useBlogStore = defineStore('blog', () => {
     }
   }
 
+  // 加载 plog 数据
+  async function loadPlogsData() {
+    if (isLoading.value) return;
+    
+    isLoading.value = true;
+    error.value = null;
+
+    try {
+      // 动态导入 plog JSON 数据
+      const plogsModule = await import('@/data/plogs.json');
+      rawPlogs.value = plogsModule.default || plogsModule;
+      
+      console.log(`✅ 成功加载 ${rawPlogs.value.length} 个 plog 项目`);
+    } catch (err) {
+      error.value = `加载 plog 数据失败: ${err.message}`;
+      console.error('❌ 加载 plog 数据失败:', err);
+      
+      // 如果加载失败，使用默认数据避免页面崩溃
+      rawPlogs.value = [];
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
   // 加载所有数据
   async function loadAllData() {
     if (isLoading.value) return;
@@ -161,7 +191,8 @@ export const useBlogStore = defineStore('blog', () => {
       await Promise.all([
         loadBlogData(),
         loadGearsData(),
-        loadLinksData()
+        loadLinksData(),
+        loadPlogsData()
       ]);
       
       lastUpdated.value = new Date().toISOString();
@@ -230,7 +261,8 @@ export const useBlogStore = defineStore('blog', () => {
     publishedCount: publishedPosts.value.length,
     totalGears: rawGears.value.length,
     totalLinks: rawLinks.value.length,
-    hasData: rawPosts.value.length > 0 || rawGears.value.length > 0 || rawLinks.value.length > 0
+    totalPlogs: rawPlogs.value.length,
+    hasData: rawPosts.value.length > 0 || rawGears.value.length > 0 || rawLinks.value.length > 0 || rawPlogs.value.length > 0
   }));
 
   return {
@@ -238,6 +270,7 @@ export const useBlogStore = defineStore('blog', () => {
     rawPosts,
     rawGears,
     rawLinks,
+    rawPlogs,
     isLoading,
     error,
     lastUpdated,
@@ -258,12 +291,16 @@ export const useBlogStore = defineStore('blog', () => {
     gearsStats,
     linksCategories,
     linksStats,
+    plogs,
+    featuredPlogs,
+    recentPlogs,
     dataStatus,
 
     // 方法
     loadBlogData,
     loadGearsData,
     loadLinksData,
+    loadPlogsData,
     loadAllData,
     refreshData,
     getPostById,
