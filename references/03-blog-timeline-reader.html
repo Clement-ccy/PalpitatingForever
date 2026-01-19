@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Deep Thoughts</title>
+    <meta name="view-transition" content="same-origin">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <style>
+        :root {
+            --bg-color: #0A0A0A;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-glow: rgba(255, 255, 255, 0.1);
+            --highlight: #fb923c; /* Orange-400 matches dashboard thought card */
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* View Transitions */
+        @view-transition {
+            navigation: auto;
+        }
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 0.4s;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        ::view-transition-old(root) {
+            animation-name: fade-out;
+        }
+        ::view-transition-new(root) {
+            animation-name: fade-in;
+        }
+        @keyframes fade-out {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.98); }
+        }
+        @keyframes fade-in {
+            from { opacity: 0; transform: scale(1.02); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Named Transitions */
+        .nav-header { view-transition-name: header; }
+        .blog-active-title { view-transition-name: blog-title; }
+
+        /* Noise Texture */
+        .noise-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Spotlight Effect Logic */
+        .spotlight-card {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+        }
+
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(
+                800px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+                rgba(255, 255, 255, 0.06),
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Inner highlight border */
+        .spotlight-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+                rgba(255, 255, 255, 0.1),
+                transparent 40%
+            );
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .spotlight-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+
+        /* Typography Prose Overrides */
+        .prose h2, .prose h3 {
+            color: white;
+            font-weight: 600;
+            margin-top: 2em;
+            margin-bottom: 1em;
+        }
+        .prose p {
+            color: #d1d5db;
+            line-height: 1.8;
+            margin-bottom: 1.5em;
+        }
+        .prose strong {
+            color: white;
+        }
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5em;
+            color: #d1d5db;
+            margin-bottom: 1.5em;
+        }
+        .prose li {
+            margin-bottom: 0.5em;
+        }
+
+        /* Code Block Styling */
+        pre[class*="language-"] {
+            background: #111 !important;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 0.75rem;
+            margin: 1.5em 0;
+        }
+        code[class*="language-"] {
+            font-family: 'JetBrains Mono', monospace !important;
+            font-size: 0.875rem;
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Root Container -->
+    <div class="min-h-screen relative flex flex-col">
+        
+        <!-- Noise Overlay -->
+        <div class="noise-bg"></div>
+
+        <!-- Navigation (New Shared Component for Subpages) -->
+        <nav class="nav-header sticky top-0 z-40 w-full border-b border-white/5 bg-[#0A0A0A]/80 backdrop-blur-md">
+            <div class="max-w-7xl mx-auto px-4 md:px-8 h-16 flex items-center justify-between">
+                <a href="https://p.superdesign.dev/draft/a58648d2-b5ec-4a13-b531-59ae62467504" id="nav-home-link" class="flex items-center gap-3 group">
+                    <div class="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+                        <iconify-icon icon="lucide:layout-grid" class="text-white/60 group-hover:text-white transition-colors"></iconify-icon>
+                    </div>
+                    <span class="font-medium text-sm text-gray-400 group-hover:text-white transition-colors">Alex Chen</span>
+                </a>
+
+                <div class="hidden md:flex items-center gap-1 bg-white/5 rounded-full p-1 border border-white/5">
+                    <a href="https://p.superdesign.dev/draft/5a63ed93-fff6-4f19-9346-4a7a5ceade14" id="nav-works" class="px-4 py-1.5 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all">Works</a>
+                    <a href="https://p.superdesign.dev/draft/8469a3ed-f561-4d51-ad27-389781c6107b" id="nav-blog" class="px-4 py-1.5 rounded-full text-xs font-medium bg-white/10 text-white shadow-sm border border-white/5">Thoughts</a>
+                    <a href="https://p.superdesign.dev/draft/411576f9-f587-416c-b7fa-05cdbc9952ae" id="nav-music" class="px-4 py-1.5 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all">Music</a>
+                    <a href="https://p.superdesign.dev/draft/d2cbe20f-662c-4313-8acb-0d0aecf75230" id="nav-photos" class="px-4 py-1.5 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all">Photos</a>
+                    <a href="https://p.superdesign.dev/draft/e3726eb1-9682-4cac-9a36-b32b24e199c8" id="nav-gear" class="px-4 py-1.5 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all">Gear</a>
+                    <a href="https://p.superdesign.dev/draft/e6261679-ae9a-4968-917b-cf7bc56e5598" id="nav-lab" class="px-4 py-1.5 rounded-full text-xs font-medium text-gray-400 hover:text-white hover:bg-white/5 transition-all">Lab</a>
+                </div>
+
+                <a href="https://p.superdesign.dev/draft/31663a5c-0b22-468f-af23-89d796b436a5" id="nav-contact" class="hidden md:flex items-center gap-2 px-4 py-1.5 rounded-full bg-white text-black text-xs font-semibold hover:bg-gray-200 transition-colors">
+                    <span>Get in touch</span>
+                    <iconify-icon icon="lucide:arrow-right" class="text-xs"></iconify-icon>
+                </a>
+
+                <!-- Mobile Menu Toggle -->
+                <button class="md:hidden text-white p-2">
+                    <iconify-icon icon="lucide:menu" class="text-xl"></iconify-icon>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content Grid -->
+        <main class="flex-1 max-w-7xl mx-auto w-full grid grid-cols-1 md:grid-cols-12 gap-8 p-4 md:p-8 relative z-10">
+            
+            <!-- Left Sidebar: Timeline List -->
+            <aside class="md:col-span-4 lg:col-span-3 flex flex-col gap-6">
+                <div class="sticky top-24 space-y-8">
+                    <div class="space-y-2 fade-in-up" style="animation-delay: 0.1s;">
+                        <h1 class="text-xl font-medium text-white">Deep Thoughts</h1>
+                        <p class="text-sm text-gray-400 leading-relaxed">
+                            Exploring the intersection of design, technology, and cognitive interfaces.
+                        </p>
+                        <div class="flex gap-2 pt-2">
+                            <button class="px-3 py-1 text-xs font-mono rounded bg-white/10 text-white border border-white/10 hover:bg-white/20 transition-colors">ALL</button>
+                            <button class="px-3 py-1 text-xs font-mono rounded bg-transparent text-gray-500 border border-transparent hover:text-white hover:bg-white/5 transition-colors">TECH</button>
+                            <button class="px-3 py-1 text-xs font-mono rounded bg-transparent text-gray-500 border border-transparent hover:text-white hover:bg-white/5 transition-colors">ESSAYS</button>
+                        </div>
+                    </div>
+
+                    <!-- Article List -->
+                    <div class="space-y-3">
+                        <!-- Active Item -->
+                        <a href="#" id="article-01" class="group block relative fade-in-up" style="animation-delay: 0.2s;">
+                            <div class="absolute -left-3 top-2 bottom-2 w-[2px] bg-orange-500 rounded-full"></div>
+                            <div class="p-4 rounded-xl bg-white/5 border border-white/10 transition-all duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-xs font-mono text-orange-400">NOV 24, 2023</span>
+                                    <span class="text-xs text-gray-600">5 min read</span>
+                                </div>
+                                <h3 class="text-sm font-medium text-white group-hover:text-orange-200 transition-colors mb-1">The Future of Interfaces is Invisible</h3>
+                                <div class="flex gap-2">
+                                    <span class="text-[10px] text-gray-500 px-1.5 py-0.5 bg-white/5 rounded">HCI</span>
+                                    <span class="text-[10px] text-gray-500 px-1.5 py-0.5 bg-white/5 rounded">Spatial</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Inactive Item -->
+                        <a href="#" id="article-02" class="group block relative pl-3 opacity-60 hover:opacity-100 transition-opacity fade-in-up" style="animation-delay: 0.25s;">
+                            <div class="absolute -left-3 top-2 bottom-2 w-[2px] bg-transparent group-hover:bg-white/20 rounded-full transition-colors"></div>
+                            <div class="p-4 rounded-xl border border-transparent hover:bg-white/5 hover:border-white/10 transition-all duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-xs font-mono text-gray-500">OCT 12, 2023</span>
+                                    <span class="text-xs text-gray-600">8 min read</span>
+                                </div>
+                                <h3 class="text-sm font-medium text-gray-300 group-hover:text-white transition-colors mb-1">Recursive Patterns in Nature & Code</h3>
+                                <div class="flex gap-2">
+                                    <span class="text-[10px] text-gray-600 px-1.5 py-0.5 bg-white/5 rounded">Math</span>
+                                    <span class="text-[10px] text-gray-600 px-1.5 py-0.5 bg-white/5 rounded">Generative</span>
+                                </div>
+                            </div>
+                        </a>
+
+                        <!-- Inactive Item -->
+                        <a href="#" id="article-03" class="group block relative pl-3 opacity-60 hover:opacity-100 transition-opacity fade-in-up" style="animation-delay: 0.3s;">
+                            <div class="absolute -left-3 top-2 bottom-2 w-[2px] bg-transparent group-hover:bg-white/20 rounded-full transition-colors"></div>
+                            <div class="p-4 rounded-xl border border-transparent hover:bg-white/5 hover:border-white/10 transition-all duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-xs font-mono text-gray-500">SEP 05, 2023</span>
+                                    <span class="text-xs text-gray-600">12 min read</span>
+                                </div>
+                                <h3 class="text-sm font-medium text-gray-300 group-hover:text-white transition-colors mb-1">Why I Switched from VS Code to Neovim</h3>
+                                <div class="flex gap-2">
+                                    <span class="text-[10px] text-gray-600 px-1.5 py-0.5 bg-white/5 rounded">DevTools</span>
+                                    <span class="text-[10px] text-gray-600 px-1.5 py-0.5 bg-white/5 rounded">Workflow</span>
+                                </div>
+                            </div>
+                        </a>
+                        
+                         <!-- Inactive Item -->
+                        <a href="#" id="article-04" class="group block relative pl-3 opacity-60 hover:opacity-100 transition-opacity fade-in-up" style="animation-delay: 0.35s;">
+                            <div class="absolute -left-3 top-2 bottom-2 w-[2px] bg-transparent group-hover:bg-white/20 rounded-full transition-colors"></div>
+                            <div class="p-4 rounded-xl border border-transparent hover:bg-white/5 hover:border-white/10 transition-all duration-300">
+                                <div class="flex justify-between items-start mb-2">
+                                    <span class="text-xs font-mono text-gray-500">AUG 18, 2023</span>
+                                    <span class="text-xs text-gray-600">6 min read</span>
+                                </div>
+                                <h3 class="text-sm font-medium text-gray-300 group-hover:text-white transition-colors mb-1">The Psychology of Dark Mode</h3>
+                                <div class="flex gap-2">
+                                    <span class="text-[10px] text-gray-600 px-1.5 py-0.5 bg-white/5 rounded">Design</span>
+                                    <span class="text-[10px] text-gray-600 px-1.5 py-0.5 bg-white/5 rounded">UX</span>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Right Area: Content Preview (Reading Pane) -->
+            <article class="md:col-span-8 lg:col-span-9 min-h-[80vh] bg-black/20 border border-white/5 rounded-3xl p-6 md:p-12 relative overflow-hidden fade-in-up" style="animation-delay: 0.2s;">
+                <!-- Subtle gradient glow at top -->
+                <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/50 to-transparent opacity-50"></div>
+                <div class="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
+
+                <!-- Article Header -->
+                <header class="mb-10 relative z-10">
+                    <div class="flex items-center gap-4 mb-6">
+                         <div class="flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-400 text-xs font-mono">
+                             <span class="w-1.5 h-1.5 rounded-full bg-orange-500 animate-pulse"></span>
+                             THOUGHTS
+                         </div>
+                         <span class="text-gray-500 text-sm font-mono">Nov 24, 2023</span>
+                    </div>
+                    <h1 class="text-3xl md:text-5xl font-bold text-white tracking-tight leading-tight mb-6 blog-active-title">
+                        The Future of Interfaces is Invisible
+                    </h1>
+                    <div class="flex items-center gap-4 border-y border-white/5 py-4">
+                        <div class="flex items-center gap-3">
+                            <div class="w-8 h-8 rounded-full overflow-hidden border border-white/10">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop" alt="Author" class="w-full h-full object-cover grayscale">
+                            </div>
+                            <span class="text-sm text-gray-300 font-medium">Alex Chen</span>
+                        </div>
+                        <div class="h-4 w-px bg-white/10"></div>
+                        <div class="flex gap-2">
+                            <a href="#" class="text-gray-500 hover:text-white transition-colors"><iconify-icon icon="lucide:share-2"></iconify-icon></a>
+                            <a href="#" class="text-gray-500 hover:text-white transition-colors"><iconify-icon icon="lucide:bookmark"></iconify-icon></a>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Article Content -->
+                <div class="prose prose-invert max-w-none relative z-10">
+                    <p class="text-xl text-gray-300 leading-relaxed font-light">
+                        We are moving away from screens towards ambient computing and haptic feedback loops. The best interface is no interface at all—a system that anticipates intent without requiring explicit command.
+                    </p>
+
+                    <h2>Beyond the Glass Rectangle</h2>
+                    <p>
+                        For the last 15 years, our primary interaction model has been touching glass. We pinch, zoom, and tap on cold surfaces. But as spatial computing (Apple Vision Pro) and AI wearables (Humane, Rewind) emerge, we're seeing a paradigm shift.
+                    </p>
+                    
+                    <!-- Notion Style Callout -->
+                    <div class="my-8 p-4 bg-white/5 border border-white/10 rounded-lg flex gap-4 items-start">
+                        <div class="text-2xl mt-0.5">💡</div>
+                        <div>
+                            <h4 class="text-white font-medium text-base m-0 mb-1">The Invisible Threshold</h4>
+                            <p class="text-sm text-gray-400 m-0 leading-relaxed">
+                                True ambient computing happens when the technology recedes into the background so completely that we forget it's there. It becomes indistinguishable from magic.
+                            </p>
+                        </div>
+                    </div>
+
+                    <p>
+                        Consider the concept of <strong>"Intent Prediction"</strong>. Instead of clicking a button to order a ride, your device knows you have a meeting across town in 20 minutes and that it's raining. It suggests the ride before you even unlock your phone.
+                    </p>
+
+                    <h3>The Code of Anticipation</h3>
+                    <p>Implementing this requires a shift from reactive programming to predictive models. Here is a simple pseudo-code example of how an intent loop might look:</p>
+
+                    <!-- Code Block -->
+                    <div class="relative group">
+                        <div class="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button class="p-2 bg-white/10 hover:bg-white/20 rounded-md text-white/70 hover:text-white transition-colors">
+                                <iconify-icon icon="lucide:copy"></iconify-icon>
+                            </button>
+                        </div>
+                        <div class="absolute top-4 left-4 flex gap-2">
+                            <div class="w-3 h-3 rounded-full bg-red-500/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-yellow-500/80"></div>
+                            <div class="w-3 h-3 rounded-full bg-green-500/80"></div>
+                        </div>
+                        <pre class="language-typescript pt-12"><code class="language-typescript">
+interface UserContext {
+  location: GeoPoint;
+  calendar: Event[];
+  weather: WeatherState;
+}
+
+function predictIntent(context: UserContext): Action | null {
+  const nextEvent = getNextEvent(context.calendar);
+  const travelTime = calculateTravelTime(context.location, nextEvent.location);
+  
+  if (nextEvent.startTime - Date.now() < travelTime + BUFFER) {
+    return {
+      type: 'SUGGEST_TRANSPORT',
+      priority: 'HIGH',
+      payload: { destination: nextEvent.location }
+    };
+  }
+  return null;
+}</code></pre>
+                    </div>
+
+                    <p>
+                        The beauty lies in the subtlety. We are designing for <em>attention management</em>, not just engagement metrics. The goal isn't to keep eyes on the screen, but to return time to the user.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4 my-8">
+                        <div class="rounded-xl overflow-hidden border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=600&auto=format&fit=crop" alt="Cyberpunk Interface" class="w-full h-48 object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                            <div class="p-3 bg-white/5">
+                                <span class="text-xs text-gray-500 font-mono">FIG 1.0 — RETRO INTERFACES</span>
+                            </div>
+                        </div>
+                        <div class="rounded-xl overflow-hidden border border-white/10">
+                            <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Abstract Light" class="w-full h-48 object-cover grayscale hover:grayscale-0 transition-all duration-500">
+                             <div class="p-3 bg-white/5">
+                                <span class="text-xs text-gray-500 font-mono">FIG 1.1 — AMBIENT LIGHT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>
+                        As we continue to refine these systems, the role of the frontend developer shifts from pixel pusher to experience conductor. We are no longer just building views; we are orchestrating moments.
+                    </p>
+                </div>
+
+                <!-- Related Articles / Footer of Article -->
+                <div class="mt-16 pt-8 border-t border-white/10">
+                    <h3 class="text-sm font-mono text-gray-400 mb-6">RELATED READING</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <a href="#" class="spotlight-card block p-6 rounded-xl group">
+                            <h4 class="text-white font-medium mb-2 group-hover:text-orange-400 transition-colors">Recursive Patterns in Nature</h4>
+                            <p class="text-sm text-gray-500">How fractals influence generative design systems.</p>
+                        </a>
+                        <a href="#" class="spotlight-card block p-6 rounded-xl group">
+                            <h4 class="text-white font-medium mb-2 group-hover:text-orange-400 transition-colors">The Psychology of Dark Mode</h4>
+                            <p class="text-sm text-gray-500">Why contrast ratios matter more than hex codes.</p>
+                        </a>
+                    </div>
+                </div>
+            </article>
+        </main>
+        
+        <footer class="w-full border-t border-white/5 bg-[#0A0A0A] py-8 mt-12">
+            <div class="max-w-7xl mx-auto px-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-xs text-gray-500 font-mono">© 2024 Alex Chen. Crafted with <span class="text-red-500">♥</span> in San Francisco.</p>
+                <div class="flex gap-6">
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors"><iconify-icon icon="lucide:github"></iconify-icon></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors"><iconify-icon icon="lucide:twitter"></iconify-icon></a>
+                    <a href="#" class="text-gray-500 hover:text-white transition-colors"><iconify-icon icon="lucide:linkedin"></iconify-icon></a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Mouse Tracking Logic for Spotlight Effect (Reused)
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.spotlight-card, .group');
+
+            const handleMouseMove = (e) => {
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            };
+
+            document.body.addEventListener('mousemove', handleMouseMove);
+            
+            // View Transition for links
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    const href = link.getAttribute('href');
+                    if (href && href.startsWith('#') && href.length > 1) {
+                        e.preventDefault();
+                        // Smooth scroll handling or tab switching if internal
+                    }
+                    // Regular links are handled by browser with View Transition API automatically if enabled
+                });
+            });
+        });
+    </script>
+</body>
+</html>

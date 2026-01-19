@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="view-transition" content="same-origin">
+    <title>Personal Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        @view-transition { navigation: auto; }
+        ::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.4s; animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+        ::view-transition-old(root) { animation-name: fade-out; }
+        ::view-transition-new(root) { animation-name: fade-in; }
+        @keyframes fade-out { from { opacity: 1; transform: scale(1); } to { opacity: 0; transform: scale(0.98); } }
+        @keyframes fade-in { from { opacity: 0; transform: scale(1.02); } to { opacity: 1; transform: scale(1); } }
+        :root {
+            --bg-color: #0A0A0A;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-glow: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Noise Texture */
+        .noise-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Spotlight Effect Logic */
+        .spotlight-card {
+            position: relative;
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            overflow: hidden;
+        }
+
+        .spotlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(
+                800px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+                rgba(255, 255, 255, 0.06),
+                transparent 40%
+            );
+            opacity: 0;
+            transition: opacity 0.5s ease;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .spotlight-card:hover::before {
+            opacity: 1;
+        }
+
+        /* Inner highlight border */
+        .spotlight-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            background: radial-gradient(
+                600px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+                rgba(255, 255, 255, 0.1),
+                transparent 40%
+            );
+            opacity: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .spotlight-card:hover::after {
+            opacity: 1;
+        }
+
+        /* Custom Animations */
+        @keyframes equalize {
+            0% { height: 3px; }
+            50% { height: 12px; }
+            100% { height: 3px; }
+        }
+        
+        .equalizer-bar {
+            animation: equalize 1s infinite ease-in-out;
+        }
+        .equalizer-bar:nth-child(2) { animation-delay: 0.2s; }
+        .equalizer-bar:nth-child(3) { animation-delay: 0.4s; }
+        .equalizer-bar:nth-child(4) { animation-delay: 0.1s; }
+
+        .pulse-ring {
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(2.4); opacity: 0; }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #444;
+        }
+        
+        /* Mesh Gradient Animation for Showcase */
+        .mesh-gradient {
+            background-color: #000000;
+            background-image: 
+                radial-gradient(at 89% 0%, hsla(277,39%,19%,1) 0px, transparent 50%),
+                radial-gradient(at 3% 9%, hsla(238,28%,22%,1) 0px, transparent 50%),
+                radial-gradient(at 96% 94%, hsla(223,32%,24%,1) 0px, transparent 50%),
+                radial-gradient(at 3% 94%, hsla(295,29%,24%,1) 0px, transparent 50%),
+                radial-gradient(at 45% 48%, hsla(263,33%,29%,1) 0px, transparent 50%);
+            background-size: 150% 150%;
+            animation: mesh-move 10s ease infinite;
+        }
+        
+        @keyframes mesh-move {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative selection:bg-white/20 selection:text-white">
+        
+        <!-- Noise Overlay -->
+        <div class="noise-bg"></div>
+
+        <nav class="w-full max-w-6xl mb-8 flex justify-between items-center relative z-20" style="view-transition-name: header;">
+            <div class="text-xl font-bold tracking-tighter text-white">AC.</div>
+            <div class="hidden md:flex gap-1 p-1 rounded-full bg-white/5 border border-white/10 backdrop-blur-md">
+                <a href="https://p.superdesign.dev/draft/5a63ed93-fff6-4f19-9346-4a7a5ceade14" id="nav-works" class="px-4 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all">Works</a>
+                <a href="https://p.superdesign.dev/draft/8469a3ed-f561-4d51-ad27-389781c6107b" id="nav-blog" class="px-4 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all">Blog</a>
+                <a href="https://p.superdesign.dev/draft/411576f9-f587-416c-b7fa-05cdbc9952ae" id="nav-music" class="px-4 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all">Music</a>
+                <a href="https://p.superdesign.dev/draft/d2cbe20f-662c-4313-8acb-0d0aecf75230" id="nav-photos" class="px-4 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all">Photos</a>
+                <a href="https://p.superdesign.dev/draft/e3726eb1-9682-4cac-9a36-b32b24e199c8" id="nav-gear" class="px-4 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all">Gear</a>
+                <a href="https://p.superdesign.dev/draft/e6261679-ae9a-4968-917b-cf7bc56e5598" id="nav-lab" class="px-4 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all">Lab</a>
+                <a href="https://p.superdesign.dev/draft/31663a5c-0b22-468f-af23-89d796b436a5" id="nav-interview" class="px-4 py-2 rounded-full text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all">Interview</a>
+            </div>
+            <a href="#" class="md:hidden p-2 text-white bg-white/5 rounded-full border border-white/10">
+                <iconify-icon icon="lucide:menu" class="text-lg"></iconify-icon>
+            </a>
+        </nav>
+
+        <!-- Main Grid Container -->
+        <div class="w-full max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6 relative z-10">
+            
+            <!-- 1. Profile Card (2x2) -->
+            <div id="profile-card" class="spotlight-card rounded-3xl col-span-1 md:col-span-2 row-span-2 p-8 flex flex-col justify-between group fade-in-up" style="animation-delay: 0.05s;">
+                <div class="flex justify-between items-start">
+                    <div class="relative">
+                        <div class="w-24 h-24 rounded-full overflow-hidden border-2 border-white/10 shadow-2xl relative z-10">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop" alt="Avatar" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                        </div>
+                        <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-[#0A0A0A] rounded-full flex items-center justify-center z-20">
+                            <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse"></div>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
+                        <div class="relative flex items-center justify-center w-2 h-2">
+                            <div class="absolute w-full h-full bg-emerald-500 rounded-full pulse-ring"></div>
+                            <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full relative z-10"></div>
+                        </div>
+                        <span class="text-xs font-mono text-gray-300">CODING</span>
+                    </div>
+                </div>
+
+                <div class="space-y-4 mt-8">
+                    <h1 class="text-4xl md:text-5xl font-semibold tracking-tight leading-tight text-white/90">
+                        Alex Chen
+                    </h1>
+                    <p class="text-lg text-gray-400 font-light max-w-md leading-relaxed">
+                        Digital Craftsman & <br class="hidden md:block"/>Frontend Architect.
+                    </p>
+                </div>
+
+                <div class="flex gap-4 mt-auto pt-6">
+                    <a href="#" id="nav-resume" class="px-5 py-2.5 rounded-full bg-white text-black text-sm font-medium hover:bg-gray-200 transition-colors">Resume</a>
+                    <a href="#" id="nav-contact" class="px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-white text-sm font-medium hover:bg-white/10 transition-colors">Contact</a>
+                </div>
+            </div>
+
+            <!-- 2. Map / Location (1x1) -->
+            <a href="https://p.superdesign.dev/draft/d2cbe20f-662c-4313-8acb-0d0aecf75230" id="location-card" class="spotlight-card block rounded-3xl col-span-1 row-span-1 min-h-[220px] relative group overflow-hidden fade-in-up" style="animation-delay: 0.1s;">
+                <!-- Map Background -->
+                <div class="absolute inset-0 bg-[#111] opacity-60 z-0 bg-[url('https://api.mapbox.com/styles/v1/mapbox/dark-v10/static/-122.4194,37.7749,12,0/400x400?access_token=pk.eyJ1IjoiZGVtbyIsImEiOiJja2VuaWx6c3MwNm02MnZ1dG0xYmJ4bWhsIn0.W0T19Z3t2l07Cg49h3aQ')]"></div>
+                <!-- Grayscale filter wrapper -->
+                <div class="absolute inset-0 bg-[url('https://maps.googleapis.com/maps/api/staticmap?center=San+Francisco,CA&zoom=13&size=400x400&maptype=roadmap&style=element:geometry%7Ccolor:0x212121&style=element:labels.icon%7Cvisibility:off&style=element:labels.text.fill%7Ccolor:0x757575&style=element:labels.text.stroke%7Ccolor:0x212121&style=feature:administrative%7Celement:geometry%7Ccolor:0x757575&style=feature:administrative.country%7Celement:labels.text.fill%7Ccolor:0x9e9e9e&style=feature:administrative.land_parcel%7Cvisibility:off&style=feature:administrative.locality%7Celement:labels.text.fill%7Ccolor:0xbdbdbd&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:poi.park%7Celement:geometry%7Ccolor:0x181818&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:poi.park%7Celement:labels.text.stroke%7Ccolor:0x1b1b1b&style=feature:road%7Celement:geometry.fill%7Ccolor:0x2c2c2c&style=feature:road.arterial%7Celement:geometry%7Ccolor:0x373737&style=feature:road.highway%7Celement:geometry%7Ccolor:0x3c3c3c&style=feature:road.highway.controlled_access%7Celement:geometry%7Ccolor:0x4e4e4e&style=feature:road.local%7Celement:labels.text.fill%7Ccolor:0x616161&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x757575&style=feature:water%7Celement:geometry%7Ccolor:0x000000&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x3d3d3d&key=YOUR_API_KEY_HERE')] bg-cover bg-center grayscale opacity-50 transition-all duration-700 group-hover:scale-110 group-hover:opacity-40"></div>
+                
+                <div class="absolute inset-0 flex flex-col justify-between p-6 z-10">
+                    <div class="self-end p-2 bg-black/50 backdrop-blur-md rounded-full border border-white/5">
+                        <iconify-icon icon="lucide:compass" class="text-white text-lg block"></iconify-icon>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                            <span class="text-xs font-mono text-blue-400">LIVE LOCATION</span>
+                        </div>
+                        <h3 class="text-xl font-medium text-white">San Francisco</h3>
+                        <p class="text-xs text-gray-500 font-mono mt-1">37.7749° N, 122.4194° W</p>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 3. Quick Links (1x1) -->
+            <div id="links-card" class="spotlight-card rounded-3xl col-span-1 row-span-1 p-6 flex flex-col justify-center gap-4 fade-in-up" style="animation-delay: 0.15s;">
+                <div class="grid grid-cols-2 gap-3 h-full">
+                    <a href="#" id="link-github" class="flex flex-col items-center justify-center bg-white/5 rounded-2xl hover:bg-white/10 hover:scale-105 transition-all border border-white/5 group">
+                        <iconify-icon icon="lucide:github" class="text-2xl text-gray-400 group-hover:text-white transition-colors"></iconify-icon>
+                    </a>
+                    <a href="#" id="link-twitter" class="flex flex-col items-center justify-center bg-white/5 rounded-2xl hover:bg-white/10 hover:scale-105 transition-all border border-white/5 group">
+                        <iconify-icon icon="lucide:twitter" class="text-2xl text-gray-400 group-hover:text-sky-400 transition-colors"></iconify-icon>
+                    </a>
+                    <a href="#" id="link-dribbble" class="flex flex-col items-center justify-center bg-white/5 rounded-2xl hover:bg-white/10 hover:scale-105 transition-all border border-white/5 group">
+                        <iconify-icon icon="lucide:dribbble" class="text-2xl text-gray-400 group-hover:text-pink-400 transition-colors"></iconify-icon>
+                    </a>
+                    <a href="#" id="link-mail" class="flex flex-col items-center justify-center bg-white/5 rounded-2xl hover:bg-white/10 hover:scale-105 transition-all border border-white/5 group">
+                        <iconify-icon icon="lucide:mail" class="text-2xl text-gray-400 group-hover:text-emerald-400 transition-colors"></iconify-icon>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 4. Now Playing (1x1) -->
+            <a href="https://p.superdesign.dev/draft/411576f9-f587-416c-b7fa-05cdbc9952ae" id="music-card" class="spotlight-card block rounded-3xl col-span-1 row-span-1 p-6 flex flex-col justify-between relative overflow-hidden group fade-in-up" style="animation-delay: 0.2s;">
+                <!-- Blurred album art bg -->
+                <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=400&auto=format&fit=crop')] bg-cover bg-center opacity-20 blur-xl group-hover:opacity-30 transition-opacity duration-700"></div>
+                
+                <div class="relative z-10 flex justify-between items-start">
+                    <iconify-icon icon="lucide:music" class="text-white/50 text-xl"></iconify-icon>
+                    <div class="flex items-end gap-1 h-4">
+                        <div class="w-1 bg-green-500 rounded-full equalizer-bar"></div>
+                        <div class="w-1 bg-green-500 rounded-full equalizer-bar"></div>
+                        <div class="w-1 bg-green-500 rounded-full equalizer-bar"></div>
+                        <div class="w-1 bg-green-500 rounded-full equalizer-bar"></div>
+                    </div>
+                </div>
+
+                <div class="relative z-10 mt-4">
+                    <div class="w-12 h-12 rounded-lg bg-gray-800 mb-3 overflow-hidden border border-white/10 shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?q=80&w=100&auto=format&fit=crop" alt="Album" class="w-full h-full object-cover animate-[spin_10s_linear_infinite]">
+                    </div>
+                    <h4 class="text-sm font-medium text-white truncate">Midnight City</h4>
+                    <p class="text-xs text-gray-400 truncate">M83</p>
+                </div>
+            </a>
+
+            <!-- 5. Tech Stack / Tool (1x1) - Filler -->
+            <a href="https://p.superdesign.dev/draft/e3726eb1-9682-4cac-9a36-b32b24e199c8" id="stack-card" class="spotlight-card block rounded-3xl col-span-1 row-span-1 p-0 relative overflow-hidden flex items-center justify-center group fade-in-up" style="animation-delay: 0.25s;">
+                <div class="absolute inset-0 bg-gradient-to-br from-purple-900/20 to-blue-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <div class="text-center z-10">
+                    <div class="text-xs font-mono text-gray-500 mb-2 tracking-widest">FAVORITE STACK</div>
+                    <div class="flex items-center gap-3 justify-center">
+                        <iconify-icon icon="logos:react" class="text-2xl grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:-translate-y-1"></iconify-icon>
+                        <iconify-icon icon="logos:tailwindcss-icon" class="text-2xl grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:-translate-y-1 delay-75"></iconify-icon>
+                        <iconify-icon icon="logos:typescript-icon" class="text-2xl grayscale group-hover:grayscale-0 transition-all duration-300 transform group-hover:-translate-y-1 delay-100"></iconify-icon>
+                    </div>
+                </div>
+            </a>
+
+            <!-- 6. Showcase / Lab (2x2) -->
+            <a href="https://p.superdesign.dev/draft/e6261679-ae9a-4968-917b-cf7bc56e5598" id="showcase-card" class="spotlight-card block rounded-3xl col-span-1 md:col-span-2 row-span-2 relative overflow-hidden group fade-in-up" style="animation-delay: 0.3s;">
+                <div class="absolute inset-0 mesh-gradient opacity-40 group-hover:opacity-60 transition-opacity duration-700"></div>
+                <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
+                
+                <div class="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-x-4 group-hover:translate-x-0">
+                    <iconify-icon icon="lucide:arrow-up-right" class="text-3xl text-white"></iconify-icon>
+                </div>
+
+                <div class="absolute bottom-0 left-0 p-8 w-full z-10">
+                    <div class="inline-block px-3 py-1 bg-white/10 backdrop-blur-md border border-white/10 rounded-full text-xs font-mono text-purple-300 mb-3">
+                        INTERACTIVE LAB / 01
+                    </div>
+                    <h2 class="text-3xl font-semibold text-white mb-2">WebGL Experiments</h2>
+                    <p class="text-gray-400 max-w-sm line-clamp-2">A collection of shaders and reactive three.js sketches exploring chaos theory.</p>
+                </div>
+                
+                <!-- Decorative 3D-ish Element -->
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-white/20 rounded-full flex items-center justify-center animate-[spin_20s_linear_infinite] group-hover:border-white/40 transition-colors">
+                     <div class="w-32 h-32 border border-white/20 rounded-full flex items-center justify-center animate-[spin_15s_linear_infinite_reverse]">
+                        <div class="w-16 h-16 bg-white/5 backdrop-blur-xl rounded-full"></div>
+                     </div>
+                </div>
+            </a>
+
+            <!-- 7. Latest Thought (2x1) -->
+            <a href="https://p.superdesign.dev/draft/8469a3ed-f561-4d51-ad27-389781c6107b" id="blog-card" class="spotlight-card block rounded-3xl col-span-1 md:col-span-2 row-span-1 p-8 flex flex-col justify-center relative group overflow-hidden fade-in-up" style="animation-delay: 0.35s;">
+                 <div class="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#0A0A0A] to-transparent z-10 md:block hidden"></div>
+                 
+                 <div class="relative z-20 flex justify-between items-center">
+                    <div class="flex-1 pr-4">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="text-xs font-mono text-gray-500">NOV 24, 2023</span>
+                            <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                            <span class="text-xs font-mono text-orange-400">THOUGHTS</span>
+                        </div>
+                        <h3 class="text-xl md:text-2xl font-medium text-white mb-2 group-hover:text-orange-200 transition-colors">
+                            The Future of Interfaces is Invisible
+                        </h3>
+                        <p class="text-sm text-gray-400 line-clamp-1 group-hover:text-gray-300 transition-colors">
+                            Why we are moving away from screens towards ambient computing and haptic feedback loops.
+                        </p>
+                    </div>
+                    <div class="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300 shrink-0">
+                         <iconify-icon icon="lucide:arrow-right" class="text-xl"></iconify-icon>
+                    </div>
+                 </div>
+            </a>
+
+        </div>
+    </div>
+
+    <script>
+        // Mouse Tracking Logic for Spotlight Effect
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.spotlight-card');
+
+            const handleMouseMove = (e) => {
+                cards.forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
+                });
+            };
+
+            document.querySelector('.grid').addEventListener('mousemove', handleMouseMove);
+        });
+    </script>
+</body>
+</html>

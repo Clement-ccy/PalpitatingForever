@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina Lab - WebGL Experiments</title>
+    <meta name="view-transition" content="same-origin">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0A0A0A;
+            --card-bg: rgba(255, 255, 255, 0.03);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --accent-glow: rgba(255, 255, 255, 0.1);
+            --lab-accent: #a855f7;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif;
+            color: #ffffff;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+
+        .font-mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Noise Texture */
+        .noise-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.05;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Glass Panel */
+        .glass-panel {
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.36);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        /* Range Input Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 12px;
+            width: 12px;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            margin-top: -5px;
+            box-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 2px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.2);
+            border-radius: 1px;
+        }
+        input[type=range]:focus {
+            outline: none;
+        }
+
+        /* View Transitions */
+        @view-transition {
+            navigation: auto;
+        }
+        ::view-transition-old(root),
+        ::view-transition-new(root) {
+            animation-duration: 0.4s;
+            animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        ::view-transition-old(root) {
+            animation-name: fade-out;
+        }
+        ::view-transition-new(root) {
+            animation-name: fade-in;
+        }
+        @keyframes fade-out {
+            from { opacity: 1; transform: scale(1); }
+            to { opacity: 0; transform: scale(0.98); }
+        }
+        @keyframes fade-in {
+            from { opacity: 0; transform: scale(1.02); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Syntax Highlighting Mock */
+        .code-keyword { color: #c678dd; }
+        .code-func { color: #61afef; }
+        .code-var { color: #e06c75; }
+        .code-num { color: #d19a66; }
+        .code-comment { color: #5c6370; font-style: italic; }
+        .code-string { color: #98c379; }
+
+        .blink-cursor {
+            animation: blink 1s step-end infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        /* Loader for Canvas */
+        .loader {
+            border: 2px solid rgba(255,255,255,0.1);
+            border-left-color: #ffffff;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Noise Overlay -->
+    <div class="noise-bg"></div>
+
+    <!-- Background Canvas -->
+    <canvas id="experiment-canvas" class="fixed inset-0 w-full h-full z-0 outline-none cursor-crosshair" style="view-transition-name: canvas;"></canvas>
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 px-6 py-4 flex items-center justify-between pointer-events-none" style="view-transition-name: header;">
+        <div class="glass-panel rounded-full px-4 py-2 pointer-events-auto flex items-center gap-4 animate-in slide-in-from-top-4 duration-500">
+            <a href="https://p.superdesign.dev/draft/a58648d2-b5ec-4a13-b531-59ae62467504" class="flex items-center gap-2 text-white/70 hover:text-white transition-colors">
+                <iconify-icon icon="lucide:arrow-left" class="text-lg"></iconify-icon>
+                <span class="text-sm font-medium">Dashboard</span>
+            </a>
+            <div class="h-4 w-[1px] bg-white/10"></div>
+            <div class="flex items-center gap-2">
+                <iconify-icon icon="lucide:flask-conical" class="text-purple-400"></iconify-icon>
+                <span class="text-sm font-mono text-purple-200">LAB / 001</span>
+            </div>
+        </div>
+
+        <!-- Main Navigation Links (Compact) -->
+        <nav class="glass-panel rounded-full px-2 py-1.5 pointer-events-auto hidden md:flex items-center gap-1 animate-in slide-in-from-top-4 duration-500 delay-100">
+            <a href="https://p.superdesign.dev/draft/a58648d2-b5ec-4a13-b531-59ae62467504" class="px-3 py-1.5 rounded-full text-xs text-white/60 hover:text-white hover:bg-white/5 transition-all">Home</a>
+            <a href="https://p.superdesign.dev/draft/5a63ed93-fff6-4f19-9346-4a7a5ceade14" class="px-3 py-1.5 rounded-full text-xs text-white/60 hover:text-white hover:bg-white/5 transition-all">Works</a>
+            <a href="https://p.superdesign.dev/draft/8469a3ed-f561-4d51-ad27-389781c6107b" class="px-3 py-1.5 rounded-full text-xs text-white/60 hover:text-white hover:bg-white/5 transition-all">Blog</a>
+            <a href="https://p.superdesign.dev/draft/e6261679-ae9a-4968-917b-cf7bc56e5598" class="px-3 py-1.5 rounded-full text-xs text-white bg-white/10 border border-white/10 shadow-[0_0_15px_rgba(168,85,247,0.3)]">Lab</a>
+            <a href="https://p.superdesign.dev/draft/31663a5c-0b22-468f-af23-89d796b436a5" class="px-3 py-1.5 rounded-full text-xs text-white/60 hover:text-white hover:bg-white/5 transition-all">Interview</a>
+        </nav>
+
+        <div class="glass-panel rounded-full p-2 pointer-events-auto animate-in slide-in-from-top-4 duration-500 delay-200">
+            <button class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-white/10 transition-colors text-white/80">
+                <iconify-icon icon="lucide:github" class="text-lg"></iconify-icon>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main UI Overlay -->
+    <main class="relative z-10 w-full h-screen flex flex-col justify-between p-6 pointer-events-none">
+        
+        <!-- Left Panel: Info & Code -->
+        <div class="mt-20 flex flex-col gap-4 max-w-sm w-full animate-in slide-in-from-left-8 duration-700">
+            <!-- Experiment Info -->
+            <div class="glass-panel rounded-xl p-6 pointer-events-auto group">
+                <div class="flex items-center justify-between mb-2">
+                    <span class="text-xs font-mono text-purple-400 tracking-wider">EXPERIMENT</span>
+                    <div class="flex gap-2">
+                        <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                        <span class="w-2 h-2 rounded-full bg-yellow-500"></span>
+                        <span class="w-2 h-2 rounded-full bg-green-500"></span>
+                    </div>
+                </div>
+                <h1 class="text-2xl font-semibold text-white mb-2">Chaos Attractor</h1>
+                <p class="text-sm text-gray-400 leading-relaxed">
+                    A particle simulation exploring strange attractors and non-linear dynamics. Interact with the field using your cursor to disrupt the flow.
+                </p>
+                <div class="flex gap-2 mt-4">
+                    <span class="px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-400">THREE.JS</span>
+                    <span class="px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-400">WEBGL</span>
+                    <span class="px-2 py-1 rounded bg-white/5 border border-white/10 text-[10px] font-mono text-gray-400">GLSL</span>
+                </div>
+            </div>
+
+            <!-- Code Editor Mockup -->
+            <div class="glass-panel rounded-xl overflow-hidden pointer-events-auto flex-1 flex flex-col max-h-[400px]">
+                <div class="px-4 py-3 border-b border-white/5 flex items-center justify-between bg-black/20">
+                    <span class="text-xs font-mono text-gray-400 flex items-center gap-2">
+                        <iconify-icon icon="lucide:code-2"></iconify-icon>
+                        fragment.glsl
+                    </span>
+                    <button class="text-xs text-gray-500 hover:text-white transition-colors">Copy</button>
+                </div>
+                <div class="p-4 font-mono text-xs overflow-y-auto leading-relaxed opacity-80 hover:opacity-100 transition-opacity">
+                    <div class="mb-1"><span class="code-keyword">void</span> <span class="code-func">main</span>() {</div>
+                    <div class="pl-4 mb-1"><span class="code-keyword">vec2</span> uv = gl_FragCoord.xy / u_resolution;</div>
+                    <div class="pl-4 mb-1"><span class="code-keyword">float</span> t = u_time * <span class="code-num">0.5</span>;</div>
+                    <div class="pl-4 mb-1"><span class="code-comment">// Create noise field</span></div>
+                    <div class="pl-4 mb-1"><span class="code-keyword">for</span>(<span class="code-keyword">float</span> i = <span class="code-num">1.0</span>; i < <span class="code-num">4.0</span>; i++) {</div>
+                    <div class="pl-8 mb-1">uv.x += <span class="code-num">0.6</span> / i * <span class="code-func">cos</span>(i * <span class="code-num">2.5</span> * uv.y + t);</div>
+                    <div class="pl-8 mb-1">uv.y += <span class="code-num">0.6</span> / i * <span class="code-func">cos</span>(i * <span class="code-num">1.5</span> * uv.x + t);</div>
+                    <div class="pl-4 mb-1">}</div>
+                    <div class="pl-4 mb-1"><span class="code-keyword">vec3</span> col = <span class="code-keyword">vec3</span>(<span class="code-num">0.5</span> * <span class="code-func">sin</span>(t) + <span class="code-num">0.5</span>, uv.x, uv.y);</div>
+                    <div class="pl-4 mb-1">gl_FragColor = <span class="code-keyword">vec4</span>(col, <span class="code-num">1.0</span>);</div>
+                    <div>}</div>
+                    <div class="mt-2 text-gray-600">... <span class="blink-cursor">|</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel: Controls -->
+        <div class="absolute top-20 right-6 w-64 glass-panel rounded-xl p-5 pointer-events-auto animate-in slide-in-from-right-8 duration-700 delay-100">
+            <div class="flex items-center gap-2 mb-6">
+                <iconify-icon icon="lucide:sliders-horizontal" class="text-gray-400"></iconify-icon>
+                <span class="text-xs font-mono font-medium text-white">PARAMETERS</span>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Control 1 -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-xs font-mono text-gray-400">
+                        <span>PARTICLE COUNT</span>
+                        <span id="val-count">2048</span>
+                    </div>
+                    <input type="range" min="100" max="5000" value="2048" class="w-full" id="ctrl-count">
+                </div>
+
+                <!-- Control 2 -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-xs font-mono text-gray-400">
+                        <span>CHAOS FACTOR</span>
+                        <span id="val-chaos">0.65</span>
+                    </div>
+                    <input type="range" min="0" max="1" step="0.01" value="0.65" class="w-full" id="ctrl-chaos">
+                </div>
+
+                <!-- Control 3 -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-xs font-mono text-gray-400">
+                        <span>SPEED</span>
+                        <span id="val-speed">1.2x</span>
+                    </div>
+                    <input type="range" min="0.1" max="3.0" step="0.1" value="1.2" class="w-full" id="ctrl-speed">
+                </div>
+
+                <!-- Control 4 -->
+                <div class="space-y-2">
+                    <div class="flex justify-between text-xs font-mono text-gray-400">
+                        <span>COLOR SHIFT</span>
+                        <span id="val-color">ON</span>
+                    </div>
+                    <div class="flex gap-2">
+                        <button class="flex-1 py-1.5 rounded bg-white/10 text-[10px] text-white font-mono hover:bg-white/20 transition-colors border border-white/10 border-b-white/30">R</button>
+                        <button class="flex-1 py-1.5 rounded bg-white/10 text-[10px] text-white font-mono hover:bg-white/20 transition-colors border border-white/10 border-b-white/30">G</button>
+                        <button class="flex-1 py-1.5 rounded bg-purple-500/20 text-[10px] text-purple-300 font-mono border border-purple-500/50 shadow-[0_0_10px_rgba(168,85,247,0.2)]">B</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-4 border-t border-white/5 flex justify-between items-center">
+                 <div class="flex items-center gap-2">
+                     <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                     <span class="text-[10px] text-gray-400 font-mono">60 FPS</span>
+                 </div>
+                 <button class="p-2 hover:bg-white/10 rounded-lg transition-colors text-white">
+                     <iconify-icon icon="lucide:refresh-cw" class="text-sm"></iconify-icon>
+                 </button>
+            </div>
+        </div>
+
+        <!-- Bottom Bar: Experiment Switcher -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 p-1 glass-panel rounded-full pointer-events-auto animate-in slide-in-from-bottom-8 duration-700 delay-200">
+             <button class="px-4 py-2 rounded-full bg-white/10 border border-white/10 text-xs font-medium text-white shadow-lg transition-all transform hover:scale-105">
+                 01. Attractor
+             </button>
+             <button class="px-4 py-2 rounded-full hover:bg-white/5 text-xs font-medium text-gray-400 transition-all hover:text-white">
+                 02. Fluid
+             </button>
+             <button class="px-4 py-2 rounded-full hover:bg-white/5 text-xs font-medium text-gray-400 transition-all hover:text-white">
+                 03. Mesh
+             </button>
+             <button class="px-4 py-2 rounded-full hover:bg-white/5 text-xs font-medium text-gray-400 transition-all hover:text-white">
+                 04. Audio
+             </button>
+        </div>
+
+    </main>
+
+    <script>
+        // Canvas Simulation Script
+        const canvas = document.getElementById('experiment-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let mouse = { x: 0, y: 0 };
+
+        // Parameters linked to UI
+        const params = {
+            count: 200,
+            chaos: 0.65,
+            speed: 1.2
+        };
+
+        // Resize handler
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initParticles();
+        }
+
+        class Particle {
+            constructor() {
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 2;
+                this.vy = (Math.random() - 0.5) * 2;
+                this.size = Math.random() * 2 + 1;
+                this.color = `hsla(${240 + Math.random() * 60}, 70%, 60%, ${Math.random() * 0.5 + 0.1})`;
+            }
+
+            update() {
+                // Chaos factor influence
+                this.x += this.vx * params.speed;
+                this.y += this.vy * params.speed;
+
+                // Mouse repulsion
+                const dx = mouse.x - this.x;
+                const dy = mouse.y - this.y;
+                const dist = Math.sqrt(dx*dx + dy*dy);
+                if (dist < 200) {
+                    const force = (200 - dist) / 200;
+                    this.vx -= dx * force * 0.05 * params.chaos;
+                    this.vy -= dy * force * 0.05 * params.chaos;
+                }
+
+                // Bounds wrap
+                if (this.x < 0) this.x = width;
+                if (this.x > width) this.x = 0;
+                if (this.y < 0) this.y = height;
+                if (this.y > height) this.y = 0;
+
+                // Friction
+                this.vx *= 0.99;
+                this.vy *= 0.99;
+
+                // Minimum movement to keep it alive
+                if(Math.abs(this.vx) < 0.1) this.vx += (Math.random()-0.5) * 0.2;
+                if(Math.abs(this.vy) < 0.1) this.vy += (Math.random()-0.5) * 0.2;
+            }
+
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            // Limit for performance in this simple 2D demo, 
+            // though the slider says 2048, we scale it down visually for 2D canvas perf
+            const realCount = Math.floor(params.count / 4);
+            for (let i = 0; i < realCount; i++) {
+                particles.push(new Particle());
+            }
+        }
+
+        function animate() {
+            // Trail effect
+            ctx.fillStyle = 'rgba(10, 10, 10, 0.2)';
+            ctx.fillRect(0, 0, width, height);
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Draw connection lines for "Network" look if close enough
+            ctx.lineWidth = 0.5;
+            for (let i = 0; i < particles.length; i++) {
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(100, 100, 255, ${1 - dist/100})`;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        // Event Listeners
+        window.addEventListener('resize', resize);
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        // UI Connections
+        document.getElementById('ctrl-count').addEventListener('input', (e) => {
+            document.getElementById('val-count').textContent = e.target.value;
+            params.count = parseInt(e.target.value);
+            initParticles();
+        });
+
+        document.getElementById('ctrl-chaos').addEventListener('input', (e) => {
+            document.getElementById('val-chaos').textContent = e.target.value;
+            params.chaos = parseFloat(e.target.value);
+        });
+
+        document.getElementById('ctrl-speed').addEventListener('input', (e) => {
+            document.getElementById('val-speed').textContent = e.target.value + 'x';
+            params.speed = parseFloat(e.target.value);
+        });
+
+        // Init
+        resize();
+        animate();
+    </script>
+</body>
+</html>
