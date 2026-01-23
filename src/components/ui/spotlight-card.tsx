@@ -36,12 +36,45 @@ export function SpotlightCard({
     setOpacity(0);
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
+    // If user presses Enter or Space, trigger click if provided, else provide a center-spot pulse
+    if (e.key === 'Enter' || e.key === ' ') {
+      // Normalize space key to prevent page scrolling on Space
+      if ((props as any).onClick) {
+        e.preventDefault();
+        (props as any).onClick(e as any);
+      } else if (divRef.current) {
+        const rect = divRef.current.getBoundingClientRect();
+        const cx = rect.width / 2;
+        const cy = rect.height / 2;
+        setPosition({ x: cx, y: cy });
+        setOpacity(1);
+        // simple temporary glow
+        setTimeout(() => setOpacity(0), 300);
+      }
+    }
+  };
+
+  const handleFocus = () => {
+    setOpacity(1);
+  };
+
+  const handleBlur = () => {
+    setOpacity(0);
+  };
+
   return (
     <div
       ref={divRef}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label="Spotlight Card"
       className={cn(
         'relative overflow-hidden rounded-xl border border-white/10 bg-white/[0.03] backdrop-blur-md transition-colors hover:border-white/20',
         className
