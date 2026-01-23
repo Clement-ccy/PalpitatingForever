@@ -22,11 +22,11 @@ export const TopDock = () => {
   ];
 
   return (
-    <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50 hidden md:block">
+    <div className="fixed top-8 left-1/2 -translate-x-1/2 z-50 hidden md:block">
       <motion.div
         onMouseMove={(e) => mouseX.set(e.pageX)}
         onMouseLeave={() => mouseX.set(Infinity)}
-        className="flex h-16 items-end gap-4 rounded-2xl border border-white/10 bg-black/50 px-4 pb-3 backdrop-blur-xl"
+        className="flex h-16 items-center gap-4 rounded-2xl border border-card-border bg-background/50 px-4 backdrop-blur-xl"
       >
         {links.map((link) => (
           <DockIcon key={link.href} mouseX={mouseX} {...link} isActive={pathname === link.href} />
@@ -61,8 +61,8 @@ function DockIcon({
 
   return (
     <div className="group relative">
-        {/* Tooltip */}
-      <div className="absolute -top-10 left-1/2 -translate-x-1/2 rounded-md bg-neutral-900 border border-white/10 px-2 py-1 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
+      {/* Tooltip */}
+      <div className="absolute top-14 left-1/2 -translate-x-1/2 rounded-md bg-neutral-900 border border-white/10 px-2 py-1 text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
         {name}
       </div>
       
@@ -73,8 +73,8 @@ function DockIcon({
         className={cn(
             "aspect-square w-10 rounded-full flex items-center justify-center border transition-colors",
             isActive 
-            ? "bg-white/20 border-white/20 text-white shadow-[0_0_20px_rgba(255,255,255,0.3)]"
-            : "bg-white/5 border-white/5 text-neutral-400 hover:bg-white/10 hover:text-white"
+            ? "bg-foreground/10 border-foreground/20 text-foreground shadow-[0_0_20px_rgba(var(--foreground),0.1)]"
+            : "bg-card border-card-border text-muted hover:bg-foreground/5 hover:text-foreground"
         )}
         >
         <Icon className="w-5 h-5" />

@@ -5,24 +5,24 @@ export function NowPlaying() {
   return (
     <SpotlightCard className="h-full w-full p-6 flex flex-col justify-between group overflow-hidden">
       <div className="flex justify-between items-start z-10">
-        <Music className="text-white/40" size={20} />
+        <Music className="text-foreground/40" size={20} />
         <div className="flex gap-1 h-4 items-end">
           {[1, 2, 3, 4].map((bar, i) => (
             <div
               key={bar}
-              className="w-1 bg-green-500/80 rounded-full equalizer-bar"
+              className="w-1 bg-green-500 rounded-full equalizer-bar"
             />
           ))}
         </div>
       </div>
 
       <div className="z-10 mt-auto">
-        <p className="text-xs font-mono text-white/40 mb-1">Now Playing</p>
+        <p className="text-xs font-mono text-muted mb-1">Now Playing</p>
         <div className="relative overflow-hidden w-full">
-            <h3 className="font-medium truncate text-white/90 group-hover:text-green-400 transition-colors">
+            <h3 className="font-medium truncate text-foreground/90 group-hover:text-green-500 transition-colors">
             Endless Fantasy
             </h3>
-            <p className="text-sm text-white/50 truncate">Anamanaguchi</p>
+            <p className="text-sm text-muted truncate">Anamanaguchi</p>
         </div>
       </div>
       

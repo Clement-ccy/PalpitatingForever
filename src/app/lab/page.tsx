@@ -45,7 +45,7 @@ export default function LabPage() {
     };
 
     const animate = () => {
-      ctx.fillStyle = 'rgba(5, 5, 5, 0.2)'; // Trail effect
+      ctx.fillStyle = 'rgba(180, 126, 126, 0)'; // Trail effect
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       particles.forEach((p, index) => {
@@ -97,7 +97,7 @@ export default function LabPage() {
   }, [params]);
 
   return (
-    <div className="relative min-h-screen bg-black overflow-hidden">
+    <div className="relative min-h-screen bg-background overflow-hidden text-foreground">
       <canvas ref={canvasRef} className="absolute inset-0 z-0 block w-full h-full" />
       
       {/* UI Overlay */}
@@ -107,11 +107,11 @@ export default function LabPage() {
             animate={{ opacity: 1, x: 0 }}
             className="flex flex-col gap-1"
          >
-             <div className="flex items-center gap-2 text-emerald-500 font-mono text-xs uppercase tracking-widest mb-2">
+             <div className="flex items-center gap-2 text-accent-foreground font-mono text-xs uppercase tracking-widest mb-2">
                  <Terminal size={12} />
                  <span>Experiment_001.tsx</span>
              </div>
-             <h1 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter mix-blend-difference">
+             <h1 className="text-4xl md:text-6xl font-black text-foreground uppercase tracking-tighter mix-blend-difference">
                  Particle<br />Systems
              </h1>
          </motion.div>
@@ -122,19 +122,19 @@ export default function LabPage() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.5 }}
-        className="absolute top-24 right-4 md:right-8 z-20 w-64 bg-black/50 backdrop-blur-xl border border-white/10 rounded-xl p-4"
+        className="absolute top-24 right-4 md:right-8 z-20 w-64 bg-card/50 backdrop-blur-xl border border-card-border rounded-xl p-4"
       >
-          <div className="flex items-center justify-between mb-4 pb-4 border-b border-white/10">
-              <div className="flex items-center gap-2 text-white font-medium text-sm">
+          <div className="flex items-center justify-between mb-4 pb-4 border-b border-card-border">
+              <div className="flex items-center gap-2 text-foreground font-medium text-sm">
                   <Sliders size={14} />
                   <span>Parameters</span>
               </div>
-              <RefreshCw size={12} className="text-white/40 cursor-pointer hover:text-white transition-colors" />
+              <RefreshCw size={12} className="text-muted-foreground cursor-pointer hover:text-foreground transition-colors" />
           </div>
 
           <div className="space-y-4">
               <div className="space-y-2">
-                  <label className="text-xs font-mono text-gray-400 flex justify-between">
+                  <label className="text-xs font-mono text-muted-foreground flex justify-between">
                       <span>Count</span>
                       <span>{params.particleCount}</span>
                   </label>
@@ -144,12 +144,12 @@ export default function LabPage() {
                     max="300" 
                     value={params.particleCount}
                     onChange={(e) => setParams({...params, particleCount: parseInt(e.target.value)})}
-                    className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-emerald-500"
+                    className="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-accent-foreground"
                    />
               </div>
 
                <div className="space-y-2">
-                  <label className="text-xs font-mono text-gray-400 flex justify-between">
+                  <label className="text-xs font-mono text-muted-foreground flex justify-between">
                       <span>Velocity</span>
                       <span>{params.speed}x</span>
                   </label>
@@ -160,19 +160,19 @@ export default function LabPage() {
                     step="0.1"
                     value={params.speed}
                     onChange={(e) => setParams({...params, speed: parseFloat(e.target.value)})}
-                    className="w-full h-1 bg-white/10 rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500"
+                    className="w-full h-1 bg-muted rounded-full appearance-none cursor-pointer [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:w-3 [&::-webkit-slider-thumb]:h-3 [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:bg-blue-500"
                    />
               </div>
           </div>
           
-          <div className="mt-4 pt-4 border-t border-white/10 flex justify-end">
-              <button title="Full Screen" className="p-2 hover:bg-white/10 rounded-lg text-white/60 hover:text-white transition-colors">
+          <div className="mt-4 pt-4 border-t border-card-border flex justify-end">
+              <button title="Full Screen" className="p-2 hover:bg-muted rounded-lg text-muted-foreground hover:text-foreground transition-colors">
                   <Maximize2 size={14} />
               </button>
           </div>
       </motion.div>
 
-      <div className="absolute bottom-8 left-4 md:left-8 right-4 md:right-8 flex justify-between items-end pointer-events-none text-white/20 font-mono text-xs">
+      <div className="absolute bottom-8 left-4 md:left-8 right-4 md:right-8 flex justify-between items-end pointer-events-none text-muted-foreground/20 font-mono text-xs">
           <div>
               COORD: 104.22, 99.31<br />
               FPS: 60

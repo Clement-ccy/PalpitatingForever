@@ -97,16 +97,16 @@ export default function PlogsPage() {
     const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
 
   return (
-    <div className="min-h-screen pt-32 px-4 pb-32 max-w-[1600px] mx-auto relative z-10">
+    <div className="min-h-screen pt-32 px-4 pb-32 max-w-[1600px] mx-auto relative z-10 bg-background text-foreground">
        <header className="mb-12 max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-mono text-purple-300 mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-muted border border-card-border text-xs font-mono text-accent-foreground mb-4">
                         <Aperture size={14} />
                         <span>VISUAL LOGS</span>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-white mb-4">Captured Moments</h1>
-                    <p className="text-gray-400 max-w-lg text-sm md:text-base leading-relaxed">
+                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-4">Captured Moments</h1>
+                    <p className="text-muted-foreground max-w-lg text-sm md:text-base leading-relaxed">
                         A collection of frozen time. Exploring light, shadow, and the quiet spaces in between. 
                         Mainly shot on Sony Alpha & Fujifilm X-Series.
                     </p>
@@ -114,13 +114,13 @@ export default function PlogsPage() {
                 
                 <div className="flex gap-4">
                     <div className="text-right hidden md:block">
-                        <div className="text-2xl font-mono text-white">84</div>
-                        <div className="text-xs text-gray-500 font-mono uppercase tracking-wider">Photos</div>
+                        <div className="text-2xl font-mono text-foreground">84</div>
+                        <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Photos</div>
                     </div>
-                    <div className="h-12 w-px bg-white/10 hidden md:block"></div>
+                    <div className="h-12 w-px bg-card-border hidden md:block"></div>
                     <div className="text-right hidden md:block">
-                        <div className="text-2xl font-mono text-white">12</div>
-                        <div className="text-xs text-gray-500 font-mono uppercase tracking-wider">Cities</div>
+                        <div className="text-2xl font-mono text-foreground">12</div>
+                        <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Cities</div>
                     </div>
                 </div>
             </div>
@@ -139,7 +139,7 @@ export default function PlogsPage() {
                 className="break-inside-avoid relative group cursor-zoom-in mb-6"
             >
                 <div className={cn(
-                    "rounded-2xl overflow-hidden border border-white/10 transition-all duration-300 bg-gray-900",
+                    "rounded-2xl overflow-hidden border border-card-border transition-all duration-300 bg-card",
                     glowThemes[photo.theme]
                 )}>
                     {/* Image */}
@@ -152,18 +152,18 @@ export default function PlogsPage() {
                     />
 
                     {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                         <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                            <h3 className="text-white font-medium text-lg mb-2">{photo.title}</h3>
+                            <h3 className="text-foreground font-medium text-lg mb-2">{photo.title}</h3>
                             <div className="flex flex-wrap gap-2">
-                                <span className="px-2 py-1 bg-white/10 backdrop-blur-md border border-white/10 rounded-md text-[10px] font-mono text-gray-300 flex items-center gap-1.5">
+                                <span className="px-2 py-1 bg-background/50 backdrop-blur-md border border-card-border rounded-md text-[10px] font-mono text-muted-foreground flex items-center gap-1.5">
                                     <Camera size={10} /> {photo.camera}
                                 </span>
-                                <span className="px-2 py-1 bg-white/10 backdrop-blur-md border border-white/10 rounded-md text-[10px] font-mono text-gray-300 flex items-center gap-1.5">
+                                <span className="px-2 py-1 bg-background/50 backdrop-blur-md border border-card-border rounded-md text-[10px] font-mono text-muted-foreground flex items-center gap-1.5">
                                     <Aperture size={10} /> {photo.settings}
                                 </span>
                                 {photo.iso && (
-                                    <span className="px-2 py-1 bg-white/10 backdrop-blur-md border border-white/10 rounded-md text-[10px] font-mono text-gray-300 flex items-center gap-1.5">
+                                    <span className="px-2 py-1 bg-background/50 backdrop-blur-md border border-card-border rounded-md text-[10px] font-mono text-muted-foreground flex items-center gap-1.5">
                                         <Droplets size={10} /> {photo.iso}
                                     </span>
                                 )}
@@ -178,10 +178,10 @@ export default function PlogsPage() {
        {/* Load More Indicator */}
        <div className="flex justify-center mt-12 mb-12">
             <button className="group flex flex-col items-center gap-2">
-                <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-black transition-all duration-300">
+                <div className="w-12 h-12 rounded-full border border-card-border flex items-center justify-center group-hover:bg-foreground group-hover:text-background transition-all duration-300">
                     <ArrowDown className="text-xl" />
                 </div>
-                <span className="text-xs font-mono text-gray-500 group-hover:text-white transition-colors">LOAD ARCHIVES</span>
+                <span className="text-xs font-mono text-muted-foreground group-hover:text-foreground transition-colors">LOAD ARCHIVES</span>
             </button>
         </div>
 
@@ -192,11 +192,11 @@ export default function PlogsPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[60] bg-black/95 backdrop-blur-xl flex items-center justify-center p-4"
+                className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-xl flex items-center justify-center p-4"
                 onClick={() => setSelectedPhoto(null)}
             >
                 <button 
-                    className="absolute top-6 right-6 text-white/50 hover:text-white transition-colors z-50 p-2 bg-black/20 rounded-full"
+                    className="absolute top-6 right-6 text-muted-foreground hover:text-foreground transition-colors z-50 p-2 bg-background/20 rounded-full"
                     onClick={() => setSelectedPhoto(null)}
                 >
                     <X size={32} />
@@ -222,15 +222,15 @@ export default function PlogsPage() {
                          />
                     </motion.div>
                     
-                    <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-black via-black/50 to-transparent">
-                          <h2 className="text-2xl font-bold text-white mb-2">{selectedPhoto.title}</h2>
-                          <div className="flex items-center gap-4 text-sm text-gray-300 font-mono">
+                    <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-background via-background/50 to-transparent">
+                          <h2 className="text-2xl font-bold text-foreground mb-2">{selectedPhoto.title}</h2>
+                          <div className="flex items-center gap-4 text-sm text-muted-foreground font-mono">
                                 <span>{selectedPhoto.camera}</span>
-                                <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
+                                <span className="w-1 h-1 bg-muted-foreground/30 rounded-full"></span>
                                 <span>{selectedPhoto.settings}</span>
                                 {selectedPhoto.iso && (
                                     <>
-                                        <span className="w-1 h-1 bg-gray-500 rounded-full"></span>
+                                        <span className="w-1 h-1 bg-muted-foreground/30 rounded-full"></span>
                                         <span>{selectedPhoto.iso}</span>
                                     </>
                                 )}

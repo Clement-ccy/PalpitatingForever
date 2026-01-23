@@ -1,18 +1,40 @@
 @import "tailwindcss";
 
 @theme {
-  --color-background: #0A0A0A;
-  --color-foreground: #ededed;
-  
-  --color-card: rgba(255, 255, 255, 0.03);
-  --color-card-border: rgba(255, 255, 255, 0.1);
-  --color-accent-glow: rgba(255, 255, 255, 0.1);
-  
   --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
 }
 
-/* View Transitions */
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: rgba(0, 0, 0, 0.03);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --card-hover-border: rgba(0, 0, 0, 0.2);
+  --card-spotlight: rgba(0, 0, 0, 0.05);
+  --muted: #737373;
+  --aurora-opacity: 0.3;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-hover-border: rgba(255, 255, 255, 0.2);
+  --card-spotlight: rgba(255, 255, 255, 0.15);
+  --muted: #a3a3a3;
+  --aurora-opacity: 0.5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-border: var(--card-border);
+  --color-card-hover-border: var(--card-hover-border);
+  --color-muted: var(--muted);
+}
 @view-transition { navigation: auto; }
 
 ::view-transition-old(root),
@@ -92,7 +114,7 @@
     position: fixed;
     filter: blur(80px);
     z-index: 0;
-    opacity: 0.5;
+    opacity: var(--aurora-opacity);
     border-radius: 50%;
     animation: float 20s infinite alternate cubic-bezier(0.4, 0.0, 0.2, 1);
   }

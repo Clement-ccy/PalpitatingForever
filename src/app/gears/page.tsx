@@ -18,10 +18,10 @@ const GEARS = [
 
 export default function GearsPage() {
   return (
-    <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto">
+    <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto bg-background text-foreground">
       <header className="mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white mb-6">Inventory</h1>
-        <p className="text-lg text-gray-400 max-w-2xl leading-relaxed">
+        <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-6">Inventory</h1>
+        <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
           The hardware, software, and tools I use to build, design, and survive. 
           A curated list of my daily drivers.
         </p>
@@ -35,19 +35,19 @@ export default function GearsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
           >
-            <SpotlightCard className="h-full flex flex-col p-6 group bg-[#0A0A0A] border-white/5 hover:border-white/10 transition-colors">
+            <SpotlightCard className="h-full flex flex-col p-6 group bg-card border-card-border hover:border-accent transition-colors">
                 <div className="flex items-start justify-between mb-8">
-                    <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-white/40 group-hover:text-white group-hover:bg-white/10 transition-colors">
+                    <div className="w-12 h-12 rounded-2xl bg-muted border border-card-border flex items-center justify-center text-muted-foreground group-hover:text-foreground group-hover:bg-accent transition-colors">
                         <gear.icon size={20} />
                     </div>
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-white/30 border border-white/10 px-2 py-1 rounded-full">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/50 border border-card-border px-2 py-1 rounded-full">
                         {gear.category}
                     </span>
                 </div>
 
                 <div className="mt-auto">
-                    <h3 className="font-bold text-white mb-2 text-lg group-hover:text-emerald-400 transition-colors">{gear.name}</h3>
-                    <p className="text-sm text-gray-500 mb-4 line-clamp-2">
+                    <h3 className="font-bold text-foreground mb-2 text-lg group-hover:text-accent-foreground transition-colors">{gear.name}</h3>
+                    <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                         {gear.description}
                     </p>
 
@@ -56,7 +56,7 @@ export default function GearsPage() {
                             <Star 
                                 key={i} 
                                 size={12} 
-                                className={cn("transition-colors", i < gear.rating ? "fill-white text-white" : "text-white/10")} 
+                                className={cn("transition-colors", i < gear.rating ? "fill-foreground text-foreground" : "text-foreground/10")} 
                             />
                         ))}
                     </div>
