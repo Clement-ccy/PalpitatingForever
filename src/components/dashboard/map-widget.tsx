@@ -4,14 +4,14 @@ import { MapPin } from 'lucide-react';
 export function MapWidget() {
   return (
     <SpotlightCard className="h-full w-full relative overflow-hidden group">
-      {/* Mock Map Background */}
+      {/* Map Background Image */}
       <div 
-        className="absolute inset-0 bg-neutral-500/10 mix-blend-overlay"
+        className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity duration-700 grayscale group-hover:grayscale-0"
         style={{
-            backgroundImage: `radial-gradient(circle at 2px 2px, var(--card-border) 1px, transparent 0)`,
-            backgroundSize: '24px 24px'
+            backgroundImage: `url('https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?q=80&w=800&auto=format&fit=crop')`,
         }}
       />
+      <div className="absolute inset-0 bg-background/20 mix-blend-multiply"></div>
       
       {/* Map Content */}
       <div className="relative z-10 w-full h-full p-4 flex flex-col justify-between">

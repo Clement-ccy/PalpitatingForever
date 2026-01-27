@@ -6,8 +6,8 @@ export function LatestThought() {
   return (
     <Link href="/blogs" className="block h-full">
       <SpotlightCard className="h-full w-full p-8 flex flex-col justify-center relative group overflow-hidden">
-        {/* Subtle Gradient */}
-        <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-[#000] to-transparent z-10 md:block hidden pointer-events-none"></div>
+        {/* Decorative Background Element */}
+        <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 blur-[80px] -mr-32 -mt-32 rounded-full group-hover:bg-orange-500/10 transition-colors duration-700"></div>
 
         <div className="relative z-20 flex justify-between items-center h-full">
             <div className="flex-1 pr-4">

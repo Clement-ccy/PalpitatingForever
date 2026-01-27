@@ -8,7 +8,7 @@ import { ThemeProvider } from '@/components/theme-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Digital Dashboard',
+  title: 'PF Station',
   description: 'Personal portfolio and digital garden',
 };
 

@@ -87,7 +87,7 @@ const ControlPanel = ({ onClose }: { onClose: () => void }) => {
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
-      className="fixed top-0 right-0 h-full w-full md:w-96 bg-background/80 backdrop-blur-2xl border-l border-white/10 z-[100] p-8 shadow-2xl"
+      className="fixed top-0 right-0 h-full w-full md:w-96 bg-background/80 backdrop-blur-2xl border-l border-white/10 z-100 p-8 shadow-2xl"
     >
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-2">

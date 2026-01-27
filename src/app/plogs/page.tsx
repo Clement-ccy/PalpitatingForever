@@ -91,6 +91,7 @@ const glowThemes = {
     emerald: 'hover:shadow-[0_0_40px_-10px_rgba(16,185,129,0.3)] hover:border-emerald-500/30',
     orange: 'hover:shadow-[0_0_40px_-10px_rgba(249,115,22,0.3)] hover:border-orange-500/30',
     purple: 'hover:shadow-[0_0_40px_-10px_rgba(168,85,247,0.3)] hover:border-purple-500/30',
+    grey: 'hover:shadow-[0_0_40px_-10px_rgba(var(--accent-plogs),0.3)] hover:border-accent-plogs/30',
 };
 
 export default function PlogsPage() {
@@ -98,14 +99,17 @@ export default function PlogsPage() {
 
   return (
     <div className="min-h-screen pt-32 px-4 pb-32 max-w-[1600px] mx-auto relative z-10 bg-background text-foreground">
+       {/* Background Glow */}
+       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-plogs/5 blur-[160px] rounded-full -z-10" />
+
        <header className="mb-12 max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-muted border border-card-border text-xs font-mono text-accent-foreground mb-4">
-                        <Aperture size={14} />
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-plogs/10 border border-accent-plogs/20 text-xs font-mono text-accent-plogs mb-4">
+                        <Camera size={14} />
                         <span>VISUAL LOGS</span>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-4">Captured Moments</h1>
+                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-4">Photos</h1>
                     <p className="text-muted-foreground max-w-lg text-sm md:text-base leading-relaxed">
                         A collection of frozen time. Exploring light, shadow, and the quiet spaces in between. 
                         Mainly shot on Sony Alpha & Fujifilm X-Series.

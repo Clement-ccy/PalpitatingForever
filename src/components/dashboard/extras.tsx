@@ -1,5 +1,5 @@
 import { SpotlightCard } from '@/components/ui/spotlight-card';
-import { Box, Code, ArrowUpRight, Github, Twitter, Linkedin, Mail } from 'lucide-react';
+import { Code, ArrowUpRight, Github, Twitter, Linkedin, Mail } from 'lucide-react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -10,23 +10,25 @@ export function Showcase() {
             <div className="absolute inset-0 mesh-gradient opacity-40 group-hover:opacity-60 transition-opacity duration-700"></div>
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
             
-            <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity duration-500 translate-x-4 group-hover:translate-x-0">
+            <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-all duration-500 translate-x-8 group-hover:translate-x-0 z-20">
                 <ArrowUpRight className="text-3xl text-foreground" />
             </div>
 
-            <div className="absolute bottom-0 left-0 p-8 w-full z-10">
+            <div className="bottom-0 left-0 p-8 w-full z-10">
                 <div className="inline-block px-3 py-1 bg-card/20 backdrop-blur-md border border-card-border rounded-full text-xs font-mono text-purple-400 dark:text-purple-300 mb-3">
                     INTERACTIVE LAB / 01
                 </div>
-                <h2 className="text-3xl font-semibold text-foreground mb-2">WebGL Experiments</h2>
+                <h2 className="text-3xl font-semibold text-foreground mb-2 wrap-break-word">WebGL Experiments</h2>
                 <p className="text-muted max-w-sm line-clamp-2">A collection of shaders and reactive three.js sketches exploring chaos theory.</p>
             </div>
             
             {/* Decorative 3D-ish Element */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-card-border rounded-full flex items-center justify-center animate-[spin_20s_linear_infinite] group-hover:border-card-hover-border transition-colors pointer-events-none">
-                    <div className="w-32 h-32 border border-card-border rounded-full flex items-center justify-center animate-[spin_15s_linear_infinite_reverse]">
-                    <div className="w-16 h-16 bg-card/10 backdrop-blur-xl rounded-full"></div>
-                    </div>
+            <div className="absolute top-1/2 left-1/2 w-48 h-48 pointer-events-none animate-[float-element_8s_ease-in-out_infinite]">
+                <div className="w-full h-full border border-card-border rounded-full flex items-center justify-center animate-[spin_20s_linear_infinite] group-hover:border-card-hover-border transition-colors">
+                        <div className="w-32 h-32 border border-card-border rounded-full flex items-center justify-center animate-[spin_15s_linear_infinite_reverse]">
+                        <div className="w-16 h-16 bg-card/10 backdrop-blur-xl rounded-full"></div>
+                        </div>
+                </div>
             </div>
         </SpotlightCard>
     </Link>
@@ -57,7 +59,7 @@ export function QuickLinks() {
 export function StackCard() {
     return (
         <SpotlightCard className="h-full w-full p-0 relative overflow-hidden flex items-center justify-center group">
-             <div className="absolute inset-0 bg-gradient-to-br from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+             <div className="absolute -inset-px bg-linear-to-br from-purple-500/10 to-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
              <div className="text-center z-10 p-6 flex flex-col items-center justify-center h-full">
                   <div className="flex items-center gap-2 text-xs font-mono text-muted mb-4 tracking-widest uppercase border border-card-border px-3 py-1 rounded-full bg-card">
                      <Code size={12} />

@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { X, ExternalLink, ArrowUpRight, Briefcase } from 'lucide-react';
 import { MOCK_WORKS, Work } from '@/data/mock-works';
 import { cn } from '@/lib/utils';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
@@ -42,13 +42,23 @@ export default function WorksPage() {
 
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 md:px-8 max-w-7xl mx-auto relative z-10 w-full">
-      
+      {/* Background Rainbow Glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none opacity-20">
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 blur-[120px] rounded-full" />
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-500/20 blur-[120px] rounded-full" />
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-emerald-500/20 blur-[120px] rounded-full" />
+      </div>
+
       {/* Header Section */}
       <div className="mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 border border-white/10 text-xs font-mono mb-4">
+                    <Briefcase size={14} className="text-blue-400" />
+                    <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">PORTFOLIO</span>
+                </div>
                 <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-foreground mb-6">
-                    Selected Works
+                    Works
                 </h1>
                 <p className="text-lg text-muted max-w-2xl leading-relaxed">
                     A collection of digital products, interactive experiences, and open source contributions. 
@@ -186,7 +196,7 @@ export default function WorksPage() {
                                 <Image src="/avatar.png" alt="Author" fill className="object-cover" />
                              </div>
                              <div>
-                                <p className="text-sm font-medium text-foreground">Alex Chen</p>
+                                <p className="text-sm font-medium text-foreground">Clement Chen</p>
                                 <p className="text-xs text-muted">Lead Designer</p>
                              </div>
                         </div>

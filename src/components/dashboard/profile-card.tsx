@@ -9,7 +9,7 @@ export function ProfileCard() {
           <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-card-border shadow-2xl relative z-10">
             <Image
               src="/avatar.png"
-              alt="Alex Chen"
+              alt="Clement Chen"
               layout="fill"
               objectFit="cover"
               className="grayscale group-hover:grayscale-0 transition-all duration-500"
@@ -30,7 +30,7 @@ export function ProfileCard() {
 
       <div className="space-y-4 mt-8">
         <h1 className="text-4xl md:text-5xl font-semibold tracking-tight leading-tight text-foreground/90">
-          Alex Chen
+          Clement Chen
         </h1>
         <p className="text-lg text-muted font-light max-w-md leading-relaxed">
           Digital Craftsman & <br className="hidden md:block"/>Frontend Architect.

@@ -12,11 +12,10 @@ export const TopDock = () => {
   const pathname = usePathname();
 
   const links = [
-    { name: 'Home', icon: Home, href: '/' },
     { name: 'Works', icon: Briefcase, href: '/works' },
-    { name: 'Blog', icon: PenTool, href: '/blogs' },
-    { name: 'Music', icon: Music, href: '/mlogs' },
-    { name: 'Photos', icon: Camera, href: '/plogs' },
+    { name: 'Blogs', icon: PenTool, href: '/blogs' },
+    { name: 'Mlogs', icon: Music, href: '/mlogs' },
+    { name: 'Plogs', icon: Camera, href: '/plogs' },
     { name: 'Gears', icon: Settings, href: '/gears' },
     { name: 'Lab', icon: FlaskConical, href: '/lab' },
   ];

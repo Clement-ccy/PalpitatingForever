@@ -17,7 +17,7 @@ export default function Home() {
             3. Links (1x1)
             4. Now Playing (1x1)
             5. Stack (1x1)
-            6. Showcase (2x2)
+            6. Showcase (2x1)
             7. Latest Thought (2x1)
         */}
 
@@ -46,8 +46,8 @@ export default function Home() {
             <StackCard />
         </BentoItem>
 
-        {/* 6. Showcase / Lab (2x2) */}
-        <BentoItem colSpan={2} rowSpan={2}>
+        {/* 6. Showcase / Lab (2x1) */}
+        <BentoItem colSpan={2} rowSpan={1}>
            <Showcase />
         </BentoItem>
 

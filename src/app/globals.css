@@ -34,6 +34,56 @@
   --color-card-border: var(--card-border);
   --color-card-hover-border: var(--card-hover-border);
   --color-muted: var(--muted);
+  
+  --color-accent-works: var(--accent-works);
+  --color-accent-blogs: var(--accent-blogs);
+  --color-accent-mlogs: var(--accent-mlogs);
+  --color-accent-plogs: var(--accent-plogs);
+  --color-accent-gears: var(--accent-gears);
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #0a0a0a;
+  --card: rgba(0, 0, 0, 0.03);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --card-hover-border: rgba(0, 0, 0, 0.2);
+  --card-spotlight: rgba(0, 0, 0, 0.05);
+  --muted: #737373;
+  --aurora-opacity: 0.3;
+
+  --accent-works: #3b82f6; /* Default Blue, will use rainbow elsewhere */
+  --accent-works-rgb: 59, 130, 246;
+  --accent-blogs: #22c55e;
+  --accent-blogs-rgb: 34, 197, 94;
+  --accent-mlogs: #ef4444;
+  --accent-mlogs-rgb: 239, 68, 68;
+  --accent-plogs: #737373;
+  --accent-plogs-rgb: 115, 115, 115;
+  --accent-gears: #f97316;
+  --accent-gears-rgb: 249, 115, 22;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --foreground: #ededed;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-hover-border: rgba(255, 255, 255, 0.2);
+  --card-spotlight: rgba(255, 255, 255, 0.15);
+  --muted: #a3a3a3;
+  --aurora-opacity: 0.5;
+
+  --accent-works: #60a5fa;
+  --accent-works-rgb: 96, 165, 250;
+  --accent-blogs: #4ade80;
+  --accent-blogs-rgb: 74, 222, 128;
+  --accent-mlogs: #f87171;
+  --accent-mlogs-rgb: 248, 113, 113;
+  --accent-plogs: #a3a3a3;
+  --accent-plogs-rgb: 163, 163, 163;
+  --accent-gears: #fb923c;
+  --accent-gears-rgb: 251, 146, 60;
 }
 @view-transition { navigation: auto; }
 
@@ -153,6 +203,13 @@
     33% { transform: translate(30px, -50px) scale(1.1); }
     66% { transform: translate(-20px, 20px) scale(0.9); }
     100% { transform: translate(0, 0) scale(1); }
+  }
+
+  @keyframes float-element {
+    0% { transform: translate(-50%, -50%) translate(0, 0); }
+    33% { transform: translate(-50%, -50%) translate(10px, -15px); }
+    66% { transform: translate(-50%, -50%) translate(-8px, 12px); }
+    100% { transform: translate(-50%, -50%) translate(0, 0); }
   }
 
   .glass-card {
