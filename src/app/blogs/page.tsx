@@ -15,7 +15,7 @@ const BLOG_POSTS = (notionData.results as unknown[])
     .map(mapNotionPage)
     .filter(post => post.category === 'Blog');
 
-const DEFAULT_COVER = 'https://images.unsplash.com/photo-1620712943543-bcc4628c6820?q=80&w=800&auto=format&fit=crop';
+const DEFAULT_COVER = 'https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800&auto=format&fit=crop';
 
 export default function BlogsPage() {
     const [selectedId, setSelectedId] = useState<string>(BLOG_POSTS[0]?.id || '');

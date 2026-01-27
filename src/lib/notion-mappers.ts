@@ -23,13 +23,20 @@ export function mapNotionBlock(rawBlock: any): NotionBlock {
     case 'numbered_list_item':
     case 'quote':
     case 'toggle':
-      content = getRichText(rawBlock[type]?.rich_text);
+    case 'to_do':
+      content = rawBlock[type]?.rich_text;
+      if (type === 'to_do') {
+        content = {
+          rich_text: rawBlock.to_do.rich_text,
+          checked: rawBlock.to_do.checked,
+        };
+      }
       break;
     case 'code':
       content = {
-        text: getRichText(rawBlock.code?.rich_text),
+        rich_text: rawBlock.code?.rich_text,
         language: rawBlock.code?.language,
-        caption: getRichText(rawBlock.code?.caption),
+        caption: rawBlock.code?.caption,
       };
       break;
     case 'image':
@@ -37,18 +44,42 @@ export function mapNotionBlock(rawBlock: any): NotionBlock {
         url: rawBlock.image?.type === 'external' 
           ? rawBlock.image.external.url 
           : rawBlock.image?.file?.url,
-        caption: getRichText(rawBlock.image?.caption),
+        caption: rawBlock.image?.caption,
       };
       break;
     case 'callout':
       content = {
-        text: getRichText(rawBlock.callout?.rich_text),
+        rich_text: rawBlock.callout?.rich_text,
         icon: rawBlock.callout?.icon?.emoji || rawBlock.callout?.icon?.external?.url,
         color: rawBlock.callout?.color,
       };
       break;
     case 'equation':
       content = rawBlock.equation?.expression;
+      break;
+    case 'bookmark':
+      content = {
+        url: rawBlock.bookmark?.url,
+        caption: rawBlock.bookmark?.caption,
+      };
+      break;
+    case 'video':
+    case 'file':
+    case 'pdf':
+    case 'audio':
+      content = {
+        url: rawBlock[type]?.type === 'external' 
+          ? rawBlock[type].external.url 
+          : rawBlock[type]?.file?.url,
+        caption: rawBlock[type]?.caption,
+      };
+      break;
+    case 'table_of_contents':
+      content = rawBlock.table_of_contents;
+      break;
+    case 'breadcrumb':
+    case 'embed':
+      content = type === 'breadcrumb' ? null : rawBlock.embed;
       break;
     case 'divider':
       content = null;
@@ -61,6 +92,9 @@ export function mapNotionBlock(rawBlock: any): NotionBlock {
     id: rawBlock.id,
     type,
     content,
+    has_children: rawBlock.has_children,
+    is_toggleable: rawBlock[type]?.is_toggleable,
+    children: rawBlock.children?.map(mapNotionBlock),
   };
 }
 

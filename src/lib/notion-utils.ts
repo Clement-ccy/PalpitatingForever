@@ -15,6 +15,9 @@ export interface NotionBlock {
   id: string;
   type: string;
   content: any; // specific content based on type
+  has_children?: boolean;
+  is_toggleable?: boolean;
+  children?: NotionBlock[];
 }
 
 /**
@@ -60,6 +63,18 @@ const CATEGORY_MAP: Record<string, string> = {
  */
 export function getRichText(richText: any[]): string {
   return richText?.map(t => t.plain_text).join('') || '';
+}
+
+/**
+ * Generates a slug-friendly ID from rich text
+ */
+export function getSlug(richText: any[]): string {
+  return getRichText(richText)
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '')
+    .replace(/[\s_-]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
 /**

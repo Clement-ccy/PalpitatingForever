@@ -10,98 +10,16 @@ import { mapNotionBlock } from '@/lib/notion-mappers';
 import notionData from '@/data/refs/notion-query-a-data-source.json';
 import blockData from '@/data/refs/notion-retrieve-block-children.json';
 import { NotionBlock } from '@/lib/notion-utils';
+import { NotionBlockRenderer } from '@/components/notion/NotionBlockRenderer';
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800&auto=format&fit=crop';
 
 const NotionRenderer = ({ blocks }: { blocks: NotionBlock[] }) => {
     return (
-        <div className="space-y-6">
-            {blocks.map((block, idx) => {
-                switch (block.type) {
-                    case 'heading_1':
-                        return <h1 key={idx} className="text-4xl font-bold text-foreground mt-12 mb-6">{block.content}</h1>;
-                    case 'heading_2':
-                        return <h2 key={idx} className="text-2xl font-bold text-foreground mt-8 mb-4 border-l-4 border-accent-blogs pl-4">{block.content}</h2>;
-                    case 'heading_3':
-                        return <h3 key={idx} className="text-xl font-bold text-foreground mt-6 mb-3">{block.content}</h3>;
-                    case 'paragraph':
-                        return <p key={idx} className="text-lg text-muted-foreground leading-relaxed">{block.content}</p>;
-                    case 'bulleted_list_item':
-                        return (
-                            <li key={idx} className="flex gap-3 text-muted-foreground text-lg">
-                                <span className="text-accent-blogs mt-1.5">•</span>
-                                <span>{block.content}</span>
-                            </li>
-                        );
-                    case 'numbered_list_item':
-                        return (
-                            <li key={idx} className="flex gap-3 text-muted-foreground text-lg list-decimal list-inside">
-                                <span>{block.content}</span>
-                            </li>
-                        );
-                    case 'code':
-                        return (
-                            <div key={idx} className="relative group">
-                                {block.content.language && (
-                                    <div className="absolute top-0 right-6 px-2 py-1 bg-card-border/50 text-[10px] font-mono rounded-b-md uppercase text-muted tracking-widest">
-                                        {block.content.language}
-                                    </div>
-                                )}
-                                <pre className="p-6 rounded-2xl bg-card border border-card-border overflow-x-auto custom-scrollbar">
-                                    <code className="text-sm font-mono text-accent-blogs/90">{block.content.text}</code>
-                                </pre>
-                                {block.content.caption && (
-                                    <div className="mt-2 text-xs text-muted italic text-center">
-                                        {block.content.caption}
-                                    </div>
-                                )}
-                            </div>
-                        );
-                    case 'image':
-                        return (
-                            <figure key={idx} className="my-10 space-y-3">
-                                <div className="relative aspect-video w-full rounded-2xl overflow-hidden border border-card-border">
-                                    <Image src={block.content.url} alt={block.content.caption || ''} fill className="object-cover" />
-                                </div>
-                                {block.content.caption && (
-                                    <figcaption className="text-center text-sm text-muted italic">
-                                        {block.content.caption}
-                                    </figcaption>
-                                )}
-                            </figure>
-                        );
-                    case 'callout':
-                        return (
-                            <div key={idx} className="p-6 rounded-2xl bg-accent-blogs/5 border border-accent-blogs/20 flex gap-4 items-start">
-                                <div className="text-2xl pt-1">
-                                    {block.content.icon && typeof block.content.icon === 'string' && block.content.icon.startsWith('http') ? (
-                                        <div className="relative w-6 h-6">
-                                            <Image src={block.content.icon} alt="" fill className="object-contain" />
-                                        </div>
-                                    ) : (
-                                        <span>{block.content.icon || <Info size={24} className="text-accent-blogs" />}</span>
-                                    )}
-                                </div>
-                                <div className="text-lg text-foreground/90 italic">
-                                    {block.content.text}
-                                </div>
-                            </div>
-                        );
-                    case 'equation':
-                        return (
-                            <div key={idx} className="my-8 p-8 bg-card/30 rounded-2xl border border-card-border flex justify-center overflow-x-auto">
-                                <div className="text-2xl font-serif text-accent-blogs">
-                                    {/* For real LaTeX, we'd use something like react-katex */}
-                                    $${block.content}$$
-                                </div>
-                            </div>
-                        );
-                    case 'divider':
-                        return <hr key={idx} className="my-12 border-card-border" />;
-                    default:
-                        return null;
-                }
-            })}
+        <div className="notion-content">
+            {blocks.map((block) => (
+                <NotionBlockRenderer key={block.id} block={block} />
+            ))}
         </div>
     );
 };
