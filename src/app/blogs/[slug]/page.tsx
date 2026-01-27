@@ -8,9 +8,10 @@ import Link from 'next/link';
 import { mapNotionPage } from '@/lib/notion-utils';
 import { mapNotionBlock } from '@/lib/notion-mappers';
 import notionData from '@/data/refs/notion-query-a-data-source.json';
+import blockData from '@/data/refs/notion-retrieve-block-children.json';
 import { NotionBlock } from '@/lib/notion-utils';
 
-const DEFAULT_COVER = 'https://images.unsplash.com/photo-1620712943543-bcc4628c6820?q=80&w=800&auto=format&fit=crop';
+const DEFAULT_COVER = 'https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800&auto=format&fit=crop';
 
 const NotionRenderer = ({ blocks }: { blocks: NotionBlock[] }) => {
     return (
@@ -118,10 +119,10 @@ export default function BlogSlugPage({ params }: { params: Promise<{ slug: strin
   const post = BLOG_POSTS.find(p => p.id === slug);
   
   // Note: In a real app, we'd fetch blocks for the specific slug.
-  // Since we only have mock JSONs in refs, let's try to load the block children if they exist for this slug
-  // or fallback to the generic retrieve-block-children.json
-  const rawBlocks = (notionData as unknown as { results: unknown[] }).results;
-  const blocks = useMemo(() => rawBlocks.map(mapNotionBlock), [rawBlocks]);
+  // Since we only have mock JSONs in refs, let's load from blockData
+  const blocks = useMemo(() => 
+    (blockData.results as unknown[]).map(mapNotionBlock)
+  , []);
 
   if (!post) {
       return (
