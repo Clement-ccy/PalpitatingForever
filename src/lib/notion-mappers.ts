@@ -77,6 +77,17 @@ export function mapNotionBlock(rawBlock: any): NotionBlock {
     case 'table_of_contents':
       content = rawBlock.table_of_contents;
       break;
+    case 'table':
+      content = {
+        has_column_header: rawBlock.table?.has_column_header,
+        has_row_header: rawBlock.table?.has_row_header,
+      };
+      break;
+    case 'table_row':
+      content = {
+        cells: rawBlock.table_row?.cells ?? [],
+      };
+      break;
     case 'breadcrumb':
     case 'embed':
       content = type === 'breadcrumb' ? null : rawBlock.embed;

@@ -7,6 +7,11 @@ export interface NotionPage {
   tags: string[];
   cover: string | null;
   category: string;
+  theme: string | null;
+  area: string;
+  role: string;
+  platforms: string[];
+  rate: number | null;
   status: string;
   url: string;
 }
@@ -30,7 +35,7 @@ export interface BlogPost {
   date: string;
   tags: string[];
   cover: string;
-  category: 'Blog';
+  category: 'Blogs' | 'PF-AIGC';
 }
 
 /**
@@ -41,7 +46,7 @@ export interface MusicLog {
   title: string;
   artist: string;
   cover: string;
-  type: 'REVIEW' | 'MIXTAPE' | 'ALBUM' | 'PODCAST';
+  type: 'MUSIC' | 'PODCAST' | 'REVIEW' | 'MIXTAPE' | 'ALBUM';
   date: string;
   rating?: number;
   duration?: string;
@@ -53,16 +58,30 @@ export interface MusicLog {
  * Mapping Category IDs to human-readable names
  */
 const CATEGORY_MAP: Record<string, string> = {
-  '2e7ec12a-acd9-803c-b7f7-cdfacbfba6e0': 'Blog',
-  '2e7ec12a-acd9-8027-ab71-c3f9ff83f4fc': 'Photography', // From "从兴庆到浐灞" example
-  '2e7ec12a-acd9-8080-80ce-fea01349c60f': 'Music',      // From "予感 - 羊文学" example
+  '2f7ec12aacd98011b306fe562bf79aa4': 'Works',
+  '2e7ec12aacd9803cb7f7cdfacbfba6e0': 'Blogs',
+  '2e7ec12aacd9808080cefea01349c60f': 'Mlogs',
+  '2e7ec12aacd98027ab71c3f9ff83f4fc': 'Plogs',
+  '2f3ec12aacd9803b81c0febaa9179add': 'PF-AIGC',
+  '2f7ec12aacd9805c855bfd8d52f71f98': 'Gears',
 };
+
+const normalizeNotionId = (id?: string): string => id?.replace(/-/g, '') ?? '';
 
 /**
  * Extracts plain text from Notion's rich_text array
  */
 export function getRichText(richText: any[]): string {
   return richText?.map(t => t.plain_text).join('') || '';
+}
+
+export function getFallbackTheme(id: string, themes: string[]): string {
+  if (themes.length === 0) return 'blue';
+  let hash = 0;
+  for (let i = 0; i < id.length; i += 1) {
+    hash = (hash * 31 + id.charCodeAt(i)) % 100000;
+  }
+  return themes[hash % themes.length];
 }
 
 /**
@@ -99,16 +118,22 @@ export function getCover(cover: any): string | null {
  */
 export function mapNotionPage(rawPage: any): NotionPage {
   const props = rawPage.properties;
+  const categoryId = normalizeNotionId(props.Category?.relation?.[0]?.id);
   
   return {
     id: rawPage.id,
     title: getTitle(props.Name?.title),
     summary: getRichText(props.Description?.rich_text),
     date: props['Publish Date']?.date?.start || rawPage.created_time.split('T')[0],
-    tags: props.Tags?.multi_select?.map((s: any) => s.name) || [],
+    tags: props.Tags?.multi_select?.map((s: { name: string }) => s.name) || [],
     cover: getCover(rawPage.cover),
-    category: CATEGORY_MAP[props.Category?.relation?.[0]?.id] || 'Uncategorized',
+    category: CATEGORY_MAP[categoryId] || 'Uncategorized',
+    theme: props.Theme?.select?.name ?? null,
+    area: getRichText(props.Area?.rich_text),
+    role: getRichText(props.Role?.rich_text),
+    platforms: props.Platfom?.multi_select?.map((s: { name: string }) => s.name) || [],
+    rate: props.Rate?.number ?? null,
     status: props.Status?.status?.name || 'Unknown',
-    url: rawPage.url,
+    url: props.Link?.url || rawPage.url,
   };
 }

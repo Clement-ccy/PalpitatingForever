@@ -1,89 +1,22 @@
 "use client";
 
-import { SpotlightCard } from '@/components/ui/spotlight-card';
-import { Camera, Aperture, Droplets, X, ArrowDown } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
 import Image from 'next/image';
-import { useState } from 'react';
-import { cn } from '@/lib/utils';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowDown, Camera, X } from 'lucide-react';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
+import { cn } from '@/lib/utils';
+import { getFallbackTheme, mapNotionPage, type NotionBlock } from '@/lib/notion-utils';
+import { mapNotionBlock } from '@/lib/notion-mappers';
+import notionData from '@/data/refs/notion-pages.json';
 
 interface Photo {
   id: string;
   title: string;
   url: string;
-  camera: string;
-  settings: string;
-  iso?: string;
-  theme: 'blue' | 'rose' | 'emerald' | 'orange' | 'purple';
+  caption: string;
+  theme: 'blue' | 'rose' | 'emerald' | 'orange' | 'purple' | 'teal';
 }
-
-const MOCK_PHOTOS: Photo[] = [
-    {
-        id: '1',
-        title: 'Neon District',
-        url: 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?q=80&w=800&auto=format&fit=crop',
-        camera: 'Sony A7IV',
-        settings: 'f/1.4',
-        iso: 'ISO 800',
-        theme: 'blue'
-    },
-    {
-        id: '2',
-        title: 'Concrete Waves',
-        url: 'https://images.unsplash.com/photo-1486718448742-163732cd1544?q=80&w=800&auto=format&fit=crop',
-        camera: 'Leica Q2',
-        settings: '28mm',
-        theme: 'rose'
-    },
-    {
-        id: '3',
-        title: 'Morning Mist',
-        url: 'https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop',
-        camera: 'Fujifilm X-T4',
-        settings: 'f/2.8',
-        theme: 'emerald'
-    },
-    {
-        id: '4',
-        title: 'Golden Hour',
-        url: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?q=80&w=800&auto=format&fit=crop',
-        camera: 'Canon R5',
-        settings: '85mm f/1.2',
-        theme: 'orange'
-    },
-    {
-        id: '5',
-        title: 'Shinjuku Crossing',
-        url: 'https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800&auto=format&fit=crop',
-        camera: 'Ricoh GR IIIx',
-        settings: 'f/2.8',
-        theme: 'purple'
-    },
-     {
-        id: '6',
-        title: 'Light Leak',
-        url: 'https://images.unsplash.com/photo-1550684848-fac1c5b4e853?q=80&w=800&auto=format&fit=crop',
-        camera: 'Analog',
-        settings: 'Portra 400',
-        theme: 'blue'
-    },
-    {
-        id: '7',
-        title: 'Night City',
-        url: 'https://images.unsplash.com/photo-1515630278258-407f66498911?q=80&w=800&auto=format&fit=crop',
-        camera: 'Sony A7SIII',
-        settings: 'ISO 3200',
-        theme: 'rose'
-    },
-     {
-        id: '8',
-        title: 'Raw Emotion',
-        url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=800&auto=format&fit=crop',
-        camera: 'Hasselblad',
-        settings: '1/500s',
-        theme: 'emerald'
-    }
-];
 
 const glowThemes = {
     blue: 'hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.3)] hover:border-blue-500/30',
@@ -91,48 +24,136 @@ const glowThemes = {
     emerald: 'hover:shadow-[0_0_40px_-10px_rgba(16,185,129,0.3)] hover:border-emerald-500/30',
     orange: 'hover:shadow-[0_0_40px_-10px_rgba(249,115,22,0.3)] hover:border-orange-500/30',
     purple: 'hover:shadow-[0_0_40px_-10px_rgba(168,85,247,0.3)] hover:border-purple-500/30',
-    grey: 'hover:shadow-[0_0_40px_-10px_rgba(var(--accent-plogs),0.3)] hover:border-accent-plogs/30',
+    teal: 'hover:shadow-[0_0_40px_-10px_rgba(20,184,166,0.3)] hover:border-teal-500/30',
 };
+
+const themePool = Object.keys(glowThemes) as Array<keyof typeof glowThemes>;
+
+interface PlogItem {
+    id: string;
+    title: string;
+    summary: string;
+    date: string;
+    cover: string | null;
+    theme: keyof typeof glowThemes;
+}
 
 export default function PlogsPage() {
     const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
+    const [selectedPlogId, setSelectedPlogId] = useState<string>('');
+    const [plogBlocks, setPlogBlocks] = useState<NotionBlock[]>([]);
+
+    const plogs = useMemo<PlogItem[]>(() => (
+        (notionData.results as unknown[])
+            .map(mapNotionPage)
+            .filter((post) => post.category === 'Plogs')
+            .map((post) => ({
+                id: post.id,
+                title: post.title,
+                summary: post.summary,
+                date: post.date,
+                cover: post.cover,
+                theme: (post.theme?.toLowerCase() && post.theme.toLowerCase() in glowThemes)
+                    ? (post.theme.toLowerCase() as keyof typeof glowThemes)
+                    : (getFallbackTheme(post.id, themePool) as keyof typeof glowThemes),
+            }))
+    ), []);
+
+    const selectedPlog = plogs.find((plog) => plog.id === selectedPlogId) ?? plogs[0];
+
+    useEffect(() => {
+        if (!selectedPlog) return;
+        setSelectedPlogId(selectedPlog.id);
+    }, [selectedPlog]);
+
+    useEffect(() => {
+        if (!selectedPlogId) return;
+        import(`@/data/refs/blocks-${selectedPlogId}.json`)
+            .then((data) => {
+                const blocks = (data.results as unknown[]).map(mapNotionBlock);
+                setPlogBlocks(blocks);
+            })
+            .catch(() => {
+                setPlogBlocks([]);
+            });
+    }, [selectedPlogId]);
+
+    const photos = useMemo<Photo[]>(() => (
+        plogBlocks
+            .filter((block) => block.type === 'image')
+            .map((block) => ({
+                id: block.id,
+                title: selectedPlog?.title || 'Plog',
+                url: block.content.url,
+                caption: block.content?.caption?.map((t: { plain_text: string }) => t.plain_text).join('') || '',
+                theme: selectedPlog?.theme ?? 'blue',
+            }))
+    ), [plogBlocks, selectedPlog]);
 
   return (
-    <div className="min-h-screen pt-32 px-4 pb-32 max-w-[1600px] mx-auto relative z-10 bg-background text-foreground">
-       {/* Background Glow */}
-       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent-plogs/5 blur-[160px] rounded-full -z-10" />
+     <div className="min-h-screen pt-32 px-4 pb-32 max-w-[1600px] mx-auto relative z-10 text-foreground">
+        {/* Background Glow */}
+        <div className="absolute top-10 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[160px] rounded-full -z-10" />
+        <div className="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[160px] rounded-full -z-10" />
+        <div className="absolute bottom-10 left-1/3 w-[26rem] h-[26rem] bg-[rgba(var(--accent-plogs-rgb),0.2)] blur-[160px] rounded-full -z-10" />
 
        <header className="mb-12 max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-plogs/10 border border-accent-plogs/20 text-xs font-mono text-accent-plogs mb-4">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-card-border text-xs font-mono text-muted mb-4">
                         <Camera size={14} />
                         <span>VISUAL LOGS</span>
                     </div>
-                    <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-4">Photos</h1>
-                    <p className="text-muted-foreground max-w-lg text-sm md:text-base leading-relaxed">
-                        A collection of frozen time. Exploring light, shadow, and the quiet spaces in between. 
-                        Mainly shot on Sony Alpha & Fujifilm X-Series.
+                    <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-4">Plogs</h1>
+                    <p className="text-muted-foreground max-w-lg text-lg leading-relaxed">
+                        {selectedPlog?.summary || 'A collection of visual logs grouped by journey and theme.'}
                     </p>
                 </div>
                 
                 <div className="flex gap-4">
                     <div className="text-right hidden md:block">
-                        <div className="text-2xl font-mono text-foreground">84</div>
+                        <div className="text-2xl font-mono text-foreground">{photos.length}</div>
                         <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Photos</div>
                     </div>
                     <div className="h-12 w-px bg-card-border hidden md:block"></div>
                     <div className="text-right hidden md:block">
-                        <div className="text-2xl font-mono text-foreground">12</div>
-                        <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Cities</div>
+                        <div className="text-2xl font-mono text-foreground">{plogs.length}</div>
+                        <div className="text-xs text-muted-foreground font-mono uppercase tracking-wider">Collections</div>
                     </div>
                 </div>
             </div>
       </header>
+
+      <section className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {plogs.map((plog) => (
+            <SpotlightCard
+                key={plog.id}
+                onClick={() => setSelectedPlogId(plog.id)}
+                className={cn(
+                    "p-4 rounded-2xl border border-card-border cursor-pointer transition-all",
+                    selectedPlogId === plog.id ? "bg-card/60" : "hover:bg-card/40",
+                    glowThemes[plog.theme]
+                )}
+            >
+                <div className="flex items-center gap-4">
+                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-card-border/30 relative">
+                        {plog.cover ? (
+                            <Image src={plog.cover} alt={plog.title} fill className="object-cover" />
+                        ) : null}
+                    </div>
+                    <div>
+                        <p className="text-xs font-mono text-muted">{plog.date}</p>
+                        <h3 className="text-lg font-semibold text-foreground">{plog.title}</h3>
+                        <p className="text-xs text-muted line-clamp-1">{plog.summary || 'Visual log collection'}</p>
+                    </div>
+                </div>
+            </SpotlightCard>
+        ))}
+      </section>
       
       {/* Masonry Grid */}
       <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-        {MOCK_PHOTOS.map((photo, index) => (
+        {photos.map((photo, index) => (
             <motion.div
                 key={photo.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -159,19 +180,11 @@ export default function PlogsPage() {
                     <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                         <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <h3 className="text-foreground font-medium text-lg mb-2">{photo.title}</h3>
-                            <div className="flex flex-wrap gap-2">
-                                <span className="px-2 py-1 bg-background/50 backdrop-blur-md border border-card-border rounded-md text-[10px] font-mono text-muted-foreground flex items-center gap-1.5">
-                                    <Camera size={10} /> {photo.camera}
+                            {photo.caption && (
+                                <span className="px-2 py-1 bg-background/50 backdrop-blur-md border border-card-border rounded-md text-[10px] font-mono text-muted-foreground inline-flex items-center gap-1.5">
+                                    <Camera size={10} /> {photo.caption}
                                 </span>
-                                <span className="px-2 py-1 bg-background/50 backdrop-blur-md border border-card-border rounded-md text-[10px] font-mono text-muted-foreground flex items-center gap-1.5">
-                                    <Aperture size={10} /> {photo.settings}
-                                </span>
-                                {photo.iso && (
-                                    <span className="px-2 py-1 bg-background/50 backdrop-blur-md border border-card-border rounded-md text-[10px] font-mono text-muted-foreground flex items-center gap-1.5">
-                                        <Droplets size={10} /> {photo.iso}
-                                    </span>
-                                )}
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -228,17 +241,9 @@ export default function PlogsPage() {
                     
                     <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-background via-background/50 to-transparent">
                           <h2 className="text-2xl font-bold text-foreground mb-2">{selectedPhoto.title}</h2>
-                          <div className="flex items-center gap-4 text-sm text-muted-foreground font-mono">
-                                <span>{selectedPhoto.camera}</span>
-                                <span className="w-1 h-1 bg-muted-foreground/30 rounded-full"></span>
-                                <span>{selectedPhoto.settings}</span>
-                                {selectedPhoto.iso && (
-                                    <>
-                                        <span className="w-1 h-1 bg-muted-foreground/30 rounded-full"></span>
-                                        <span>{selectedPhoto.iso}</span>
-                                    </>
-                                )}
-                          </div>
+                          {selectedPhoto.caption && (
+                              <div className="text-sm text-muted-foreground font-mono">{selectedPhoto.caption}</div>
+                          )}
                     </div>
                 </div>
             </motion.div>

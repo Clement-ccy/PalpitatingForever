@@ -9,7 +9,7 @@ import path from 'path';
  */
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
-const DATA_SOURCE_ID = '2e7ec12a-acd9-803c-b7f7-cdfacbfba6e0'; // Example ID from CATEGORY_MAP
+const DATA_SOURCE_ID = '2e7ec12a-acd9-80f5-9c35-000b7c541f04'; // Example ID from CATEGORY_MAP
 
 async function fetchNotion(endpoint: string, options: any = {}) {
   const response = await fetch(`https://api.notion.com/v1${endpoint}`, {

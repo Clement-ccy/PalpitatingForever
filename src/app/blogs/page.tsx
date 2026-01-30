@@ -1,144 +1,142 @@
 "use client";
 
-import Link from 'next/link';
-import { SpotlightCard } from '@/components/ui/spotlight-card';
-import { Calendar, ArrowRight, Layers } from 'lucide-react';
-import { useState, useMemo } from 'react';
-import { cn } from '@/lib/utils';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
-import { mapNotionPage } from '@/lib/notion-utils';
-import notionData from '@/data/refs/notion-query-a-data-source.json';
-
-// Use Notion data instead of local mock
-const BLOG_POSTS = (notionData.results as unknown[])
-    .map(mapNotionPage)
-    .filter(post => post.category === 'Blog');
+import Link from 'next/link';
+import { motion } from 'framer-motion';
+import { ArrowRight, Calendar, Layers } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { getFallbackTheme, mapNotionPage } from '@/lib/notion-utils';
+import notionData from '@/data/refs/notion-pages.json';
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800&auto=format&fit=crop';
+const themePool = ['blue', 'purple', 'emerald', 'orange', 'pink', 'teal'];
+
+const themeTokens: Record<string, { accent: string; softBg: string }> = {
+    blue: { accent: 'text-blue-400', softBg: 'bg-blue-500/10' },
+    purple: { accent: 'text-purple-400', softBg: 'bg-purple-500/10' },
+    emerald: { accent: 'text-emerald-400', softBg: 'bg-emerald-500/10' },
+    orange: { accent: 'text-orange-400', softBg: 'bg-orange-500/10' },
+    pink: { accent: 'text-pink-400', softBg: 'bg-pink-500/10' },
+    teal: { accent: 'text-teal-400', softBg: 'bg-teal-500/10' },
+};
+
+const resolveTheme = (theme: string | null, id: string): string => {
+    const normalized = theme?.toLowerCase() ?? '';
+    if (normalized && themeTokens[normalized]) return normalized;
+    return getFallbackTheme(id, themePool);
+};
 
 export default function BlogsPage() {
-    const [selectedId, setSelectedId] = useState<string>(BLOG_POSTS[0]?.id || '');
-    const selectedPost = useMemo(() => BLOG_POSTS.find(p => p.id === selectedId), [selectedId]);
+    const posts = useMemo(() => (
+        (notionData.results as unknown[])
+            .map(mapNotionPage)
+            .filter((post) => post.category === 'Blogs' || post.category === 'PF-AIGC')
+            .map((post) => ({
+                ...post,
+                theme: resolveTheme(post.theme, post.id),
+            }))
+            .sort((a, b) => (a.date < b.date ? 1 : -1))
+    ), []);
+
+    const [selectedId, setSelectedId] = useState<string>(posts[0]?.id || '');
+    const selectedPost = posts.find((post) => post.id === selectedId) ?? posts[0];
 
     return (
-        <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto">
+        <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto relative">
+            <div className="absolute top-0 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+            <div className="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+            <div className="absolute bottom-10 left-1/3 w-[26rem] h-[26rem] bg-[rgba(var(--accent-mlogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+
             <header className="mb-12">
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-blogs/10 border border-accent-blogs/20 text-xs font-mono text-accent-blogs mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-card-border text-xs font-mono text-muted mb-4">
                     <Layers size={14} />
                     <span>THOUGHTS & ARCHIVES</span>
                 </div>
-                <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-foreground mb-4">Blog</h1>
-                <p className="text-muted text-lg max-w-2xl">
+                <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-4">Blog</h1>
+                <p className="text-muted-foreground text-lg max-w-2xl">
                     Documenting the process, sharing insights, and building a second brain.
                 </p>
             </header>
 
-            <div className="flex flex-col lg:flex-row gap-8 h-[70vh]">
-                {/* List View (Left) */}
-                <div className="w-full lg:w-2/5 overflow-y-auto custom-scrollbar pr-4 space-y-4">
-                    {BLOG_POSTS.map((postItem) => (
-                        <SpotlightCard 
-                            key={postItem.id}
-                            onClick={() => setSelectedId(postItem.id)}
-                            spotlightColor="rgba(var(--accent-blogs-rgb), 0.15)"
-                            className={cn(
-                                "group relative overflow-hidden rounded-2xl border transition-all duration-500 cursor-pointer h-32",
-                                selectedId === postItem.id 
-                                    ? "border-accent-blogs bg-accent-blogs/5 ring-1 ring-accent-blogs/50" 
-                                    : "border-card-border hover:border-accent-blogs/30 bg-card hover:bg-accent-blogs/5"
-                            )}
-                        >
-                            {/* Background Image (Darkened/Blurred) */}
-                            <div className="absolute inset-0 z-0">
-                                <motion.div layoutId={`cover-bg-${postItem.id}`} className="absolute inset-0">
-                                    <Image 
-                                        src={postItem.cover || DEFAULT_COVER} 
-                                        alt="" 
-                                        fill 
-                                        className={cn(
-                                            "object-cover transition-all duration-700 opacity-20 blur-sm",
-                                            selectedId === postItem.id ? "scale-110 opacity-30 blur-none" : "group-hover:opacity-25"
-                                        )}
-                                    />
-                                </motion.div>
-                                <div className="absolute inset-0 bg-gradient-to-r from-background via-background/80 to-transparent" />
-                            </div>
-
-                            <div className="relative z-10 p-6 flex flex-col justify-center h-full">
-                                <span className="text-[10px] font-mono text-muted mb-1">{postItem.date}</span>
-                                <h3 className={cn(
-                                    "text-lg font-bold leading-tight transition-colors",
-                                    selectedId === postItem.id ? "text-accent-blogs" : "text-foreground group-hover:text-accent-blogs"
-                                )}>
-                                    {postItem.title}
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10">
+                <div className="lg:col-span-7 relative">
+                    <div className="absolute left-3 top-0 bottom-0 w-px bg-card-border/70" />
+                    <div className="space-y-8">
+                        {posts.map((post) => (
+                            <motion.button
+                                key={post.id}
+                                onClick={() => setSelectedId(post.id)}
+                                className={cn(
+                                    "relative w-full text-left pl-12 pr-4 py-4 rounded-2xl transition-all",
+                                    selectedId === post.id ? "bg-card/60 border border-card-border" : "hover:bg-card/40"
+                                )}
+                                initial={{ opacity: 0, y: 16 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.4 }}
+                                type="button"
+                            >
+                                <span className="absolute left-[6px] top-6 w-3 h-3 rounded-full border border-card-border bg-background" />
+                                <div className="flex items-center gap-3 text-[11px] font-mono text-muted mb-2">
+                                    <span>{post.date}</span>
+                                    <span className="w-1 h-1 bg-card-border rounded-full" />
+                                    <span className={cn("uppercase tracking-widest", themeTokens[post.theme].accent)}>
+                                        {post.category}
+                                    </span>
+                                </div>
+                                <h3 className={cn("text-xl md:text-2xl font-semibold text-foreground mb-2", selectedId === post.id && themeTokens[post.theme].accent)}>
+                                    {post.title}
                                 </h3>
-                            </div>
-                        </SpotlightCard>
-                    ))}
+                                <p className="text-sm text-muted-foreground line-clamp-2">
+                                    {post.summary}
+                                </p>
+                            </motion.button>
+                        ))}
+                    </div>
                 </div>
 
-                {/* Preview Pane (Right) */}
-                <div className="hidden lg:flex flex-1 rounded-3xl border border-card-border bg-card/50 backdrop-blur-sm overflow-hidden relative shadow-2xl">
-                    <AnimatePresence mode="wait">
-                        {selectedPost && (
-                            <motion.div
-                                key={selectedPost.id}
-                                initial={{ opacity: 0, scale: 0.98 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 1.02 }}
-                                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-                                className="absolute inset-0 flex flex-col"
-                            >
-                                {/* Cover Header */}
-                                <div className="relative h-1/2 w-full overflow-hidden">
-                                    <motion.div layoutId={`cover-image-${selectedPost.id}`} className="absolute inset-0">
-                                        <Image 
-                                            src={selectedPost.cover || DEFAULT_COVER} 
-                                            alt={selectedPost.title}
-                                            fill
-                                            className="object-cover"
-                                        />
-                                    </motion.div>
-                                    <div className="absolute inset-0 bg-gradient-to-t from-card via-card/20 to-transparent" />
-                                    
-                                    {/* Action Button */}
-                                    <Link 
+                <aside className="lg:col-span-5">
+                    {selectedPost && (
+                        <div className="sticky top-28 rounded-3xl border border-card-border bg-card/60 overflow-hidden">
+                            <div className="relative h-64 w-full">
+                                <Image
+                                    src={selectedPost.cover || DEFAULT_COVER}
+                                    alt={selectedPost.title}
+                                    fill
+                                    className="object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+                                <div className="absolute bottom-4 right-4">
+                                    <Link
                                         href={`/blogs/${selectedPost.id}`}
-                                        className="absolute bottom-6 right-6 group/btn flex items-center gap-2 px-6 py-3 bg-accent-blogs text-black font-bold rounded-full shadow-[0_0_20px_rgba(var(--accent-blogs),0.3)] hover:scale-105 transition-all active:scale-95"
+                                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-80 transition-opacity"
                                     >
-                                        Jump to Post
-                                        <ArrowRight size={18} className="transition-transform group-hover/btn:translate-x-1" />
+                                        Read
+                                        <ArrowRight size={16} />
                                     </Link>
                                 </div>
-
-                                {/* Content Summary */}
-                                <div className="flex-1 p-10 overflow-y-auto custom-scrollbar">
-                                    <div className="flex gap-2 mb-6">
-                                        {selectedPost.tags.map(tag => (
-                                            <span key={tag} className="px-3 py-1 rounded-full bg-accent-blogs/10 border border-accent-blogs/20 text-[10px] font-mono text-accent-blogs uppercase tracking-wider">
-                                                {tag}
-                                            </span>
-                                        ))}
-                                    </div>
-                                    <h2 className="text-3xl font-black text-foreground mb-4 leading-tight">
-                                        {selectedPost.title}
-                                    </h2>
-                                    <p className="text-lg text-muted-foreground leading-relaxed font-light italic border-l-2 border-accent-blogs/30 pl-6">
-                                        {selectedPost.summary}
-                                    </p>
-                                    
-                                    <div className="mt-8 flex items-center gap-4 text-muted text-sm font-mono">
-                                        <div className="flex items-center gap-2">
-                                            <Calendar size={14} />
-                                            <span>Published on {selectedPost.date}</span>
-                                        </div>
-                                    </div>
+                            </div>
+                            <div className="p-8 space-y-5">
+                                <div className="flex flex-wrap gap-2">
+                                    {selectedPost.tags.map((tag) => (
+                                        <span
+                                            key={tag}
+                                            className={cn("px-3 py-1 rounded-full text-[10px] font-mono uppercase tracking-wider border", themeTokens[selectedPost.theme].softBg, themeTokens[selectedPost.theme].accent)}
+                                        >
+                                            {tag}
+                                        </span>
+                                    ))}
                                 </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
+                                <h2 className="text-3xl font-bold text-foreground">{selectedPost.title}</h2>
+                                <p className="text-muted-foreground leading-relaxed">{selectedPost.summary}</p>
+                                <div className="flex items-center gap-2 text-xs font-mono text-muted">
+                                    <Calendar size={12} />
+                                    <span>{selectedPost.date}</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </aside>
             </div>
         </div>
     );

@@ -1,46 +1,51 @@
 'use client';
 
-import { motion } from 'framer-motion';
-import { use, useMemo } from 'react';
+import { use, useMemo, useState, useEffect } from 'react';
 import Image from 'next/image';
-import { Calendar, Tag, ChevronLeft, Share2, Bookmark, Info } from 'lucide-react';
 import Link from 'next/link';
-import { mapNotionPage } from '@/lib/notion-utils';
+import { motion } from 'framer-motion';
+import { Calendar, Tag, ChevronLeft, Share2, Bookmark } from 'lucide-react';
+import { renderNotionBlocks } from '@/components/notion/NotionBlockRenderer';
 import { mapNotionBlock } from '@/lib/notion-mappers';
-import notionData from '@/data/refs/notion-query-a-data-source.json';
-import blockData from '@/data/refs/notion-retrieve-block-children.json';
-import { NotionBlock } from '@/lib/notion-utils';
-import { NotionBlockRenderer } from '@/components/notion/NotionBlockRenderer';
+import { mapNotionPage, NotionBlock, NotionPage } from '@/lib/notion-utils';
+import notionData from '@/data/refs/notion-pages.json';
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800&auto=format&fit=crop';
 
 const NotionRenderer = ({ blocks }: { blocks: NotionBlock[] }) => {
     return (
         <div className="notion-content">
-            {blocks.map((block) => (
-                <NotionBlockRenderer key={block.id} block={block} />
-            ))}
+            {renderNotionBlocks(blocks)}
         </div>
     );
 };
 
 export default function BlogSlugPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
+  const [blocks, setBlocks] = useState<NotionBlock[]>([]);
   
   // Get all blogs from Notion data
   const BLOG_POSTS = useMemo(() => 
     (notionData.results as unknown[])
         .map(mapNotionPage)
-        .filter(post => post.category === 'Blog')
+        .filter((post) => post.category === 'Blogs' || post.category === 'PF-AIGC')
   , []);
 
-  const post = BLOG_POSTS.find(p => p.id === slug);
+  const post = BLOG_POSTS.find(p => p.id === slug) as NotionPage | undefined;
   
-  // Note: In a real app, we'd fetch blocks for the specific slug.
-  // Since we only have mock JSONs in refs, let's load from blockData
-  const blocks = useMemo(() => 
-    (blockData.results as unknown[]).map(mapNotionBlock)
-  , []);
+  useEffect(() => {
+    if (post) {
+      // Dynamically import the blocks for this post
+      import(`@/data/refs/blocks-${post.id}.json`)
+        .then(data => {
+          const mappedBlocks = (data.results as unknown[]).map(mapNotionBlock);
+          setBlocks(mappedBlocks);
+        })
+        .catch(err => {
+          console.error('Failed to load blocks:', err);
+        });
+    }
+  }, [post]);
 
   if (!post) {
       return (

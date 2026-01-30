@@ -1,66 +1,114 @@
 'use client';
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { X, ExternalLink, ArrowUpRight, Briefcase } from 'lucide-react';
-import { MOCK_WORKS, Work } from '@/data/mock-works';
-import { cn } from '@/lib/utils';
-import { SpotlightCard } from '@/components/ui/spotlight-card';
+import { useMemo, useState } from 'react';
 import Image from 'next/image';
+import { motion, AnimatePresence } from 'framer-motion';
+import { ArrowUpRight, Briefcase, ExternalLink, X } from 'lucide-react';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
+import { cn } from '@/lib/utils';
+import { getFallbackTheme, mapNotionPage } from '@/lib/notion-utils';
+import notionData from '@/data/refs/notion-pages.json';
 
-const themeColors = {
-    emerald: 'text-emerald-400',
-    purple: 'text-purple-400',
-    blue: 'text-blue-400',
-    orange: 'text-orange-400',
-    pink: 'text-pink-400',
-    teal: 'text-teal-400',
-};
+const themeTokens = {
+    emerald: {
+        text: 'text-emerald-400',
+        hover: 'group-hover:text-emerald-300',
+        gradient: 'from-emerald-500/20',
+    },
+    purple: {
+        text: 'text-purple-400',
+        hover: 'group-hover:text-purple-300',
+        gradient: 'from-purple-500/20',
+    },
+    blue: {
+        text: 'text-blue-400',
+        hover: 'group-hover:text-blue-300',
+        gradient: 'from-blue-500/20',
+    },
+    orange: {
+        text: 'text-orange-400',
+        hover: 'group-hover:text-orange-300',
+        gradient: 'from-orange-500/20',
+    },
+    pink: {
+        text: 'text-pink-400',
+        hover: 'group-hover:text-pink-300',
+        gradient: 'from-pink-500/20',
+    },
+    teal: {
+        text: 'text-teal-400',
+        hover: 'group-hover:text-teal-300',
+        gradient: 'from-teal-500/20',
+    },
+} as const;
 
-const themeHoverColors = {
-    emerald: 'group-hover:text-emerald-300',
-    purple: 'group-hover:text-purple-300',
-    blue: 'group-hover:text-blue-300',
-    orange: 'group-hover:text-orange-300',
-    pink: 'group-hover:text-pink-300',
-    teal: 'group-hover:text-teal-300',
-};
+const themePool = Object.keys(themeTokens) as Array<keyof typeof themeTokens>;
+const DEFAULT_COVER = 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop';
 
-const themeGradients = {
-    emerald: 'from-emerald-500/20',
-    purple: 'from-purple-500/20',
-    blue: 'from-blue-500/20',
-    orange: 'from-orange-500/20',
-    pink: 'from-pink-500/20',
-    teal: 'from-teal-500/20',
+interface WorkCard {
+    id: string;
+    title: string;
+    category: string;
+    year: string;
+    description: string;
+    tech: string[];
+    imageUrl: string;
+    link: string;
+    role: string;
+    theme: keyof typeof themeTokens;
+}
+
+const resolveTheme = (theme: string | null, id: string): keyof typeof themeTokens => {
+    const normalized = theme?.toLowerCase() ?? '';
+    if (normalized && normalized in themeTokens) {
+        return normalized as keyof typeof themeTokens;
+    }
+    return getFallbackTheme(id, themePool) as keyof typeof themeTokens;
 };
 
 export default function WorksPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
+  const works = useMemo<WorkCard[]>(() => (
+    (notionData.results as unknown[])
+        .map(mapNotionPage)
+        .filter((post) => post.category === 'Works')
+        .map((post) => ({
+            id: post.id,
+            title: post.title,
+            category: post.platforms[0] || 'Project',
+            year: post.date.split('-')[0],
+            description: post.summary,
+            tech: post.tags,
+            imageUrl: post.cover || DEFAULT_COVER,
+            link: post.url,
+            role: post.role || 'Creator',
+            theme: resolveTheme(post.theme, post.id),
+        }))
+  ), []);
 
-  const selectedWork = MOCK_WORKS.find((w) => w.id === selectedId);
+  const selectedWork = works.find((work) => work.id === selectedId);
 
   return (
     <div className="min-h-screen pt-32 pb-20 px-4 md:px-8 max-w-7xl mx-auto relative z-10 w-full">
       {/* Background Rainbow Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none opacity-20">
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-500/20 blur-[120px] rounded-full" />
-        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-purple-500/20 blur-[120px] rounded-full" />
-        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-emerald-500/20 blur-[120px] rounded-full" />
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.25)] blur-[120px] rounded-full" />
+        <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-[rgba(var(--accent-blogs-rgb),0.22)] blur-[120px] rounded-full" />
+        <div className="absolute bottom-1/4 left-1/3 w-96 h-96 bg-[rgba(var(--accent-mlogs-rgb),0.22)] blur-[120px] rounded-full" />
       </div>
 
       {/* Header Section */}
       <div className="mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 border border-white/10 text-xs font-mono mb-4">
-                    <Briefcase size={14} className="text-blue-400" />
-                    <span className="bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">PORTFOLIO</span>
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[rgba(var(--accent-works-rgb),0.2)] via-[rgba(var(--accent-blogs-rgb),0.2)] to-[rgba(var(--accent-mlogs-rgb),0.2)] border border-card-border text-xs font-mono mb-4">
+                    <Briefcase size={14} className="text-[color:var(--accent-works)]" />
+                    <span className="bg-gradient-to-r from-[color:var(--accent-works)] via-[color:var(--accent-blogs)] to-[color:var(--accent-mlogs)] bg-clip-text text-transparent">PORTFOLIO</span>
                 </div>
                 <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-foreground mb-6">
                     Works
                 </h1>
-                <p className="text-lg text-muted max-w-2xl leading-relaxed">
+                <p className="text-lg text-muted-foreground max-w-2xl leading-relaxed">
                     A collection of digital products, interactive experiences, and open source contributions. 
                     Building the intersection of design and engineering.
                 </p>
@@ -78,7 +126,7 @@ export default function WorksPage() {
       
       {/* Projects Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {MOCK_WORKS.map((work, index) => (
+        {works.map((work, index) => (
           <motion.div
             key={work.id}
             layoutId={`card-container-${work.id}`}
@@ -109,20 +157,20 @@ export default function WorksPage() {
                 <div className="p-6 relative z-10 flex flex-col flex-grow">
                     <motion.div layoutId={`card-content-${work.id}`}>
                         <div className="flex items-center gap-2 mb-3">
-                            <span className={cn("text-xs font-mono", themeColors[work.theme])}>{work.year}</span>
+                            <span className={cn("text-xs font-mono", themeTokens[work.theme].text)}>{work.year}</span>
                             <span className="w-1 h-1 bg-card-border rounded-full"></span>
                             <span className="text-xs font-mono text-muted uppercase tracking-wider">{work.category}</span>
                         </div>
-                        <h3 className={cn("text-2xl font-semibold text-foreground mb-2 transition-colors", themeHoverColors[work.theme])}>
+                        <h3 className={cn("text-2xl font-semibold text-foreground mb-2 transition-colors", themeTokens[work.theme].hover)}>
                             {work.title}
                         </h3>
                         <p className="text-sm text-muted line-clamp-2 mb-4">
                             {work.description}
                         </p>
                         <div className="flex gap-2 flex-wrap mt-auto">
-                            {work.tech.map(t => (
-                                <span key={t} className="px-2 py-1 rounded-md bg-card border border-card-border text-xs text-muted font-mono">
-                                    {t}
+                            {work.tech.map((tech) => (
+                                <span key={tech} className="px-2 py-1 rounded-md bg-card border border-card-border text-xs text-muted font-mono">
+                                    {tech}
                                 </span>
                             ))}
                         </div>
@@ -177,8 +225,8 @@ export default function WorksPage() {
                      />
                      <div className="absolute inset-0 bg-background/40"></div>
                      {/* Gradient Overlay */}
-                      <div 
-                        className={cn("absolute inset-0 opacity-40 bg-gradient-to-br", themeGradients[selectedWork.theme], "to-transparent")}
+                    <div 
+                        className={cn("absolute inset-0 opacity-40 bg-gradient-to-br", themeTokens[selectedWork.theme].gradient, "to-transparent")}
                     />
 
                     <motion.div layoutId={`card-title-${selectedId}`} className="relative z-10 text-center p-4">
@@ -197,7 +245,7 @@ export default function WorksPage() {
                              </div>
                              <div>
                                 <p className="text-sm font-medium text-foreground">Clement Chen</p>
-                                <p className="text-xs text-muted">Lead Designer</p>
+                                <p className="text-xs text-muted">{selectedWork.role}</p>
                              </div>
                         </div>
                         <a href={selectedWork.link} className="flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-bold rounded-full hover:opacity-80 transition-opacity">
@@ -218,9 +266,9 @@ export default function WorksPage() {
                    <div className="mt-8 pt-8 border-t border-card-border">
                       <h3 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Technologies Used</h3>
                       <div className="flex flex-wrap gap-2">
-                        {selectedWork.tech.map(t => (
-                            <span key={t} className="px-3 py-1 bg-card border border-card-border rounded-full text-xs text-muted font-mono">
-                                {t}
+                        {selectedWork.tech.map((tech) => (
+                            <span key={tech} className="px-3 py-1 bg-card border border-card-border rounded-full text-xs text-muted font-mono">
+                                {tech}
                             </span>
                         ))}
                       </div>

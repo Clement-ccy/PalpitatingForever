@@ -1,29 +1,62 @@
 'use client';
 
-import { SpotlightCard } from '@/components/ui/spotlight-card';
-import { Star, Package, Cpu, Camera, Terminal, Shield, Book, Settings } from 'lucide-react';
-import { cn } from '@/lib/utils';
+import { useMemo } from 'react';
 import { motion } from 'framer-motion';
+import { Book, Camera, Cpu, Package, Settings, Shield, Star, Terminal } from 'lucide-react';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
+import { cn } from '@/lib/utils';
+import { getFallbackTheme, mapNotionPage } from '@/lib/notion-utils';
+import notionData from '@/data/refs/notion-pages.json';
 
-const GEARS = [
-    { category: 'Hardware', icon: Cpu, name: 'MacBook Pro 16"', description: 'M3 Max, 64GB RAM. The powerhouse.', rating: 5 },
-    { category: 'Hardware', icon: Terminal, name: 'HHKB Pro Hybrid', description: 'Topre switches. A lifestyle choice.', rating: 5 },
-    { category: 'Photography', icon: Camera, name: 'Sony A7M4', description: 'My primary camera for everything.', rating: 4 },
-    { category: 'Software', icon: Terminal, name: 'VS Code', description: 'I live here. Custom theme & font.', rating: 5 },
-    { category: 'Software', icon: Package, name: 'Raycast', description: 'Spotlight on steroids. Essential.', rating: 5 },
-    { category: 'Design', icon: Package, name: 'Figma', description: 'Where ideas start. Infinite canvas.', rating: 4 },
-    { category: 'EDC', icon: Shield, name: 'Aer City Pack', description: 'The perfect daily carry backpack.', rating: 5 },
-    { category: 'Lifestyle', icon: Book, name: 'Kindle Paperwhite', description: 'Distraction-free reading device.', rating: 4 },
-];
+const themeTokens = {
+  blue: 'text-blue-400 border-blue-500/20 bg-blue-500/10',
+  purple: 'text-purple-400 border-purple-500/20 bg-purple-500/10',
+  emerald: 'text-emerald-400 border-emerald-500/20 bg-emerald-500/10',
+  orange: 'text-orange-400 border-orange-500/20 bg-orange-500/10',
+  pink: 'text-pink-400 border-pink-500/20 bg-pink-500/10',
+  teal: 'text-teal-400 border-teal-500/20 bg-teal-500/10',
+} as const;
+
+type ThemeKey = keyof typeof themeTokens;
+const themePool = Object.keys(themeTokens) as ThemeKey[];
+
+const categoryIcons = [Cpu, Terminal, Camera, Package, Shield, Book];
+
+interface GearItem {
+  id: string;
+  category: string;
+  name: string;
+  description: string;
+  rating: number;
+  theme: ThemeKey;
+}
 
 export default function GearsPage() {
+  const gears = useMemo<GearItem[]>(() => (
+    (notionData.results as unknown[])
+      .map(mapNotionPage)
+      .filter((post) => post.category === 'Gears')
+      .map((post, index) => ({
+        id: post.id,
+        category: post.tags[0] || 'Gear',
+        name: post.title,
+        description: post.summary,
+        rating: post.rate ?? 0,
+        theme: post.theme?.toLowerCase() && post.theme.toLowerCase() in themeTokens
+          ? (post.theme.toLowerCase() as ThemeKey)
+          : (getFallbackTheme(post.id + index.toString(), themePool) as ThemeKey),
+      }))
+  ), []);
+
   return (
-    <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto bg-background text-foreground relative overflow-hidden">
+    <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto text-foreground relative">
       {/* Background Glow */}
-      <div className="absolute top-1/2 -right-20 w-96 h-96 bg-accent-gears/5 blur-[120px] rounded-full -z-10" />
+      <div className="absolute top-10 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+      <div className="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+      <div className="absolute bottom-10 left-1/3 w-[26rem] h-[26rem] bg-[rgba(var(--accent-gears-rgb),0.2)] blur-[140px] rounded-full -z-10" />
 
       <header className="mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-accent-gears/10 border border-accent-gears/20 text-xs font-mono text-accent-gears mb-4">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-card-border text-xs font-mono text-muted mb-4">
             <Settings size={14} />
             <span>INVENTORY & TOOLS</span>
         </div>
@@ -35,25 +68,28 @@ export default function GearsPage() {
       </header>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {GEARS.map((gear, idx) => (
+        {gears.map((gear, idx) => (
           <motion.div
             key={idx}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: idx * 0.1 }}
           >
-            <SpotlightCard className="h-full flex flex-col p-6 group bg-card border-card-border hover:border-accent-gears/50 transition-all duration-500 shadow-sm hover:shadow-[0_0_30px_rgba(var(--accent-gears),0.1)]">
+            <SpotlightCard className="h-full flex flex-col p-6 group bg-card border-card-border transition-all duration-500 shadow-sm hover:shadow-[0_0_30px_rgba(255,255,255,0.08)]">
                 <div className="flex items-start justify-between mb-8">
-                    <div className="w-12 h-12 rounded-2xl bg-muted border border-card-border flex items-center justify-center text-muted-foreground group-hover:text-accent-gears group-hover:bg-accent-gears/10 group-hover:border-accent-gears/20 transition-all duration-300">
-                        <gear.icon size={20} />
+                    <div className={cn("w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-300", themeTokens[gear.theme])}>
+                        {(() => {
+                          const Icon = categoryIcons[idx % categoryIcons.length];
+                          return <Icon size={20} />;
+                        })()}
                     </div>
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/50 border border-card-border px-2 py-1 rounded-full group-hover:border-accent-gears/30 transition-colors">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/50 border border-card-border px-2 py-1 rounded-full">
                         {gear.category}
                     </span>
                 </div>
 
                 <div className="mt-auto">
-                    <h3 className="font-bold text-foreground mb-2 text-lg group-hover:text-accent-gears transition-colors">{gear.name}</h3>
+                    <h3 className="font-bold text-foreground mb-2 text-lg">{gear.name}</h3>
                     <p className="text-sm text-muted-foreground mb-4 line-clamp-2">
                         {gear.description}
                     </p>
@@ -63,7 +99,7 @@ export default function GearsPage() {
                             <Star 
                                 key={i} 
                                 size={12} 
-                                className={cn("transition-colors", i < gear.rating ? "fill-accent-gears text-accent-gears" : "text-foreground/10")} 
+                                className={cn("transition-colors", i < gear.rating ? "fill-foreground text-foreground" : "text-foreground/10")} 
                             />
                         ))}
                     </div>
