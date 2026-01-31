@@ -13,6 +13,7 @@ export function SpotlightCard({
   children,
   className = '',
   spotlightColor = 'var(--card-spotlight)',
+  onClick,
   ...props
 }: SpotlightCardProps) {
   const divRef = useRef<HTMLDivElement>(null);
@@ -39,10 +40,9 @@ export function SpotlightCard({
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
     // If user presses Enter or Space, trigger click if provided, else provide a center-spot pulse
     if (e.key === 'Enter' || e.key === ' ') {
-      // Normalize space key to prevent page scrolling on Space
-      if ((props as any).onClick) {
+      if (onClick) {
         e.preventDefault();
-        (props as any).onClick(e as any);
+        divRef.current?.click();
       } else if (divRef.current) {
         const rect = divRef.current.getBoundingClientRect();
         const cx = rect.width / 2;

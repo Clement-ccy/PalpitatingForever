@@ -88,9 +88,12 @@ const resolveTheme = (theme: string | null, id: string): ThemeKey => {
     return getFallbackTheme(id, themePool) as ThemeKey;
 };
 
-const getMlogType = (area: string): MlogType => (
-    area.toLowerCase().includes('podcast') ? 'PODCAST' : 'MUSIC'
-);
+const getMlogType = (area: string): MlogType => {
+    const normalized = area.trim().toLowerCase();
+    if (normalized === 'podcast') return 'PODCAST';
+    if (normalized === 'music') return 'MUSIC';
+    return normalized.includes('podcast') ? 'PODCAST' : 'MUSIC';
+};
 
 const getThemeToken = (theme: ThemeKey) => themeTokens[theme];
 
@@ -145,8 +148,8 @@ export default function MusicPage() {
     <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto flex flex-col gap-12 relative">
       {/* Background Glow */}
       <div className="absolute top-10 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[140px] rounded-full -z-10" />
-      <div className="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
-      <div className="absolute bottom-10 left-1/3 w-[26rem] h-[26rem] bg-[rgba(var(--accent-mlogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+      <div className="absolute top-1/3 right-1/4 w-md h-112 bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+      <div className="absolute bottom-10 left-1/3 w-104 h-104 bg-[rgba(var(--accent-mlogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
 
       <header className="mb-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-card-border text-xs font-mono text-muted mb-4">
@@ -159,13 +162,13 @@ export default function MusicPage() {
       <section className="w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-center animate-in fade-in slide-in-from-bottom-4 duration-1000">
           {/* Turntable Visual */}
           <div className="lg:col-span-5 relative group flex justify-center">
-              <div className="relative aspect-square w-full max-w-[400px]">
+              <div className="relative aspect-square w-full max-w-100">
                     {/* Vinyl Record */}
                     <div className={cn(
                         "absolute inset-0 rounded-full bg-black shadow-2xl border border-white/5 p-2 transition-transform duration-1000",
                         isPlaying ? "animate-[spin_8s_linear_infinite]" : ""
                     )}>
-                        <div className="w-full h-full rounded-full border border-card-border relative flex items-center justify-center bg-card bg-[radial-gradient(var(--card-border)_1px,transparent_1px)] bg-[length:4px_4px]">
+                        <div className="w-full h-full rounded-full border border-card-border relative flex items-center justify-center bg-card bg-[radial-gradient(var(--card-border)_1px,transparent_1px)] bg-size-[4px_4px]">
                              {/* Label */}
                               <div className={cn(
                                   "w-1/3 h-1/3 rounded-full relative overflow-hidden flex items-center justify-center border-4 border-black/80",
@@ -185,8 +188,8 @@ export default function MusicPage() {
 
                     {/* Tonearm (Decorative) */}
                     <div className={cn(
-                        "absolute top-0 right-0 w-8 h-48 origin-top bg-gradient-to-b from-neutral-500 to-neutral-700 rounded-full shadow-xl z-10 border border-card-border hidden md:block transition-transform duration-700",
-                        isPlaying ? "rotate-[6deg]" : "rotate-[12deg]"
+                      "absolute top-0 right-0 w-8 h-48 origin-top bg-linear-to-b from-neutral-500 to-neutral-700 rounded-full shadow-xl z-10 border border-card-border hidden md:block transition-transform duration-700",
+                        isPlaying ? "rotate-6" : "rotate-12"
                     )} />
 
                     {/* Center Glow */}
@@ -263,7 +266,7 @@ export default function MusicPage() {
             </div>
        </section>
 
-       <div className="h-px w-full bg-gradient-to-r from-transparent via-card-border to-transparent"></div>
+                      <div className="h-px w-full bg-linear-to-r from-transparent via-card-border to-transparent"></div>
 
        {/* Collection Grid */}
        <section className="space-y-6">
@@ -290,13 +293,13 @@ export default function MusicPage() {
                          {log.cover ? (
                               <Image src={log.cover} alt={log.title} fill className="object-cover group-hover:scale-110 transition-transform duration-500" />
                          ) : (
-                             <div className="w-full h-full bg-gradient-to-br from-card to-background flex items-center justify-center border border-card-border">
+                          <div className="w-full h-full bg-linear-to-br from-card to-background flex items-center justify-center border border-card-border">
                                  <Mic2 className="text-muted" size={32} />
                              </div>
                          )}
                      </div>
                      
-                     <div className="flex flex-col justify-between py-1 flex-grow">
+                     <div className="flex flex-col justify-between py-1 grow">
                          <div>
                              <div className="flex items-center gap-2 mb-1">
                                   <span className={cn("px-1.5 py-0.5 rounded text-[10px] font-mono border", themeTokens[log.theme].softBg, themeTokens[log.theme].border, themeTokens[log.theme].accent)}>

@@ -1,18 +1,43 @@
 
-import { 
-  getRichText, 
-  getTitle, 
-  getCover, 
-  NotionPage, 
-  NotionBlock 
-} from './notion-utils';
+import { NotionBlock, NotionPage } from './notion-utils';
 
 /**
  * Maps a raw Notion Block object to a clean NotionBlock interface
  */
-export function mapNotionBlock(rawBlock: any): NotionBlock {
+type RawNotionBlock = {
+  id: string;
+  type: string;
+  has_children?: boolean;
+  children?: RawNotionBlock[];
+} & Record<string, unknown>;
+
+const isRecord = (value: unknown): value is Record<string, unknown> => (
+  typeof value === 'object' && value !== null
+);
+
+const isRawNotionBlock = (value: unknown): value is RawNotionBlock => {
+  if (!isRecord(value)) return false;
+  return typeof value.id === 'string' && typeof value.type === 'string';
+};
+
+export function mapNotionBlock(rawBlock: unknown): NotionBlock {
+  if (!isRawNotionBlock(rawBlock)) {
+    return {
+      id: 'unknown',
+      type: 'unknown',
+      content: null,
+    };
+  }
+
   const type = rawBlock.type;
-  let content: any = null;
+  let content: unknown = null;
+  const asRecord = (value: unknown): Record<string, unknown> => (
+    value && typeof value === 'object' ? value as Record<string, unknown> : {}
+  );
+  const asString = (value: unknown): string | undefined => (
+    typeof value === 'string' ? value : undefined
+  );
+  const blockValue = asRecord(rawBlock[type]);
 
   switch (type) {
     case 'heading_1':
@@ -23,89 +48,109 @@ export function mapNotionBlock(rawBlock: any): NotionBlock {
     case 'numbered_list_item':
     case 'quote':
     case 'toggle':
-    case 'to_do':
-      content = rawBlock[type]?.rich_text;
-      if (type === 'to_do') {
-        content = {
-          rich_text: rawBlock.to_do.rich_text,
-          checked: rawBlock.to_do.checked,
-        };
-      }
+      case 'to_do':
+        content = blockValue.rich_text;
+        if (type === 'to_do') {
+          const todoValue = asRecord(rawBlock.to_do);
+          content = {
+            rich_text: todoValue.rich_text ?? [],
+            checked: Boolean(todoValue.checked),
+          };
+        }
       break;
     case 'code':
+      const codeValue = asRecord(rawBlock.code);
       content = {
-        rich_text: rawBlock.code?.rich_text,
-        language: rawBlock.code?.language,
-        caption: rawBlock.code?.caption,
+        rich_text: codeValue.rich_text ?? [],
+        language: asString(codeValue.language),
+        caption: codeValue.caption ?? [],
       };
       break;
     case 'image':
+      const imageValue = asRecord(rawBlock.image);
+      const imageType = asString(imageValue.type);
+      const imageExternal = asRecord(imageValue.external);
+      const imageFile = asRecord(imageValue.file);
       content = {
-        url: rawBlock.image?.type === 'external' 
-          ? rawBlock.image.external.url 
-          : rawBlock.image?.file?.url,
-        caption: rawBlock.image?.caption,
+        url: imageType === 'external'
+          ? asString(imageExternal.url)
+          : asString(imageFile.url),
+        caption: imageValue.caption ?? [],
       };
       break;
     case 'callout':
+      const calloutValue = asRecord(rawBlock.callout);
+      const calloutIcon = asRecord(calloutValue.icon);
+      const calloutExternal = asRecord(calloutIcon.external);
       content = {
-        rich_text: rawBlock.callout?.rich_text,
-        icon: rawBlock.callout?.icon?.emoji || rawBlock.callout?.icon?.external?.url,
-        color: rawBlock.callout?.color,
+        rich_text: calloutValue.rich_text ?? [],
+        icon: asString(calloutIcon.emoji) ?? asString(calloutExternal.url),
+        color: asString(calloutValue.color),
       };
       break;
     case 'equation':
-      content = rawBlock.equation?.expression;
+      content = asRecord(rawBlock.equation).expression;
       break;
     case 'bookmark':
+      const bookmarkValue = asRecord(rawBlock.bookmark);
       content = {
-        url: rawBlock.bookmark?.url,
-        caption: rawBlock.bookmark?.caption,
+        url: asString(bookmarkValue.url),
+        caption: bookmarkValue.caption ?? [],
       };
       break;
     case 'video':
     case 'file':
     case 'pdf':
     case 'audio':
+      const mediaValue = asRecord(rawBlock[type]);
+      const mediaType = asString(mediaValue.type);
+      const mediaExternal = asRecord(mediaValue.external);
+      const mediaFile = asRecord(mediaValue.file);
       content = {
-        url: rawBlock[type]?.type === 'external' 
-          ? rawBlock[type].external.url 
-          : rawBlock[type]?.file?.url,
-        caption: rawBlock[type]?.caption,
+        url: mediaType === 'external'
+          ? asString(mediaExternal.url)
+          : asString(mediaFile.url),
+        caption: mediaValue.caption ?? [],
       };
       break;
     case 'table_of_contents':
-      content = rawBlock.table_of_contents;
+      content = rawBlock.table_of_contents ?? null;
       break;
     case 'table':
+      const tableValue = asRecord(rawBlock.table);
       content = {
-        has_column_header: rawBlock.table?.has_column_header,
-        has_row_header: rawBlock.table?.has_row_header,
+        has_column_header: Boolean(tableValue.has_column_header),
+        has_row_header: Boolean(tableValue.has_row_header),
       };
       break;
     case 'table_row':
+      const rowValue = asRecord(rawBlock.table_row);
       content = {
-        cells: rawBlock.table_row?.cells ?? [],
+        cells: rowValue.cells ?? [],
       };
       break;
     case 'breadcrumb':
     case 'embed':
-      content = type === 'breadcrumb' ? null : rawBlock.embed;
+      content = type === 'breadcrumb' ? null : rawBlock.embed ?? null;
       break;
     case 'divider':
       content = null;
       break;
     default:
-      content = rawBlock[type];
+      content = rawBlock[type] ?? null;
   }
+
+  const children = Array.isArray(rawBlock.children)
+    ? rawBlock.children.filter(isRawNotionBlock)
+    : [];
 
   return {
     id: rawBlock.id,
     type,
     content,
     has_children: rawBlock.has_children,
-    is_toggleable: rawBlock[type]?.is_toggleable,
-    children: rawBlock.children?.map(mapNotionBlock),
+    is_toggleable: Boolean(asRecord(blockValue).is_toggleable),
+    children: children.map(mapNotionBlock),
   };
 }
 

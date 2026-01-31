@@ -101,9 +101,9 @@ export default function WorksPage() {
       <div className="mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8">
             <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-gradient-to-r from-[rgba(var(--accent-works-rgb),0.2)] via-[rgba(var(--accent-blogs-rgb),0.2)] to-[rgba(var(--accent-mlogs-rgb),0.2)] border border-card-border text-xs font-mono mb-4">
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-linear-to-r from-[rgba(var(--accent-works-rgb),0.2)] via-[rgba(var(--accent-blogs-rgb),0.2)] to-[rgba(var(--accent-mlogs-rgb),0.2)] border border-card-border text-xs font-mono mb-4">
                     <Briefcase size={14} className="text-[color:var(--accent-works)]" />
-                    <span className="bg-gradient-to-r from-[color:var(--accent-works)] via-[color:var(--accent-blogs)] to-[color:var(--accent-mlogs)] bg-clip-text text-transparent">PORTFOLIO</span>
+                    <span className="bg-linear-to-r from-[color:var(--accent-works)] via-[color:var(--accent-blogs)] to-[color:var(--accent-mlogs)] bg-clip-text text-transparent">PORTFOLIO</span>
                 </div>
                 <h1 className="text-5xl md:text-7xl font-semibold tracking-tight text-foreground mb-6">
                     Works
@@ -139,7 +139,7 @@ export default function WorksPage() {
             <SpotlightCard className="group h-full flex flex-col p-0 overflow-hidden">
                 {/* Image Section */}
                 <div className="aspect-[4/3] relative overflow-hidden bg-muted/20">
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-60 z-10 pointer-events-none"></div>
+                            <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent opacity-60 z-10 pointer-events-none"></div>
                      <Image 
                         src={work.imageUrl} 
                         alt={work.title}
@@ -226,7 +226,7 @@ export default function WorksPage() {
                      <div className="absolute inset-0 bg-background/40"></div>
                      {/* Gradient Overlay */}
                     <div 
-                        className={cn("absolute inset-0 opacity-40 bg-gradient-to-br", themeTokens[selectedWork.theme].gradient, "to-transparent")}
+                        className={cn("absolute inset-0 opacity-40 bg-linear-to-br", themeTokens[selectedWork.theme].gradient, "to-transparent")}
                     />
 
                     <motion.div layoutId={`card-title-${selectedId}`} className="relative z-10 text-center p-4">

@@ -1,6 +1,5 @@
 import React, { memo } from 'react';
 import { cn } from '@/lib/utils';
-// @ts-ignore
 import { InlineMath } from 'react-katex';
 import 'katex/dist/katex.min.css';
 import Link from 'next/link';

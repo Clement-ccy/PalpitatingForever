@@ -1,8 +1,8 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Shuffle, BookOpen, Search, LayoutGrid, X, ExternalLink, Settings, Moon, Sun } from 'lucide-react';
+import { Shuffle, BookOpen, Search, LayoutGrid, X, ExternalLink, Settings, Moon, Sun, type LucideIcon } from 'lucide-react';
 import { MOCK_BLOGS } from '@/data/mock-blogs';
 import { MOCK_WORKS } from '@/data/mock-works';
 import { useRouter } from 'next/navigation';
@@ -58,7 +58,7 @@ const DockButton = ({
   label, 
   className 
 }: { 
-  icon: any, 
+  icon: LucideIcon, 
   onClick: () => void, 
   label: string,
   className?: string
@@ -76,11 +76,6 @@ const DockButton = ({
 
 const ControlPanel = ({ onClose }: { onClose: () => void }) => {
   const { theme, setTheme } = useTheme();
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => setMounted(true), []);
-
-  if (!mounted) return null;
 
   return (
     <motion.div

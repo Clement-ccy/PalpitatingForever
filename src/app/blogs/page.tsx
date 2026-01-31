@@ -45,8 +45,8 @@ export default function BlogsPage() {
     return (
         <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto relative">
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[140px] rounded-full -z-10" />
-            <div className="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
-            <div className="absolute bottom-10 left-1/3 w-[26rem] h-[26rem] bg-[rgba(var(--accent-mlogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+            <div className="absolute top-1/3 right-1/4 w-md h-112 bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+            <div className="absolute bottom-10 left-1/3 w-104 h-104 bg-[rgba(var(--accent-mlogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
 
             <header className="mb-12">
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-card-border text-xs font-mono text-muted mb-4">
@@ -76,7 +76,7 @@ export default function BlogsPage() {
                                 transition={{ duration: 0.4 }}
                                 type="button"
                             >
-                                <span className="absolute left-[6px] top-6 w-3 h-3 rounded-full border border-card-border bg-background" />
+                                <span className="absolute left-1.5 top-6 w-3 h-3 rounded-full border border-card-border bg-background" />
                                 <div className="flex items-center gap-3 text-[11px] font-mono text-muted mb-2">
                                     <span>{post.date}</span>
                                     <span className="w-1 h-1 bg-card-border rounded-full" />
@@ -105,7 +105,7 @@ export default function BlogsPage() {
                                     fill
                                     className="object-cover"
                                 />
-                                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-background/20 to-transparent" />
+                                <div className="absolute inset-0 bg-linear-to-t from-background/80 via-background/20 to-transparent" />
                                 <div className="absolute bottom-4 right-4">
                                     <Link
                                         href={`/blogs/${selectedPost.id}`}

@@ -19,7 +19,7 @@ export interface NotionPage {
 export interface NotionBlock {
   id: string;
   type: string;
-  content: any; // specific content based on type
+  content: unknown; // specific content based on type
   has_children?: boolean;
   is_toggleable?: boolean;
   children?: NotionBlock[];
@@ -54,6 +54,59 @@ export interface MusicLog {
   theme: 'rose' | 'indigo' | 'emerald' | 'orange';
 }
 
+type NotionRichText = { plain_text: string };
+type NotionCover = { type?: string; external?: { url?: string }; file?: { url?: string } };
+
+interface NotionSelect {
+  name: string;
+}
+
+interface NotionRelation {
+  id: string;
+}
+
+interface NotionMultiSelect {
+  name: string;
+}
+
+interface NotionStatus {
+  name: string;
+}
+
+interface NotionPageProperties {
+  Name?: { title?: NotionRichText[] };
+  Description?: { rich_text?: NotionRichText[] };
+  'Publish Date'?: { date?: { start?: string } };
+  Tags?: { multi_select?: NotionMultiSelect[] };
+  Category?: { relation?: NotionRelation[] };
+  Theme?: { select?: NotionSelect | null };
+  Area?: { select?: NotionSelect | null };
+  Role?: { rich_text?: NotionRichText[] };
+  Platfom?: { multi_select?: NotionMultiSelect[] };
+  Rate?: { number?: number | null };
+  Status?: { status?: NotionStatus | null };
+  Link?: { url?: string | null };
+}
+
+interface NotionPageResponse {
+  id: string;
+  created_time: string;
+  cover?: NotionCover | null;
+  url?: string;
+  properties: NotionPageProperties;
+}
+
+const isRecord = (value: unknown): value is Record<string, unknown> => (
+  typeof value === 'object' && value !== null
+);
+
+const isNotionPageResponse = (value: unknown): value is NotionPageResponse => {
+  if (!isRecord(value)) return false;
+  return typeof value.id === 'string'
+    && typeof value.created_time === 'string'
+    && isRecord(value.properties);
+};
+
 /**
  * Mapping Category IDs to human-readable names
  */
@@ -71,8 +124,8 @@ const normalizeNotionId = (id?: string): string => id?.replace(/-/g, '') ?? '';
 /**
  * Extracts plain text from Notion's rich_text array
  */
-export function getRichText(richText: any[]): string {
-  return richText?.map(t => t.plain_text).join('') || '';
+export function getRichText(richText?: NotionRichText[] | null): string {
+  return richText?.map((t) => t.plain_text).join('') || '';
 }
 
 export function getFallbackTheme(id: string, themes: string[]): string {
@@ -87,7 +140,7 @@ export function getFallbackTheme(id: string, themes: string[]): string {
 /**
  * Generates a slug-friendly ID from rich text
  */
-export function getSlug(richText: any[]): string {
+export function getSlug(richText?: NotionRichText[] | null): string {
   return getRichText(richText)
     .toLowerCase()
     .trim()
@@ -99,25 +152,44 @@ export function getSlug(richText: any[]): string {
 /**
  * Extracts the title from Notion's title property
  */
-export function getTitle(titleProp: any[]): string {
-  return titleProp?.map(t => t.plain_text).join('') || 'Untitled';
+export function getTitle(titleProp?: NotionRichText[] | null): string {
+  return titleProp?.map((t) => t.plain_text).join('') || 'Untitled';
 }
 
 /**
  * Extracts cover URL from Notion's cover property
  */
-export function getCover(cover: any): string | null {
+export function getCover(cover?: NotionCover | null): string | null {
   if (!cover) return null;
-  if (cover.type === 'external') return cover.external.url;
-  if (cover.type === 'file') return cover.file.url;
+  if (cover.type === 'external') return cover.external?.url ?? null;
+  if (cover.type === 'file') return cover.file?.url ?? null;
   return null;
 }
 
 /**
  * Maps a raw Notion Page object to a clean NotionPage interface
  */
-export function mapNotionPage(rawPage: any): NotionPage {
-  const props = rawPage.properties;
+export function mapNotionPage(rawPage: unknown): NotionPage {
+  if (!isNotionPageResponse(rawPage)) {
+    return {
+      id: 'unknown',
+      title: 'Untitled',
+      summary: '',
+      date: new Date().toISOString().split('T')[0],
+      tags: [],
+      cover: null,
+      category: 'Uncategorized',
+      theme: null,
+      area: '',
+      role: '',
+      platforms: [],
+      rate: null,
+      status: 'Unknown',
+      url: '',
+    };
+  }
+
+  const props = rawPage.properties as NotionPageProperties;
   const categoryId = normalizeNotionId(props.Category?.relation?.[0]?.id);
   
   return {
@@ -129,11 +201,11 @@ export function mapNotionPage(rawPage: any): NotionPage {
     cover: getCover(rawPage.cover),
     category: CATEGORY_MAP[categoryId] || 'Uncategorized',
     theme: props.Theme?.select?.name ?? null,
-    area: getRichText(props.Area?.rich_text),
+    area: props.Area?.select?.name ?? '',
     role: getRichText(props.Role?.rich_text),
     platforms: props.Platfom?.multi_select?.map((s: { name: string }) => s.name) || [],
     rate: props.Rate?.number ?? null,
     status: props.Status?.status?.name || 'Unknown',
-    url: props.Link?.url || rawPage.url,
+    url: props.Link?.url ?? rawPage.url ?? '',
   };
 }

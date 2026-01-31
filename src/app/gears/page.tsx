@@ -52,8 +52,8 @@ export default function GearsPage() {
     <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto text-foreground relative">
       {/* Background Glow */}
       <div className="absolute top-10 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[140px] rounded-full -z-10" />
-      <div className="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
-      <div className="absolute bottom-10 left-1/3 w-[26rem] h-[26rem] bg-[rgba(var(--accent-gears-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+      <div className="absolute top-1/3 right-1/4 w-md h-112 bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+      <div className="absolute bottom-10 left-1/3 w-104 h-104 bg-[rgba(var(--accent-gears-rgb),0.2)] blur-[140px] rounded-full -z-10" />
 
       <header className="mb-16 animate-in fade-in slide-in-from-bottom-4 duration-1000">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-card-border text-xs font-mono text-muted mb-4">

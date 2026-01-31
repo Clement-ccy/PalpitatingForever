@@ -62,7 +62,7 @@ export default function BlogSlugPage({ params }: { params: Promise<{ slug: strin
   return (
     <div className="min-h-screen bg-background relative">
         {/* Progress Bar (Client Side logic could be added) */}
-        <div className="fixed top-0 left-0 w-full h-1 bg-accent-blogs/10 z-[100]">
+        <div className="fixed top-0 left-0 w-full h-1 bg-accent-blogs/10 z-100">
             <motion.div className="h-full bg-accent-blogs origin-left" style={{ scaleX: 0 }} />
         </div>
 
@@ -77,7 +77,7 @@ export default function BlogSlugPage({ params }: { params: Promise<{ slug: strin
                     priority
                 />
             </motion.div>
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-background via-background/60 to-transparent" />
             
             <div className="absolute inset-0 flex items-end">
                 <div className="max-w-4xl mx-auto px-6 pb-12 w-full">
@@ -118,7 +118,7 @@ export default function BlogSlugPage({ params }: { params: Promise<{ slug: strin
         {/* Content */}
         <div className="max-w-4xl mx-auto px-6 py-20 relative">
             {/* Sidebar Actions */}
-            <div className="hidden xl:flex flex-col gap-4 absolute -left-20 top-20 sticky top-32 h-fit">
+            <div className="hidden xl:flex flex-col gap-4 absolute -left-20 top-20 h-fit">
                 <button className="p-3 rounded-full border border-card-border bg-card text-muted hover:text-accent-blogs transition-colors" type="button">
                     <Share2 size={20} />
                 </button>

@@ -31,7 +31,6 @@ export default function LabPage() {
 
     const initParticles = () => {
       particles = [];
-      const count = Math.floor((canvas.width * canvas.height) / (15000 / params.speed)); // Adjust density based on "speed" mainly to show reactivity
       for (let i = 0; i < params.particleCount; i++) {
         particles.push({
           x: Math.random() * canvas.width,
@@ -48,7 +47,7 @@ export default function LabPage() {
       ctx.fillStyle = 'rgba(180, 126, 126, 0)'; // Trail effect
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-      particles.forEach((p, index) => {
+      particles.forEach((p) => {
         p.x += p.vx;
         p.y += p.vy;
 

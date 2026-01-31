@@ -7,7 +7,7 @@ export function NowPlaying() {
       <div className="flex justify-between items-start z-10">
         <Music className="text-foreground/40" size={20} />
         <div className="flex gap-1 h-4 items-end">
-          {[1, 2, 3, 4].map((bar, i) => (
+          {[1, 2, 3, 4].map((bar) => (
             <div
               key={bar}
               className="w-1 bg-green-500 rounded-full equalizer-bar"

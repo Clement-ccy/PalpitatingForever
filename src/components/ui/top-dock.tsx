@@ -3,7 +3,7 @@
 import { MotionValue, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
-import { Home, PenTool, Music, Camera, Settings,  FlaskConical, Briefcase } from 'lucide-react';
+import { PenTool, Music, Camera, Settings,  FlaskConical, Briefcase } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 

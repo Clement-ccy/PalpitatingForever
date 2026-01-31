@@ -11,14 +11,27 @@ import path from 'path';
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATA_SOURCE_ID = '2e7ec12a-acd9-80f5-9c35-000b7c541f04'; // Example ID from CATEGORY_MAP
 
-async function fetchNotion(endpoint: string, options: any = {}) {
+type NotionListResponse<T> = {
+  results: T[];
+  next_cursor?: string | null;
+};
+
+type NotionBlockResponse = {
+  id: string;
+  has_children?: boolean;
+  children?: NotionBlockResponse[];
+} & Record<string, unknown>;
+
+type NotionPageResponse = Record<string, unknown> & { id: string };
+
+async function fetchNotion<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(`https://api.notion.com/v1${endpoint}`, {
     ...options,
     headers: {
       'Authorization': `Bearer ${NOTION_TOKEN}`,
       'Notion-Version': '2025-09-03',
       'Content-Type': 'application/json',
-      ...options.headers,
+      ...(options.headers ? Object.fromEntries(new Headers(options.headers).entries()) : {}),
     },
   });
 
@@ -30,13 +43,15 @@ async function fetchNotion(endpoint: string, options: any = {}) {
   return response.json();
 }
 
-async function fetchBlockChildren(blockId: string): Promise<any[]> {
+async function fetchBlockChildren(blockId: string): Promise<NotionBlockResponse[]> {
   console.log(`  - Fetching children for block: ${blockId}`);
-  let blocks: any[] = [];
+  let blocks: NotionBlockResponse[] = [];
   let cursor: string | undefined;
 
   do {
-    const data: any = await fetchNotion(`/blocks/${blockId}/children?page_size=100${cursor ? `&start_cursor=${cursor}` : ''}`);
+    const data = await fetchNotion<NotionListResponse<NotionBlockResponse>>(
+      `/blocks/${blockId}/children?page_size=100${cursor ? `&start_cursor=${cursor}` : ''}`
+    );
     const results = data.results;
     
     // For each block, if it has children, fetch them recursively
@@ -47,7 +62,7 @@ async function fetchBlockChildren(blockId: string): Promise<any[]> {
     }
     
     blocks = blocks.concat(results);
-    cursor = data.next_cursor;
+    cursor = data.next_cursor ?? undefined;
   } while (cursor);
 
   return blocks;
@@ -64,7 +79,7 @@ async function main() {
   try {
     // 1. Query Data Source (Pages)
     console.log(`1. Querying data source: ${DATA_SOURCE_ID}`);
-    const pagesData = await fetchNotion(`/data_sources/${DATA_SOURCE_ID}/query`, {
+    const pagesData = await fetchNotion<NotionListResponse<NotionPageResponse>>(`/data_sources/${DATA_SOURCE_ID}/query`, {
       method: 'POST',
     });
     
@@ -79,7 +94,7 @@ async function main() {
 
     // 2. Fetch Blocks for each page recursively
     console.log('2. Fetching blocks for each page...');
-    const allPageBlocks: Record<string, any[]> = {};
+    const allPageBlocks: Record<string, NotionBlockResponse[]> = {};
 
     for (const page of pagesData.results) {
       console.log(`📄 Page: ${page.id}`);
@@ -94,8 +109,9 @@ async function main() {
     }
 
     console.log('✅ All data fetched and saved successfully.');
-  } catch (err: any) {
-    console.error('❌ Fetch failed:', err.message);
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error('❌ Fetch failed:', message);
   }
 }
 

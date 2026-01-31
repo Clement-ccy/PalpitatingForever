@@ -18,6 +18,15 @@ interface Photo {
   theme: 'blue' | 'rose' | 'emerald' | 'orange' | 'purple' | 'teal';
 }
 
+type ImageContent = {
+  url?: string;
+  caption?: { plain_text: string }[];
+};
+
+const getImageContent = (value: unknown): ImageContent => (
+  value && typeof value === 'object' ? value as ImageContent : {}
+);
+
 const glowThemes = {
     blue: 'hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.3)] hover:border-blue-500/30',
     rose: 'hover:shadow-[0_0_40px_-10px_rgba(244,63,94,0.3)] hover:border-rose-500/30',
@@ -81,21 +90,29 @@ export default function PlogsPage() {
     const photos = useMemo<Photo[]>(() => (
         plogBlocks
             .filter((block) => block.type === 'image')
-            .map((block) => ({
-                id: block.id,
-                title: selectedPlog?.title || 'Plog',
-                url: block.content.url,
-                caption: block.content?.caption?.map((t: { plain_text: string }) => t.plain_text).join('') || '',
-                theme: selectedPlog?.theme ?? 'blue',
-            }))
+            .map((block) => {
+                const imageContent = getImageContent(block.content);
+                const caption = Array.isArray(imageContent.caption)
+                    ? imageContent.caption.map((t) => t.plain_text).join('')
+                    : '';
+
+                return {
+                    id: block.id,
+                    title: selectedPlog?.title || 'Plog',
+                    url: imageContent.url ?? '',
+                    caption,
+                    theme: selectedPlog?.theme ?? 'blue',
+                };
+            })
+            .filter((photo) => photo.url.length > 0)
     ), [plogBlocks, selectedPlog]);
 
   return (
-     <div className="min-h-screen pt-32 px-4 pb-32 max-w-[1600px] mx-auto relative z-10 text-foreground">
+     <div className="min-h-screen pt-32 px-4 pb-32 max-w-400 mx-auto relative z-10 text-foreground">
         {/* Background Glow */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[160px] rounded-full -z-10" />
-        <div className="absolute top-1/3 right-1/4 w-[28rem] h-[28rem] bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[160px] rounded-full -z-10" />
-        <div className="absolute bottom-10 left-1/3 w-[26rem] h-[26rem] bg-[rgba(var(--accent-plogs-rgb),0.2)] blur-[160px] rounded-full -z-10" />
+        <div className="absolute top-1/3 right-1/4 w-md h-112 bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[160px] rounded-full -z-10" />
+        <div className="absolute bottom-10 left-1/3 w-104 h-104 bg-[rgba(var(--accent-plogs-rgb),0.2)] blur-[160px] rounded-full -z-10" />
 
        <header className="mb-12 max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
@@ -177,7 +194,7 @@ export default function PlogsPage() {
                     />
 
                     {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                    <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
                         <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                             <h3 className="text-foreground font-medium text-lg mb-2">{photo.title}</h3>
                             {photo.caption && (
@@ -209,7 +226,7 @@ export default function PlogsPage() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[60] bg-background/95 backdrop-blur-xl flex items-center justify-center p-4"
+                className="fixed inset-0 z-60 bg-background/95 backdrop-blur-xl flex items-center justify-center p-4"
                 onClick={() => setSelectedPhoto(null)}
             >
                 <button 
@@ -239,7 +256,7 @@ export default function PlogsPage() {
                          />
                     </motion.div>
                     
-                    <div className="absolute bottom-0 left-0 w-full p-6 bg-gradient-to-t from-background via-background/50 to-transparent">
+                    <div className="absolute bottom-0 left-0 w-full p-6 bg-linear-to-t from-background via-background/50 to-transparent">
                           <h2 className="text-2xl font-bold text-foreground mb-2">{selectedPhoto.title}</h2>
                           {selectedPhoto.caption && (
                               <div className="text-sm text-muted-foreground font-mono">{selectedPhoto.caption}</div>
