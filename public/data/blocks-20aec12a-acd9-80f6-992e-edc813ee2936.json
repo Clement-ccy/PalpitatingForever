@@ -1,0 +1,78 @@
+{
+  "results": [
+    {
+      "object": "block",
+      "id": "2f7ec12a-acd9-80fc-81e5-c0abf00548d7",
+      "parent": {
+        "type": "page_id",
+        "page_id": "20aec12a-acd9-80f6-992e-edc813ee2936"
+      },
+      "created_time": "2026-01-29T17:56:00.000Z",
+      "last_edited_time": "2026-01-29T17:56:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "audio",
+      "audio": {
+        "caption": [],
+        "type": "file",
+        "file": {
+          "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/a9c7fd44-0668-42b4-9061-ff227f8fe9a9/HG_-_%E5%90%9B%E3%81%AB%E8%81%B4%E3%81%8B%E3%81%9B%E3%81%9F%E3%81%8B%E3%81%A3%E3%81%9F%E6%AD%8C_%28Original_Artist6_is_MINE%29.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZEK7NKBQ%2F20260131%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260131T131333Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEO3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQC2cw%2B3eVVG3Z8SmM2H6%2FIddGTcUKMlFvj6dAQhUNbHlQIgX%2F3achJI3ScAVLCDhbFnKZeMZpLvVcSvTVuL6dRywd8qiAQItf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDP3QTmzC8NXV8wrdYCrcA52C9MEV6dkKRsPRUtG%2BjDfoTOqUNmX%2B9SdGkZdXA7AHX2E4nkqjQTqtwfc13HCAyDDF3TrnVRAuEE4p4bR1YMvq6ZPlgQ7HKzgSoAQ8F8%2BgMZjT06qZYJ8xjFyThEudzdeQNrR7JJkXiRJpiSrq98Bz0OzXkPgOgn%2B8G7gJPVcXJpFsgdNQN4KVLxsMcRucBE53zhvhP%2FwKLwqm5HgnayIN%2Bh8G8HX%2FgNEuFfXDclYCLbGeef85tz%2FHkGioPzeFYrRaujp6ueM0yG%2BIRaNinRqDy6y3HDedk7EWSzUGX7tnaQUhjWtFFQrTE%2BzLHaP8tB5PHVFudK%2BAGA7USyyzvwDpXcFQ7Y7481LVnL0u2bC%2FzP%2FD1%2Bao41bX9n%2BCKC452jOf0r2ZRpblDnfJJke%2FI4wsiFOiMuGpl1AzTXRI24wm1B1w71Qo1C5pmCRPEHRnFOPTmy7aVKuB8PpeB%2Bq9ywgEUS67X2ydtDIhXjvVfpQFRiq51lMSiHN5NItBr1ZOXt3CwFeeyMtTC6FXSVZONu4DbSK8CSNckkk40MZk%2FLIBazTW6wyAgyz3SgcX4FuUGzBNPcuH8hGDToi7WQ5L2mTM8X8TMtjEUGDKeGWv4DZvUFo0srSflvEKIkO8MMrn98sGOqUB1K%2B6LZbOdiO%2B5MJGkkCyBFxW3JGDk8qItTxJ7kDO4qWYS355Or1HXiuJKYZx8tNjMh3r2RVwZErXS6uLjybcfvDwLu0HHbfUNXRQ4lLRQHGFzBzU5svV5pJCQtLXTYAe5mRdTYMiLIFWzWO3q3mGAolm5bgOHlGJP%2Bw0SG5zhjPR3AtXQR0NDQkeaBH%2FkDErzYzL4x3QsZ9lfVOmlvoSVwHbbI3P&X-Amz-Signature=abde33a4ea23a0a507672916a916a85eaa1b3a283560ca23bf4048feb4079c5f&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
+          "expiry_time": "2026-01-31T14:13:33.654Z"
+        }
+      }
+    },
+    {
+      "object": "block",
+      "id": "2f7ec12a-acd9-8086-b5dc-d0d0f5bbbb78",
+      "parent": {
+        "type": "page_id",
+        "page_id": "20aec12a-acd9-80f6-992e-edc813ee2936"
+      },
+      "created_time": "2026-01-29T17:56:00.000Z",
+      "last_edited_time": "2026-01-29T17:56:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "作词: 6% is MINE\n作曲: 6% is MINE\n君に聴かせたかった歌があって、\nそれはこんなメロディをしてる。\n優しい歌に聞こえたらいいな、\n僕等はそっと歌うんだ。\n君に聴かせたかった歌があって、\nそれはこんなメロディをしてる。\n悲しい歌に聞こえないように、\n僕等はそっと歌うんだ。\n君の描く空の青が、\n僕等の青と違うなら、\nふたつの空を混ぜあわせ、\n新しい空を創ろう。\n歌をうたおう、君のために。\nそれだけで、きっと笑顔になれる。\n歌をうたおう、希望の歌を。\n涙がね、枯れ果てないように...\n君を守ってくれる歌があって、\nそれはこんなメロディをしてる。\n素敵な歌に聞こえますように、\n僕等はそっと願うんだ。\n君を守ってくれる歌があって、\nそれはこんなメロディをしてる。\n寂しい歌に聞こえないように、\n僕等はそっと祈るんだ。\n君の過ごす夜の闇が、\n僕等の闇と違うなら、\nふたつの夜を混ぜあわせ、\n新しい夜を創ろう。\n歌をうたおう、僕のために。\nそれだけで、きっと幸せになれる。\n歌をうたおう、喜びの歌を。\n心のね、傷を癒すように...\n歌をうたおう、君のために。\nそれだけで、きっと笑顔になれる。\n歌をうたおう、希望の歌を。\n涙がね、枯れ果てないように...\n-END-",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "作词: 6% is MINE\n作曲: 6% is MINE\n君に聴かせたかった歌があって、\nそれはこんなメロディをしてる。\n優しい歌に聞こえたらいいな、\n僕等はそっと歌うんだ。\n君に聴かせたかった歌があって、\nそれはこんなメロディをしてる。\n悲しい歌に聞こえないように、\n僕等はそっと歌うんだ。\n君の描く空の青が、\n僕等の青と違うなら、\nふたつの空を混ぜあわせ、\n新しい空を創ろう。\n歌をうたおう、君のために。\nそれだけで、きっと笑顔になれる。\n歌をうたおう、希望の歌を。\n涙がね、枯れ果てないように...\n君を守ってくれる歌があって、\nそれはこんなメロディをしてる。\n素敵な歌に聞こえますように、\n僕等はそっと願うんだ。\n君を守ってくれる歌があって、\nそれはこんなメロディをしてる。\n寂しい歌に聞こえないように、\n僕等はそっと祈るんだ。\n君の過ごす夜の闇が、\n僕等の闇と違うなら、\nふたつの夜を混ぜあわせ、\n新しい夜を創ろう。\n歌をうたおう、僕のために。\nそれだけで、きっと幸せになれる。\n歌をうたおう、喜びの歌を。\n心のね、傷を癒すように...\n歌をうたおう、君のために。\nそれだけで、きっと笑顔になれる。\n歌をうたおう、希望の歌を。\n涙がね、枯れ果てないように...\n-END-",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    }
+  ]
+}

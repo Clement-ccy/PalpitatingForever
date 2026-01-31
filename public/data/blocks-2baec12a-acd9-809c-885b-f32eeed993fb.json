@@ -1,0 +1,1143 @@
+{
+  "results": [
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-80db-8ed3-e61c353dc285",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:06:00.000Z",
+      "last_edited_time": "2025-11-29T20:06:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "你可能会注意到，当你让大型语言模型在没有指导的情况下构建着陆页时，它几乎总是符合Inter字体、白色背景上的紫色渐变和极少的动画。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "你可能会注意到，当你让大型语言模型在没有指导的情况下构建着陆页时，它几乎总是符合Inter字体、白色背景上的紫色渐变和极少的动画。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-8026-9b4f-e326ea61a1b2",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:06:00.000Z",
+      "last_edited_time": "2025-11-29T20:06:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "问题是什么？分布收敛。在抽样过程中，模型根据训练数据中的统计模式预测代币。安全的设计选择——那些普遍适用且不冒犯任何人的人——主导了网页培训数据。没有方向，克劳德从这个高概率中心采样。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "问题是什么？分布收敛。在抽样过程中，模型根据训练数据中的统计模式预测代币。安全的设计选择——那些普遍适用且不冒犯任何人的人——主导了网页培训数据。没有方向，克劳德从这个高概率中心采样。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-8039-b214-c25bc78725b7",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:06:00.000Z",
+      "last_edited_time": "2025-11-29T20:06:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "对于开发面向客户的产品的开发者来说，这种通用的美学削弱了品牌形象，使AI生成的界面立刻被识别——也容易被忽视。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "对于开发面向客户的产品的开发者来说，这种通用的美学削弱了品牌形象，使AI生成的界面立刻被识别——也容易被忽视。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-801d-a424-e0b497070b1c",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:07:00.000Z",
+      "last_edited_time": "2025-11-29T20:07:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_1",
+      "heading_1": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "技能：动态上下文加载",
+              "link": null
+            },
+            "annotations": {
+              "bold": true,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "技能：动态上下文加载",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-8012-a550-e97629f2e30d",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:07:00.000Z",
+      "last_edited_time": "2025-11-29T20:08:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "这正是我们要做的技能设计目的是：按需提供专业上下文，且无永久开销。技能是一种文档（通常为标记），包含指令、约束和领域知识，存储在指定目录中，Claude 可以通过简单的文件读取工具访问。Claude可以利用这些技能在运行时动态加载所需信息，逐步增强上下文，而不是一开始就加载所有内容。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "这正是我们要做的技能设计目的是：按需提供专业上下文，且无永久开销。技能是一种文档（通常为标记），包含指令、约束和领域知识，存储在指定目录中，Claude 可以通过简单的文件读取工具访问。Claude可以利用这些技能在运行时动态加载所需信息，逐步增强上下文，而不是一开始就加载所有内容。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-805e-881d-fa213467fc20",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:07:00.000Z",
+      "last_edited_time": "2025-11-29T20:07:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "当Claude具备这些技能和必要的阅读工具时，可以自主识别并加载相关技能，基于当前任务。例如，当被要求构建着陆页或创建React组件时，Claude可以加载前端设计技能并及时应用其指令。这是核心的心理模型：技能是按需激活的提示和情境资源，为特定任务类型提供专业指导，同时不产生永久的情境负担。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "当Claude具备这些技能和必要的阅读工具时，可以自主识别并加载相关技能，基于当前任务。例如，当被要求构建着陆页或创建React组件时，Claude可以加载前端设计技能并及时应用其指令。这是核心的心理模型：技能是按需激活的提示和情境资源，为特定任务类型提供专业指导，同时不产生永久的情境负担。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-8037-bbc0-f78c51a4aac3",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:07:00.000Z",
+      "last_edited_time": "2025-11-29T20:08:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "这使得开发者能够享受 Claude 可导向性的优势，同时避免通过将不同任务的分散指令塞入系统提示词来过载上下文窗口。正如我们所说之前解释过，上下文窗口中过多的标记会导致性能下降，因此保持上下文窗口内容精简和聚焦对于激发模型最佳性能极为重要。技能通过使有效的提示可重复使用且具上下文来解决这个问题。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "这使得开发者能够享受 Claude 可导向性的优势，同时避免通过将不同任务的分散指令塞入系统提示词来过载上下文窗口。正如我们所说之前解释过，上下文窗口中过多的标记会导致性能下降，因此保持上下文窗口内容精简和聚焦对于激发模型最佳性能极为重要。技能通过使有效的提示可重复使用且具上下文来解决这个问题。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-800c-95e2-c7c8fe7c81db",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:07:00.000Z",
+      "last_edited_time": "2025-11-29T20:07:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_1",
+      "heading_1": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "提示提升前端输出",
+              "link": null
+            },
+            "annotations": {
+              "bold": true,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "提示提升前端输出",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-80cb-bb0f-d5a2dbfd31c4",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:07:00.000Z",
+      "last_edited_time": "2025-11-29T20:07:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "通过创建前端设计技能，我们可以从Claude中解锁显著更好的用户界面生成，而无需永久的上下文开销。核心见解是用前端工程师的角度来思考前端设计。你越能将美学改进映射到可实现的前端代码上，Claude 的执行能力就越强。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "通过创建前端设计技能，我们可以从Claude中解锁显著更好的用户界面生成，而无需永久的上下文开销。核心见解是用前端工程师的角度来思考前端设计。你越能将美学改进映射到可实现的前端代码上，Claude 的执行能力就越强。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-8002-9e16-fa7fad221dc9",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:07:00.000Z",
+      "last_edited_time": "2025-11-29T20:08:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "利用这一洞察，我们识别出几个针对性提示效果显著的领域：排版、动画、背景效果和主题。这些都能干净利落地转化成 Claude 能写的代码。在提示中实现这一点不需要详细的技术说明，只需使用针对性的语言，让模型更深入地思考这些设计轴，就能引发更强的输出。这与我们提供的指导非常一致上下文工程博客文章，关于在正确高度提示模型，避免低空硬编码逻辑的两个极端，比如指定精确十六进制码和假设共享上下文的模糊高空导航。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "利用这一洞察，我们识别出几个针对性提示效果显著的领域：排版、动画、背景效果和主题。这些都能干净利落地转化成 Claude 能写的代码。在提示中实现这一点不需要详细的技术说明，只需使用针对性的语言，让模型更深入地思考这些设计轴，就能引发更强的输出。这与我们提供的指导非常一致上下文工程博客文章，关于在正确高度提示模型，避免低空硬编码逻辑的两个极端，比如指定精确十六进制码和假设共享上下文的模糊高空导航。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-80a8-99b6-f9c15836de47",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:08:00.000Z",
+      "last_edited_time": "2025-11-29T20:09:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "以下是一些可以用于优化设计能力的Prompt：",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "以下是一些可以用于优化设计能力的Prompt：",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-8079-aba9-e79c821184f2",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:09:00.000Z",
+      "last_edited_time": "2025-11-29T20:09:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_1",
+      "heading_1": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Typography",
+              "link": null
+            },
+            "annotations": {
+              "bold": true,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Typography",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-80b2-bf61-c143778cd355",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:09:00.000Z",
+      "last_edited_time": "2025-11-29T20:09:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "为了观察这一点，我们先把排版视为一个可以通过提示影响的维度。下面的提示特别引导克劳德使用更有趣的字体：",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "为了观察这一点，我们先把排版视为一个可以通过提示影响的维度。下面的提示特别引导克劳德使用更有趣的字体：",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-80a9-b135-f4698bc3990d",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:10:00.000Z",
+      "last_edited_time": "2025-11-29T20:10:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "code",
+      "code": {
+        "caption": [],
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "<use_interesting_fonts>\nTypography instantly signals quality. Avoid using boring, generic fonts.\n\nNever use: Inter, Roboto, Open Sans, Lato, default system fonts\n\nHere are some examples of good, impactful choices:\n- Code aesthetic: JetBrains Mono, Fira Code, Space Grotesk\n- Editorial: Playfair Display, Crimson Pro\n- Technical: IBM Plex family, Source Sans 3\n- Distinctive: Bricolage Grotesque, Newsreader\n\nPairing principle: High contrast = interesting. Display + monospace, serif + geometric sans, variable font across weights.\n\nUse extremes: 100/200 weight vs 800/900, not 400 vs 600. Size jumps of 3x+, not 1.5x.\n\nPick one distinctive font, use it decisively. Load from Google Fonts.\n</use_interesting_fonts>",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "<use_interesting_fonts>\nTypography instantly signals quality. Avoid using boring, generic fonts.\n\nNever use: Inter, Roboto, Open Sans, Lato, default system fonts\n\nHere are some examples of good, impactful choices:\n- Code aesthetic: JetBrains Mono, Fira Code, Space Grotesk\n- Editorial: Playfair Display, Crimson Pro\n- Technical: IBM Plex family, Source Sans 3\n- Distinctive: Bricolage Grotesque, Newsreader\n\nPairing principle: High contrast = interesting. Display + monospace, serif + geometric sans, variable font across weights.\n\nUse extremes: 100/200 weight vs 800/900, not 400 vs 600. Size jumps of 3x+, not 1.5x.\n\nPick one distinctive font, use it decisively. Load from Google Fonts.\n</use_interesting_fonts>",
+            "href": null
+          }
+        ],
+        "language": "xml"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-80f5-9aae-ee1423dcb58f",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:10:00.000Z",
+      "last_edited_time": "2025-11-29T20:10:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_1",
+      "heading_1": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Themes",
+              "link": null
+            },
+            "annotations": {
+              "bold": true,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Themes",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-80c4-93b2-f3060ec0db07",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:10:00.000Z",
+      "last_edited_time": "2025-11-29T20:11:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "另一个我们可以推动的设计灵感来自知名主题和美学。克洛德对流行主题有着丰富的理解;我们可以用这些来传达我们希望前端体现的具体美学。举个例子：",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "另一个我们可以推动的设计灵感来自知名主题和美学。克洛德对流行主题有着丰富的理解;我们可以用这些来传达我们希望前端体现的具体美学。举个例子：",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-8007-88f9-c47a63e9c393",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:11:00.000Z",
+      "last_edited_time": "2025-11-29T20:11:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "code",
+      "code": {
+        "caption": [],
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "<always_use_rpg_theme>\nAlways design with RPG aesthetic:\n- Fantasy-inspired color palettes with rich, dramatic tones\n- Ornate borders and decorative frame elements\n- Parchment textures, leather-bound styling, and weathered materials\n- Epic, adventurous atmosphere with dramatic lighting\n- Medieval-inspired serif typography with embellished headers\n</always_use_rpg_theme>",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "<always_use_rpg_theme>\nAlways design with RPG aesthetic:\n- Fantasy-inspired color palettes with rich, dramatic tones\n- Ornate borders and decorative frame elements\n- Parchment textures, leather-bound styling, and weathered materials\n- Epic, adventurous atmosphere with dramatic lighting\n- Medieval-inspired serif typography with embellished headers\n</always_use_rpg_theme>",
+            "href": null
+          }
+        ],
+        "language": "xml"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-8074-a7de-c7786b37406f",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:11:00.000Z",
+      "last_edited_time": "2025-11-29T20:11:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_1",
+      "heading_1": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Universal Prompt",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Universal Prompt",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-809e-9d1b-dcf924e0639a",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:12:00.000Z",
+      "last_edited_time": "2025-11-29T20:12:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "同样的原则也延伸到其他设计维度：提示动作（动画和微互动）为静态设计所缺乏的打磨增添光彩，同时引导模型朝向更有趣的背景选择，创造深度和视觉趣味。这正是综合技能的体现。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "同样的原则也延伸到其他设计维度：提示动作（动画和微互动）为静态设计所缺乏的打磨增添光彩，同时引导模型朝向更有趣的背景选择，创造深度和视觉趣味。这正是综合技能的体现。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-80d0-a221-f7f2a8ba6b8e",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:12:00.000Z",
+      "last_edited_time": "2025-11-29T20:12:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "综合这些，我们开发了一个~400令牌提示——足够紧凑，既能加载又不会臃肿上下文（即使作为技能加载）——极大提升了前端在排版、色彩、动态和背景等方面的数据：",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "综合这些，我们开发了一个~400令牌提示——足够紧凑，既能加载又不会臃肿上下文（即使作为技能加载）——极大提升了前端在排版、色彩、动态和背景等方面的数据：",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-8073-a18d-fc0d71675212",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:04:00.000Z",
+      "last_edited_time": "2025-11-29T20:04:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "code",
+      "code": {
+        "caption": [],
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "<frontend_aesthetics>\nYou tend to converge toward generic, \"on distribution\" outputs. In frontend design,this creates what users call the \"AI slop\" aesthetic. Avoid this: make creative,distinctive frontends that surprise and delight.\n\nFocus on:\n\n- Typography: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics.\n- Color & Theme: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes. Draw from IDE themes and cultural aesthetics for inspiration.\n- Motion: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions.\n- Backgrounds: Create atmosphere and depth rather than defaulting to solid colors. Layer CSS gradients, use geometric patterns, or add contextual effects that match the overall aesthetic.\n\nAvoid generic AI-generated aesthetics:\n\n- Overused font families (Inter, Roboto, Arial, system fonts)\n- Clichéd color schemes (particularly purple gradients on white backgrounds)\n- Predictable layouts and component patterns\n- Cookie-cutter design that lacks context-specific character\n\nInterpret creatively and make unexpected choices that feel genuinely designed for the context. Vary between light and dark themes, different fonts, different aesthetics. You still tend to converge on common choices (Space Grotesk, for example) across generations. Avoid this: it is critical that you think outside the box!\n</frontend_aesthetics>",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "<frontend_aesthetics>\nYou tend to converge toward generic, \"on distribution\" outputs. In frontend design,this creates what users call the \"AI slop\" aesthetic. Avoid this: make creative,distinctive frontends that surprise and delight.\n\nFocus on:\n\n- Typography: Choose fonts that are beautiful, unique, and interesting. Avoid generic fonts like Arial and Inter; opt instead for distinctive choices that elevate the frontend's aesthetics.\n- Color & Theme: Commit to a cohesive aesthetic. Use CSS variables for consistency. Dominant colors with sharp accents outperform timid, evenly-distributed palettes. Draw from IDE themes and cultural aesthetics for inspiration.\n- Motion: Use animations for effects and micro-interactions. Prioritize CSS-only solutions for HTML. Use Motion library for React when available. Focus on high-impact moments: one well-orchestrated page load with staggered reveals (animation-delay) creates more delight than scattered micro-interactions.\n- Backgrounds: Create atmosphere and depth rather than defaulting to solid colors. Layer CSS gradients, use geometric patterns, or add contextual effects that match the overall aesthetic.\n\nAvoid generic AI-generated aesthetics:\n\n- Overused font families (Inter, Roboto, Arial, system fonts)\n- Clichéd color schemes (particularly purple gradients on white backgrounds)\n- Predictable layouts and component patterns\n- Cookie-cutter design that lacks context-specific character\n\nInterpret creatively and make unexpected choices that feel genuinely designed for the context. Vary between light and dark themes, different fonts, different aesthetics. You still tend to converge on common choices (Space Grotesk, for example) across generations. Avoid this: it is critical that you think outside the box!\n</frontend_aesthetics>",
+            "href": null
+          }
+        ],
+        "language": "xml"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-806a-a75d-eb58e8ee9afb",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:27:00.000Z",
+      "last_edited_time": "2025-11-29T20:27:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_2",
+      "heading_2": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Another for agents",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Another for agents",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-80fa-bd98-d4b137eeefac",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:22:00.000Z",
+      "last_edited_time": "2025-11-29T20:24:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "code",
+      "code": {
+        "caption": [],
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "You are a professional designer for luxury brands\n\n<design_thinking>\nBefore output design, understand the context and commit to a CREATIVE direction:\n\n- **Purpose**: What problem does this interface solve? What is the key JTBD?\n- **Content hierachy**: What's the epic-center of the interface? Which ones should be subtle?\n- **Differentiation**: What makes this UNFORGETTABLE & UNIQUE? What's the one thing someone will remember?\n- **Interaction & animation**: Interaction animation plays pivotal role to amazing product design, think through key interaction that make the experience fun\n</design_thinking>\n\n<theme>\nWhat type of font, colour, theme will the target audience really like and fit the brand well?\nMUST choose font, color that fit audience scenario well; Default don't do dark mode\n</theme>\n\n<functional>\nCore buttons Ul components on the page MUST be functional\n</functional>\n\n<constrains>\nNEVER use Al slop purple or blue colour You can customise cursor, but always make it visble Use lucid icons instead of emoji or other text icon Pay attention to font hierarchy, make things extremely well fit \n</constrains>\n\n<sound_effect>\nUse sound effect for interaction adds delight \n</sound_effect>\n\n<output_format>\nONLY output single html code, nothing else\n</output_format>\n\n",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "You are a professional designer for luxury brands\n\n<design_thinking>\nBefore output design, understand the context and commit to a CREATIVE direction:\n\n- **Purpose**: What problem does this interface solve? What is the key JTBD?\n- **Content hierachy**: What's the epic-center of the interface? Which ones should be subtle?\n- **Differentiation**: What makes this UNFORGETTABLE & UNIQUE? What's the one thing someone will remember?\n- **Interaction & animation**: Interaction animation plays pivotal role to amazing product design, think through key interaction that make the experience fun\n</design_thinking>\n\n<theme>\nWhat type of font, colour, theme will the target audience really like and fit the brand well?\nMUST choose font, color that fit audience scenario well; Default don't do dark mode\n</theme>\n\n<functional>\nCore buttons Ul components on the page MUST be functional\n</functional>\n\n<constrains>\nNEVER use Al slop purple or blue colour You can customise cursor, but always make it visble Use lucid icons instead of emoji or other text icon Pay attention to font hierarchy, make things extremely well fit \n</constrains>\n\n<sound_effect>\nUse sound effect for interaction adds delight \n</sound_effect>\n\n<output_format>\nONLY output single html code, nothing else\n</output_format>\n\n",
+            "href": null
+          }
+        ],
+        "language": "xml"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-806a-8bce-d54d647c145f",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:04:00.000Z",
+      "last_edited_time": "2025-11-29T20:21:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_1",
+      "heading_1": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Sources and Thanks",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Sources and Thanks",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-802b-b5c7-c5663c670254",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:12:00.000Z",
+      "last_edited_time": "2025-11-29T20:13:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "https://claude.com/blog/improving-frontend-design-through-skills",
+              "link": {
+                "url": "https://claude.com/blog/improving-frontend-design-through-skills"
+              }
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "https://claude.com/blog/improving-frontend-design-through-skills",
+            "href": "https://claude.com/blog/improving-frontend-design-through-skills"
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2baec12a-acd9-801f-8910-fd330c79e0b8",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2baec12a-acd9-809c-885b-f32eeed993fb"
+      },
+      "created_time": "2025-11-29T20:21:00.000Z",
+      "last_edited_time": "2025-11-29T20:21:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [],
+        "color": "default"
+      }
+    }
+  ]
+}

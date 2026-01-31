@@ -1,0 +1,129 @@
+{
+  "results": [
+    {
+      "object": "block",
+      "id": "2ecec12a-acd9-804d-9863-cff4e3e09da6",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2d0ec12a-acd9-80ce-bb76-c4efa83a3905"
+      },
+      "created_time": "2026-01-18T16:57:00.000Z",
+      "last_edited_time": "2026-01-18T16:58:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "在vscode的settings.json中添加以下内容：",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "在vscode的settings.json中添加以下内容：",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "2ecec12a-acd9-8070-b2f5-e06f18ea13cb",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2d0ec12a-acd9-80ce-bb76-c4efa83a3905"
+      },
+      "created_time": "2026-01-18T16:58:00.000Z",
+      "last_edited_time": "2026-01-18T16:59:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "code",
+      "code": {
+        "caption": [],
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "{\n\t\"platformio-ide.customPATH\": \"C:\\\\Users\\\\[你的用户名]\\\\.platformio\\\\penv\\\\Scripts\",\n\t\"platformio-ide.customPyPiIndexUrl\": \"",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "{\n\t\"platformio-ide.customPATH\": \"C:\\\\Users\\\\[你的用户名]\\\\.platformio\\\\penv\\\\Scripts\",\n\t\"platformio-ide.customPyPiIndexUrl\": \"",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "https://mirrors.aliyun.com/pypi/simple/",
+              "link": {
+                "url": "https://mirrors.aliyun.com/pypi/simple/"
+              }
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "https://mirrors.aliyun.com/pypi/simple/",
+            "href": "https://mirrors.aliyun.com/pypi/simple/"
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "\",\n}",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "\",\n}",
+            "href": null
+          }
+        ],
+        "language": "json"
+      }
+    }
+  ]
+}

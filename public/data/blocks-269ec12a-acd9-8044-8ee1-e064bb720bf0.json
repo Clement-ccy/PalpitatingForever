@@ -1,0 +1,560 @@
+{
+  "results": [
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-8069-97ca-c8214e25eeb6",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T01:26:00.000Z",
+      "last_edited_time": "2025-09-09T01:26:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_1",
+      "heading_1": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "本构方程",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "本构方程",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-8074-a6e2-c02d72417019",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T01:26:00.000Z",
+      "last_edited_time": "2025-09-09T01:27:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_1",
+      "heading_1": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "平衡方程",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "平衡方程",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-809a-aa6a-d48ea8fbd4ad",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T01:27:00.000Z",
+      "last_edited_time": "2025-09-09T01:27:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "控制",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "控制",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-8025-bed6-fc3eef433740",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T01:27:00.000Z",
+      "last_edited_time": "2025-09-09T01:27:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "伴随",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "伴随",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-806c-b6b1-d30d201fe57d",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T01:27:00.000Z",
+      "last_edited_time": "2025-09-09T01:27:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "敏度",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "敏度",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-8023-a6f2-e221d1e0fe15",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T01:30:00.000Z",
+      "last_edited_time": "2025-09-09T01:35:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "梯度算子▽ \\triangledown：数学升阶",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "梯度算子▽ \\triangledown：数学升阶",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-808d-bbac-fb1ebd7605b6",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T01:32:00.000Z",
+      "last_edited_time": "2025-09-09T01:34:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "散度算子▽⋅：",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "散度算子▽⋅：",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-80ea-ad1a-e3c176296a04",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T01:34:00.000Z",
+      "last_edited_time": "2025-09-09T01:35:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "拉普拉斯算子△ 或者 ▽^2 \\triangledown^2",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "拉普拉斯算子△ 或者 ▽^2 \\triangledown^2",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-8094-84e3-f9fefbc717e9",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T02:35:00.000Z",
+      "last_edited_time": "2025-09-09T02:35:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-80f5-8c1f-d8075276148a",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T02:35:00.000Z",
+      "last_edited_time": "2025-09-09T02:35:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-8034-ab5d-c1671187e8e9",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T02:35:00.000Z",
+      "last_edited_time": "2025-09-09T02:36:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "对偶",
+              "link": null
+            },
+            "annotations": {
+              "bold": true,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "对偶",
+            "href": null
+          },
+          {
+            "type": "text",
+            "text": {
+              "content": "函数的求解方案优化",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "函数的求解方案优化",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-80c6-8b37-f4582811f773",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T02:59:00.000Z",
+      "last_edited_time": "2025-09-09T03:00:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "heading_1",
+      "heading_1": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "对于建模方案的方程解的问题（以平衡稳态静力学求解为例）",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "对于建模方案的方程解的问题（以平衡稳态静力学求解为例）",
+            "href": null
+          }
+        ],
+        "is_toggleable": false,
+        "color": "default"
+      }
+    },
+    {
+      "object": "block",
+      "id": "269ec12a-acd9-809c-aaaf-d651458a21fa",
+      "parent": {
+        "type": "page_id",
+        "page_id": "269ec12a-acd9-8044-8ee1-e064bb720bf0"
+      },
+      "created_time": "2025-09-09T02:55:00.000Z",
+      "last_edited_time": "2025-09-09T02:59:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "应力应变条件&稳态方程→可以求解",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "应力应变条件&稳态方程→可以求解",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    }
+  ]
+}
