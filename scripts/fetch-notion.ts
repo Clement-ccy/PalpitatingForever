@@ -1,5 +1,6 @@
 import fs from 'fs';
 import path from 'path';
+import { config as loadEnv } from 'dotenv';
 
 /**
  * FETCH NOTION DATA SCRIPT
@@ -8,9 +9,15 @@ import path from 'path';
  * Uses NOTION_TOKEN from environment variables.
  */
 
+const ROOT_DIR = process.cwd();
+const OUTPUT_DIR = path.join(ROOT_DIR, 'public/data');
+
+['.env.local', '.env'].forEach((file) => {
+  loadEnv({ path: path.join(ROOT_DIR, file) });
+});
+
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
 const DATA_SOURCE_ID = process.env.NOTION_DATA_SOURCE_ID;
-const OUTPUT_DIR = path.join(process.cwd(), 'public/data');
 
 type NotionListResponse<T> = {
   results: T[];
