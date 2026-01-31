@@ -9,7 +9,8 @@ import path from 'path';
  */
 
 const NOTION_TOKEN = process.env.NOTION_TOKEN;
-const DATA_SOURCE_ID = '2e7ec12a-acd9-80f5-9c35-000b7c541f04'; // Example ID from CATEGORY_MAP
+const DATA_SOURCE_ID = process.env.NOTION_DATA_SOURCE_ID;
+const OUTPUT_DIR = path.join(process.cwd(), 'public/data');
 
 type NotionListResponse<T> = {
   results: T[];
@@ -74,6 +75,11 @@ async function main() {
     process.exit(1);
   }
 
+  if (!DATA_SOURCE_ID) {
+    console.error('❌ Error: NOTION_DATA_SOURCE_ID is not set in environment variables.');
+    process.exit(1);
+  }
+
   console.log('🚀 Starting Recursive Notion Data Fetch...');
 
   try {
@@ -83,27 +89,33 @@ async function main() {
       method: 'POST',
     });
     
-    const outputPath = path.join(process.cwd(), 'src/data/refs');
-    if (!fs.existsSync(outputPath)) fs.mkdirSync(outputPath, { recursive: true });
+    if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
 
     fs.writeFileSync(
-      path.join(outputPath, 'notion-pages.json'),
+      path.join(OUTPUT_DIR, 'notion-pages.json'),
       JSON.stringify(pagesData, null, 2)
     );
     console.log(`✅ Saved ${pagesData.results.length} pages to notion-pages.json`);
 
     // 2. Fetch Blocks for each page recursively
     console.log('2. Fetching blocks for each page...');
-    const allPageBlocks: Record<string, NotionBlockResponse[]> = {};
+    const pageIds = new Set(pagesData.results.map((page) => page.id));
+    const existingFiles = fs.readdirSync(OUTPUT_DIR);
+    for (const file of existingFiles) {
+      if (!file.startsWith('blocks-') || !file.endsWith('.json')) continue;
+      const id = file.replace('blocks-', '').replace('.json', '');
+      if (!pageIds.has(id)) {
+        fs.unlinkSync(path.join(OUTPUT_DIR, file));
+      }
+    }
 
     for (const page of pagesData.results) {
       console.log(`📄 Page: ${page.id}`);
       const blocks = await fetchBlockChildren(page.id);
-      allPageBlocks[page.id] = blocks;
       
       // Save individual page blocks
       fs.writeFileSync(
-        path.join(outputPath, `blocks-${page.id}.json`),
+        path.join(OUTPUT_DIR, `blocks-${page.id}.json`),
         JSON.stringify({ results: blocks }, null, 2)
       );
     }

@@ -14,9 +14,9 @@ Next.js App Router portfolio using Notion as a CMS, Tailwind v4 in `globals.css`
 ├── src/components/       # UI + dashboard components
 │   └── notion/            # Notion renderer + rich text
 ├── src/lib/              # Notion mappers, utils, shared helpers
-├── src/data/refs/         # Generated Notion JSON payloads
+├── public/data/           # Generated Notion JSON payloads
 ├── scripts/               # Data fetch automation
-└── references/            # Design references (HTML mockups)
+└── public/                 # Static assets
 ```
 
 ## WHERE TO LOOK
@@ -25,7 +25,7 @@ Next.js App Router portfolio using Notion as a CMS, Tailwind v4 in `globals.css`
 | Route pages | `src/app/**/page.tsx` | App Router, mostly client components |
 | Notion rendering | `src/components/notion/NotionBlockRenderer.tsx` | Recursive render + list grouping |
 | Notion mapping | `src/lib/notion-utils.ts`, `src/lib/notion-mappers.ts` | Category mapping + block normalization |
-| Notion data fetch | `scripts/fetch-notion.ts` | Writes to `src/data/refs/` |
+| Notion data fetch | `scripts/fetch-notion.ts` | Writes to `public/data/` |
 | Global styling | `src/app/globals.css` | Tailwind v4 `@theme` and utilities |
 
 ## CODE MAP
@@ -62,5 +62,5 @@ NOTION_TOKEN=... npm run fetch-notion
 ```
 
 ## NOTES
-- Notion data JSONs in `src/data/refs/` are generated artifacts.
+- Notion data JSONs in `public/data/` are generated artifacts.
 - `next.config.ts` allows remote images from Unsplash, Giphy, Notion S3, and notion.so.

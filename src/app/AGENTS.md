@@ -27,8 +27,8 @@ src/app/
 | Gears | `gears/page.tsx` | Gear list from Notion pages |
 
 ## CONVENTIONS
-- Pages are mostly `'use client'` and pull from `src/data/refs/notion-pages.json`.
-- Content blocks load from `src/data/refs/blocks-<pageId>.json` and render via `renderNotionBlocks`.
+- Pages are mostly `'use client'` and fetch from `/data/notion-pages.json`.
+- Content blocks load from `/data/blocks-<pageId>.json` and render via `renderNotionBlocks`.
 - Use `@/` alias for imports and `cn()` for conditional classes.
 
 ## ANTI-PATTERNS

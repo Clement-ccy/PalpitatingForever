@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Shuffle, BookOpen, Search, LayoutGrid, X, ExternalLink, Settings, Moon, Sun, type LucideIcon } from 'lucide-react';
-import { MOCK_BLOGS } from '@/data/mock-blogs';
-import { MOCK_WORKS } from '@/data/mock-works';
 import { useRouter } from 'next/navigation';
 import { useTheme } from 'next-themes';
 
@@ -13,17 +11,11 @@ export const TopRightDock = () => {
   const router = useRouter();
 
   const handleRandomProject = () => {
-    const randomWork = MOCK_WORKS[Math.floor(Math.random() * MOCK_WORKS.length)];
-    if (randomWork.link && randomWork.link !== '#') {
-      window.open(randomWork.link, '_blank');
-    } else {
-      router.push('/works');
-    }
+    router.push('/works');
   };
 
   const handleRandomBlog = () => {
-    const randomBlog = MOCK_BLOGS[Math.floor(Math.random() * MOCK_BLOGS.length)];
-    router.push(`/blogs/${randomBlog.slug}`);
+    router.push('/blogs');
   };
 
   return (

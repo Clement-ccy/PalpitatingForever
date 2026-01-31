@@ -6,9 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowDown, Camera, X } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 import { cn } from '@/lib/utils';
-import { getFallbackTheme, mapNotionPage, type NotionBlock } from '@/lib/notion-utils';
-import { mapNotionBlock } from '@/lib/notion-mappers';
-import notionData from '@/data/refs/notion-pages.json';
+import { getFallbackTheme, type NotionBlock } from '@/lib/notion-utils';
+import { fetchNotionBlocks, fetchNotionPages } from '@/lib/notion-data';
 
 interface Photo {
   id: string;
@@ -51,41 +50,45 @@ export default function PlogsPage() {
     const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null);
     const [selectedPlogId, setSelectedPlogId] = useState<string>('');
     const [plogBlocks, setPlogBlocks] = useState<NotionBlock[]>([]);
-
-    const plogs = useMemo<PlogItem[]>(() => (
-        (notionData.results as unknown[])
-            .map(mapNotionPage)
-            .filter((post) => post.category === 'Plogs')
-            .map((post) => ({
-                id: post.id,
-                title: post.title,
-                summary: post.summary,
-                date: post.date,
-                cover: post.cover,
-                theme: (post.theme?.toLowerCase() && post.theme.toLowerCase() in glowThemes)
-                    ? (post.theme.toLowerCase() as keyof typeof glowThemes)
-                    : (getFallbackTheme(post.id, themePool) as keyof typeof glowThemes),
-            }))
-    ), []);
-
-    const selectedPlog = plogs.find((plog) => plog.id === selectedPlogId) ?? plogs[0];
+    const [plogs, setPlogs] = useState<PlogItem[]>([]);
 
     useEffect(() => {
-        if (!selectedPlog) return;
-        setSelectedPlogId(selectedPlog.id);
-    }, [selectedPlog]);
+        let active = true;
+        fetchNotionPages().then((pages) => {
+            if (!active) return;
+            const mapped = pages
+                .filter((post) => post.category === 'Plogs')
+                .map((post) => ({
+                    id: post.id,
+                    title: post.title,
+                    summary: post.summary,
+                    date: post.date,
+                    cover: post.cover,
+                    theme: (post.theme?.toLowerCase() && post.theme.toLowerCase() in glowThemes)
+                        ? (post.theme.toLowerCase() as keyof typeof glowThemes)
+                        : (getFallbackTheme(post.id, themePool) as keyof typeof glowThemes),
+                }));
+            setPlogs(mapped);
+        });
+        return () => {
+            active = false;
+        };
+    }, []);
+
+    const activePlogId = selectedPlogId || plogs[0]?.id || '';
+    const selectedPlog = plogs.find((plog) => plog.id === activePlogId) ?? plogs[0];
 
     useEffect(() => {
-        if (!selectedPlogId) return;
-        import(`@/data/refs/blocks-${selectedPlogId}.json`)
-            .then((data) => {
-                const blocks = (data.results as unknown[]).map(mapNotionBlock);
-                setPlogBlocks(blocks);
-            })
-            .catch(() => {
-                setPlogBlocks([]);
-            });
-    }, [selectedPlogId]);
+        if (!activePlogId) return;
+        let active = true;
+        fetchNotionBlocks(activePlogId).then((blocks) => {
+            if (!active) return;
+            setPlogBlocks(blocks);
+        });
+        return () => {
+            active = false;
+        };
+    }, [activePlogId]);
 
     const photos = useMemo<Photo[]>(() => (
         plogBlocks
@@ -148,7 +151,7 @@ export default function PlogsPage() {
                 onClick={() => setSelectedPlogId(plog.id)}
                 className={cn(
                     "p-4 rounded-2xl border border-card-border cursor-pointer transition-all",
-                    selectedPlogId === plog.id ? "bg-card/60" : "hover:bg-card/40",
+                    activePlogId === plog.id ? "bg-card/60" : "hover:bg-card/40",
                     glowThemes[plog.theme]
                 )}
             >

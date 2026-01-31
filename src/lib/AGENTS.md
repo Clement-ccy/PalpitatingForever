@@ -8,6 +8,7 @@ Notion mapping utilities and shared helpers used by pages and renderers.
 |------|----------|-------|
 | Page mapping | `notion-utils.ts` | `mapNotionPage`, category/theme normalization |
 | Block mapping | `notion-mappers.ts` | `mapNotionBlock` including table support |
+| Data fetch | `notion-data.ts` | Client fetch for `/data/*.json` |
 | Class utils | `utils.ts` | `cn()` helper |
 
 ## CONVENTIONS

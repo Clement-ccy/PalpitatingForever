@@ -1,14 +1,13 @@
 'use client';
 
-import { use, useMemo, useState, useEffect } from 'react';
+import { use, useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Calendar, Tag, ChevronLeft, Share2, Bookmark } from 'lucide-react';
 import { renderNotionBlocks } from '@/components/notion/NotionBlockRenderer';
-import { mapNotionBlock } from '@/lib/notion-mappers';
-import { mapNotionPage, NotionBlock, NotionPage } from '@/lib/notion-utils';
-import notionData from '@/data/refs/notion-pages.json';
+import { NotionBlock, NotionPage } from '@/lib/notion-utils';
+import { fetchNotionBlocks, fetchNotionPages } from '@/lib/notion-data';
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800&auto=format&fit=crop';
 
@@ -23,40 +22,57 @@ const NotionRenderer = ({ blocks }: { blocks: NotionBlock[] }) => {
 export default function BlogSlugPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
   const [blocks, setBlocks] = useState<NotionBlock[]>([]);
-  
-  // Get all blogs from Notion data
-  const BLOG_POSTS = useMemo(() => 
-    (notionData.results as unknown[])
-        .map(mapNotionPage)
-        .filter((post) => post.category === 'Blogs' || post.category === 'PF-AIGC')
-  , []);
+  const [posts, setPosts] = useState<NotionPage[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const post = BLOG_POSTS.find(p => p.id === slug) as NotionPage | undefined;
-  
   useEffect(() => {
-    if (post) {
-      // Dynamically import the blocks for this post
-      import(`@/data/refs/blocks-${post.id}.json`)
-        .then(data => {
-          const mappedBlocks = (data.results as unknown[]).map(mapNotionBlock);
-          setBlocks(mappedBlocks);
-        })
-        .catch(err => {
-          console.error('Failed to load blocks:', err);
-        });
-    }
-  }, [post]);
+    let active = true;
+    fetchNotionPages().then((pages) => {
+      if (!active) return;
+      setPosts(pages.filter((page) => page.category === 'Blogs' || page.category === 'PF-AIGC'));
+      setIsLoading(false);
+    }).catch(() => {
+      if (!active) return;
+      setIsLoading(false);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
+
+  const post = posts.find((page) => page.id === slug);
+  const postId = post?.id;
+
+  useEffect(() => {
+    if (!postId) return;
+    let active = true;
+    fetchNotionBlocks(postId).then((data) => {
+      if (!active) return;
+      setBlocks(data);
+    });
+    return () => {
+      active = false;
+    };
+  }, [postId]);
 
   if (!post) {
+    if (isLoading) {
       return (
-          <div className="min-h-[60vh] flex flex-col items-center justify-center text-center">
-              <h1 className="text-4xl font-bold text-foreground mb-4">404</h1>
-              <p className="text-muted">Thought not found in the archives.</p>
-              <Link href="/blogs" className="mt-8 text-accent-blogs hover:underline flex items-center gap-2">
-                <ChevronLeft size={18} /> Back to Blogs
-              </Link>
-          </div>
-      )
+        <div className="min-h-[60vh] flex items-center justify-center text-muted">
+          Loading...
+        </div>
+      );
+    }
+
+    return (
+      <div className="min-h-[60vh] flex flex-col items-center justify-center text-center">
+          <h1 className="text-4xl font-bold text-foreground mb-4">404</h1>
+          <p className="text-muted">Thought not found in the archives.</p>
+          <Link href="/blogs" className="mt-8 text-accent-blogs hover:underline flex items-center gap-2">
+            <ChevronLeft size={18} /> Back to Blogs
+          </Link>
+      </div>
+    );
   }
 
   return (

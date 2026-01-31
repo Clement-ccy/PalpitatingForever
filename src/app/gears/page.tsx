@@ -1,12 +1,12 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Book, Camera, Cpu, Package, Settings, Shield, Star, Terminal } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 import { cn } from '@/lib/utils';
-import { getFallbackTheme, mapNotionPage } from '@/lib/notion-utils';
-import notionData from '@/data/refs/notion-pages.json';
+import { getFallbackTheme } from '@/lib/notion-utils';
+import { fetchNotionPages } from '@/lib/notion-data';
 
 const themeTokens = {
   blue: 'text-blue-400 border-blue-500/20 bg-blue-500/10',
@@ -32,21 +32,30 @@ interface GearItem {
 }
 
 export default function GearsPage() {
-  const gears = useMemo<GearItem[]>(() => (
-    (notionData.results as unknown[])
-      .map(mapNotionPage)
-      .filter((post) => post.category === 'Gears')
-      .map((post, index) => ({
-        id: post.id,
-        category: post.tags[0] || 'Gear',
-        name: post.title,
-        description: post.summary,
-        rating: post.rate ?? 0,
-        theme: post.theme?.toLowerCase() && post.theme.toLowerCase() in themeTokens
-          ? (post.theme.toLowerCase() as ThemeKey)
-          : (getFallbackTheme(post.id + index.toString(), themePool) as ThemeKey),
-      }))
-  ), []);
+  const [gears, setGears] = useState<GearItem[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    fetchNotionPages().then((pages) => {
+      if (!active) return;
+      const mapped = pages
+        .filter((post) => post.category === 'Gears')
+        .map((post, index) => ({
+          id: post.id,
+          category: post.tags[0] || 'Gear',
+          name: post.title,
+          description: post.summary,
+          rating: post.rate ?? 0,
+          theme: post.theme?.toLowerCase() && post.theme.toLowerCase() in themeTokens
+            ? (post.theme.toLowerCase() as ThemeKey)
+            : (getFallbackTheme(post.id + index.toString(), themePool) as ThemeKey),
+        }));
+      setGears(mapped);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto text-foreground relative">

@@ -1,13 +1,13 @@
 "use client";
 
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { ArrowRight, Calendar, Layers } from 'lucide-react';
 import { cn } from '@/lib/utils';
-import { getFallbackTheme, mapNotionPage } from '@/lib/notion-utils';
-import notionData from '@/data/refs/notion-pages.json';
+import { getFallbackTheme, type NotionPage } from '@/lib/notion-utils';
+import { fetchNotionPages } from '@/lib/notion-data';
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800&auto=format&fit=crop';
 const themePool = ['blue', 'purple', 'emerald', 'orange', 'pink', 'teal'];
@@ -27,20 +27,32 @@ const resolveTheme = (theme: string | null, id: string): string => {
     return getFallbackTheme(id, themePool);
 };
 
-export default function BlogsPage() {
-    const posts = useMemo(() => (
-        (notionData.results as unknown[])
-            .map(mapNotionPage)
-            .filter((post) => post.category === 'Blogs' || post.category === 'PF-AIGC')
-            .map((post) => ({
-                ...post,
-                theme: resolveTheme(post.theme, post.id),
-            }))
-            .sort((a, b) => (a.date < b.date ? 1 : -1))
-    ), []);
+type BlogItem = NotionPage & { theme: string };
 
-    const [selectedId, setSelectedId] = useState<string>(posts[0]?.id || '');
-    const selectedPost = posts.find((post) => post.id === selectedId) ?? posts[0];
+export default function BlogsPage() {
+    const [posts, setPosts] = useState<BlogItem[]>([]);
+    const [selectedId, setSelectedId] = useState<string>('');
+
+    useEffect(() => {
+        let active = true;
+        fetchNotionPages().then((pages) => {
+            if (!active) return;
+            const mapped = pages
+                .filter((post) => post.category === 'Blogs' || post.category === 'PF-AIGC')
+                .map((post) => ({
+                    ...post,
+                    theme: resolveTheme(post.theme, post.id),
+                }))
+                .sort((a, b) => (a.date < b.date ? 1 : -1));
+            setPosts(mapped);
+        });
+        return () => {
+            active = false;
+        };
+    }, []);
+
+    const activeId = selectedId || posts[0]?.id || '';
+    const selectedPost = posts.find((post) => post.id === activeId) ?? posts[0];
 
     return (
         <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto relative">
@@ -69,14 +81,14 @@ export default function BlogsPage() {
                                 onClick={() => setSelectedId(post.id)}
                                 className={cn(
                                     "relative w-full text-left pl-12 pr-4 py-4 rounded-2xl transition-all",
-                                    selectedId === post.id ? "bg-card/60 border border-card-border" : "hover:bg-card/40"
+                                    activeId === post.id ? "bg-card/60 border border-card-border" : "hover:bg-card/40"
                                 )}
                                 initial={{ opacity: 0, y: 16 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: 0.4 }}
                                 type="button"
                             >
-                                <span className="absolute left-1.5 top-6 w-3 h-3 rounded-full border border-card-border bg-background" />
+                                <span className="absolute left-1.5 top-4.5 w-3 h-3 rounded-full border border-card-border bg-background" />
                                 <div className="flex items-center gap-3 text-[11px] font-mono text-muted mb-2">
                                     <span>{post.date}</span>
                                     <span className="w-1 h-1 bg-card-border rounded-full" />
@@ -84,7 +96,7 @@ export default function BlogsPage() {
                                         {post.category}
                                     </span>
                                 </div>
-                                <h3 className={cn("text-xl md:text-2xl font-semibold text-foreground mb-2", selectedId === post.id && themeTokens[post.theme].accent)}>
+                                <h3 className={cn("text-xl md:text-2xl font-semibold text-foreground mb-2", activeId === post.id && themeTokens[post.theme].accent)}>
                                     {post.title}
                                 </h3>
                                 <p className="text-sm text-muted-foreground line-clamp-2">

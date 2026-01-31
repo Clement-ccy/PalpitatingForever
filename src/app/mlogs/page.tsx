@@ -1,14 +1,13 @@
 "use client";
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Disc3, Pause, SkipBack, SkipForward, Volume2, Star, Clock, Mic2, PlayCircle, Music } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 import { renderNotionBlocks } from '@/components/notion/NotionBlockRenderer';
 import { cn } from '@/lib/utils';
-import { getFallbackTheme, mapNotionPage, type NotionBlock } from '@/lib/notion-utils';
-import { mapNotionBlock } from '@/lib/notion-mappers';
-import notionData from '@/data/refs/notion-pages.json';
+import { getFallbackTheme, type NotionBlock } from '@/lib/notion-utils';
+import { fetchNotionBlocks, fetchNotionPages } from '@/lib/notion-data';
 
 const themeTokens = {
     rose: {
@@ -101,48 +100,52 @@ export default function MusicPage() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [selectedId, setSelectedId] = useState<string>('');
   const [selectedBlocks, setSelectedBlocks] = useState<NotionBlock[]>([]);
+  const [mlogs, setMlogs] = useState<MlogItem[]>([]);
 
-  const mlogs = useMemo<MlogItem[]>(() => (
-    (notionData.results as unknown[])
-        .map(mapNotionPage)
+  useEffect(() => {
+    let active = true;
+    fetchNotionPages().then((pages) => {
+      if (!active) return;
+      const mapped = pages
         .filter((post) => post.category === 'Mlogs')
         .map((post) => {
-            const [trackTitle, artistName] = post.title.split(' - ');
-            const type = getMlogType(post.area);
-            return {
-                id: post.id,
-                title: trackTitle || post.title,
-                artist: artistName || post.summary || 'Unknown Artist',
-                cover: post.cover || DEFAULT_COVER,
-                type,
-                date: post.date,
-                description: post.summary,
-                theme: resolveTheme(post.theme, post.id),
-                rating: post.rate,
-            };
-        })
-  ), []);
+          const [trackTitle, artistName] = post.title.split(' - ');
+          const type = getMlogType(post.area);
+          return {
+            id: post.id,
+            title: trackTitle || post.title,
+            artist: artistName || post.summary || 'Unknown Artist',
+            cover: post.cover || DEFAULT_COVER,
+            type,
+            date: post.date,
+            description: post.summary,
+            theme: resolveTheme(post.theme, post.id),
+            rating: post.rate,
+          };
+        });
+      setMlogs(mapped);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
-  const selectedLog = mlogs.find((log) => log.id === selectedId) ?? mlogs[0];
+  const activeId = selectedId || mlogs[0]?.id || '';
+  const selectedLog = mlogs.find((log) => log.id === activeId) ?? mlogs[0];
   const selectedTheme = selectedLog?.theme ?? 'blue';
   const selectedThemeTokens = getThemeToken(selectedTheme);
 
   useEffect(() => {
-    if (!selectedLog) return;
-    setSelectedId(selectedLog.id);
-  }, [selectedLog]);
-
-  useEffect(() => {
-    if (!selectedId) return;
-    import(`@/data/refs/blocks-${selectedId}.json`)
-      .then((data) => {
-        const blocks = (data.results as unknown[]).map(mapNotionBlock);
-        setSelectedBlocks(blocks);
-      })
-      .catch(() => {
-        setSelectedBlocks([]);
-      });
-  }, [selectedId]);
+    if (!activeId) return;
+    let active = true;
+    fetchNotionBlocks(activeId).then((blocks) => {
+      if (!active) return;
+      setSelectedBlocks(blocks);
+    });
+    return () => {
+      active = false;
+    };
+  }, [activeId]);
 
   return (
     <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto flex flex-col gap-12 relative">
@@ -285,7 +288,7 @@ export default function MusicPage() {
                       onClick={() => setSelectedId(log.id)}
                       className={cn(
                           "p-4 flex gap-4 group cursor-pointer rounded-2xl border-card-border transition-all shadow-sm",
-                          selectedId === log.id ? "border-foreground/50 bg-card" : "hover:border-card-border/80"
+                          activeId === log.id ? "border-foreground/50 bg-card" : "hover:border-card-border/80"
                       )}
                   >
 

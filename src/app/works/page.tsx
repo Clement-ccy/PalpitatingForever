@@ -1,13 +1,13 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Briefcase, ExternalLink, X } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 import { cn } from '@/lib/utils';
-import { getFallbackTheme, mapNotionPage } from '@/lib/notion-utils';
-import notionData from '@/data/refs/notion-pages.json';
+import { getFallbackTheme } from '@/lib/notion-utils';
+import { fetchNotionPages } from '@/lib/notion-data';
 
 const themeTokens = {
     emerald: {
@@ -68,23 +68,32 @@ const resolveTheme = (theme: string | null, id: string): keyof typeof themeToken
 
 export default function WorksPage() {
   const [selectedId, setSelectedId] = useState<string | null>(null);
-  const works = useMemo<WorkCard[]>(() => (
-    (notionData.results as unknown[])
-        .map(mapNotionPage)
+  const [works, setWorks] = useState<WorkCard[]>([]);
+
+  useEffect(() => {
+    let active = true;
+    fetchNotionPages().then((pages) => {
+      if (!active) return;
+      const mapped = pages
         .filter((post) => post.category === 'Works')
         .map((post) => ({
-            id: post.id,
-            title: post.title,
-            category: post.platforms[0] || 'Project',
-            year: post.date.split('-')[0],
-            description: post.summary,
-            tech: post.tags,
-            imageUrl: post.cover || DEFAULT_COVER,
-            link: post.url,
-            role: post.role || 'Creator',
-            theme: resolveTheme(post.theme, post.id),
-        }))
-  ), []);
+          id: post.id,
+          title: post.title,
+          category: post.platforms[0] || 'Project',
+          year: post.date.split('-')[0],
+          description: post.summary,
+          tech: post.tags,
+          imageUrl: post.cover || DEFAULT_COVER,
+          link: post.url,
+          role: post.role || 'Creator',
+          theme: resolveTheme(post.theme, post.id),
+        }));
+      setWorks(mapped);
+    });
+    return () => {
+      active = false;
+    };
+  }, []);
 
   const selectedWork = works.find((work) => work.id === selectedId);
 
