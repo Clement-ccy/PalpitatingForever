@@ -23,10 +23,9 @@
       "type": "audio",
       "audio": {
         "caption": [],
-        "type": "file",
-        "file": {
-          "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/a9c7fd44-0668-42b4-9061-ff227f8fe9a9/HG_-_%E5%90%9B%E3%81%AB%E8%81%B4%E3%81%8B%E3%81%9B%E3%81%9F%E3%81%8B%E3%81%A3%E3%81%9F%E6%AD%8C_%28Original_Artist6_is_MINE%29.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466RX5MMZUV%2F20260131%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260131T124530Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEO3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIQDjgXxeV117Vbk3jnfdu%2FxLQOB%2BjBX8G1%2FOuIvK18J%2B6QIgeY%2FmKbMt59ffWK%2BXmctrkgL8enCAmtORLwzs5KFIVb4qiAQItf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDKg4oyML3CqKF4dwACrcA9nMhBzJnH824EC70dy2aHfKKB2GAfy7bzVijQCNZ3nukojkCLdib4TLBajLLurF%2BSAXICFqnUCoFA54f8O8Gf9IljPOSodppbVaWgon%2Bk3laEyj4dWcGn20BmBmNggHYPbM75z9wDwF%2F0AJaOHJbf8IoK77eBYAyJ7YreUBn9gCUq1%2BR5pFumw4461FlP6DKyzCZHW9ZFOIX5un%2B51%2FCGrTJQgLxWLSyRQ9mz9DvamGJxIQgO3FY1kUpwgPAfvA9PhVn8ddSTQ7UX9W6L8OG%2B6QoYxhbQ8mh4IT2o8XF1CsLrhgpRbDRC8%2BWncMavgU78p3mYq1bbn17VAhCMMPn7RITEZgJd557r1jhSjDxt397i8vBjINIgBoKMl91yMZou8ETeswci2no3JQu%2BiyyYJHeruv8XbhhoO7i4ApuGdq18KD3A9bUwPGkxIfyIE3RZV%2Bu1UWAVi%2BAPNJKKBiCZX8AABOBW3wbTtTHUnuSL8T0VCDw0KFX8U6rBIgDRljl5OvSubUiAK4fUkB2CbSmMCx3%2F8ncrIYE65YwzUOBW51wsRe7sjYNqQB9CaAErgPLy2O2AjCTAJoo9vp4JoG1b2%2Be6hKP%2BUljjMpzr%2BDVcA0UVZ8ErNcCLxA56XYMIzn98sGOqUB0cE96h1LHpr3WQbt7783jCzWxv0MDhIy0NV2sJat05MIKHTf%2FFo2pwHJnN36GyQmjJVLuI0lc%2FO%2FT15Dsq7m2w6ncxikpZdRw2QSNMKOj%2Boh6eIODgGUMd4VaCsakX%2FOZNVWTA8km0Z5C0b5%2F2C8QPcmQM9UOR9ueiMoZfbIFFAyhLpQt8JejZTApzZtZ%2B%2FXP1lZNxp8JWytxe%2FynLCG8e4mj1R6&X-Amz-Signature=8875b15b3e7e0a0bed737f78b76efd0287a078b39a14081effc00d280f4b95a6&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
-          "expiry_time": "2026-01-31T13:45:30.490Z"
+        "type": "external",
+        "external": {
+          "url": "/media/notion/blocks/2f7ec12a-acd9-80fc-81e5-c0abf00548d7.mp3"
         }
       }
     },

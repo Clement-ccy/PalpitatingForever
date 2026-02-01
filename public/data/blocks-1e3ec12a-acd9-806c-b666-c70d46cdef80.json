@@ -23,10 +23,9 @@
       "type": "audio",
       "audio": {
         "caption": [],
-        "type": "file",
-        "file": {
-          "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/068b0a6c-52d9-466a-b711-38f96393bbd1/%E4%BA%88%E6%84%9F_-_%E7%BE%8A%E6%96%87%E5%AD%A6.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB46657PZXVVJ%2F20260131%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260131T124528Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEO3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQChkh912XSukEZzzQzOd4ocal4QuY7YEouoKYbW98X2ngIhAK6i3yvyiRzwHHaXrdU3EXQefpLgjoeyQ1V%2FMYZ3f%2BE7KogECLX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgxLp1p43%2F%2BdPQBOcPwq3ANH41E771Tl9lEyN6vHZQZj5PzCBfKWV7pHITa3zoxX%2F5UETObNwIQT8UAw9gbbBcFGTVM65uWz2Rof3E7S1TbWbZiILd2dbUsviVoczCs5SgLxrn9kW%2B46hCHVTJsZvR0qu9p1BMjXyaspHn%2B1Nn5fIr6pJjL2sfgug4YieU%2F0aoaWpCCuDBjel7jzJCCLG8NIMIXKy3%2F0hpcfvOf3hgZJZvQAShC%2B3LWTi5zyeIw%2Fa13hjghocG6%2FHTzo0WGG%2BXbPfogjfesAV0SXdG2uipAmadFbUF1UyTtiQxEXK4PHMl%2FoHNL8TVvRXzWCK5DBNY%2BOHIMtfWeIXRAs1bXdoBscc470Fe52NBLcTWIfOIP9boKlnJ9xQ67zX1rvGiPJ9MrxjsGtQMyGtalZu7nNbbmqzBU7HjqKIdqzbCWFq%2BQYF3Cqy7SBiM7EJBgWcmezARK4O7EWLYCD5Tj2knuRzGsNioIlHupq8NUFgrFwZ8DAw%2BWXxiiFFNDdOBAR7%2FiFUfwILuaTn9ypJM95MXlASO%2BLPR1%2F%2BFt7WUVNEovrl6HQbR8MrV5s4UqXR9IErH1zp0T%2FBljZditwCzwtooG3keyaCyXExXkqJO133U64ylAb4biC0C9VuhiSpWAfSTCh5%2FfLBjqkASWC60DX%2Fn%2FlaQr4vEVhVh264qyJzL43ZtobZ07yiuR6XWFQizOOM9y6CL25oZc6qUXHlCmV0eejA9QrZeuiUUlCFIOBfIW007ifOO4rmrBZYZvpYczqhEb6k7tG5EXHUOt276CkrUj2Is%2F1Huh46Kffz%2BoMyhOU9G992O%2B7ZdbC8wCuOehJBjTSAsJbrCpOF1Kt47J3Dams3CYUBQqLru4Bqp%2Bh&X-Amz-Signature=daefcd816e390791b68c3f992e0285aedf1738109ef6b373354bb5f8d9c63e05&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
-          "expiry_time": "2026-01-31T13:45:28.784Z"
+        "type": "external",
+        "external": {
+          "url": "/media/notion/blocks/2f7ec12a-acd9-8048-bec4-e1bd75a1b154.mp3"
         }
       }
     },

@@ -23,10 +23,9 @@
       "type": "audio",
       "audio": {
         "caption": [],
-        "type": "file",
-        "file": {
-          "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/6d151727-a83f-43fe-beae-10f62f0d8495/%E6%98%9F%E8%A6%8B%E3%82%8B%E9%A0%83%E3%82%92%E9%81%8E%E3%81%8E%E3%81%A6%E3%82%82_-_HG.mp3?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466R2R5JOI6%2F20260131%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260131T124529Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEO3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDaY2QTLioS1L48bflKigyjiMdxnyonBhO612OvAGpw5gIhAPYe960WHes%2Frp91GNwFuj0qMSHcwUE%2B41msUkh%2F5VnRKogECLX%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgwE6uonxl5U0IWpDAEq3AOugph04oWTDoAmpPp2mHAOFVAAAmlEAAyqiTZwjFN1NLfNR997TEdR8roJZMJ7ttSRji7%2BZbKmiWiEeaJ9%2FpswFHzZ74DSy40s%2BZ7hTiIKGZW3sD44dHErG9RovG0miIgUZDC3mVNnbDfiukMSBm3d4NX%2F6XdjhGe2XnfGMucmWUSutghR4VP56Tpg%2Bpw65gFq0qq29NkGE9M7eJWOO%2BXDGkWWhqUjHj%2FdBFlcXZWLrmmNtyyudAc4Q%2F7sP0ECGwNWvElCrLe7Y8LnLyLrFBGn60jn45kurKJycdFEDi%2FjuRRDKlYMXSI1iAJ7A0iwwq5LDKca8b%2F89cMBRKnO9iL%2FoyeUnYd39wJu80MYJsKMmR4YElYKNwVocGr2aD2EPqW9zTJAlf3VmwdVN4P7j1vI1NxenluC%2FWTMt7jVlQCQOukXaK7RXxbDwDV37aZk2oXobt%2Bmy3AH7HbbhI4Tpjp2MA%2FGE%2B%2BUyhbyjXBUjjCJIPCFbo2XD%2FRXvI8nY9wgs8T0kkaobqAR3mpYGp%2FvgcMNgsKTtm80csyB7JdGREK%2FmEgWt5xZp%2Fxmf9X9C3u5xuGqfjylfXSLx6XqXkZ2%2BlCoL%2F3wgM4MyJPp2EE0kKu29u580GmLDefewSm9nTCh5%2FfLBjqkAYxZ1bYT%2Fw6N7jXmrazv8Lx%2FZnB8DKm2PzTqqfeHc%2FbtKCliqUaP7uB9918Yh9VPoAaAVN1IIL3GscN1RaMbec91Fit65u1T0XKx9n6eSLcLP93XTHNB4L7UbWtBvpbJPL0wZdAlJDvFr1RMyzWFXetjtAqiFDZydJ0Ny1qS%2FOpRV2hmyYvASYSGrq0UMaD5g7V7LlgOA5mqeg1QyFQrEEqw2EhN&X-Amz-Signature=182e2dfde5a3f15d55e55148bc80ebd3d695ce87cd389ac2ecb982038b58c21a&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
-          "expiry_time": "2026-01-31T13:45:29.137Z"
+        "type": "external",
+        "external": {
+          "url": "/media/notion/blocks/2f7ec12a-acd9-80c5-893f-dfdd6cc78a1e.mp3"
         }
       }
     },

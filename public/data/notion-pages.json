@@ -17,7 +17,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/rijksmuseum_jansz_1636.jpg"
+          "url": "/media/notion/pages/1b7ec12a-acd9-80ef-bab5-e6925ceed244.jpg"
         }
       },
       "icon": null,
@@ -202,7 +202,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/met_john_singer_sargent_morocco.jpg"
+          "url": "/media/notion/pages/1d5ec12a-acd9-801b-82a7-f9c948385277.jpg"
         }
       },
       "icon": null,
@@ -342,7 +342,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/nasa_robert_stewart_spacewalk.jpg"
+          "url": "/media/notion/pages/1d6ec12a-acd9-8012-9581-f70e4d896bf8.jpg"
         }
       },
       "icon": null,
@@ -484,7 +484,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/nasa_new_york_city_grid.jpg"
+          "url": "/media/notion/pages/1d6ec12a-acd9-80f2-b14d-f1a052ddf9d8.jpg"
         }
       },
       "icon": null,
@@ -624,7 +624,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb2.jpg"
+          "url": "/media/notion/pages/1e3ec12a-acd9-806c-b666-c70d46cdef80.jpg"
         }
       },
       "icon": null,
@@ -820,7 +820,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/met_georges_seurat_1884.jpg"
+          "url": "/media/notion/pages/1eaec12a-acd9-809b-bba1-df084c6c2573.jpg"
         }
       },
       "icon": null,
@@ -1008,10 +1008,9 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "file",
-        "file": {
-          "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/c4a38603-a516-4e98-8c5d-a3cc79055007/%E4%BB%8E%E5%85%B4%E5%BA%86%E5%88%B0%E6%B5%90%E7%81%9E.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466T2S7TATK%2F20260131%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260131T124523Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEO3%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJHMEUCIF%2F1kqUrQTBB4K%2BDzbPId9h9lkHnDqYxmgGnkmWxo8rvAiEAz5FWsziGkiyyVmB%2BhrbRoPc7DGEXRNWTkQGLlolxZcwqiAQItf%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FARAAGgw2Mzc0MjMxODM4MDUiDPSXtlTUxrsvYBvSvyrcA9TYe1NB9nPfjF4cfO36fAPaa0hGrnvMJBdSxH7HLgXhrGXgQ9z62N6pLnJFWrJWP9XmlI24QY88EEriNU4615p7L3M7prTTmFTiDrJuQ9FeW%2FgaH03CUjkcLBtmYTK2pDSGRxjBlt%2BgsZcqLg5YKMokdZi9jyBNvY7dBoGAF70jn0qmOwK7%2BqRKeDqC0E8veWzZ17EdaukcJIEQUHml73b4kiWyJDNjz8QcDYKqxGbX1Zt20cZT48BGFEK6zdiuJPtLv35UxA07qUmNwTCCxu8OzANFSHZsFXegYvEe64UgSmJycfU0TpsHiMST43JRETix1aRbyokw0L67WvcvSLu%2FxT0REaFfIe2%2Fg2%2FrvC%2FDpELFkiWDmUTX93%2FBwUq46dPzLaN%2FFwNiHeLLzjsDCHNkzsZy3xLn1SUJ42BqOqmVT7coUJbfLEmOcuusS3qlRcGGb2KFO%2BfAPfdrPrPVmWHhuuTFgi8x36vfTKHsyn9dK6Cm9vh1%2FgUtmeACzWHlrfPfZJsP2VQM85FmLCt2rFM9xVHGnst7t65t03Xkbg3q96KPc7tTxH%2Fnxz39DGDs24A82I0FIrBOlH%2BTuGbJ1EtjhxeUzP5Y71j%2FH1nC72gWqMjX7TAqaaqN8LlZMMPn98sGOqUB93IHb5CEkuc%2FCCaqKUq2p59yoORNU4s3GmQ2ZRSt7XFpCx0sFWBi%2FmybEXtbCAhD9Lm8NaipnZMZKSOXY3uxUtfa1fk59HfnBOJo0PBxywmfe1TAU63hyAla5wD%2BZyPyEe6VABAbOpYaQOdMsoNE48CeuVByiVgasxbC%2BA2ExQMxyo0%2BQ2u%2BegFezQL%2FhHSkKKOpKURKncdQ3UIiccdHT6pwD1ee&X-Amz-Signature=f5b908020dd0c8a1b7ab3ea5a81eace224c95021c5012b1bf9e62d758ff83ce2&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
-          "expiry_time": "2026-01-31T13:45:23.173Z"
+        "type": "external",
+        "external": {
+          "url": "/media/notion/pages/204ec12a-acd9-8098-b7a5-cbcf197114d5.jpg"
         }
       },
       "icon": null,
@@ -1207,7 +1206,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/gradients_11.jpg"
+          "url": "/media/notion/pages/209ec12a-acd9-80f9-9ce3-f3ebe309bd57.jpg"
         }
       },
       "icon": null,
@@ -1347,7 +1346,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb4.jpg"
+          "url": "/media/notion/pages/20aec12a-acd9-80f6-992e-edc813ee2936.jpg"
         }
       },
       "icon": null,
@@ -1527,7 +1526,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/gradients_5.png"
+          "url": "/media/notion/pages/22cec12a-acd9-80ae-85d2-c88c02d9af15.png"
         }
       },
       "icon": null,
@@ -1663,7 +1662,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/nasa_robert_stewart_spacewalk_2.jpg"
+          "url": "/media/notion/pages/269ec12a-acd9-8044-8ee1-e064bb720bf0.jpg"
         }
       },
       "icon": null,
@@ -1799,7 +1798,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb2.jpg"
+          "url": "/media/notion/pages/26aec12a-acd9-809f-b03d-d89b0e6da1ed.jpg"
         }
       },
       "icon": null,
@@ -1953,7 +1952,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb3.jpg"
+          "url": "/media/notion/pages/26aec12a-acd9-80bf-9a77-c298c89f22cf.jpg"
         }
       },
       "icon": null,
@@ -2111,7 +2110,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/met_goya_1789.jpg"
+          "url": "/media/notion/pages/26bec12a-acd9-8014-817e-c65e1763b763.jpg"
         }
       },
       "icon": null,
@@ -2247,7 +2246,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/woodcuts_7.jpg"
+          "url": "/media/notion/pages/26bec12a-acd9-80cd-907a-c6e5db0227aa.jpg"
         }
       },
       "icon": null,
@@ -2401,7 +2400,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/solid_yellow.png"
+          "url": "/media/notion/pages/26dec12a-acd9-800c-9753-f716992e9f4d.png"
         }
       },
       "icon": null,
@@ -2537,7 +2536,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/met_gerome_1890.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-8000-86ec-d5aa1823e854.jpg"
         }
       },
       "icon": null,
@@ -2691,7 +2690,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb2.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-800d-a2a6-f29c856163d4.jpg"
         }
       },
       "icon": null,
@@ -2827,7 +2826,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb1.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-804f-b14c-f8f662ec0d7f.jpg"
         }
       },
       "icon": null,
@@ -2981,7 +2980,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/woodcuts_10.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-805f-b375-e40c25284a4f.jpg"
         }
       },
       "icon": null,
@@ -3135,7 +3134,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/woodcuts_sekka_2.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-8074-91f2-cff0c437a967.jpg"
         }
       },
       "icon": null,
@@ -3271,7 +3270,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/met_silk_kashan_carpet.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-809d-a457-f291014e800e.jpg"
         }
       },
       "icon": null,
@@ -3425,7 +3424,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb4.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-80a2-8fbb-c9b874d9ef8d.jpg"
         }
       },
       "icon": null,
@@ -3561,7 +3560,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/woodcuts_16.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-80b5-aba4-f9175d5f57c2.jpg"
         }
       },
       "icon": null,
@@ -3715,7 +3714,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/woodcuts_6.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-80bf-9aa6-ceb5d1baeb35.jpg"
         }
       },
       "icon": null,
@@ -3869,7 +3868,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb4.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-80de-819d-e6c5e30ad25d.jpg"
         }
       },
       "icon": null,
@@ -4005,7 +4004,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb1.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-80ec-ab51-fe4210145884.jpg"
         }
       },
       "icon": null,
@@ -4159,7 +4158,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/met_gerome_1890.jpg"
+          "url": "/media/notion/pages/271ec12a-acd9-80fe-9fa2-dad05bd310a8.jpg"
         }
       },
       "icon": null,
@@ -4313,7 +4312,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/rijksmuseum_rembrandt_1642.jpg"
+          "url": "/media/notion/pages/275ec12a-acd9-8073-b65e-cfbf17343691.jpg"
         }
       },
       "icon": null,
@@ -4449,7 +4448,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb3.jpg"
+          "url": "/media/notion/pages/2adec12a-acd9-80e0-8206-e56734087a8c.jpg"
         }
       },
       "icon": null,
@@ -4589,7 +4588,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/webb2.jpg"
+          "url": "/media/notion/pages/2baec12a-acd9-809c-885b-f32eeed993fb.jpg"
         }
       },
       "icon": null,
@@ -4741,7 +4740,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/met_joseph_hidley_1870.jpg"
+          "url": "/media/notion/pages/2d0ec12a-acd9-80ce-bb76-c4efa83a3905.jpg"
         }
       },
       "icon": null,
@@ -4903,7 +4902,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://www.notion.so/images/page-cover/woodcuts_1.jpg"
+          "url": "/media/notion/pages/2f5ec12a-acd9-80cf-9f39-fe46b9509212.jpg"
         }
       },
       "icon": null,
@@ -5083,7 +5082,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=800&auto=format&fit=crop"
+          "url": "/media/notion/pages/2f7ec12a-acd9-8020-9f9c-ff9b86662ac2.jpg"
         }
       },
       "icon": null,
@@ -5289,7 +5288,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop"
+          "url": "/media/notion/pages/2f7ec12a-acd9-8042-96d6-ef6d3301095e.jpg"
         }
       },
       "icon": null,
@@ -5495,7 +5494,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://images.unsplash.com/photo-1558486012-817176f84c6d?q=80&w=800&auto=format&fit=crop"
+          "url": "/media/notion/pages/2f7ec12a-acd9-808d-a585-e13b332ec888.jpg"
         }
       },
       "icon": null,
@@ -5886,7 +5885,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?q=80&w=800&auto=format&fit=crop"
+          "url": "/media/notion/pages/2f7ec12a-acd9-80c9-b09f-f61e8b91f07a.jpg"
         }
       },
       "icon": null,
@@ -6092,7 +6091,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://images.unsplash.com/photo-1642427749670-f20e2e76ed8c?q=80&w=800&auto=format&fit=crop"
+          "url": "/media/notion/pages/2f7ec12a-acd9-80f8-b0c2-fb61c49f5e4a.jpg"
         }
       },
       "icon": null,
@@ -6298,7 +6297,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop"
+          "url": "/media/notion/pages/2f7ec12a-acd9-80fb-8a54-fab433255534.jpg"
         }
       },
       "icon": null,
@@ -6493,5 +6492,5 @@
   "has_more": false,
   "type": "page_or_data_source",
   "page_or_data_source": {},
-  "request_id": "548880d4-3f71-44ec-9873-05681c34379b"
+  "request_id": "26f99198-a3ac-4772-8233-ae41992d455d"
 }

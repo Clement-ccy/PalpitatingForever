@@ -35,8 +35,8 @@ jobs:
 
       - name: Commit and push updates
         run: |
-          if [ -n "$(git status --porcelain public/data)" ]; then
-            git add public/data
+          if [ -n "$(git status --porcelain public/data public/media/notion)" ]; then
+            git add public/data public/media/notion
             git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" commit -m "chore(data): sync notion"
             git push
           else

@@ -63,4 +63,5 @@ NOTION_TOKEN=... npm run fetch-notion
 
 ## NOTES
 - Notion data JSONs in `public/data/` are generated artifacts.
+- Notion file assets are mirrored to `public/media/notion/blocks` and page covers to `public/media/notion/pages`.
 - `next.config.ts` allows remote images from Unsplash, Giphy, Notion S3, and notion.so.
