@@ -6,8 +6,10 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Calendar, Tag, ChevronLeft, Share2, Bookmark } from 'lucide-react';
 import { renderNotionBlocks } from '@/components/notion/NotionBlockRenderer';
-import { NotionBlock, NotionPage } from '@/lib/notion-utils';
-import { fetchNotionBlocks, fetchNotionPages } from '@/lib/notion-data';
+import type { NotionBlock, NotionPage } from '@/lib/notion/types';
+import { fetchNotionBlocks, fetchNotionPages } from '@/lib/notion/client';
+import { trackEvent } from '@/lib/analytics/client';
+import { Comments } from '@/components/comments/Comments';
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1519638831568-d9897f54ed69?q=80&w=800&auto=format&fit=crop';
 
@@ -46,6 +48,12 @@ export default function BlogSlugPage({ params }: { params: Promise<{ slug: strin
   useEffect(() => {
     if (!postId) return;
     let active = true;
+    trackEvent({
+      site: 'main',
+      name: 'blog_detail_view',
+      path: `/blogs/${postId}`,
+      title: post?.title ?? null,
+    });
     fetchNotionBlocks(postId).then((data) => {
       if (!active) return;
       setBlocks(data);
@@ -53,7 +61,7 @@ export default function BlogSlugPage({ params }: { params: Promise<{ slug: strin
     return () => {
       active = false;
     };
-  }, [postId]);
+  }, [postId, post?.title]);
 
   if (!post) {
     if (isLoading) {
@@ -151,6 +159,14 @@ export default function BlogSlugPage({ params }: { params: Promise<{ slug: strin
             >
                 <NotionRenderer blocks={blocks} />
             </motion.div>
+
+            <Comments
+              site="main"
+              pageKey={post.id}
+              pageUrl={`/blogs/${post.id}`}
+              pageTitle={post.title}
+              accentClassName="text-accent-blogs"
+            />
 
             {/* Footer Navigation */}
             <footer className="mt-32 pt-12 border-t border-card-border">
