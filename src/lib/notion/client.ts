@@ -1,6 +1,6 @@
-import { mapNotionPage, type NotionPage } from '@/lib/notion-utils';
-import { mapNotionBlock } from '@/lib/notion-mappers';
-import type { NotionBlock } from '@/lib/notion-utils';
+import type { NotionBlock, NotionPage } from './types';
+import { mapNotionBlock } from './mappers';
+import { mapNotionPage } from './utils';
 
 type NotionPagesResponse = {
   results?: unknown[];

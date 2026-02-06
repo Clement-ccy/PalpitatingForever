@@ -1,5 +1,4 @@
-
-import { NotionBlock, NotionPage } from './notion-utils';
+import type { NotionBlock } from './types';
 
 /**
  * Maps a raw Notion Block object to a clean NotionBlock interface
@@ -48,17 +47,17 @@ export function mapNotionBlock(rawBlock: unknown): NotionBlock {
     case 'numbered_list_item':
     case 'quote':
     case 'toggle':
-      case 'to_do':
-        content = blockValue.rich_text;
-        if (type === 'to_do') {
-          const todoValue = asRecord(rawBlock.to_do);
-          content = {
-            rich_text: todoValue.rich_text ?? [],
-            checked: Boolean(todoValue.checked),
-          };
-        }
+    case 'to_do':
+      content = blockValue.rich_text;
+      if (type === 'to_do') {
+        const todoValue = asRecord(rawBlock.to_do);
+        content = {
+          rich_text: todoValue.rich_text ?? [],
+          checked: Boolean(todoValue.checked),
+        };
+      }
       break;
-    case 'code':
+    case 'code': {
       const codeValue = asRecord(rawBlock.code);
       content = {
         rich_text: codeValue.rich_text ?? [],
@@ -66,7 +65,8 @@ export function mapNotionBlock(rawBlock: unknown): NotionBlock {
         caption: codeValue.caption ?? [],
       };
       break;
-    case 'image':
+    }
+    case 'image': {
       const imageValue = asRecord(rawBlock.image);
       const imageType = asString(imageValue.type);
       const imageExternal = asRecord(imageValue.external);
@@ -78,7 +78,8 @@ export function mapNotionBlock(rawBlock: unknown): NotionBlock {
         caption: imageValue.caption ?? [],
       };
       break;
-    case 'callout':
+    }
+    case 'callout': {
       const calloutValue = asRecord(rawBlock.callout);
       const calloutIcon = asRecord(calloutValue.icon);
       const calloutExternal = asRecord(calloutIcon.external);
@@ -88,20 +89,22 @@ export function mapNotionBlock(rawBlock: unknown): NotionBlock {
         color: asString(calloutValue.color),
       };
       break;
+    }
     case 'equation':
       content = asRecord(rawBlock.equation).expression;
       break;
-    case 'bookmark':
+    case 'bookmark': {
       const bookmarkValue = asRecord(rawBlock.bookmark);
       content = {
         url: asString(bookmarkValue.url),
         caption: bookmarkValue.caption ?? [],
       };
       break;
+    }
     case 'video':
     case 'file':
     case 'pdf':
-    case 'audio':
+    case 'audio': {
       const mediaValue = asRecord(rawBlock[type]);
       const mediaType = asString(mediaValue.type);
       const mediaExternal = asRecord(mediaValue.external);
@@ -113,22 +116,25 @@ export function mapNotionBlock(rawBlock: unknown): NotionBlock {
         caption: mediaValue.caption ?? [],
       };
       break;
+    }
     case 'table_of_contents':
       content = rawBlock.table_of_contents ?? null;
       break;
-    case 'table':
+    case 'table': {
       const tableValue = asRecord(rawBlock.table);
       content = {
         has_column_header: Boolean(tableValue.has_column_header),
         has_row_header: Boolean(tableValue.has_row_header),
       };
       break;
-    case 'table_row':
+    }
+    case 'table_row': {
       const rowValue = asRecord(rawBlock.table_row);
       content = {
         cells: rowValue.cells ?? [],
       };
       break;
+    }
     case 'breadcrumb':
     case 'embed':
       content = type === 'breadcrumb' ? null : rawBlock.embed ?? null;
@@ -157,6 +163,3 @@ export function mapNotionBlock(rawBlock: unknown): NotionBlock {
 /**
  * Interface for a full post with its content blocks
  */
-export interface FullPost extends NotionPage {
-  blocks: NotionBlock[];
-}
