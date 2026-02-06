@@ -5,7 +5,10 @@ import { TopDock } from '@/components/ui/top-dock';
 import { TopLeftDock } from '@/components/ui/top-left-dock';
 import { TopRightDock } from '@/components/ui/top-right-dock';
 import { ThemeProvider } from '@/components/theme-provider';
+import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
+import AudioPlayer from '@/components/player/AudioPlayer';
 import './globals.css';
+
 
 export const metadata: Metadata = {
   title: 'PF Station',
@@ -21,9 +24,11 @@ export default function RootLayout({
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <body className="font-sans min-h-screen relative selection:bg-white/20 overflow-x-hidden flex flex-col items-center p-4 md:p-8 bg-background text-foreground transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+          <AnalyticsTracker />
           <TopLeftDock />
           <TopDock />
           <TopRightDock />
+          <AudioPlayer />
           <div className="aurora-blob aurora-1" />
           <div className="aurora-blob aurora-2" />
           <div className="aurora-blob aurora-3" />
