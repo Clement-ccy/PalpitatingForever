@@ -1,13 +1,17 @@
 "use client";
 
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowDown, Camera, X } from 'lucide-react';
+import { ArrowDown, Camera, LayoutGrid, LayoutList, X } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 import { cn } from '@/lib/utils';
-import { getFallbackTheme, type NotionBlock } from '@/lib/notion-utils';
-import { fetchNotionBlocks, fetchNotionPages } from '@/lib/notion-data';
+import { getFallbackTheme } from '@/lib/notion/utils';
+import type { NotionBlock } from '@/lib/notion/types';
+import { fetchNotionBlocks, fetchNotionPages } from '@/lib/notion/client';
+import { trackEvent } from '@/lib/analytics/client';
+import { Comments } from '@/components/comments/Comments';
 
 interface Photo {
   id: string;
@@ -51,6 +55,8 @@ export default function PlogsPage() {
     const [selectedPlogId, setSelectedPlogId] = useState<string>('');
     const [plogBlocks, setPlogBlocks] = useState<NotionBlock[]>([]);
     const [plogs, setPlogs] = useState<PlogItem[]>([]);
+    const [viewMode, setViewMode] = useState<'list' | 'waterfall'>('list');
+    const trackedWaterfallIdRef = useRef('');
 
     useEffect(() => {
         let active = true;
@@ -81,6 +87,12 @@ export default function PlogsPage() {
     useEffect(() => {
         if (!activePlogId) return;
         let active = true;
+        trackEvent({
+          site: 'main',
+          name: 'plog_detail_select',
+          path: `/plogs/${activePlogId}`,
+          title: selectedPlog?.title ?? null,
+        });
         fetchNotionBlocks(activePlogId).then((blocks) => {
             if (!active) return;
             setPlogBlocks(blocks);
@@ -88,7 +100,7 @@ export default function PlogsPage() {
         return () => {
             active = false;
         };
-    }, [activePlogId]);
+    }, [activePlogId, selectedPlog?.title]);
 
     const photos = useMemo<Photo[]>(() => (
         plogBlocks
@@ -110,8 +122,20 @@ export default function PlogsPage() {
             .filter((photo) => photo.url.length > 0)
     ), [plogBlocks, selectedPlog]);
 
+    useEffect(() => {
+      if (!activePlogId || photos.length === 0) return;
+      if (trackedWaterfallIdRef.current === activePlogId) return;
+      trackEvent({
+        site: 'main',
+        name: 'plog_waterfall_load',
+        path: `/plogs/${activePlogId}`,
+        title: selectedPlog?.title ?? null,
+      });
+      trackedWaterfallIdRef.current = activePlogId;
+    }, [activePlogId, photos.length, selectedPlog?.title]);
+
   return (
-     <div className="min-h-screen pt-32 px-4 pb-32 max-w-400 mx-auto relative z-10 text-foreground">
+      <div className="min-h-screen pt-32 px-4 pb-32 max-w-400 mx-auto relative z-10 text-foreground">
         {/* Background Glow */}
         <div className="absolute top-10 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[160px] rounded-full -z-10" />
         <div className="absolute top-1/3 right-1/4 w-md h-112 bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[160px] rounded-full -z-10" />
@@ -144,73 +168,104 @@ export default function PlogsPage() {
             </div>
       </header>
 
-      <section className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {plogs.map((plog) => (
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex gap-2">
+          <button
+            type="button"
+            onClick={() => setViewMode('list')}
+            className={cn('inline-flex items-center gap-2 px-3 py-2 rounded-full text-xs font-mono border', viewMode === 'list' ? 'bg-foreground text-background border-foreground' : 'bg-card border-card-border text-muted')}
+          >
+            <LayoutList size={12} /> 列表视图
+          </button>
+          <button
+            type="button"
+            onClick={() => setViewMode('waterfall')}
+            className={cn('inline-flex items-center gap-2 px-3 py-2 rounded-full text-xs font-mono border', viewMode === 'waterfall' ? 'bg-foreground text-background border-foreground' : 'bg-card border-card-border text-muted')}
+          >
+            <LayoutGrid size={12} /> 瀑布流视图
+          </button>
+        </div>
+      </div>
+
+      {viewMode === 'list' && (
+        <section className="mb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {plogs.map((plog) => (
             <SpotlightCard
-                key={plog.id}
-                onClick={() => setSelectedPlogId(plog.id)}
-                className={cn(
-                    "p-4 rounded-2xl border border-card-border cursor-pointer transition-all",
-                    activePlogId === plog.id ? "bg-card/60" : "hover:bg-card/40",
-                    glowThemes[plog.theme]
-                )}
+              key={plog.id}
+              onClick={() => setSelectedPlogId(plog.id)}
+              className={cn(
+                'p-4 rounded-2xl border border-card-border cursor-pointer transition-all',
+                activePlogId === plog.id ? 'bg-card/60' : 'hover:bg-card/40',
+                glowThemes[plog.theme]
+              )}
             >
-                <div className="flex items-center gap-4">
-                    <div className="w-16 h-16 rounded-xl overflow-hidden bg-card-border/30 relative">
-                        {plog.cover ? (
-                            <Image src={plog.cover} alt={plog.title} fill className="object-cover" />
-                        ) : null}
-                    </div>
-                    <div>
-                        <p className="text-xs font-mono text-muted">{plog.date}</p>
-                        <h3 className="text-lg font-semibold text-foreground">{plog.title}</h3>
-                        <p className="text-xs text-muted line-clamp-1">{plog.summary || 'Visual log collection'}</p>
-                    </div>
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-xl overflow-hidden bg-card-border/30 relative">
+                  {plog.cover ? (
+                    <Image src={plog.cover} alt={plog.title} fill className="object-cover" />
+                  ) : null}
                 </div>
+                <div>
+                  <p className="text-xs font-mono text-muted">{plog.date}</p>
+                  <h3 className="text-lg font-semibold text-foreground">{plog.title}</h3>
+                  <p className="text-xs text-muted line-clamp-1">{plog.summary || 'Visual log collection'}</p>
+                  <div className="mt-2">
+                    <Link
+                      href={`/plogs/${plog.id}`}
+                      className="text-[10px] font-mono text-accent-plogs hover:underline"
+                    >
+                      查看详情
+                    </Link>
+                  </div>
+                </div>
+              </div>
             </SpotlightCard>
-        ))}
-      </section>
+          ))}
+        </section>
+      )}
       
       {/* Masonry Grid */}
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-        {photos.map((photo, index) => (
+      {viewMode === 'waterfall' && (
+        <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+          {photos.map((photo, index) => (
             <motion.div
-                key={photo.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                onClick={() => setSelectedPhoto(photo)}
-                className="break-inside-avoid relative group cursor-zoom-in mb-6"
+              key={photo.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
+              onClick={() => {
+                setSelectedPhoto(photo);
+              }}
+              className="break-inside-avoid relative group cursor-zoom-in mb-6"
             >
-                <div className={cn(
-                    "rounded-2xl overflow-hidden border border-card-border transition-all duration-300 bg-card",
-                    glowThemes[photo.theme]
-                )}>
-                    {/* Image */}
-                    <Image
-                        src={photo.url}
-                        alt={photo.title}
-                        width={800}
-                        height={600}
-                        className={cn("w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105", photo.theme === 'rose' || photo.theme === 'emerald' ? "grayscale group-hover:grayscale-0" : "")}
-                    />
+              <div className={cn(
+                'rounded-2xl overflow-hidden border border-card-border transition-all duration-300 bg-card',
+                glowThemes[photo.theme]
+              )}>
+                <Image
+                  src={photo.url}
+                  alt={photo.title}
+                  width={800}
+                  height={600}
+                  className={cn('w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105', photo.theme === 'rose' || photo.theme === 'emerald' ? 'grayscale group-hover:grayscale-0' : '')}
+                />
 
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                        <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                            <h3 className="text-foreground font-medium text-lg mb-2">{photo.title}</h3>
-                            {photo.caption && (
-                                <span className="px-2 py-1 bg-background/50 backdrop-blur-md border border-card-border rounded-md text-[10px] font-mono text-muted-foreground inline-flex items-center gap-1.5">
-                                    <Camera size={10} /> {photo.caption}
-                                </span>
-                            )}
-                        </div>
-                    </div>
+                <div className="absolute inset-0 bg-linear-to-t from-background/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
+                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <h3 className="text-foreground font-medium text-lg mb-2">{photo.title}</h3>
+                    {photo.caption && (
+                      <span className="px-2 py-1 bg-background/50 backdrop-blur-md border border-card-border rounded-md text-[10px] font-mono text-muted-foreground inline-flex items-center gap-1.5">
+                        <Camera size={10} /> {photo.caption}
+                      </span>
+                    )}
+                  </div>
                 </div>
+              </div>
             </motion.div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
        {/* Load More Indicator */}
        <div className="flex justify-center mt-12 mb-12">
@@ -269,6 +324,16 @@ export default function PlogsPage() {
             </motion.div>
         )}
       </AnimatePresence>
+
+       {viewMode === 'waterfall' && selectedPlog && (
+         <Comments
+           site="main"
+           pageKey={selectedPlog.id}
+           pageUrl={`/plogs/${selectedPlog.id}`}
+           pageTitle={selectedPlog.title}
+           accentClassName="text-accent-plogs"
+         />
+       )}
     </div>
   );
 }

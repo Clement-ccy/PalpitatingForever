@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUpRight, Briefcase, ExternalLink, X } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 import { cn } from '@/lib/utils';
-import { getFallbackTheme } from '@/lib/notion-utils';
-import { fetchNotionPages } from '@/lib/notion-data';
+import { getFallbackTheme } from '@/lib/notion/utils';
+import { fetchNotionPages } from '@/lib/notion/client';
+import { trackEvent } from '@/lib/analytics/client';
 
 const themeTokens = {
     emerald: {
@@ -139,7 +141,15 @@ export default function WorksPage() {
           <motion.div
             key={work.id}
             layoutId={`card-container-${work.id}`}
-            onClick={() => setSelectedId(work.id)}
+            onClick={() => {
+              trackEvent({
+                site: 'main',
+                name: 'work_card_open',
+                path: `/works/${work.id}`,
+                title: work.title,
+              });
+              setSelectedId(work.id);
+            }}
             className="cursor-pointer"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -153,12 +163,13 @@ export default function WorksPage() {
                         src={work.imageUrl} 
                         alt={work.title}
                         fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                         className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
                      />
                     <div className="absolute top-4 right-4 z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                            <div className="w-10 h-10 rounded-full bg-background/50 backdrop-blur-md flex items-center justify-center border border-card-border">
-                            <ArrowUpRight className="text-foreground" size={18} />
-                            </div>
+                      <div className="w-10 h-10 rounded-full bg-background/50 backdrop-blur-md flex items-center justify-center border border-card-border">
+                        <ArrowUpRight className="text-foreground" size={18} />
+                      </div>
                     </div>
                 </div>
 
@@ -174,7 +185,7 @@ export default function WorksPage() {
                             {work.title}
                         </h3>
                         <p className="text-sm text-muted line-clamp-2 mb-4">
-                            {work.description}
+                          {work.description}
                         </p>
                         <div className="flex gap-2 flex-wrap mt-auto">
                             {work.tech.map((tech) => (
@@ -219,7 +230,7 @@ export default function WorksPage() {
             >
                 {/* Close Button */}
                 <button 
-                    onClick={(e) => { e.stopPropagation(); setSelectedId(null); }}
+                    onClick={(event) => { event.stopPropagation(); setSelectedId(null); }}
                     className="absolute top-4 right-4 p-2 bg-background/50 rounded-full border border-card-border hover:bg-foreground/10 transition-colors z-30 text-foreground"
                 >
                     <X size={20} />
@@ -230,6 +241,7 @@ export default function WorksPage() {
                         src={selectedWork.imageUrl} 
                         alt={selectedWork.title}
                         fill
+                        sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
                         className="object-cover"
                      />
                      <div className="absolute inset-0 bg-background/40"></div>
@@ -244,50 +256,80 @@ export default function WorksPage() {
                     </motion.div>
                  </div>
 
-              <div className="p-8 overflow-y-auto custom-scrollbar">
-                <motion.div layoutId={`card-content-${selectedId}`}>
-                   <div className="flex items-center justify-between mb-8">
+               <div className="p-8 overflow-y-auto custom-scrollbar">
+                 <motion.div layoutId={`card-content-${selectedId}`}>
+                   <div className="flex items-center justify-between mb-8 flex-wrap gap-4">
                         <div className="flex items-center gap-4">
                              {/* User Avatar Placeholder */}
                              <div className="w-10 h-10 rounded-full bg-card border border-card-border overflow-hidden relative">
-                                <Image src="/avatar.png" alt="Author" fill className="object-cover" />
+                                <Image src="/media/avatar.png" alt="Author" fill sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw" className="object-cover" />
                              </div>
                              <div>
                                 <p className="text-sm font-medium text-foreground">Clement Chen</p>
                                 <p className="text-xs text-muted">{selectedWork.role}</p>
                              </div>
                         </div>
-                        <a href={selectedWork.link} className="flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-bold rounded-full hover:opacity-80 transition-opacity">
-                            View Live <ExternalLink size={14} />
-                        </a>
+                        <div className="flex flex-wrap gap-2">
+                          <Link
+                            href={`/works/${selectedWork.id}`}
+                            className="flex items-center gap-2 px-5 py-2.5 border border-card-border text-foreground text-sm font-bold rounded-full hover:bg-foreground/5 transition-colors"
+                            onClick={(event) => {
+                              event.stopPropagation();
+                              trackEvent({
+                                site: 'main',
+                                name: 'work_detail_open',
+                                path: `/works/${selectedWork.id}`,
+                                title: selectedWork.title,
+                              });
+                            }}
+                          >
+                            站内详情介绍
+                          </Link>
+                          {selectedWork.link && (
+                            <a
+                              href={selectedWork.link}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-bold rounded-full hover:opacity-80 transition-opacity"
+                              onClick={(event) => {
+                                event.stopPropagation();
+                                trackEvent({
+                                  site: 'main',
+                                  name: 'work_external_click',
+                                  path: `/works/${selectedWork.id}`,
+                                  title: selectedWork.title,
+                                });
+                              }}
+                            >
+                              View Live <ExternalLink size={14} />
+                            </a>
+                          )}
+                        </div>
                    </div>
                   
                    <div className="prose dark:prose-invert max-w-none">
                        <p className="text-foreground/80 text-lg leading-relaxed mb-8">
                         {selectedWork.description}
                        </p>
-                       
-                       <p className="text-muted">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                       </p>
                    </div>
 
-                   <div className="mt-8 pt-8 border-t border-card-border">
-                      <h3 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Technologies Used</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {selectedWork.tech.map((tech) => (
-                            <span key={tech} className="px-3 py-1 bg-card border border-card-border rounded-full text-xs text-muted font-mono">
-                                {tech}
-                            </span>
-                        ))}
-                      </div>
-                   </div>
-                </motion.div>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
+                    <div className="mt-8 pt-8 border-t border-card-border">
+                       <h3 className="text-sm font-bold text-foreground mb-4 uppercase tracking-wider">Technologies Used</h3>
+                       <div className="flex flex-wrap gap-2">
+                         {selectedWork.tech.map((tech) => (
+                             <span key={tech} className="px-3 py-1 bg-card border border-card-border rounded-full text-xs text-muted font-mono">
+                                 {tech}
+                             </span>
+                         ))}
+                       </div>
+                    </div>
+                 </motion.div>
+               </div>
+             </motion.div>
+           </div>
+         )}
+       </AnimatePresence>
+
     </div>
   );
 }
