@@ -66,6 +66,7 @@ export function SpotlightCard({
   return (
     <div
       ref={divRef}
+      onClick={onClick}
       onMouseMove={handleMouseMove}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}

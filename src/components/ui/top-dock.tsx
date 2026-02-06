@@ -3,7 +3,7 @@
 import { MotionValue, motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import Link from 'next/link';
-import { PenTool, Music, Camera, Settings,  FlaskConical, Briefcase } from 'lucide-react';
+import { PenTool, Music, Camera, Settings, User, Link2, Briefcase } from 'lucide-react';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
 
@@ -17,7 +17,8 @@ export const TopDock = () => {
     { name: 'Mlogs', icon: Music, href: '/mlogs' },
     { name: 'Plogs', icon: Camera, href: '/plogs' },
     { name: 'Gears', icon: Settings, href: '/gears' },
-    { name: 'Lab', icon: FlaskConical, href: '/lab' },
+    { name: 'About', icon: User, href: '/about' },
+    { name: 'Links', icon: Link2, href: '/links' },
   ];
 
   return (

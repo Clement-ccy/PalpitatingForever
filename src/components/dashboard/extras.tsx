@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 export function Showcase() {
   return (
-    <Link href="/lab" className="block h-full w-full">
+    <Link href="/about" className="block h-full w-full">
         <SpotlightCard className="h-full w-full relative group overflow-hidden">
             <div className="absolute inset-0 mesh-gradient opacity-40 group-hover:opacity-60 transition-opacity duration-700"></div>
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10 mix-blend-overlay"></div>
@@ -16,10 +16,10 @@ export function Showcase() {
 
             <div className="bottom-0 left-0 p-8 w-full z-10">
                 <div className="inline-block px-3 py-1 bg-card/20 backdrop-blur-md border border-card-border rounded-full text-xs font-mono text-purple-400 dark:text-purple-300 mb-3">
-                    INTERACTIVE LAB / 01
+                    ABOUT / 01
                 </div>
-                <h2 className="text-3xl font-semibold text-foreground mb-2 wrap-break-word">WebGL Experiments</h2>
-                <p className="text-muted max-w-sm line-clamp-2">A collection of shaders and reactive three.js sketches exploring chaos theory.</p>
+                <h2 className="text-3xl font-semibold text-foreground mb-2 wrap-break-word">Who I Am</h2>
+                <p className="text-muted max-w-sm line-clamp-2">Background, focus areas, and the systems behind this site.</p>
             </div>
             
             {/* Decorative 3D-ish Element */}

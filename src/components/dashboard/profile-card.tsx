@@ -8,11 +8,11 @@ export function ProfileCard() {
         <div className="relative">
           <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-card-border shadow-2xl relative z-10">
             <Image
-              src="/avatar.png"
+              src="/media/avatar.png"
               alt="Clement Chen"
-              layout="fill"
-              objectFit="cover"
-              className="grayscale group-hover:grayscale-0 transition-all duration-500"
+              fill
+              sizes="(min-width: 1024px) 33vw, (min-width: 768px) 50vw, 100vw"
+              className="object-cover grayscale group-hover:grayscale-0 transition-all duration-500"
             />
           </div>
           <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-background rounded-full flex items-center justify-center z-20">

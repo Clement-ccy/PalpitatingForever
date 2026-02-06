@@ -74,7 +74,7 @@ const ControlPanel = ({ onClose }: { onClose: () => void }) => {
       initial={{ opacity: 0, x: 100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 100 }}
-      className="fixed top-0 right-0 h-full w-full md:w-96 bg-background/80 backdrop-blur-2xl border-l border-white/10 z-100 p-8 shadow-2xl"
+      className="fixed top-0 right-0 h-full w-full md:w-96 bg-background/80 backdrop-blur-2xl border-l border-white/10 z-50 p-8 shadow-2xl"
     >
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-2">
@@ -124,7 +124,8 @@ const ControlPanel = ({ onClose }: { onClose: () => void }) => {
             {[
               { label: 'Works', href: '/works' },
               { label: 'Blog', href: '/blogs' },
-              { label: 'Lab', href: '/lab' },
+  { label: 'About', href: '/about' },
+  { label: 'Links', href: '/links' },
               { label: 'Gears', href: '/gears' },
             ].map((link) => (
               <a
