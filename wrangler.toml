@@ -1,0 +1,21 @@
+name = "pf-api"
+main = "worker/src/index.ts"
+compatibility_date = "2025-01-01"
+
+[triggers]
+crons = ["10 0 * * *"]
+
+[vars]
+RESEND_FROM = "no-reply@notification.ccy.asia"
+ADMIN_EMAIL = "319788356@qq.com"
+COMMENTS_AUTO_APPROVE = "true"
+ALLOWED_ORIGINS = "https://ccy.asia,https://www.ccy.asia,http://localhost:3000"
+SITE_SLUG = "main"
+ADMIN_SESSION_SECRET = ""
+DATA_SECRET = ""
+ADMIN_SETUP_TOKEN = ""
+
+[[d1_databases]]
+binding = "DATABASE"
+database_name = "pf-database"
+migrations_dir = "worker/migrations"
