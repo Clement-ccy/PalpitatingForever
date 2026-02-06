@@ -5,8 +5,8 @@ import { motion } from 'framer-motion';
 import { Book, Camera, Cpu, Package, Settings, Shield, Star, Terminal } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 import { cn } from '@/lib/utils';
-import { getFallbackTheme } from '@/lib/notion-utils';
-import { fetchNotionPages } from '@/lib/notion-data';
+import { getFallbackTheme } from '@/lib/notion/utils';
+import { fetchNotionPages } from '@/lib/notion/client';
 
 const themeTokens = {
   blue: 'text-blue-400 border-blue-500/20 bg-blue-500/10',

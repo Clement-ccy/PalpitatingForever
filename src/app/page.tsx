@@ -1,4 +1,7 @@
+'use client';
+
 import { BentoGrid, BentoItem } from "@/components/ui/bento-grid";
+
 import { ProfileCard } from "@/components/dashboard/profile-card";
 import { NowPlaying } from "@/components/dashboard/now-playing";
 import { LatestThought } from "@/components/dashboard/latest-thought";
