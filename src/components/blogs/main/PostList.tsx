@@ -7,6 +7,7 @@ import type { NotionPage } from '@/lib/notion/types';
 import { cn } from '@/lib/utils';
 import { BLOG_THEME_TOKENS } from '@/components/blogs/theme';
 import { BentoGrid, BentoItem } from '@/components/ui/bento-grid';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
 
 type BlogItem = NotionPage & { theme: string };
 
@@ -54,7 +55,8 @@ export default function PostList({
       <BentoGrid className="max-w-none grid-cols-1 md:grid-cols-2 xl:grid-cols-2 gap-6 auto-rows-[minmax(240px,auto)]">
         {posts.map((post) => (
           <BentoItem key={post.id} className="border border-card-border bg-card/50">
-            <div className="flex flex-col h-full">
+            <SpotlightCard className="h-full w-full p-0 rounded-3xl border-card-border bg-card/50">
+              <div className="flex flex-col h-full">
               <div className="relative h-48 w-full">
                 <Image
                   src={post.cover || DEFAULT_COVER}
@@ -96,6 +98,7 @@ export default function PostList({
                 </div>
               </div>
             </div>
+            </SpotlightCard>
           </BentoItem>
         ))}
       </BentoGrid>

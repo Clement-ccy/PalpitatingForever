@@ -33,7 +33,7 @@ export const BentoItem = ({
   return (
     <div
       className={cn(
-        "rounded-2xl group/bento transition duration-200 overflow-hidden relative fade-in-up", // Added fade-in animation
+        "rounded-3xl group/bento transition duration-200 overflow-hidden relative fade-in-up", // Added fade-in animation
         // Column Spans
         colSpan === 1 && "md:col-span-1",
         colSpan === 2 && "md:col-span-2",

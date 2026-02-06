@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { SpotlightCard } from '@/components/ui/spotlight-card';
 
 type SidebarWidgetsProps = {
   wechatQrUrl: string;
@@ -29,25 +30,25 @@ export default function SidebarWidgets({
     <div className="space-y-6 w-full">
 
       {/* 微信二维码卡片 */}
-      <div className="group rounded-3xl border border-card-border bg-card/40 backdrop-blur-md transition-all hover:bg-card/60">
-          {wechatQrUrl ? (
-            <div className="relative aspect-[3/1] w-full rounded-xl overflow-hidden border border-card-border/50 bg-white/5">
-                <Image 
-                    src={wechatQrUrl} 
-                    alt="WeChat QR" 
-                    fill 
-                    className="object-cover transition-transform duration-500 group-hover:scale-105" 
-                />
-            </div>
-          ) : (
-            <div className="h-40 w-full bg-card-border/20 rounded-xl flex items-center justify-center text-xs text-muted">
-                QR Placeholder
-            </div>
-          )}
-      </div>
+      <SpotlightCard className="group rounded-3xl border border-card-border bg-card/40 backdrop-blur-md transition-all hover:bg-card/60 p-4">
+        {wechatQrUrl ? (
+          <div className="relative aspect-[3/1] w-full rounded-xl overflow-hidden border border-card-border/50 bg-white/5">
+            <Image
+              src={wechatQrUrl}
+              alt="WeChat QR"
+              fill
+              className="object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </div>
+        ) : (
+          <div className="h-40 w-full bg-card-border/20 rounded-xl flex items-center justify-center text-xs text-muted">
+            QR Placeholder
+          </div>
+        )}
+      </SpotlightCard>
 
       {/* 赞助卡片 */}
-      <div className="rounded-3xl border border-card-border bg-card/40 backdrop-blur-md p-6">
+      <SpotlightCard className="rounded-3xl border border-card-border bg-card/40 backdrop-blur-md p-6">
         <p className="text-[10px] font-mono text-muted uppercase tracking-widest mb-3">Support</p>
         <p className="text-sm text-muted-foreground leading-relaxed">{sponsorText || 'Fuel my creativity.'}</p>
         <a
@@ -58,10 +59,10 @@ export default function SidebarWidgets({
         >
             Sponsor
         </a>
-      </div>
+      </SpotlightCard>
 
       {/* 热门文章 */}
-      <div className="rounded-3xl border border-card-border bg-card/40 backdrop-blur-md p-6">
+      <SpotlightCard className="rounded-3xl border border-card-border bg-card/40 backdrop-blur-md p-6">
         <p className="text-[10px] font-mono text-muted uppercase tracking-widest mb-4">Trending</p>
         <div className="flex flex-col gap-4">
           {hotPosts.map((post, index) => (
@@ -77,10 +78,10 @@ export default function SidebarWidgets({
             </Link>
           ))}
         </div>
-      </div>
+      </SpotlightCard>
 
       {/* Tags - 这里是关键修复点 */}
-      <div className="rounded-3xl border border-card-border bg-card/40 backdrop-blur-md p-6">
+      <SpotlightCard className="rounded-3xl border border-card-border bg-card/40 backdrop-blur-md p-6">
         <p className="text-[10px] font-mono text-muted uppercase tracking-widest mb-4">Topics</p>
         {/* CRITICAL FIX: flex-wrap 允许标签换行，防止撑开宽度 */}
         <div className="flex flex-wrap gap-2">
@@ -90,10 +91,10 @@ export default function SidebarWidgets({
             </span>
           ))}
         </div>
-      </div>
+      </SpotlightCard>
 
       {/* 统计信息 */}
-      <div className="rounded-3xl border border-card-border bg-card/60 p-6 backdrop-blur-md">
+      <SpotlightCard className="rounded-3xl border border-card-border bg-card/60 p-6 backdrop-blur-md">
         <p className="text-xs font-mono text-muted uppercase tracking-widest mb-3">Stats</p>
         <div className="grid grid-cols-2 gap-y-4 gap-x-2 text-sm">
           <div>
@@ -113,7 +114,7 @@ export default function SidebarWidgets({
             <p className="text-xl font-medium text-foreground font-mono">{stats.commentTotal}</p>
           </div>
         </div>
-      </div>
+      </SpotlightCard>
     </div>
   );
 }

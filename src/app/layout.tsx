@@ -5,6 +5,7 @@ import { TopDock } from '@/components/ui/top-dock';
 import { TopLeftDock } from '@/components/ui/top-left-dock';
 import { TopRightDock } from '@/components/ui/top-right-dock';
 import { ThemeProvider } from '@/components/theme-provider';
+import ParticleOverlay from '@/components/ui/particle-overlay';
 import AnalyticsTracker from '@/components/analytics/AnalyticsTracker';
 import AudioPlayer from '@/components/player/AudioPlayer';
 import './globals.css';
@@ -32,6 +33,7 @@ export default function RootLayout({
           <div className="aurora-blob aurora-1" />
           <div className="aurora-blob aurora-2" />
           <div className="aurora-blob aurora-3" />
+          <ParticleOverlay />
           <div className="noise-bg" />
           <main className="relative z-10 w-full max-w-6xl mx-auto pt-24 pb-40">
             {children}
