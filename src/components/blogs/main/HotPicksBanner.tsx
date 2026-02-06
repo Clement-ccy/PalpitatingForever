@@ -43,6 +43,7 @@ export default function HotPicksBanner({ posts }: HotPicksBannerProps) {
               src={active.cover || DEFAULT_COVER}
               alt={active.title}
               fill
+              loading='eager'
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 60vw"
             />

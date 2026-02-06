@@ -23,8 +23,8 @@ export function MapWidget() {
         
         <div className="bg-card backdrop-blur-md border border-card-border rounded-lg p-3 self-start group-hover:bg-background/50 transition-colors">
             <p className="text-[10px] text-muted font-mono mb-1 tracking-wider uppercase">Live Location</p>
-            <p className="text-sm font-medium text-foreground/90">Tokyo, Japan</p>
-            <p className="text-xs text-muted font-mono">35.6762° N, 139.650° E</p>
+            <p className="text-sm font-medium text-foreground/90">Xi&apos;an, China</p>
+            <p className="text-xs text-muted font-mono">34.3416° N, 108.9398° E</p>
         </div>
       </div>
 
