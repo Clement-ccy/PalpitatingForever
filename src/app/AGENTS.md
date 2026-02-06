@@ -1,36 +1,40 @@
 # APP ROUTER NOTES
 
 ## OVERVIEW
-Client-side App Router pages for the portfolio sections and landing grid.
+App Router pages for the portfolio, with admin UI and API proxy routes.
 
 ## STRUCTURE
 ```
 src/app/
-├── page.tsx            # Home dashboard (bento grid)
-├── layout.tsx          # Root layout, theme provider, global effects
-├── blogs/              # Blog list + [slug] detail
-├── works/              # Works index
-├── mlogs/              # Music/Podcast logs
-├── plogs/              # Photo log collections
-├── gears/              # Gear list
-└── lab/                # Lab page
+├── layout.tsx        # Root layout, aurora/noise background
+├── page.tsx          # Home dashboard (bento grid)
+├── admin/            # Admin UI (layout + pages)
+├── api/admin/        # Proxy routes to worker backend
+├── blogs/            # Blog list + [slug] detail
+├── works/            # Works index
+├── mlogs/            # Music/Podcast logs
+├── plogs/            # Photo log collections
+├── gears/            # Gear list
+├── about/            # About page
+└── links/            # Links page
 ```
 
 ## WHERE TO LOOK
 | Task | Location | Notes |
 |------|----------|-------|
-| Blog list layout | `blogs/page.tsx` | Timeline list + detail preview card |
-| Blog detail | `blogs/[slug]/page.tsx` | Loads blocks dynamically per page id |
-| Works | `works/page.tsx` | Uses Notion pages data, theme accents |
-| Mlogs | `mlogs/page.tsx` | Area → Podcast/Music; renders blocks below |
-| Plogs | `plogs/page.tsx` | Collections; images from block list |
-| Gears | `gears/page.tsx` | Gear list from Notion pages |
+| App shell | `layout.tsx` | Global background effects |
+| Admin shell | `admin/layout.tsx` | Admin layout wrapper |
+| Admin guard | `components/admin/AdminGuard.tsx` | CSRF check + auth gate |
+| Blog detail | `blogs/[slug]/page.tsx` | Loads blocks per page id |
+| Works | `works/page.tsx` | Notion pages + theme accents |
+| Mlogs | `mlogs/page.tsx` | Renders blocks below |
+| Plogs | `plogs/page.tsx` | Collections + waterfall analytics |
 
 ## CONVENTIONS
 - Pages are mostly `'use client'` and fetch from `/data/notion-pages.json`.
 - Content blocks load from `/data/blocks-<pageId>.json` and render via `renderNotionBlocks`.
-- Use `@/` alias for imports and `cn()` for conditional classes.
+- Admin pages fetch via `lib/admin/client` and forward `X-CSRF-Token` from `sessionStorage`.
 
 ## ANTI-PATTERNS
-- Do not re-introduce mock data sources once Notion data exists.
+- Do not reintroduce mock data once Notion data exists.
 - Avoid mixing raw Notion API objects into UI; always map first.

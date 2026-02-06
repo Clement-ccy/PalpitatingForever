@@ -16,6 +16,65 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Analytics + Comments (Worker v1)
+
+### Environment variables
+```bash
+# Frontend
+NEXT_PUBLIC_API_BASE_URL=https://api.ccy.asia
+
+# Worker
+SITE_SLUG=main
+ADMIN_SESSION_SECRET=***
+DATA_SECRET=***
+ADMIN_SETUP_TOKEN=***
+```
+
+### Migrations
+```bash
+npx wrangler d1 migrations apply pf-database --local
+npx wrangler d1 migrations apply pf-database --remote
+```
+
+### Cron
+Daily rollup + retention cleanup runs at **00:10 Asia/Shanghai** via `wrangler.toml` cron.
+
+### Admin subdomain
+Admin runs on **admin.ccy.asia** (host-based routing in `src/middleware.ts`).
+
+### Admin setup (one-time)
+```bash
+curl -X POST https://api.ccy.asia/v1/admin/auth/setup \
+  -H "Authorization: Bearer $ADMIN_SETUP_TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"username":"Clement-ccy","password":"<REDACTED>"}'
+```
+
+### Admin UI registration
+- Visit https://admin.ccy.asia
+- Register tab is enabled only before setup is disabled
+
+## Local Worker + D1 (single DB)
+
+### Create local database
+```bash
+npx wrangler d1 create pf-database --local
+```
+
+### Apply migrations (local)
+```bash
+npx wrangler d1 migrations apply pf-database --local
+```
+
+### Optional reset helper
+```bash
+# PowerShell
+./scripts/reset-local-d1.ps1
+
+# bash
+./scripts/reset-local-d1.sh
+```
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

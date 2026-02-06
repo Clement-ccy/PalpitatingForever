@@ -1,7 +1,8 @@
 'use client';
 
 import React, { memo } from 'react';
-import { NotionBlock, getSlug } from '@/lib/notion-utils';
+import type { NotionBlock } from '@/lib/notion/types';
+import { getSlug } from '@/lib/notion/utils';
 import { RichText, type RichTextItem } from './RichText';
 import Image from 'next/image';
 import Link from 'next/link';

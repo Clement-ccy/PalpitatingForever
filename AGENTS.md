@@ -1,67 +1,66 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-01-30
-**Commit:** 77b4772
+**Generated:** 2026-02-04
+**Commit:** 6a1096d
 **Branch:** main
 
 ## OVERVIEW
-Next.js App Router portfolio using Notion as a CMS, Tailwind v4 in `globals.css`, Framer Motion UI, and a custom Notion block renderer.
+Next.js App Router portfolio (React 19) with Notion-sourced content, Tailwind v4 CSS tokens, and a Cloudflare Worker + D1 backend for analytics, comments, and admin.
 
 ## STRUCTURE
 ```
 ./
-├── src/app/              # App Router pages (blogs, mlogs, plogs, works, gears)
-├── src/components/       # UI + dashboard components
-│   └── notion/            # Notion renderer + rich text
-├── src/lib/              # Notion mappers, utils, shared helpers
-├── public/data/           # Generated Notion JSON payloads
-├── scripts/               # Data fetch automation
-└── public/                 # Static assets
+├── src/                # App Router UI, API proxies, shared UI/lib
+├── worker/             # Cloudflare Worker API + D1 schema
+├── scripts/            # Notion fetch pipeline
+├── public/data/        # Generated Notion JSON (pages + blocks)
+├── public/media/notion # Mirrored Notion assets
+└── wrangler.toml       # Worker config + cron + D1 binding
 ```
 
 ## WHERE TO LOOK
 | Task | Location | Notes |
 |------|----------|-------|
-| Route pages | `src/app/**/page.tsx` | App Router, mostly client components |
-| Notion rendering | `src/components/notion/NotionBlockRenderer.tsx` | Recursive render + list grouping |
-| Notion mapping | `src/lib/notion-utils.ts`, `src/lib/notion-mappers.ts` | Category mapping + block normalization |
-| Notion data fetch | `scripts/fetch-notion.ts` | Writes to `public/data/` |
-| Global styling | `src/app/globals.css` | Tailwind v4 `@theme` and utilities |
-
-## CODE MAP
-| Symbol | Type | Location | Role |
-|--------|------|----------|------|
-| `RootLayout` | function | `src/app/layout.tsx` | App shell, theme provider, global effects |
-| `NotionBlockRenderer` | component | `src/components/notion/NotionBlockRenderer.tsx` | Recursive block rendering |
-| `renderNotionBlocks` | function | `src/components/notion/NotionBlockRenderer.tsx` | Groups list blocks and handles depth |
-| `mapNotionPage` | function | `src/lib/notion-utils.ts` | Page mapping + category/theme normalization |
-| `mapNotionBlock` | function | `src/lib/notion-mappers.ts` | Block mapping + table support |
+| App shell | `src/app/layout.tsx` | Global layout + aurora/noise background |
+| Middleware routing | `src/middleware.ts` | Admin subdomain rewrite |
+| Admin UI | `src/app/admin/*` | Guarded dashboard + settings + comments |
+| Admin API proxy | `src/app/api/admin/*` | Proxies to worker + forwards CSRF/cookies |
+| Admin client | `src/lib/admin/client.ts` | Admin UI request wrappers |
+| Notion data client | `src/lib/notion/client.ts` | Fetches `/public/data` JSON |
+| Notion mapping | `src/lib/notion/{utils,mappers,types}.ts` | Map pages/blocks + helpers |
+| Notion renderer | `src/components/notion/NotionBlockRenderer.tsx` | Recursive block rendering |
+| Notion sync CI | `.github/workflows/notion-sync.yml` | Hourly data sync |
+| Worker entry | `worker/src/index.ts` | Routes + scheduled cron |
+| Worker schema | `worker/migrations/*.sql` | D1 tables + indexes |
 
 ## CONVENTIONS (PROJECT-SPECIFIC)
-- **Imports:** use `@/` alias; order: React/Next → external → UI → lib → types.
-- **React Compiler:** enabled in `next.config.ts`; avoid unnecessary `useMemo`/`useCallback`.
-- **Tailwind v4:** configuration lives in `src/app/globals.css` `@theme` only.
-- **Icons:** `lucide-react` only.
+- Tailwind v4 config lives **only** in `src/app/globals.css` via `@theme` and CSS variables.
+- Use `@/*` path alias (tsconfig paths).
+- Types live in `src/lib/**/types.ts`; fetch logic lives in `src/lib/**/client.ts`.
+- Admin routes use CSRF from `sessionStorage` and forward via `X-CSRF-Token` header.
+- Notion content is mapped before UI; never render raw API objects.
 
 ## ANTI-PATTERNS (THIS PROJECT)
-- **NEVER** use `any`. Prefer `unknown` if needed.
-- **DO NOT** add `tailwind.config.js`.
+- **NEVER** use `any` (prefer `unknown`).
+- **DO NOT** add `tailwind.config.js` (Tailwind v4 lives in CSS).
+- Avoid using raw Notion API objects in UI components.
 
 ## UNIQUE STYLES
-- Global effects: `.aurora-blob`, `.noise-bg`, `.glass-card`, `.custom-scrollbar`.
-- Theme tokens live in CSS variables (`--accent-*`) in `globals.css`.
+- Global effects: `.aurora-blob`, `.noise-bg`, `.glass-card`, `.custom-scrollbar` in `globals.css`.
+- Theme tokens: `--accent-*` and `--accent-*-rgb` for page-specific glow styling.
 
 ## COMMANDS
 ```bash
-npm install
 npm run dev
-npm run build
-npm run start
 npm run lint
-NOTION_TOKEN=... npm run fetch-notion
+npm run build
+npm run fetch-notion
+
+# D1 migrations
+npx wrangler d1 migrations apply pf-database --local
 ```
 
 ## NOTES
-- Notion data JSONs in `public/data/` are generated artifacts.
-- Notion file assets are mirrored to `public/media/notion/blocks` and page covers to `public/media/notion/pages`.
-- `next.config.ts` allows remote images from Unsplash, Giphy, Notion S3, and notion.so.
+- Admin runs on `admin.ccy.asia` via middleware rewrite.
+- Worker cron runs daily at 00:10 Asia/Shanghai (`wrangler.toml`).
+- LSP tools may be unavailable on Windows + Bun 1.3.5.

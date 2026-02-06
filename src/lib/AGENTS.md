@@ -1,20 +1,28 @@
 # LIBRARY NOTES
 
 ## OVERVIEW
-Notion mapping utilities and shared helpers used by pages and renderers.
+Shared helpers plus Notion, analytics, comments, and admin clients/types.
 
 ## WHERE TO LOOK
 | Task | Location | Notes |
 |------|----------|-------|
-| Page mapping | `notion-utils.ts` | `mapNotionPage`, category/theme normalization |
-| Block mapping | `notion-mappers.ts` | `mapNotionBlock` including table support |
-| Data fetch | `notion-data.ts` | Client fetch for `/data/*.json` |
 | Class utils | `utils.ts` | `cn()` helper |
+| API base URL | `api.ts` | `NEXT_PUBLIC_API_BASE_URL` + `buildApiUrl` |
+| Analytics types | `analytics/types.ts` | Payload + response types |
+| Analytics client | `analytics/client.ts` | Pageview + event tracking |
+| Comments types | `comments/types.ts` | Comment payloads + API shapes |
+| Comments client | `comments/client.ts` | Thread fetch + submit |
+| Admin types | `admin/types.ts` | Admin payloads + responses |
+| Admin client | `admin/client.ts` | Admin UI request wrappers |
+| Notion types | `notion/types.ts` | Page/block shapes |
+| Notion client | `notion/client.ts` | Fetches `/data` JSON |
+| Notion utils | `notion/utils.ts` | Slug/theme/text helpers + page mapping |
+| Notion mappers | `notion/mappers.ts` | Block mapping only |
 
 ## CONVENTIONS
-- Normalize Notion relation IDs by stripping hyphens before lookup.
-- Map Notion pages into typed shapes before UI use.
-- Use `getFallbackTheme` for deterministic theme assignment.
+- Types live in `src/lib/**/types.ts`.
+- Client fetch logic lives in `src/lib/**/client.ts`.
+- Notion pages must be mapped before UI use.
 
 ## ANTI-PATTERNS
 - Do not pass raw Notion API objects to components.

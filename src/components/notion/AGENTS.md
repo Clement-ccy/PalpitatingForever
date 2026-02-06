@@ -1,7 +1,7 @@
 # NOTION RENDERER NOTES
 
 ## OVERVIEW
-Recursive renderer for Notion blocks plus rich-text annotation handling.
+Recursive renderer for mapped Notion blocks plus rich-text annotation handling.
 
 ## WHERE TO LOOK
 | Task | Location | Notes |
