@@ -8,6 +8,8 @@ import { renderNotionBlocks } from '@/components/notion/NotionBlockRenderer';
 import type { NotionBlock, NotionPage } from '@/lib/notion/types';
 import { fetchNotionBlocks, fetchNotionPages } from '@/lib/notion/client';
 import { Comments } from '@/components/comments/Comments';
+import { usePlayer } from '@/components/player/PlayerProvider';
+import type { AudioTrack } from '@/lib/player/types';
 
 const DEFAULT_COVER = 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?q=80&w=800&auto=format&fit=crop';
 
@@ -22,6 +24,8 @@ export default function MlogDetailPage({ params }: { params: Promise<{ id: strin
   const [blocks, setBlocks] = useState<NotionBlock[]>([]);
   const [log, setLog] = useState<NotionPage | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { setQueue, playTrackById } = usePlayer();
+  const [audioSrc, setAudioSrc] = useState<string | null>(null);
 
   useEffect(() => {
     let active = true;
@@ -47,6 +51,11 @@ export default function MlogDetailPage({ params }: { params: Promise<{ id: strin
     fetchNotionBlocks(id).then((data) => {
       if (!active) return;
       setBlocks(data);
+      const audioBlock = data.find((block) => block.type === 'audio');
+      const content = (audioBlock?.content && typeof audioBlock.content === 'object'
+        ? (audioBlock.content as { url?: string })
+        : undefined);
+      setAudioSrc(content?.url ?? null);
     });
     return () => {
       active = false;
@@ -100,9 +109,22 @@ export default function MlogDetailPage({ params }: { params: Promise<{ id: strin
                 </span>
               ))}
             </div>
-            <div className="mt-6">
+             <div className="mt-6">
               <button
                 type="button"
+                onClick={() => {
+                  if (!audioSrc || !log) return;
+                  const track: AudioTrack = {
+                    id: log.id,
+                    title: log.title,
+                    artist: log.summary || 'Unknown Artist',
+                    cover: log.cover,
+                    src: audioSrc,
+                    kind: 'mlog',
+                  };
+                  setQueue([track], 0);
+                  playTrackById(log.id);
+                }}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-80 transition-opacity"
               >
                 Play <PlayCircle size={16} />

@@ -7,9 +7,11 @@ import { Clock, Music, PlayCircle, PlusCircle, Star } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
 import { cn } from '@/lib/utils';
 import { getFallbackTheme } from '@/lib/notion/utils';
-import type { NotionPage } from '@/lib/notion/types';
-import { fetchNotionPages } from '@/lib/notion/client';
+import type { NotionBlock, NotionPage } from '@/lib/notion/types';
+import { fetchNotionBlocks, fetchNotionPages } from '@/lib/notion/client';
 import { trackEvent } from '@/lib/analytics/client';
+import { usePlayer } from '@/components/player/PlayerProvider';
+import type { AudioTrack } from '@/lib/player/types';
 
 const themeTokens = {
     rose: {
@@ -79,6 +81,7 @@ interface MlogItem {
     theme: ThemeKey;
     rating: number | null;
     duration?: string;
+    audioSrc?: string;
 }
 
 const resolveTheme = (theme: string | null, id: string): ThemeKey => {
@@ -98,20 +101,13 @@ const getMlogType = (area: string): MlogType => {
 
 const getThemeToken = (theme: ThemeKey) => themeTokens[theme];
 
-type PlaylistItem = {
-  id: string;
-  title: string;
-  artist: string;
-  cover: string;
-};
-
 export default function MusicPage() {
   const [mlogs, setMlogs] = useState<MlogItem[]>([]);
-  const [playlist, setPlaylist] = useState<PlaylistItem[]>([]);
+  const { queue, setQueue, addTracks, playTrackById } = usePlayer();
 
   useEffect(() => {
     let active = true;
-    fetchNotionPages().then((pages) => {
+    fetchNotionPages().then(async (pages) => {
       if (!active) return;
       const mapped = pages
         .filter((post) => post.category === 'Mlogs')
@@ -130,7 +126,19 @@ export default function MusicPage() {
             rating: post.rate,
           };
         });
-      setMlogs(mapped);
+      const audioBlocks = await Promise.all(
+        mapped.map(async (log) => {
+          const blocks = await fetchNotionBlocks(log.id);
+          const audioBlock = blocks.find((block) => block.type === 'audio');
+          const content = (audioBlock?.content && typeof audioBlock.content === 'object'
+            ? (audioBlock.content as { url?: string })
+            : undefined);
+          return { id: log.id, audioSrc: content?.url };
+        })
+      );
+      const audioMap = new Map(audioBlocks.map((item) => [item.id, item.audioSrc]));
+      const enriched = mapped.map((log) => ({ ...log, audioSrc: audioMap.get(log.id) }));
+      setMlogs(enriched);
     });
     return () => {
       active = false;
@@ -142,10 +150,17 @@ export default function MusicPage() {
   ), [mlogs]);
 
   const addToPlaylist = (log: MlogItem) => {
-    setPlaylist((prev) => {
-      if (prev.find((item) => item.id === log.id)) return prev;
-      return [...prev, { id: log.id, title: log.title, artist: log.artist, cover: log.cover }];
-    });
+    if (!log.audioSrc) return;
+    addTracks([
+      {
+        id: log.id,
+        title: log.title,
+        artist: log.artist,
+        cover: log.cover,
+        src: log.audioSrc,
+        kind: 'mlog',
+      },
+    ]);
     trackEvent({
       site: 'main',
       name: 'mlog_add_to_playlist',
@@ -153,6 +168,22 @@ export default function MusicPage() {
       title: log.title,
     });
   };
+
+  useEffect(() => {
+    if (mlogs.length === 0) return;
+    const sorted = [...mlogs].sort((a, b) => (a.date < b.date ? 1 : -1));
+    const topFive = sorted.filter((log) => log.audioSrc).slice(0, 5);
+    if (topFive.length === 0) return;
+    const tracks: AudioTrack[] = topFive.map((log) => ({
+      id: log.id,
+      title: log.title,
+      artist: log.artist,
+      cover: log.cover,
+      src: log.audioSrc as string,
+      kind: 'mlog',
+    }));
+    setQueue(tracks, 0);
+  }, [mlogs, setQueue]);
 
   return (
     <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto flex flex-col gap-12 relative">
@@ -230,17 +261,24 @@ export default function MusicPage() {
                 </div>
 
                 <div className="mt-4 flex flex-wrap gap-2">
-                  <button
-                    type="button"
-                    onClick={() => addToPlaylist(log)}
-                    className="inline-flex items-center gap-2 rounded-full border border-card-border px-3 py-1.5 text-[10px] font-mono text-foreground hover:bg-foreground/5 transition-colors"
-                  >
-                    <PlusCircle size={12} /> Add to Playlist
-                  </button>
-                  <Link
-                    href={`/mlogs/${log.id}`}
-                    className="inline-flex items-center gap-2 rounded-full bg-foreground text-background px-3 py-1.5 text-[10px] font-bold hover:opacity-80 transition-opacity"
-                  >
+                   <button
+                     type="button"
+                     onClick={() => addToPlaylist(log)}
+                     className="inline-flex items-center gap-2 rounded-full border border-card-border px-3 py-1.5 text-[10px] font-mono text-foreground hover:bg-foreground/5 transition-colors"
+                   >
+                     <PlusCircle size={12} /> Add to Playlist
+                   </button>
+                   <button
+                     type="button"
+                     onClick={() => log.audioSrc && playTrackById(log.id)}
+                     className="inline-flex items-center gap-2 rounded-full border border-card-border px-3 py-1.5 text-[10px] font-mono text-foreground hover:bg-foreground/5 transition-colors"
+                   >
+                     <PlayCircle size={12} /> Play
+                   </button>
+                   <Link
+                     href={`/mlogs/${log.id}`}
+                     className="inline-flex items-center gap-2 rounded-full bg-foreground text-background px-3 py-1.5 text-[10px] font-bold hover:opacity-80 transition-opacity"
+                   >
                     View Detail <PlayCircle size={12} />
                   </Link>
                 </div>
@@ -250,21 +288,21 @@ export default function MusicPage() {
         </div>
       </section>
 
-      {playlist.length > 0 && (
+      {queue.length > 0 && (
         <section className="mt-10 rounded-3xl border border-card-border bg-card/40 p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-foreground">Playlist</h3>
-            <span className="text-xs font-mono text-muted">{playlist.length} tracks</span>
+            <span className="text-xs font-mono text-muted">{queue.length} tracks</span>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {playlist.map((item) => (
+            {queue.map((item) => (
               <div key={item.id} className="flex items-center gap-3 rounded-2xl border border-card-border bg-background/40 p-3">
                 <div className="relative w-12 h-12 rounded-xl overflow-hidden bg-card">
-                  <Image src={item.cover} alt={item.title} fill sizes="48px" className="object-cover" />
+                  <Image src={item.cover || DEFAULT_COVER} alt={item.title} fill sizes="48px" className="object-cover" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-foreground">{item.title}</p>
-                  <p className="text-xs text-muted">{item.artist}</p>
+                  <p className="text-xs text-muted">{item.artist || 'Unknown Artist'}</p>
                 </div>
               </div>
             ))}
