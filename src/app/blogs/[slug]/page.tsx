@@ -28,7 +28,7 @@ export default function BlogSlugPage({ params }: { params: Promise<{ slug: strin
   const [blocks, setBlocks] = useState<NotionBlock[]>([]);
   const [posts, setPosts] = useState<NotionPage[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { setQueue, playTrackById } = usePlayer();
+  const { playTrack } = usePlayer();
   const [audioSrc, setAudioSrc] = useState<string | null>(null);
 
   useEffect(() => {
@@ -157,8 +157,7 @@ export default function BlogSlugPage({ params }: { params: Promise<{ slug: strin
                                   src: audioSrc,
                                   kind: 'blog',
                                 };
-                                setQueue([track], 0);
-                                playTrackById(post.id);
+                                playTrack(track);
                               }}
                               className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-80 transition-opacity"
                             >

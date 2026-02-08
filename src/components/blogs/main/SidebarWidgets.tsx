@@ -30,7 +30,7 @@ export default function SidebarWidgets({
     <div className="space-y-6 w-full">
 
       {/* 微信二维码卡片 */}
-      <SpotlightCard className="group rounded-3xl border border-card-border bg-card/40 backdrop-blur-md transition-all hover:bg-card/60 p-4">
+      <SpotlightCard className="group rounded-3xl border border-card-border bg-card/40 backdrop-blur-md transition-all hover:bg-card/60">
         {wechatQrUrl ? (
           <div className="relative aspect-[3/1] w-full rounded-xl overflow-hidden border border-card-border/50 bg-white/5">
             <Image

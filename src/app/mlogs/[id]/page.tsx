@@ -24,7 +24,7 @@ export default function MlogDetailPage({ params }: { params: Promise<{ id: strin
   const [blocks, setBlocks] = useState<NotionBlock[]>([]);
   const [log, setLog] = useState<NotionPage | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { setQueue, playTrackById } = usePlayer();
+  const { playTrack } = usePlayer();
   const [audioSrc, setAudioSrc] = useState<string | null>(null);
 
   useEffect(() => {
@@ -122,8 +122,7 @@ export default function MlogDetailPage({ params }: { params: Promise<{ id: strin
                     src: audioSrc,
                     kind: 'mlog',
                   };
-                  setQueue([track], 0);
-                  playTrackById(log.id);
+                  playTrack(track);
                 }}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-semibold hover:opacity-80 transition-opacity"
               >

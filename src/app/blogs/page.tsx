@@ -20,8 +20,8 @@ export default function BlogsPage() {
     const [posts, setPosts] = useState<BlogItem[]>([]);
     const [selectedId, setSelectedId] = useState<string>("");
     const wechatQrUrl = "/media/wechat-qr.png";
-    const sponsorText = "文案与链接";
-    const sponsorLink = "链接";
+    const sponsorText = "感谢各位的支持！如果我的内容对你有帮助，欢迎通过以下方式支持我继续创作：";
+    const sponsorLink = "https://afdian.com/a/ClementChen";
     const [areaFilter, setAreaFilter] = useState<string>("All");
     const [commentTotal, setCommentTotal] = useState<number>(0);
     const [wordTotal, setWordTotal] = useState<number>(0);
