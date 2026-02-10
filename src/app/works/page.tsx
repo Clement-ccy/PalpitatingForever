@@ -100,7 +100,7 @@ export default function WorksPage() {
   const selectedWork = works.find((work) => work.id === selectedId);
 
   return (
-    <div className="min-h-screen pt-32 pb-20 px-4 md:px-8 max-w-7xl mx-auto relative z-10 w-full">
+    <div className="min-h-screen relative z-10 w-full">
       {/* Background Rainbow Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full -z-10 pointer-events-none opacity-20">
         <div className="absolute top-0 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.25)] blur-[120px] rounded-full" />

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Book, Camera, Cpu, Package, Settings, Shield, Star, Terminal } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
@@ -29,6 +30,7 @@ interface GearItem {
   description: string;
   rating: number;
   theme: ThemeKey;
+  cover?: string | null;
 }
 
 export default function GearsPage() {
@@ -42,10 +44,11 @@ export default function GearsPage() {
         .filter((post) => post.category === 'Gears')
         .map((post, index) => ({
           id: post.id,
-          category: post.tags[0] || 'Gear',
+          category: post.area || post.tags[0] || 'Gear',
           name: post.title,
           description: post.summary,
           rating: post.rate ?? 0,
+          cover: post.cover,
           theme: post.theme?.toLowerCase() && post.theme.toLowerCase() in themeTokens
             ? (post.theme.toLowerCase() as ThemeKey)
             : (getFallbackTheme(post.id + index.toString(), themePool) as ThemeKey),
@@ -58,7 +61,7 @@ export default function GearsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto text-foreground relative">
+    <div className="min-h-screen text-foreground relative">
       {/* Background Glow */}
       <div className="absolute top-10 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[140px] rounded-full -z-10" />
       <div className="absolute top-1/3 right-1/4 w-md h-112 bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
@@ -85,14 +88,24 @@ export default function GearsPage() {
             transition={{ duration: 0.5, delay: idx * 0.1 }}
           >
             <SpotlightCard className="h-full flex flex-col p-6 group bg-card border-card-border transition-all duration-500 shadow-sm hover:shadow-[0_0_30px_rgba(255,255,255,0.08)]">
-                <div className="flex items-start justify-between mb-8">
-                    <div className={cn("w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-300", themeTokens[gear.theme])}>
-                        {(() => {
-                          const Icon = categoryIcons[idx % categoryIcons.length];
-                          return <Icon size={20} />;
-                        })()}
+                <div className="flex items-start justify-between mb-6">
+                    <div className={cn("w-12 h-12 rounded-2xl border flex items-center justify-center transition-all duration-300 overflow-hidden", themeTokens[gear.theme])}>
+                        {gear.cover ? (
+                          <Image
+                            src={gear.cover}
+                            alt={gear.name}
+                            width={48}
+                            height={48}
+                            className="object-cover"
+                          />
+                        ) : (
+                          (() => {
+                            const Icon = categoryIcons[idx % categoryIcons.length];
+                            return <Icon size={20} />;
+                          })()
+                        )}
                     </div>
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/50 border border-card-border px-2 py-1 rounded-full">
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-muted-foreground/60 border border-card-border px-2 py-1 rounded-full">
                         {gear.category}
                     </span>
                 </div>

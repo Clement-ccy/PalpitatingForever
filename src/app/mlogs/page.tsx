@@ -171,17 +171,18 @@ export default function MusicPage() {
 
 
   return (
-    <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto flex flex-col gap-12 relative">
-      {/* Background Glow */}
-      <div className="absolute top-10 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[140px] rounded-full -z-10" />
-      <div className="absolute top-1/3 right-1/4 w-md h-112 bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
-      <div className="absolute bottom-10 left-1/3 w-104 h-104 bg-[rgba(var(--accent-mlogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
+    <div className="min-h-screen flex flex-col gap-12 relative">
+
 
       <header className="mb-4">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-card border border-card-border text-xs font-mono text-muted mb-4">
               <Music size={14} />
               <span>AUDITORY ARCHIVES</span>
           </div>
+          <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-foreground mb-4">Mlogs</h1>
+                    <p className="text-muted-foreground max-w-lg text-lg leading-relaxed">
+                        {'A collection of auditory logs grouped by journey and theme.'}
+                    </p>
       </header>
       
       <div className="h-px w-full bg-linear-to-r from-transparent via-card-border to-transparent" />

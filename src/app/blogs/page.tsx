@@ -162,7 +162,7 @@ export default function BlogsPage() {
     }, []);
 
     return (
-        <div className="min-h-screen pt-32 px-4 pb-32 max-w-7xl mx-auto relative">
+        <div className="min-h-screen relative">
             {/* 背景效果保持不变 */}
             <div className="absolute top-0 left-1/4 w-96 h-96 bg-[rgba(var(--accent-works-rgb),0.2)] blur-[140px] rounded-full -z-10" />
             <div className="absolute top-1/3 right-1/4 w-md h-112 bg-[rgba(var(--accent-blogs-rgb),0.2)] blur-[140px] rounded-full -z-10" />
