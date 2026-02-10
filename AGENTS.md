@@ -1,7 +1,7 @@
 # PROJECT KNOWLEDGE BASE
 
-**Generated:** 2026-02-04
-**Commit:** 6a1096d
+**Generated:** 2026-02-10
+**Commit:** b5e492c
 **Branch:** main
 
 ## OVERVIEW
@@ -29,6 +29,8 @@ Next.js App Router portfolio (React 19) with Notion-sourced content, Tailwind v4
 | Notion data client | `src/lib/notion/client.ts` | Fetches `/public/data` JSON |
 | Notion mapping | `src/lib/notion/{utils,mappers,types}.ts` | Map pages/blocks + helpers |
 | Notion renderer | `src/components/notion/NotionBlockRenderer.tsx` | Recursive block rendering |
+| Comments UI | `src/components/comments/Comments.tsx` | Thread tree + submit/reply form |
+| Analytics tracker | `src/components/analytics/AnalyticsTracker.tsx` | Pageview + title/description sync |
 | Notion sync CI | `.github/workflows/notion-sync.yml` | Hourly data sync |
 | Worker entry | `worker/src/index.ts` | Routes + scheduled cron |
 | Worker schema | `worker/migrations/*.sql` | D1 tables + indexes |

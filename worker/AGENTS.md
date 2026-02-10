@@ -11,6 +11,7 @@ worker/
 ├── src/analytics/      # Analytics handlers + rollups
 ├── src/comments/       # Comments handlers + rate limiting
 ├── src/admin/          # Admin auth/settings handlers
+├── src/                # Subdir AGENTS.md files for core/analytics/comments/admin
 └── migrations/         # D1 schema + seed data
 ```
 

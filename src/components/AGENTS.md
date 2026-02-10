@@ -20,6 +20,10 @@ src/components/
 | Docks | `ui/top-*.tsx` | Navigation docks |
 | Error boundary | `ui/error-boundary.tsx` | Wrap fragile UI |
 | Admin guard | `admin/AdminGuard.tsx` | CSRF check + redirect |
+| Comments UI | `comments/Comments.tsx` | Thread tree + submit/reply form |
+| Analytics tracker | `analytics/AnalyticsTracker.tsx` | Pageview + title/description sync |
+| Player | `player/*` | Audio player UI + provider |
+| Blogs | `blogs/*` | Blog list, timeline, widgets |
 
 ## CONVENTIONS
 - Keep components functional and presentational.

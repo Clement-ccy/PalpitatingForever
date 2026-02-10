@@ -9,6 +9,7 @@ src/app/
 ├── layout.tsx        # Root layout, aurora/noise background
 ├── page.tsx          # Home dashboard (bento grid)
 ├── admin/            # Admin UI (layout + pages)
+├── api/              # API proxies to worker backend
 ├── api/admin/        # Proxy routes to worker backend
 ├── blogs/            # Blog list + [slug] detail
 ├── works/            # Works index
@@ -25,6 +26,7 @@ src/app/
 | App shell | `layout.tsx` | Global background effects |
 | Admin shell | `admin/layout.tsx` | Admin layout wrapper |
 | Admin guard | `components/admin/AdminGuard.tsx` | CSRF check + auth gate |
+| API proxy entry | `api/*/route.ts` | Proxies to worker routes |
 | Blog detail | `blogs/[slug]/page.tsx` | Loads blocks per page id |
 | Works | `works/page.tsx` | Notion pages + theme accents |
 | Mlogs | `mlogs/page.tsx` | Renders blocks below |
