@@ -14,8 +14,8 @@ export const TopLeftDock = () => {
   const [isBrandingHovered, setIsBrandingHovered] = useState(false);
 
   const appLinks = [
-    { name: "Project 1", href: "https://example1.com" },
-    { name: "Project 2", href: "https://example2.com" },
+    { name: "PF Station", href: "https://ccy.asia" },
+    // { name: "Project 2", href: "https://example2.com" },
     // Add more as needed
   ];
 

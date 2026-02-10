@@ -1,5 +1,13 @@
 import Image from 'next/image';
+import { Github, Linkedin, Mail, Twitter } from 'lucide-react';
 import { SpotlightCard } from '@/components/ui/spotlight-card';
+
+const CONTACT_LINKS = [
+  { icon: Github, href: 'https://github.com/', label: 'GitHub' },
+  { icon: Twitter, href: 'https://x.com/', label: 'Twitter' },
+  { icon: Linkedin, href: 'https://linkedin.com/', label: 'LinkedIn' },
+  { icon: Mail, href: 'mailto:hello@example.com', label: 'Email' },
+];
 
 export function ProfileCard() {
   return (
@@ -37,9 +45,25 @@ export function ProfileCard() {
         </p>
       </div>
 
-      <div className="flex gap-4 mt-auto pt-6">
+      <div className="flex gap-4 mt-auto pt-6 items-center">
         <a href="#" className="px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium hover:opacity-80 transition-opacity">Resume</a>
-        <a href="#" className="px-5 py-2.5 rounded-full bg-card border border-card-border text-foreground text-sm font-medium hover:bg-white/10 dark:hover:bg-white/10 transition-colors">Contact</a>
+        <div className="flex items-center gap-2 group/contact">
+          <a href="#" className="px-5 py-2.5 rounded-full bg-card border border-card-border text-foreground text-sm font-medium hover:bg-white/10 dark:hover:bg-white/10 transition-colors">Contact</a>
+          <div className="flex items-center gap-2 overflow-hidden max-w-0 opacity-0 translate-x-2 transition-all duration-300 ease-out group-hover/contact:max-w-[200px] group-hover/contact:opacity-100 group-hover/contact:translate-x-0">
+            {CONTACT_LINKS.map((item) => (
+              <a
+                key={item.label}
+                href={item.href}
+                target={item.href.startsWith('http') ? '_blank' : undefined}
+                rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+                className="w-9 h-9 rounded-full border border-card-border bg-card flex items-center justify-center text-muted hover:text-foreground hover:bg-foreground/5 transition-colors"
+                aria-label={item.label}
+              >
+                <item.icon size={16} />
+              </a>
+            ))}
+          </div>
+        </div>
       </div>
     </SpotlightCard>
   );

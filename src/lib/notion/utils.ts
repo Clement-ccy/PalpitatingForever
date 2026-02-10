@@ -28,7 +28,7 @@ interface NotionPageProperties {
   Theme?: { select?: NotionSelect | null };
   Area?: { select?: NotionSelect | null };
   Role?: { rich_text?: NotionRichText[] };
-  Platfom?: { multi_select?: NotionMultiSelect[] };
+  Platform?: { multi_select?: NotionMultiSelect[] };
   Rate?: { number?: number | null };
   Status?: { status?: NotionStatus | null };
   Link?: { url?: string | null };
@@ -63,6 +63,7 @@ const CATEGORY_MAP: Record<string, string> = {
   '2e7ec12aacd98027ab71c3f9ff83f4fc': 'Plogs',
   '2f3ec12aacd9803b81c0febaa9179add': 'PF-AIGC',
   '2f7ec12aacd9805c855bfd8d52f71f98': 'Gears',
+  '301ec12aacd9803caec8e75354e0fc36': 'Links',
 };
 
 const normalizeNotionId = (id?: string): string => id?.replace(/-/g, '') ?? '';
