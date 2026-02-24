@@ -1,6 +1,7 @@
 import type { Metadata} from 'next';
 import { GeistSans } from 'geist/font/sans';
 import { GeistMono } from 'geist/font/mono';
+import { Noto_Sans_SC, Noto_Sans_Mono } from 'next/font/google';
 import { TopDock } from '@/components/ui/top-dock';
 import { TopLeftDock } from '@/components/ui/top-left-dock';
 import { TopRightDock } from '@/components/ui/top-right-dock';
@@ -17,13 +18,31 @@ export const metadata: Metadata = {
   description: 'Personal portfolio and digital garden',
 };
 
+const notoSansSc = Noto_Sans_SC({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+  variable: '--font-noto-sans-sc',
+});
+
+const notoSansMonoSc = Noto_Sans_Mono({
+  subsets: ['latin'],
+  weight: ['400', '500', '600'],
+  display: 'swap',
+  variable: '--font-noto-sans-mono-sc',
+});
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={`${GeistSans.variable} ${GeistMono.variable} ${notoSansSc.variable} ${notoSansMonoSc.variable}`}
+      suppressHydrationWarning
+    >
       <body className="font-sans min-h-screen relative selection:bg-white/20 overflow-x-hidden flex flex-col items-center p-4 md:p-8 bg-background text-foreground transition-colors duration-300">
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <PlayerProvider>

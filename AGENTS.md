@@ -65,4 +65,3 @@ npx wrangler d1 migrations apply pf-database --local
 ## NOTES
 - Admin runs on `admin.ccy.asia` via middleware rewrite.
 - Worker cron runs daily at 00:10 Asia/Shanghai (`wrangler.toml`).
-- LSP tools may be unavailable on Windows + Bun 1.3.5.
