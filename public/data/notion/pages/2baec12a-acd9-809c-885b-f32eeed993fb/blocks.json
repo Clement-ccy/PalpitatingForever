@@ -1757,10 +1757,9 @@
       "type": "image",
       "image": {
         "caption": [],
-        "type": "file",
-        "file": {
-          "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/1813ed72-abf8-4b7b-a0ad-a111ceabefdb/llm-ui-design-skill-prompting-rpg-theme.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB4664TRX3SVP%2F20260304%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260304T095648Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJGMEQCIHnTQ0fpN2BmGaT3EfvzM78K9wR5tjQT9hsygDr%2BrkJbAiBHttB2aXG93ajpreR%2Fl4MxbSeNcvd2TqB%2FOfaq4Qd%2FriqIBAiz%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAAaDDYzNzQyMzE4MzgwNSIMrmnQo5H5764CSiHeKtwDjQqfSv60N08W1ioutNjR7oxz05npp39gkK2MLrxewvFg%2B%2BF3s4zWcb60r4VlciRytGVKKruxTBCFIuN1DvXj2n5Z81nZTnsNJlyeRKLdQroIoM82JaKInAjQUCtk%2BPtRGgo02%2F5bbOU3BXsjyrTVaSHFRVdAKEdmFgxvZOupwJr%2BS%2FGFnMDJV%2Fni5m5mDVEcooRoSQdyjWLs55vrO8RKE9Cjb2kQjU8vTCaiFB%2FnI8EdzQI9sglH0ZMs3yWbqMVxcfQ7NFZV7DcQxOp52TAcooZKKVWb9LFf9s0o71Wg0fmK1BpWCb521M4zCzsrwBXnpz86l21aaXi%2F2gA5nUsgSjCOJSIce2zlMwOGrRU5TtJpw4%2BQ%2FFvzOyiMImFjLYk%2Bvy18BNZHgqarzgbwbzA1695ahTkyb9UYSZ1nrAV47QnBxaI2EubC8kL0au0CTGpJYiIoDEuN5bzK1jfFPkKW14pCnpdJhTNZQCfjSJSeQ2pl42%2F94qwErU%2BUpv7CIxOJ990Q1TVD2BK25scHhAtd4%2Bk30gMDxSpe83a4ak39myqNzNNekRnRjdRjMKiCbcrBsk7BUrSxEuVsGSUFI8wP1sS2DQ64Pclqj3aPEquK1%2BfOz7ck96UXVU3huVQwnfWfzQY6pgFXWWLLtL9go%2FFvbxE2w2llGnnw42DqCYe7ttDIvfu7hATDSYR95cygq1DPB9YIUOsUaw43%2BdbEzSS%2BRuhfUeSW9UbsH7uT77DSEznCgcLTD68QhtWnyguw4HzxzJLek4VrFFVt4DObloSpg2qdpTEhnbWOpislIWA%2FnFRVjWYztVOTs5cR%2F%2FFl9t4AFRX0nejTyZrjkhc6JvXJQHEN5VPs3Nef91Zs&X-Amz-Signature=b30e8c7b80ba6eab701323494e740b5d91d1aed2185396ea8e98ce2bd2e63529&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
-          "expiry_time": "2026-03-04T10:56:48.895Z"
+        "type": "external",
+        "external": {
+          "url": "/media/notion/blocks/314ec12a-acd9-8000-ac06-f2a34c2cb6fc-llm-ui-design-skill-prompting-rpg-theme.png"
         }
       }
     },

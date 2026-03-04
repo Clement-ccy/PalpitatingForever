@@ -10,8 +10,8 @@ import { config as loadEnv } from 'dotenv';
  */
 
 const ROOT_DIR = process.cwd();
-const LEGACY_OUTPUT_DIR = path.join(ROOT_DIR, 'public/data');
-const OUTPUT_DIR = path.join(LEGACY_OUTPUT_DIR, 'notion');
+const DATA_ROOT_DIR = path.join(ROOT_DIR, 'public/data');
+const OUTPUT_DIR = path.join(DATA_ROOT_DIR, 'notion');
 const PAGES_DIR = path.join(OUTPUT_DIR, 'pages');
 const MEDIA_ROOT_DIR = path.join(ROOT_DIR, 'public/media/notion');
 const BLOCK_MEDIA_DIR = path.join(MEDIA_ROOT_DIR, 'blocks');
@@ -592,7 +592,7 @@ async function main() {
       method: 'POST',
     });
     
-    if (!fs.existsSync(LEGACY_OUTPUT_DIR)) fs.mkdirSync(LEGACY_OUTPUT_DIR, { recursive: true });
+    if (!fs.existsSync(DATA_ROOT_DIR)) fs.mkdirSync(DATA_ROOT_DIR, { recursive: true });
     if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
     if (!fs.existsSync(PAGES_DIR)) fs.mkdirSync(PAGES_DIR, { recursive: true });
     if (!fs.existsSync(MEDIA_ROOT_DIR)) fs.mkdirSync(MEDIA_ROOT_DIR, { recursive: true });
@@ -624,16 +624,7 @@ async function main() {
       }
     }
 
-    if (fs.existsSync(LEGACY_OUTPUT_DIR)) {
-      const legacyFiles = fs.readdirSync(LEGACY_OUTPUT_DIR);
-      for (const file of legacyFiles) {
-        if (!file.startsWith('blocks-') || !file.endsWith('.json')) continue;
-        const id = file.replace('blocks-', '').replace('.json', '');
-        if (!pageIds.has(id)) {
-          fs.unlinkSync(path.join(LEGACY_OUTPUT_DIR, file));
-        }
-      }
-    }
+    // Legacy cleanup removed
 
     const pagesToFetchBlocks: NotionPageResponse[] = [];
     for (const page of pagesData.results) {
@@ -682,10 +673,7 @@ async function main() {
         JSON.stringify(page, null, 2)
       );
 
-      fs.writeFileSync(
-        path.join(LEGACY_OUTPUT_DIR, `blocks-${page.id}.json`),
-        JSON.stringify({ results: blocks }, null, 2)
-      );
+      // Legacy blocks-<id>.json output removed
     }
 
     for (const page of pagesData.results) {
@@ -714,11 +702,7 @@ async function main() {
       JSON.stringify(manifest, null, 2)
     );
 
-    fs.writeFileSync(
-      path.join(LEGACY_OUTPUT_DIR, 'notion-pages.json'),
-      JSON.stringify({ results: pagesData.results }, null, 2)
-    );
-    console.log(`✅ Legacy notion-pages.json saved for compatibility`);
+    // Legacy notion-pages.json output removed
 
     if (failedDownloads.length > 0) {
       const failedList = failedDownloads.join('\n');

@@ -148,10 +148,9 @@
       "type": "image",
       "image": {
         "caption": [],
-        "type": "file",
-        "file": {
-          "url": "https://prod-files-secure.s3.us-west-2.amazonaws.com/4f37e2c8-cb33-427c-85df-7f85e80016e8/d3bee080-1503-4e37-b8f6-d285f23fa1d9/ai-closed-loop-learning-overload-anxiety.jpg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAZI2LB466ZSU3TRXP%2F20260304%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20260304T094107Z&X-Amz-Expires=3600&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEOr%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaCXVzLXdlc3QtMiJIMEYCIQDZQuVDT2CvtLCByilqMCOCBv5n3sbzmZxuJOHn1u8XDAIhAMKDA%2FHsylIJcGqxjCn2BraHGx26P8gakwIkBgVPuGDLKogECLL%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEQABoMNjM3NDIzMTgzODA1IgwTIW3FR3UioJ2wJc0q3AO6iyU5aUvHn10xmJw9VOzNynozzyS4EgSE8zjUTdrB9P45WLE%2FESJ0OXMyrheaHZcsijZqi%2BUZfRzNh5YwQ%2FVwa1uvk8tlaHBM1%2BrTnrAfLjHi0bFyJae6y1sPdTgrlWhuNeyxjKU3xDKTXp4TFJ6mGxet4yTD%2BRjL2lA6257JIQNDu851BmlU0kpQPySMQAtO%2BYLSw4yRo1ZGiS%2FFs60hKMQmx3dz1NCfrhuye5CdDJjcOtQSFoDLnWeFAav653Nr7LJPta10H4LEEvqsp3GxU9u7JF7s8YNaXVD16wVIbKG%2B1SIdeT1xnbT4h6ayreyk5Sm6N7peP%2FjixDu3VaMUOhOThONrceqY5b5V06Dm8zep6Z2sfIjvpmNMQRNZlorxPHa6pUJ3rCmrX8iBsBzc1pxgr4AYHnPMjdmZrwpyQV419ZPmgYHJzzdJh1QAq0kp%2Bd3%2Ftx1jl%2BHy22Eizbz2z9krL08Cl5exc7XWprmRPhL0vOuldwAIyeLqFppR6lM5cyFT9ECX8fzt62oZhTY7R2hVM50vEAd6OHi4KwJxybjAGfxYvFYhg7s5oSBRHs00gEkTZ1TprWl5OsxTSY32XbdqQ%2BcVPARV2aeaw9RLquB7r%2F%2Fga45kID%2FVkTCV85%2FNBjqkAeKdrjtvJICOBMJmLwGKHaIbVktGQSJZo602AakP0De%2FrNie8OXz6r7BOMojpBqNCxLHiVobuWKmvWSdgtuxAWHxxGnoOWUjcAuKlX6CrwrADhgCL8ydfJpzsW%2B%2BP6rTTrsCxWnLkob7OljEWpfMTXr1hYK76TZ9FcvX70UTc3t6nK%2BWuB5yC2cpu9chVbq3dtm6I0njRwnkB9zpmwJ69jmwRFRT&X-Amz-Signature=7a464d8e7e5181075811386f5ce19c8d47a63a75c4b4e357f1f7cbd6b67d6a83&X-Amz-SignedHeaders=host&x-amz-checksum-mode=ENABLED&x-id=GetObject",
-          "expiry_time": "2026-03-04T10:41:07.225Z"
+        "type": "external",
+        "external": {
+          "url": "/media/notion/blocks/311ec12a-acd9-806b-b547-ea0972857e2b-ai-closed-loop-learning-overload-anxiety.jpg"
         }
       }
     },
