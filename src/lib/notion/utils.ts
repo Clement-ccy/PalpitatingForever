@@ -1,7 +1,12 @@
 import type { NotionPage } from './types';
 
 type NotionRichText = { plain_text: string };
-type NotionCover = { type?: string; external?: { url?: string }; file?: { url?: string } };
+type NotionCoverSource = { url?: string };
+type NotionCover = {
+  type?: string;
+  external?: NotionCoverSource;
+  file?: NotionCoverSource;
+};
 
 interface NotionSelect {
   name: string;
@@ -108,6 +113,8 @@ export function getTitle(titleProp?: NotionRichText[] | null): string {
  */
 export function getCover(cover?: NotionCover | null): string | null {
   if (!cover) return null;
+  if (cover.external?.url) return cover.external.url;
+  if (cover.file?.url) return cover.file.url;
   if (cover.type === 'external') return cover.external?.url ?? null;
   if (cover.type === 'file') return cover.file?.url ?? null;
   return null;
