@@ -1,0 +1,202 @@
+{
+  "object": "page",
+  "id": "2baec12a-acd9-809c-885b-f32eeed993fb",
+  "created_time": "2025-11-29T20:03:00.000Z",
+  "last_edited_time": "2026-02-27T12:29:00.000Z",
+  "created_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "last_edited_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "cover": {
+    "type": "external",
+    "external": {
+      "url": "/media/notion/pages/2baec12a-acd9-809c-885b-f32eeed993fb-llm-ui-design-skill-prompting-cover.jpg"
+    }
+  },
+  "icon": null,
+  "parent": {
+    "type": "data_source_id",
+    "data_source_id": "2e7ec12a-acd9-80f5-9c35-000b7c541f04",
+    "database_id": "2e7ec12a-acd9-805c-bd15-cf5affe4cb79"
+  },
+  "archived": false,
+  "in_trash": false,
+  "is_locked": false,
+  "properties": {
+    "Created": {
+      "id": "%3D%5BaD",
+      "type": "created_time",
+      "created_time": "2025-11-29T20:03:00.000Z"
+    },
+    "Rate": {
+      "id": "%3FHu%5B",
+      "type": "number",
+      "number": 4
+    },
+    "Role": {
+      "id": "C~%3Dj",
+      "type": "select",
+      "select": {
+        "id": "L[Fz",
+        "name": "Writer",
+        "color": "red"
+      }
+    },
+    "Platfom": {
+      "id": "EElo",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "551f58ff-3451-4ee9-896a-da1f41c442b2",
+          "name": "Article",
+          "color": "purple"
+        },
+        {
+          "id": "e8feedc5-55dd-435a-a1f9-a5c774a26253",
+          "name": "Social Media",
+          "color": "red"
+        }
+      ]
+    },
+    "Tags": {
+      "id": "Klqy",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "ea3d6a8e-f17b-42dd-bac1-9bea60eba48e",
+          "name": "LLM",
+          "color": "orange"
+        },
+        {
+          "id": "fab0b9b3-3ca6-4775-aac9-902ae839f82d",
+          "name": "Design",
+          "color": "purple"
+        },
+        {
+          "id": "9884cf77-a743-4c71-a5e2-e3d691ccd25b",
+          "name": "Frontend",
+          "color": "yellow"
+        },
+        {
+          "id": "4770d2d0-8b2d-4071-9c61-9b3cf0d0b725",
+          "name": "Prompt Engineering",
+          "color": "brown"
+        }
+      ]
+    },
+    "Link": {
+      "id": "OMar",
+      "type": "url",
+      "url": "/blogs/llm-ui-design-skill-prompting"
+    },
+    "Projects": {
+      "id": "OsEj",
+      "type": "relation",
+      "relation": [],
+      "has_more": false
+    },
+    "Description": {
+      "id": "R%5EVh",
+      "type": "rich_text",
+      "rich_text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "分享如何通过 Skill 文档与结构化 Prompt 工程，引导 LLM 跨越平庸的设计模式，输出具有品牌感和设计感的前端 UI。",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "分享如何通过 Skill 文档与结构化 Prompt 工程，引导 LLM 跨越平庸的设计模式，输出具有品牌感和设计感的前端 UI。",
+          "href": null
+        }
+      ]
+    },
+    "Area": {
+      "id": "%5CMx%3F",
+      "type": "select",
+      "select": {
+        "id": "62424f7c-2804-48ce-b322-25ef2591350f",
+        "name": "Tutorial",
+        "color": "brown"
+      }
+    },
+    "Publish Date": {
+      "id": "cgE_",
+      "type": "date",
+      "date": {
+        "start": "2025-11-30",
+        "end": null,
+        "time_zone": null
+      }
+    },
+    "Theme": {
+      "id": "mgy%5E",
+      "type": "select",
+      "select": {
+        "id": "1397f5f0-269d-4a4e-b2b4-f86c5113efd5",
+        "name": "pink",
+        "color": "pink"
+      }
+    },
+    "Status": {
+      "id": "q%3Fks",
+      "type": "status",
+      "status": {
+        "id": "7358a141-271b-49ca-8240-4893b6b02c24",
+        "name": "Published",
+        "color": "green"
+      }
+    },
+    "Category": {
+      "id": "q%5EGS",
+      "type": "relation",
+      "relation": [
+        {
+          "id": "2e7ec12a-acd9-803c-b7f7-cdfacbfba6e0"
+        }
+      ],
+      "has_more": false
+    },
+    "Last edited time": {
+      "id": "%7B~pX",
+      "type": "last_edited_time",
+      "last_edited_time": "2026-02-27T12:29:00.000Z"
+    },
+    "Name": {
+      "id": "title",
+      "type": "title",
+      "title": [
+        {
+          "type": "text",
+          "text": {
+            "content": "用 Skill + Prompt 让 LLM 输出有设计感的前端",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "用 Skill + Prompt 让 LLM 输出有设计感的前端",
+          "href": null
+        }
+      ]
+    }
+  },
+  "url": "https://www.notion.so/Skill-Prompt-LLM-2baec12aacd9809c885bf32eeed993fb",
+  "public_url": null
+}

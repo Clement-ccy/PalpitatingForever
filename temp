@@ -1,0 +1,52 @@
+# Notion Worker
+
+**Goal**: Build a Notion worker that syncs Google Calendar events into a Notion database. Include properties for: event title, start and end date/time, location, description, calendar name, and a link to the event. Use the Google Calendar API.
+
+## Step 1: Initialize Project
+
+Check if `package.json` exists with `@project-ajax/sdk` as a dependency.
+
+If not initialized, run these commands yourself:
+```bash
+npm init @project-ajax@latest -- --directory .
+npm install
+```
+
+Do not proceed to Step 2 until initialization is complete.
+
+## Step 2: Learn the SDK
+
+Read these resources:
+
+1. `README.md` - Overview of worker capabilities and CLI commands
+2. `CLAUDE.md` - Condensed patterns for building workers
+3. `node_modules/@project-ajax/sdk/src/` - Familiarize yourself with the SDK source code. The JSDoc comments document expected formats and constraints that aren't covered in the README.
+
+Do not proceed to Step 3 until you have read these.
+
+## Step 3: Gather Requirements
+
+Ask the user clarifying questions that will help you accomplish their goal. Base your questions on what you learned from the SDK documentation and what's needed to build a working worker.
+
+Do not proceed to Step 4 until the user has answered.
+
+## Step 4: Build the Worker
+
+Using what you learned from the SDK and the user's requirements, build the worker.
+
+After writing the code, run `npm run check` to verify there are no TypeScript errors.
+
+## Step 5: Hand Off to User
+
+Once the code is complete and type-checks, stop and provide:
+
+1. A brief summary of what the worker does
+2. The deploy command:
+
+```bash
+npx workers deploy
+```
+
+Tell the user this will open a browser to authenticate with Notion.
+
+Do not attempt to run the deploy command yourself - it requires browser-based authentication that the user must complete manually.

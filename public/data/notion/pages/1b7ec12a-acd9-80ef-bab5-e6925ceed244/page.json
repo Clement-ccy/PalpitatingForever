@@ -1,0 +1,202 @@
+{
+  "object": "page",
+  "id": "1b7ec12a-acd9-80ef-bab5-e6925ceed244",
+  "created_time": "2025-03-15T19:02:00.000Z",
+  "last_edited_time": "2026-02-27T12:28:00.000Z",
+  "created_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "last_edited_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "cover": {
+    "type": "external",
+    "external": {
+      "url": "/media/notion/pages/1b7ec12a-acd9-80ef-bab5-e6925ceed244-generative-models-deep-dive-cover.jpg"
+    }
+  },
+  "icon": null,
+  "parent": {
+    "type": "data_source_id",
+    "data_source_id": "2e7ec12a-acd9-80f5-9c35-000b7c541f04",
+    "database_id": "2e7ec12a-acd9-805c-bd15-cf5affe4cb79"
+  },
+  "archived": false,
+  "in_trash": false,
+  "is_locked": false,
+  "properties": {
+    "Created": {
+      "id": "%3D%5BaD",
+      "type": "created_time",
+      "created_time": "2025-03-15T19:02:00.000Z"
+    },
+    "Rate": {
+      "id": "%3FHu%5B",
+      "type": "number",
+      "number": 5
+    },
+    "Role": {
+      "id": "C~%3Dj",
+      "type": "select",
+      "select": {
+        "id": "L[Fz",
+        "name": "Writer",
+        "color": "red"
+      }
+    },
+    "Platfom": {
+      "id": "EElo",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "551f58ff-3451-4ee9-896a-da1f41c442b2",
+          "name": "Article",
+          "color": "purple"
+        },
+        {
+          "id": "e8feedc5-55dd-435a-a1f9-a5c774a26253",
+          "name": "Social Media",
+          "color": "red"
+        }
+      ]
+    },
+    "Tags": {
+      "id": "Klqy",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "373c93d2-b5b6-4594-b33b-815cdbde2798",
+          "name": "AI",
+          "color": "red"
+        },
+        {
+          "id": "d3206ad0-aba6-4b8b-91c0-c82ae091b7bf",
+          "name": "Generative AI",
+          "color": "gray"
+        },
+        {
+          "id": "c81ee767-d25c-47ce-829e-7593843a5060",
+          "name": "Deep Learning",
+          "color": "gray"
+        },
+        {
+          "id": "3d8e793c-4da2-4bcc-ada2-bdf2880ee362",
+          "name": "Problem Solving",
+          "color": "blue"
+        }
+      ]
+    },
+    "Link": {
+      "id": "OMar",
+      "type": "url",
+      "url": "/blogs/generative-models-deep-dive"
+    },
+    "Projects": {
+      "id": "OsEj",
+      "type": "relation",
+      "relation": [],
+      "has_more": false
+    },
+    "Description": {
+      "id": "R%5EVh",
+      "type": "rich_text",
+      "rich_text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "探讨如何利用深度学习解决问题，强调解锁更高抽象层级的理论与解析。",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "探讨如何利用深度学习解决问题，强调解锁更高抽象层级的理论与解析。",
+          "href": null
+        }
+      ]
+    },
+    "Area": {
+      "id": "%5CMx%3F",
+      "type": "select",
+      "select": {
+        "id": "558dac62-52e8-4c40-a93e-dc56267d2bc5",
+        "name": "Deepdive",
+        "color": "purple"
+      }
+    },
+    "Publish Date": {
+      "id": "cgE_",
+      "type": "date",
+      "date": {
+        "start": "2025-05-18",
+        "end": null,
+        "time_zone": null
+      }
+    },
+    "Theme": {
+      "id": "mgy%5E",
+      "type": "select",
+      "select": {
+        "id": "c5f8b8b4-714c-4113-8f40-761f44a09197",
+        "name": "emerald",
+        "color": "green"
+      }
+    },
+    "Status": {
+      "id": "q%3Fks",
+      "type": "status",
+      "status": {
+        "id": "7358a141-271b-49ca-8240-4893b6b02c24",
+        "name": "Published",
+        "color": "green"
+      }
+    },
+    "Category": {
+      "id": "q%5EGS",
+      "type": "relation",
+      "relation": [
+        {
+          "id": "2e7ec12a-acd9-803c-b7f7-cdfacbfba6e0"
+        }
+      ],
+      "has_more": false
+    },
+    "Last edited time": {
+      "id": "%7B~pX",
+      "type": "last_edited_time",
+      "last_edited_time": "2026-02-27T12:28:00.000Z"
+    },
+    "Name": {
+      "id": "title",
+      "type": "title",
+      "title": [
+        {
+          "type": "text",
+          "text": {
+            "content": "Gen AI 就是新的深度学习：解锁更高维度的抽象与问题求解",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "Gen AI 就是新的深度学习：解锁更高维度的抽象与问题求解",
+          "href": null
+        }
+      ]
+    }
+  },
+  "url": "https://www.notion.so/Gen-AI-1b7ec12aacd980efbab5e6925ceed244",
+  "public_url": null
+}

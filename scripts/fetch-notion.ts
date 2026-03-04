@@ -10,7 +10,9 @@ import { config as loadEnv } from 'dotenv';
  */
 
 const ROOT_DIR = process.cwd();
-const OUTPUT_DIR = path.join(ROOT_DIR, 'public/data');
+const LEGACY_OUTPUT_DIR = path.join(ROOT_DIR, 'public/data');
+const OUTPUT_DIR = path.join(LEGACY_OUTPUT_DIR, 'notion');
+const PAGES_DIR = path.join(OUTPUT_DIR, 'pages');
 const MEDIA_ROOT_DIR = path.join(ROOT_DIR, 'public/media/notion');
 const BLOCK_MEDIA_DIR = path.join(MEDIA_ROOT_DIR, 'blocks');
 const PAGE_MEDIA_DIR = path.join(MEDIA_ROOT_DIR, 'pages');
@@ -37,6 +39,29 @@ type NotionBlockResponse = {
 } & Record<string, unknown>;
 
 type NotionPageResponse = Record<string, unknown> & { id: string };
+
+type PageIndexEntry = {
+  id: string;
+  lastEditedTime: string | null;
+  pageFile: string;
+  blocksFile: string;
+};
+
+type MediaIndexEntry = {
+  id: string;
+  type: 'block' | 'page-cover';
+  sourceUrl: string;
+  localFile: string;
+  lastEditedTime: string | null;
+};
+
+type Manifest = {
+  generatedAt: string;
+  pageCount: number;
+  mediaCount: number;
+  pages: PageIndexEntry[];
+  media: MediaIndexEntry[];
+};
 
 async function fetchNotion<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
   const response = await fetch(`https://api.notion.com/v1${endpoint}`, {
@@ -185,6 +210,27 @@ const readJsonFile = <T,>(filePath: string): T | null => {
   }
 };
 
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+const fetchWithRetry = async (url: string, attempts = 3): Promise<Response> => {
+  let lastError: Error | null = null;
+  for (let attempt = 1; attempt <= attempts; attempt += 1) {
+    try {
+      const response = await fetch(url);
+      if (response.ok) return response;
+      const status = response.status;
+      const shouldRetry = status === 429 || (status >= 500 && status < 600);
+      lastError = new Error(`Failed to download ${url}: ${status}`);
+      if (!shouldRetry || attempt === attempts) throw lastError;
+    } catch (error) {
+      lastError = error instanceof Error ? error : new Error(String(error));
+      if (attempt === attempts) throw lastError;
+    }
+    await sleep(300 * attempt);
+  }
+  throw lastError ?? new Error(`Failed to download ${url}`);
+};
+
 const buildBlockIndex = (blocks: NotionBlockResponse[]): Map<string, NotionBlockResponse> => {
   const map = new Map<string, NotionBlockResponse>();
   const stack = [...blocks];
@@ -200,7 +246,11 @@ const buildBlockIndex = (blocks: NotionBlockResponse[]): Map<string, NotionBlock
   return map;
 };
 
-const collectBlockMedia = (blocks: NotionBlockResponse[], usedFiles: Set<string>) => {
+const collectBlockMedia = (
+  blocks: NotionBlockResponse[],
+  usedFiles: Set<string>,
+  mediaIndex: MediaIndexEntry[]
+) => {
   const stack = [...blocks];
   while (stack.length > 0) {
     const block = stack.pop();
@@ -215,8 +265,15 @@ const collectBlockMedia = (blocks: NotionBlockResponse[], usedFiles: Set<string>
   const originalName = readName(blockData) ?? (url ? getUrlFileName(url) : null) ?? undefined;
         const expectedName = url ? getExpectedFileNameFromUrl(block.id, url, originalName) : null;
         const fileName = expectedName || (url ? getLocalFileName(url, BLOCK_MEDIA_URL_PREFIX) : null);
-        if (fileName) {
+        if (fileName && url) {
           usedFiles.add(fileName);
+          mediaIndex.push({
+            id: block.id,
+            type: 'block',
+            sourceUrl: url,
+            localFile: fileName,
+            lastEditedTime: readLastEditedTime(block),
+          });
         }
       }
     }
@@ -227,7 +284,11 @@ const collectBlockMedia = (blocks: NotionBlockResponse[], usedFiles: Set<string>
   }
 };
 
-const collectPageCoverMedia = (page: NotionPageResponse, usedFiles: Set<string>) => {
+const collectPageCoverMedia = (
+  page: NotionPageResponse,
+  usedFiles: Set<string>,
+  mediaIndex: MediaIndexEntry[]
+) => {
   const coverValue = page.cover;
   if (!coverValue || typeof coverValue !== 'object') return;
   const coverType = readType(coverValue);
@@ -239,6 +300,15 @@ const collectPageCoverMedia = (page: NotionPageResponse, usedFiles: Set<string>)
   const fileName = expectedName || (url ? getLocalFileName(url, PAGE_MEDIA_URL_PREFIX) : null);
   if (fileName) {
     usedFiles.add(fileName);
+    if (url) {
+      mediaIndex.push({
+        id: page.id,
+        type: 'page-cover',
+        sourceUrl: url,
+        localFile: fileName,
+        lastEditedTime: readLastEditedTime(page),
+      });
+    }
   }
 };
 
@@ -250,10 +320,7 @@ const downloadMedia = async (
   previousFileName?: string | null,
   originalName?: string | null
 ): Promise<{ fileName: string; publicUrl: string } | null> => {
-  const response = await fetch(url);
-  if (!response.ok) {
-    throw new Error(`Failed to download ${url}: ${response.status}`);
-  }
+  const response = await fetchWithRetry(url);
   const contentType = response.headers.get('content-type');
   const ext = getExtension(contentType, url);
   const fileName = buildLocalFileName(fileStem, ext, originalName);
@@ -276,7 +343,8 @@ const rewriteMediaBlock = async (
   block: NotionBlockResponse,
   usedFiles: Set<string>,
   failedDownloads: string[],
-  cachedEditedTime?: string
+  cachedEditedTime?: string,
+  mediaIndex?: MediaIndexEntry[]
 ): Promise<void> => {
   const blockType = block.type;
   if (!MEDIA_BLOCK_TYPES.includes(blockType as typeof MEDIA_BLOCK_TYPES[number])) return;
@@ -298,6 +366,15 @@ const rewriteMediaBlock = async (
     const expectedFileName = getExpectedFileNameFromUrl(block.id, url, originalName);
     if (expectedFileName && fs.existsSync(path.join(BLOCK_MEDIA_DIR, expectedFileName))) {
       usedFiles.add(expectedFileName);
+      if (mediaIndex) {
+        mediaIndex.push({
+          id: block.id,
+          type: 'block',
+          sourceUrl: url,
+          localFile: expectedFileName,
+          lastEditedTime: currentEditedTime,
+        });
+      }
       return;
     }
     const existingExternal = readNested(blockData, 'external');
@@ -305,6 +382,15 @@ const rewriteMediaBlock = async (
     const existingFileName = existingUrl ? getLocalFileName(existingUrl, BLOCK_MEDIA_URL_PREFIX) : null;
     if (existingFileName && fs.existsSync(path.join(BLOCK_MEDIA_DIR, existingFileName))) {
       usedFiles.add(existingFileName);
+      if (mediaIndex && existingUrl) {
+        mediaIndex.push({
+          id: block.id,
+          type: 'block',
+          sourceUrl: existingUrl,
+          localFile: existingFileName,
+          lastEditedTime: currentEditedTime,
+        });
+      }
       return;
     }
   }
@@ -324,6 +410,15 @@ const rewriteMediaBlock = async (
     );
     if (!result) return;
     usedFiles.add(result.fileName);
+    if (mediaIndex) {
+      mediaIndex.push({
+        id: block.id,
+        type: 'block',
+        sourceUrl: url,
+        localFile: result.fileName,
+        lastEditedTime: currentEditedTime ?? null,
+      });
+    }
     block[blockType] = {
       ...blockData,
       type: 'external',
@@ -341,7 +436,8 @@ const rewritePageCover = async (
   page: NotionPageResponse,
   usedFiles: Set<string>,
   failedDownloads: string[],
-  cachedEditedTime?: string
+  cachedEditedTime?: string,
+  mediaIndex?: MediaIndexEntry[]
 ): Promise<void> => {
   const coverValue = page.cover;
   if (!coverValue || typeof coverValue !== 'object') return;
@@ -365,12 +461,39 @@ const rewritePageCover = async (
       // filename changed without page edit; re-download to rename
       if (existingFileName && fs.existsSync(path.join(PAGE_MEDIA_DIR, existingFileName))) {
         usedFiles.add(existingFileName);
+        if (mediaIndex && existingUrl) {
+          mediaIndex.push({
+            id: page.id,
+            type: 'page-cover',
+            sourceUrl: existingUrl,
+            localFile: existingFileName,
+            lastEditedTime: currentEditedTime,
+          });
+        }
       }
     } else if (expectedFileName && fs.existsSync(path.join(PAGE_MEDIA_DIR, expectedFileName))) {
       usedFiles.add(expectedFileName);
+      if (mediaIndex) {
+        mediaIndex.push({
+          id: page.id,
+          type: 'page-cover',
+          sourceUrl: url,
+          localFile: expectedFileName,
+          lastEditedTime: currentEditedTime,
+        });
+      }
       return;
     } else if (existingFileName && fs.existsSync(path.join(PAGE_MEDIA_DIR, existingFileName))) {
       usedFiles.add(existingFileName);
+      if (mediaIndex && existingUrl) {
+        mediaIndex.push({
+          id: page.id,
+          type: 'page-cover',
+          sourceUrl: existingUrl,
+          localFile: existingFileName,
+          lastEditedTime: currentEditedTime,
+        });
+      }
       return;
     }
   }
@@ -390,6 +513,15 @@ const rewritePageCover = async (
     );
     if (!result) return;
     usedFiles.add(result.fileName);
+    if (mediaIndex) {
+      mediaIndex.push({
+        id: page.id,
+        type: 'page-cover',
+        sourceUrl: url,
+        localFile: result.fileName,
+        lastEditedTime: currentEditedTime ?? null,
+      });
+    }
     page.cover = {
       type: 'external',
       external: { url: result.publicUrl },
@@ -404,7 +536,8 @@ async function fetchBlockChildren(
   blockId: string,
   usedFiles: Set<string>,
   failedDownloads: string[],
-  cachedBlocksById?: Map<string, NotionBlockResponse>
+  cachedBlocksById?: Map<string, NotionBlockResponse>,
+  mediaIndex?: MediaIndexEntry[]
 ): Promise<NotionBlockResponse[]> {
   console.log(`  - Fetching children for block: ${blockId}`);
   let blocks: NotionBlockResponse[] = [];
@@ -423,12 +556,13 @@ async function fetchBlockChildren(
           block.id,
           usedFiles,
           failedDownloads,
-          cachedBlocksById
+          cachedBlocksById,
+          mediaIndex
         );
       }
       const cachedBlock = cachedBlocksById?.get(block.id);
       const cachedEditedTime = cachedBlock ? readLastEditedTime(cachedBlock) ?? undefined : undefined;
-      await rewriteMediaBlock(block, usedFiles, failedDownloads, cachedEditedTime);
+      await rewriteMediaBlock(block, usedFiles, failedDownloads, cachedEditedTime, mediaIndex);
     }
     
     blocks = blocks.concat(results);
@@ -458,7 +592,9 @@ async function main() {
       method: 'POST',
     });
     
+    if (!fs.existsSync(LEGACY_OUTPUT_DIR)) fs.mkdirSync(LEGACY_OUTPUT_DIR, { recursive: true });
     if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
+    if (!fs.existsSync(PAGES_DIR)) fs.mkdirSync(PAGES_DIR, { recursive: true });
     if (!fs.existsSync(MEDIA_ROOT_DIR)) fs.mkdirSync(MEDIA_ROOT_DIR, { recursive: true });
     if (!fs.existsSync(BLOCK_MEDIA_DIR)) fs.mkdirSync(BLOCK_MEDIA_DIR, { recursive: true });
     if (!fs.existsSync(PAGE_MEDIA_DIR)) fs.mkdirSync(PAGE_MEDIA_DIR, { recursive: true });
@@ -466,9 +602,10 @@ async function main() {
     const usedBlockFiles = new Set<string>();
     const usedPageFiles = new Set<string>();
     const failedDownloads: string[] = [];
+    const mediaIndex: MediaIndexEntry[] = [];
 
     const existingPagesData = readJsonFile<NotionListResponse<NotionPageResponse>>(
-      path.join(OUTPUT_DIR, 'notion-pages.json')
+      path.join(OUTPUT_DIR, 'pages-index.json')
     );
     const cachedPagesById = new Map<string, NotionPageResponse>();
     if (existingPagesData?.results) {
@@ -478,12 +615,23 @@ async function main() {
     }
 
     const pageIds = new Set(pagesData.results.map((page) => page.id));
-    const existingFiles = fs.readdirSync(OUTPUT_DIR);
-    for (const file of existingFiles) {
-      if (!file.startsWith('blocks-') || !file.endsWith('.json')) continue;
-      const id = file.replace('blocks-', '').replace('.json', '');
-      if (!pageIds.has(id)) {
-        fs.unlinkSync(path.join(OUTPUT_DIR, file));
+    const existingPageDirs = fs.readdirSync(PAGES_DIR);
+    for (const dir of existingPageDirs) {
+      const dirPath = path.join(PAGES_DIR, dir);
+      if (!fs.statSync(dirPath).isDirectory()) continue;
+      if (!pageIds.has(dir)) {
+        fs.rmSync(dirPath, { recursive: true, force: true });
+      }
+    }
+
+    if (fs.existsSync(LEGACY_OUTPUT_DIR)) {
+      const legacyFiles = fs.readdirSync(LEGACY_OUTPUT_DIR);
+      for (const file of legacyFiles) {
+        if (!file.startsWith('blocks-') || !file.endsWith('.json')) continue;
+        const id = file.replace('blocks-', '').replace('.json', '');
+        if (!pageIds.has(id)) {
+          fs.unlinkSync(path.join(LEGACY_OUTPUT_DIR, file));
+        }
       }
     }
 
@@ -492,13 +640,13 @@ async function main() {
       const cachedPage = cachedPagesById.get(page.id);
       const currentEditedTime = readLastEditedTime(page);
       const cachedEditedTime = cachedPage ? readLastEditedTime(cachedPage) ?? undefined : undefined;
-      await rewritePageCover(page, usedPageFiles, failedDownloads, cachedEditedTime);
+      await rewritePageCover(page, usedPageFiles, failedDownloads, cachedEditedTime, mediaIndex);
       if (cachedEditedTime && currentEditedTime && cachedEditedTime === currentEditedTime) {
         const cachedBlocks = readJsonFile<{ results: NotionBlockResponse[] }>(
-          path.join(OUTPUT_DIR, `blocks-${page.id}.json`)
+          path.join(PAGES_DIR, page.id, 'blocks.json')
         );
         if (cachedBlocks?.results) {
-          collectBlockMedia(cachedBlocks.results, usedBlockFiles);
+          collectBlockMedia(cachedBlocks.results, usedBlockFiles, mediaIndex);
           continue;
         }
       }
@@ -506,36 +654,79 @@ async function main() {
     }
 
     fs.writeFileSync(
-      path.join(OUTPUT_DIR, 'notion-pages.json'),
-      JSON.stringify(pagesData, null, 2)
+      path.join(OUTPUT_DIR, 'pages-index.json'),
+      JSON.stringify({ results: pagesData.results }, null, 2)
     );
-    console.log(`✅ Saved ${pagesData.results.length} pages to notion-pages.json`);
+    console.log(`✅ Saved ${pagesData.results.length} pages to pages-index.json`);
 
     // 2. Fetch Blocks for each page recursively
     console.log('2. Fetching blocks for each page...');
     for (const page of pagesToFetchBlocks) {
       console.log(`📄 Page: ${page.id}`);
+      const pageDir = path.join(PAGES_DIR, page.id);
+      if (!fs.existsSync(pageDir)) fs.mkdirSync(pageDir, { recursive: true });
       const cachedBlocks = readJsonFile<{ results: NotionBlockResponse[] }>(
-        path.join(OUTPUT_DIR, `blocks-${page.id}.json`)
+        path.join(pageDir, 'blocks.json')
       );
       const cachedBlocksById = cachedBlocks?.results ? buildBlockIndex(cachedBlocks.results) : undefined;
-      const blocks = await fetchBlockChildren(page.id, usedBlockFiles, failedDownloads, cachedBlocksById);
+      const blocks = await fetchBlockChildren(page.id, usedBlockFiles, failedDownloads, cachedBlocksById, mediaIndex);
 
       // Save individual page blocks
       fs.writeFileSync(
-        path.join(OUTPUT_DIR, `blocks-${page.id}.json`),
+        path.join(pageDir, 'blocks.json'),
+        JSON.stringify({ results: blocks }, null, 2)
+      );
+
+      fs.writeFileSync(
+        path.join(pageDir, 'page.json'),
+        JSON.stringify(page, null, 2)
+      );
+
+      fs.writeFileSync(
+        path.join(LEGACY_OUTPUT_DIR, `blocks-${page.id}.json`),
         JSON.stringify({ results: blocks }, null, 2)
       );
     }
 
     for (const page of pagesData.results) {
       if (!pagesToFetchBlocks.find((entry) => entry.id === page.id)) {
-        collectPageCoverMedia(page, usedPageFiles);
+        collectPageCoverMedia(page, usedPageFiles, mediaIndex);
       }
     }
 
+    const pageIndex: PageIndexEntry[] = pagesData.results.map((page) => ({
+      id: page.id,
+      lastEditedTime: readLastEditedTime(page),
+      pageFile: `pages/${page.id}/page.json`,
+      blocksFile: `pages/${page.id}/blocks.json`,
+    }));
+
+    const manifest: Manifest = {
+      generatedAt: new Date().toISOString(),
+      pageCount: pageIndex.length,
+      mediaCount: mediaIndex.length,
+      pages: pageIndex,
+      media: mediaIndex,
+    };
+
+    fs.writeFileSync(
+      path.join(OUTPUT_DIR, 'manifest.json'),
+      JSON.stringify(manifest, null, 2)
+    );
+
+    fs.writeFileSync(
+      path.join(LEGACY_OUTPUT_DIR, 'notion-pages.json'),
+      JSON.stringify({ results: pagesData.results }, null, 2)
+    );
+    console.log(`✅ Legacy notion-pages.json saved for compatibility`);
+
     if (failedDownloads.length > 0) {
-      throw new Error(`Media download failures:\n${failedDownloads.join('\n')}`);
+      const failedList = failedDownloads.join('\n');
+      console.warn(`⚠️ Media download failures (partial):\n${failedList}`);
+      fs.writeFileSync(
+        path.join(OUTPUT_DIR, 'failed-downloads.json'),
+        JSON.stringify({ failed: failedDownloads }, null, 2)
+      );
     }
 
     const existingBlockFiles = fs.readdirSync(BLOCK_MEDIA_DIR);

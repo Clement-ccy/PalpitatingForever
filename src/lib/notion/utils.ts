@@ -150,7 +150,7 @@ export function mapNotionPage(rawPage: unknown): NotionPage {
     theme: props.Theme?.select?.name ?? null,
     area: props.Area?.select?.name ?? '',
     role: getRichText(props.Role?.rich_text),
-    platforms: props.Platfom?.multi_select?.map((s: { name: string }) => s.name) || [],
+    platforms: props.Platform?.multi_select?.map((s: { name: string }) => s.name) || [],
     rate: props.Rate?.number ?? null,
     status: props.Status?.status?.name || 'Unknown',
     url: props.Link?.url ?? rawPage.url ?? '',

@@ -12,7 +12,8 @@ type NotionBlocksResponse = {
 
 export async function fetchNotionPages(): Promise<NotionPage[]> {
   try {
-    const response = await fetch('/data/notion-pages.json');
+    const primaryResponse = await fetch('/data/notion/pages-index.json');
+    const response = primaryResponse.ok ? primaryResponse : await fetch('/data/notion-pages.json');
     if (!response.ok) return [];
     const data = await response.json() as NotionPagesResponse;
     const results = Array.isArray(data.results) ? data.results : [];
@@ -25,7 +26,8 @@ export async function fetchNotionPages(): Promise<NotionPage[]> {
 
 export async function fetchNotionBlocks(pageId: string): Promise<NotionBlock[]> {
   try {
-    const response = await fetch(`/data/blocks-${pageId}.json`);
+    const primaryResponse = await fetch(`/data/notion/pages/${pageId}/blocks.json`);
+    const response = primaryResponse.ok ? primaryResponse : await fetch(`/data/blocks-${pageId}.json`);
     if (!response.ok) return [];
     const data = await response.json() as NotionBlocksResponse;
     const results = Array.isArray(data.results) ? data.results : [];

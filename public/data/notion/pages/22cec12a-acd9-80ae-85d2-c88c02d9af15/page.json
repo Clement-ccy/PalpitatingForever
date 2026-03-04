@@ -1,0 +1,233 @@
+{
+  "object": "page",
+  "id": "22cec12a-acd9-80ae-85d2-c88c02d9af15",
+  "created_time": "2025-07-10T10:10:00.000Z",
+  "last_edited_time": "2026-02-27T12:29:00.000Z",
+  "created_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "last_edited_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "cover": {
+    "type": "external",
+    "external": {
+      "url": "/media/notion/pages/22cec12a-acd9-80ae-85d2-c88c02d9af15-generative-ai-architecture-2026-cover.jpg"
+    }
+  },
+  "icon": null,
+  "parent": {
+    "type": "data_source_id",
+    "data_source_id": "2e7ec12a-acd9-80f5-9c35-000b7c541f04",
+    "database_id": "2e7ec12a-acd9-805c-bd15-cf5affe4cb79"
+  },
+  "archived": false,
+  "in_trash": false,
+  "is_locked": false,
+  "properties": {
+    "Created": {
+      "id": "%3D%5BaD",
+      "type": "created_time",
+      "created_time": "2025-07-10T10:10:00.000Z"
+    },
+    "Rate": {
+      "id": "%3FHu%5B",
+      "type": "number",
+      "number": 5
+    },
+    "Role": {
+      "id": "C~%3Dj",
+      "type": "select",
+      "select": {
+        "id": "L[Fz",
+        "name": "Writer",
+        "color": "red"
+      }
+    },
+    "Platfom": {
+      "id": "EElo",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "551f58ff-3451-4ee9-896a-da1f41c442b2",
+          "name": "Article",
+          "color": "purple"
+        }
+      ]
+    },
+    "Tags": {
+      "id": "Klqy",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "373c93d2-b5b6-4594-b33b-815cdbde2798",
+          "name": "AI",
+          "color": "red"
+        },
+        {
+          "id": "d3206ad0-aba6-4b8b-91c0-c82ae091b7bf",
+          "name": "Generative AI",
+          "color": "gray"
+        },
+        {
+          "id": "8e45df55-0acc-44e0-8149-43714f1e4c4e",
+          "name": "Architecture",
+          "color": "blue"
+        },
+        {
+          "id": "d2f7cc0a-1f31-4fdd-b13e-4c4d8451f662",
+          "name": "Transformer",
+          "color": "green"
+        }
+      ]
+    },
+    "Link": {
+      "id": "OMar",
+      "type": "url",
+      "url": "/blog/generative-ai-architecture-2026"
+    },
+    "Projects": {
+      "id": "OsEj",
+      "type": "relation",
+      "relation": [],
+      "has_more": false
+    },
+    "Description": {
+      "id": "R%5EVh",
+      "type": "rich_text",
+      "rich_text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "深度拆解 2025-2026 年生成式 AI 的技术底层。从混合 Mamba 架构到推理时计算（Test-Time Compute），从 ",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "深度拆解 2025-2026 年生成式 AI 的技术底层。从混合 Mamba 架构到推理时计算（Test-Time Compute），从 ",
+          "href": null
+        },
+        {
+          "type": "text",
+          "text": {
+            "content": "Flow Matching",
+            "link": {
+              "url": "https://www.notion.so/blog/flow-matching"
+            }
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "Flow Matching",
+          "href": "https://www.notion.so/blog/flow-matching"
+        },
+        {
+          "type": "text",
+          "text": {
+            "content": " 到原生多模态，一文看懂生成式 AI 大模型背后的架构演进。",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": " 到原生多模态，一文看懂生成式 AI 大模型背后的架构演进。",
+          "href": null
+        }
+      ]
+    },
+    "Area": {
+      "id": "%5CMx%3F",
+      "type": "select",
+      "select": {
+        "id": "aa69bf07-f3a5-4341-b6fa-d0a0229c9b40",
+        "name": "Review",
+        "color": "default"
+      }
+    },
+    "Publish Date": {
+      "id": "cgE_",
+      "type": "date",
+      "date": {
+        "start": "2026-01-11",
+        "end": null,
+        "time_zone": null
+      }
+    },
+    "Theme": {
+      "id": "mgy%5E",
+      "type": "select",
+      "select": {
+        "id": "e72a8a9e-a058-4de0-87b1-f2d0fd3e7d0b",
+        "name": "blue",
+        "color": "blue"
+      }
+    },
+    "Status": {
+      "id": "q%3Fks",
+      "type": "status",
+      "status": {
+        "id": "7358a141-271b-49ca-8240-4893b6b02c24",
+        "name": "Published",
+        "color": "green"
+      }
+    },
+    "Category": {
+      "id": "q%5EGS",
+      "type": "relation",
+      "relation": [
+        {
+          "id": "2e7ec12a-acd9-803c-b7f7-cdfacbfba6e0"
+        }
+      ],
+      "has_more": false
+    },
+    "Last edited time": {
+      "id": "%7B~pX",
+      "type": "last_edited_time",
+      "last_edited_time": "2026-02-27T12:29:00.000Z"
+    },
+    "Name": {
+      "id": "title",
+      "type": "title",
+      "title": [
+        {
+          "type": "text",
+          "text": {
+            "content": "生成式 AI 的底层重构：从 Transformer 到混合架构与推理计算 (2025-2026)",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "生成式 AI 的底层重构：从 Transformer 到混合架构与推理计算 (2025-2026)",
+          "href": null
+        }
+      ]
+    }
+  },
+  "url": "https://www.notion.so/AI-Transformer-2025-2026-22cec12aacd980ae85d2c88c02d9af15",
+  "public_url": null
+}

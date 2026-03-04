@@ -1,0 +1,182 @@
+{
+  "object": "page",
+  "id": "1e3ec12a-acd9-806c-b666-c70d46cdef80",
+  "created_time": "2025-04-28T17:15:00.000Z",
+  "last_edited_time": "2026-02-27T10:38:00.000Z",
+  "created_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "last_edited_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "cover": {
+    "type": "external",
+    "external": {
+      "url": "/media/notion/pages/1e3ec12a-acd9-806c-b666-c70d46cdef80-webb2.jpg"
+    }
+  },
+  "icon": null,
+  "parent": {
+    "type": "data_source_id",
+    "data_source_id": "2e7ec12a-acd9-80f5-9c35-000b7c541f04",
+    "database_id": "2e7ec12a-acd9-805c-bd15-cf5affe4cb79"
+  },
+  "archived": false,
+  "in_trash": false,
+  "is_locked": false,
+  "properties": {
+    "Created": {
+      "id": "%3D%5BaD",
+      "type": "created_time",
+      "created_time": "2025-04-28T17:15:00.000Z"
+    },
+    "Rate": {
+      "id": "%3FHu%5B",
+      "type": "number",
+      "number": 5
+    },
+    "Role": {
+      "id": "C~%3Dj",
+      "type": "select",
+      "select": {
+        "id": "b@AH",
+        "name": "Vocal",
+        "color": "default"
+      }
+    },
+    "Platfom": {
+      "id": "EElo",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "551f58ff-3451-4ee9-896a-da1f41c442b2",
+          "name": "Article",
+          "color": "purple"
+        }
+      ]
+    },
+    "Tags": {
+      "id": "Klqy",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "1064ba9c-b001-49d4-a2d4-dc060b6e14ed",
+          "name": "Shoegaze",
+          "color": "purple"
+        }
+      ]
+    },
+    "Link": {
+      "id": "OMar",
+      "type": "url",
+      "url": null
+    },
+    "Projects": {
+      "id": "OsEj",
+      "type": "relation",
+      "relation": [],
+      "has_more": false
+    },
+    "Description": {
+      "id": "R%5EVh",
+      "type": "rich_text",
+      "rich_text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "和本科同学一起合作的",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "和本科同学一起合作的",
+          "href": null
+        }
+      ]
+    },
+    "Area": {
+      "id": "%5CMx%3F",
+      "type": "select",
+      "select": {
+        "id": "b15daeae-f2ab-45a4-b76d-5590fa1e7c04",
+        "name": "Music",
+        "color": "orange"
+      }
+    },
+    "Publish Date": {
+      "id": "cgE_",
+      "type": "date",
+      "date": {
+        "start": "2026-01-29",
+        "end": null,
+        "time_zone": null
+      }
+    },
+    "Theme": {
+      "id": "mgy%5E",
+      "type": "select",
+      "select": {
+        "id": "8b811fe5-0a4b-4da3-98f9-17cd2d5aa42d",
+        "name": "purple",
+        "color": "purple"
+      }
+    },
+    "Status": {
+      "id": "q%3Fks",
+      "type": "status",
+      "status": {
+        "id": "7358a141-271b-49ca-8240-4893b6b02c24",
+        "name": "Published",
+        "color": "green"
+      }
+    },
+    "Category": {
+      "id": "q%5EGS",
+      "type": "relation",
+      "relation": [
+        {
+          "id": "2e7ec12a-acd9-8080-80ce-fea01349c60f"
+        }
+      ],
+      "has_more": false
+    },
+    "Last edited time": {
+      "id": "%7B~pX",
+      "type": "last_edited_time",
+      "last_edited_time": "2026-02-27T10:38:00.000Z"
+    },
+    "Name": {
+      "id": "title",
+      "type": "title",
+      "title": [
+        {
+          "type": "text",
+          "text": {
+            "content": "予感 - 羊文学",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "予感 - 羊文学",
+          "href": null
+        }
+      ]
+    }
+  },
+  "url": "https://www.notion.so/1e3ec12aacd9806cb666c70d46cdef80",
+  "public_url": null
+}

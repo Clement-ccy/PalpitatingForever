@@ -1,0 +1,48 @@
+{
+  "results": [
+    {
+      "object": "block",
+      "id": "2f7ec12a-acd9-80de-b8ba-e92e57150392",
+      "parent": {
+        "type": "page_id",
+        "page_id": "2f7ec12a-acd9-80b6-961d-cbf64b9154e9"
+      },
+      "created_time": "2026-01-29T17:59:00.000Z",
+      "last_edited_time": "2026-01-29T18:00:00.000Z",
+      "created_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "last_edited_by": {
+        "object": "user",
+        "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+      },
+      "has_children": false,
+      "archived": false,
+      "in_trash": false,
+      "type": "paragraph",
+      "paragraph": {
+        "rich_text": [
+          {
+            "type": "text",
+            "text": {
+              "content": "Shoegaze（或者叫Shoegazing）是20世纪80年代末在英国出现的独立/另类摇滚（Indie/Alternative Rock）的一个子流派。它的特点是混合了空灵或模糊的人声，与由强失真形成的扭曲吉他声墙，再加上大量使用踏板、颤音、混响等效果器。英国音乐出版社（British Music Press）创造了一个专有术语——Shoegaze（盯鞋），用来描述一批新乐队吉他手在现场表演时，在一种超然、内省、不对抗的状态下低着头，一动不动的站在舞台上。有解释说这是因为他们大量使用不同的吉他效果器，所以需要经常踩踏板变换及低头观察这些效果器的读数。",
+              "link": null
+            },
+            "annotations": {
+              "bold": false,
+              "italic": false,
+              "strikethrough": false,
+              "underline": false,
+              "code": false,
+              "color": "default"
+            },
+            "plain_text": "Shoegaze（或者叫Shoegazing）是20世纪80年代末在英国出现的独立/另类摇滚（Indie/Alternative Rock）的一个子流派。它的特点是混合了空灵或模糊的人声，与由强失真形成的扭曲吉他声墙，再加上大量使用踏板、颤音、混响等效果器。英国音乐出版社（British Music Press）创造了一个专有术语——Shoegaze（盯鞋），用来描述一批新乐队吉他手在现场表演时，在一种超然、内省、不对抗的状态下低着头，一动不动的站在舞台上。有解释说这是因为他们大量使用不同的吉他效果器，所以需要经常踩踏板变换及低头观察这些效果器的读数。",
+            "href": null
+          }
+        ],
+        "color": "default"
+      }
+    }
+  ]
+}

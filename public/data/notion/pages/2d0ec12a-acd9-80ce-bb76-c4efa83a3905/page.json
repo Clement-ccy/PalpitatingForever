@@ -1,0 +1,202 @@
+{
+  "object": "page",
+  "id": "2d0ec12a-acd9-80ce-bb76-c4efa83a3905",
+  "created_time": "2025-12-21T14:41:00.000Z",
+  "last_edited_time": "2026-02-27T12:28:00.000Z",
+  "created_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "last_edited_by": {
+    "object": "user",
+    "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
+  },
+  "cover": {
+    "type": "external",
+    "external": {
+      "url": "/media/notion/pages/2d0ec12a-acd9-80ce-bb76-c4efa83a3905-vscode-platformio-mirror-config-cover.jpg"
+    }
+  },
+  "icon": null,
+  "parent": {
+    "type": "data_source_id",
+    "data_source_id": "2e7ec12a-acd9-80f5-9c35-000b7c541f04",
+    "database_id": "2e7ec12a-acd9-805c-bd15-cf5affe4cb79"
+  },
+  "archived": false,
+  "in_trash": false,
+  "is_locked": false,
+  "properties": {
+    "Created": {
+      "id": "%3D%5BaD",
+      "type": "created_time",
+      "created_time": "2025-12-21T14:41:00.000Z"
+    },
+    "Rate": {
+      "id": "%3FHu%5B",
+      "type": "number",
+      "number": 3
+    },
+    "Role": {
+      "id": "C~%3Dj",
+      "type": "select",
+      "select": {
+        "id": "L[Fz",
+        "name": "Writer",
+        "color": "red"
+      }
+    },
+    "Platfom": {
+      "id": "EElo",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "551f58ff-3451-4ee9-896a-da1f41c442b2",
+          "name": "Article",
+          "color": "purple"
+        },
+        {
+          "id": "e8feedc5-55dd-435a-a1f9-a5c774a26253",
+          "name": "Social Media",
+          "color": "red"
+        }
+      ]
+    },
+    "Tags": {
+      "id": "Klqy",
+      "type": "multi_select",
+      "multi_select": [
+        {
+          "id": "c5414402-f63b-4b12-9f4f-383fd4bd073c",
+          "name": "VSCode",
+          "color": "blue"
+        },
+        {
+          "id": "4a3a459f-ebc5-4788-a97e-d817c71575df",
+          "name": "PlatformIO",
+          "color": "orange"
+        },
+        {
+          "id": "05d6c4d2-9d08-4343-8710-8bab077bea31",
+          "name": "Embedded",
+          "color": "red"
+        },
+        {
+          "id": "b30db20d-f8e8-49db-8a62-532565ed5b12",
+          "name": "Mirror",
+          "color": "blue"
+        }
+      ]
+    },
+    "Link": {
+      "id": "OMar",
+      "type": "url",
+      "url": "/blogs/vscode-platformio-mirror-config"
+    },
+    "Projects": {
+      "id": "OsEj",
+      "type": "relation",
+      "relation": [],
+      "has_more": false
+    },
+    "Description": {
+      "id": "R%5EVh",
+      "type": "rich_text",
+      "rich_text": [
+        {
+          "type": "text",
+          "text": {
+            "content": "在VScode中配置PlatformIO的运行时环境，通过在settings.json中添加自定义路径和PyPi镜像源来解决下载及创建项目的卡顿问题。",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "在VScode中配置PlatformIO的运行时环境，通过在settings.json中添加自定义路径和PyPi镜像源来解决下载及创建项目的卡顿问题。",
+          "href": null
+        }
+      ]
+    },
+    "Area": {
+      "id": "%5CMx%3F",
+      "type": "select",
+      "select": {
+        "id": "f5fa4646-c329-4ef9-8d98-7a5778038dc9",
+        "name": "Practice Note",
+        "color": "red"
+      }
+    },
+    "Publish Date": {
+      "id": "cgE_",
+      "type": "date",
+      "date": {
+        "start": "2025-12-21",
+        "end": null,
+        "time_zone": null
+      }
+    },
+    "Theme": {
+      "id": "mgy%5E",
+      "type": "select",
+      "select": {
+        "id": "9fe3d228-b8fc-448a-bb05-c0b571be2fee",
+        "name": "orange",
+        "color": "red"
+      }
+    },
+    "Status": {
+      "id": "q%3Fks",
+      "type": "status",
+      "status": {
+        "id": "7358a141-271b-49ca-8240-4893b6b02c24",
+        "name": "Published",
+        "color": "green"
+      }
+    },
+    "Category": {
+      "id": "q%5EGS",
+      "type": "relation",
+      "relation": [
+        {
+          "id": "2e7ec12a-acd9-803c-b7f7-cdfacbfba6e0"
+        }
+      ],
+      "has_more": false
+    },
+    "Last edited time": {
+      "id": "%7B~pX",
+      "type": "last_edited_time",
+      "last_edited_time": "2026-02-27T12:28:00.000Z"
+    },
+    "Name": {
+      "id": "title",
+      "type": "title",
+      "title": [
+        {
+          "type": "text",
+          "text": {
+            "content": "PlatformIO 中下载缓慢及创建项目卡顿问题处理",
+            "link": null
+          },
+          "annotations": {
+            "bold": false,
+            "italic": false,
+            "strikethrough": false,
+            "underline": false,
+            "code": false,
+            "color": "default"
+          },
+          "plain_text": "PlatformIO 中下载缓慢及创建项目卡顿问题处理",
+          "href": null
+        }
+      ]
+    }
+  },
+  "url": "https://www.notion.so/PlatformIO-2d0ec12aacd980cebb76c4efa83a3905",
+  "public_url": null
+}
