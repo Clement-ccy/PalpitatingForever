@@ -10,8 +10,8 @@ import { config as loadEnv } from 'dotenv';
  */
 
 const ROOT_DIR = process.cwd();
-const LEGACY_OUTPUT_DIR = path.join(ROOT_DIR, 'public/data');
-const OUTPUT_DIR = path.join(LEGACY_OUTPUT_DIR, 'notion');
+const DATA_ROOT_DIR = path.join(ROOT_DIR, 'public/data');
+const OUTPUT_DIR = path.join(DATA_ROOT_DIR, 'notion');
 const PAGES_DIR = path.join(OUTPUT_DIR, 'pages');
 const MEDIA_ROOT_DIR = path.join(ROOT_DIR, 'public/media/notion');
 const BLOCK_MEDIA_DIR = path.join(MEDIA_ROOT_DIR, 'blocks');
@@ -259,22 +259,20 @@ const collectBlockMedia = (
     if (MEDIA_BLOCK_TYPES.includes(blockType as typeof MEDIA_BLOCK_TYPES[number])) {
       const blockData = block[blockType] as Record<string, unknown> | undefined;
       const mediaType = blockData ? readType(blockData) : null;
-      if (mediaType === 'external') {
-        const external = blockData ? readNested(blockData, 'external') : null;
-        const url = external ? readUrl(external) : null;
-  const originalName = readName(blockData) ?? (url ? getUrlFileName(url) : null) ?? undefined;
-        const expectedName = url ? getExpectedFileNameFromUrl(block.id, url, originalName) : null;
-        const fileName = expectedName || (url ? getLocalFileName(url, BLOCK_MEDIA_URL_PREFIX) : null);
-        if (fileName && url) {
-          usedFiles.add(fileName);
-          mediaIndex.push({
-            id: block.id,
-            type: 'block',
-            sourceUrl: url,
-            localFile: fileName,
-            lastEditedTime: readLastEditedTime(block),
-          });
-        }
+      const external = blockData ? readNested(blockData, 'external') : null;
+      const url = external ? readUrl(external) : null;
+      const originalName = readName(blockData) ?? (url ? getUrlFileName(url) : null) ?? undefined;
+      const expectedName = url ? getExpectedFileNameFromUrl(block.id, url, originalName) : null;
+      const fileName = expectedName || (url ? getLocalFileName(url, BLOCK_MEDIA_URL_PREFIX) : null);
+      if (fileName && url) {
+        usedFiles.add(fileName);
+        mediaIndex.push({
+          id: block.id,
+          type: 'block',
+          sourceUrl: url,
+          localFile: fileName,
+          lastEditedTime: readLastEditedTime(block),
+        });
       }
     }
     const children = Array.isArray(block.children) ? block.children : [];
@@ -292,10 +290,10 @@ const collectPageCoverMedia = (
   const coverValue = page.cover;
   if (!coverValue || typeof coverValue !== 'object') return;
   const coverType = readType(coverValue);
-  if (coverType !== 'external') return;
-  const external = readNested(coverValue, 'external');
-  const url = external ? readUrl(external) : null;
-  const originalName = readName(external) ?? (url ? getUrlFileName(url) : null) ?? undefined;
+  if (!coverType) return;
+  const coverSource = readNested(coverValue, coverType);
+  const url = coverSource ? readUrl(coverSource) : null;
+  const originalName = readName(coverSource) ?? (url ? getUrlFileName(url) : null) ?? undefined;
   const expectedName = url ? getExpectedFileNameFromUrl(page.id, url, originalName) : null;
   const fileName = expectedName || (url ? getLocalFileName(url, PAGE_MEDIA_URL_PREFIX) : null);
   if (fileName) {
@@ -352,14 +350,11 @@ const rewriteMediaBlock = async (
   const blockData = block[blockType] as Record<string, unknown> | undefined;
   if (!blockData || typeof blockData !== 'object') return;
 
-  const mediaType = readType(blockData);
-  if (mediaType !== 'file') return;
-
-  const fileObject = readNested(blockData, 'file');
-  const url = fileObject ? readUrl(fileObject) : null;
+  const mediaSource = readNested(blockData, 'file') ?? readNested(blockData, 'external');
+  const url = mediaSource ? readUrl(mediaSource) : null;
   if (!url) return;
 
-  const originalName = readName(blockData) ?? readName(fileObject) ?? getUrlFileName(url);
+  const originalName = readName(blockData) ?? readName(mediaSource) ?? getUrlFileName(url);
 
   const currentEditedTime = readLastEditedTime(block);
   if (cachedEditedTime && currentEditedTime && cachedEditedTime === currentEditedTime) {
@@ -377,27 +372,9 @@ const rewriteMediaBlock = async (
       }
       return;
     }
-    const existingExternal = readNested(blockData, 'external');
-    const existingUrl = existingExternal ? readUrl(existingExternal) : null;
-    const existingFileName = existingUrl ? getLocalFileName(existingUrl, BLOCK_MEDIA_URL_PREFIX) : null;
-    if (existingFileName && fs.existsSync(path.join(BLOCK_MEDIA_DIR, existingFileName))) {
-      usedFiles.add(existingFileName);
-      if (mediaIndex && existingUrl) {
-        mediaIndex.push({
-          id: block.id,
-          type: 'block',
-          sourceUrl: existingUrl,
-          localFile: existingFileName,
-          lastEditedTime: currentEditedTime,
-        });
-      }
-      return;
-    }
   }
 
-  const existingExternal = readNested(blockData, 'external');
-  const existingUrl = existingExternal ? readUrl(existingExternal) : null;
-  const previousFileName = existingUrl ? getLocalFileName(existingUrl, BLOCK_MEDIA_URL_PREFIX) : null;
+  const previousFileName = null;
 
   try {
     const result = await downloadMedia(
@@ -454,24 +431,7 @@ const rewritePageCover = async (
   const currentEditedTime = readLastEditedTime(page);
   if (cachedEditedTime && currentEditedTime && cachedEditedTime === currentEditedTime) {
     const expectedFileName = getExpectedFileNameFromUrl(page.id, url, originalName);
-    const existingExternal = readNested(coverValue, 'external');
-    const existingUrl = existingExternal ? readUrl(existingExternal) : null;
-    const existingFileName = existingUrl ? getLocalFileName(existingUrl, PAGE_MEDIA_URL_PREFIX) : null;
-    if (expectedFileName && existingFileName && expectedFileName !== existingFileName) {
-      // filename changed without page edit; re-download to rename
-      if (existingFileName && fs.existsSync(path.join(PAGE_MEDIA_DIR, existingFileName))) {
-        usedFiles.add(existingFileName);
-        if (mediaIndex && existingUrl) {
-          mediaIndex.push({
-            id: page.id,
-            type: 'page-cover',
-            sourceUrl: existingUrl,
-            localFile: existingFileName,
-            lastEditedTime: currentEditedTime,
-          });
-        }
-      }
-    } else if (expectedFileName && fs.existsSync(path.join(PAGE_MEDIA_DIR, expectedFileName))) {
+    if (expectedFileName && fs.existsSync(path.join(PAGE_MEDIA_DIR, expectedFileName))) {
       usedFiles.add(expectedFileName);
       if (mediaIndex) {
         mediaIndex.push({
@@ -483,24 +443,10 @@ const rewritePageCover = async (
         });
       }
       return;
-    } else if (existingFileName && fs.existsSync(path.join(PAGE_MEDIA_DIR, existingFileName))) {
-      usedFiles.add(existingFileName);
-      if (mediaIndex && existingUrl) {
-        mediaIndex.push({
-          id: page.id,
-          type: 'page-cover',
-          sourceUrl: existingUrl,
-          localFile: existingFileName,
-          lastEditedTime: currentEditedTime,
-        });
-      }
-      return;
     }
   }
 
-  const existingExternal = readNested(coverValue, 'external');
-  const existingUrl = existingExternal ? readUrl(existingExternal) : null;
-  const previousFileName = existingUrl ? getLocalFileName(existingUrl, PAGE_MEDIA_URL_PREFIX) : null;
+  const previousFileName = null;
 
   try {
     const result = await downloadMedia(
@@ -592,7 +538,7 @@ async function main() {
       method: 'POST',
     });
     
-    if (!fs.existsSync(LEGACY_OUTPUT_DIR)) fs.mkdirSync(LEGACY_OUTPUT_DIR, { recursive: true });
+    if (!fs.existsSync(DATA_ROOT_DIR)) fs.mkdirSync(DATA_ROOT_DIR, { recursive: true });
     if (!fs.existsSync(OUTPUT_DIR)) fs.mkdirSync(OUTPUT_DIR, { recursive: true });
     if (!fs.existsSync(PAGES_DIR)) fs.mkdirSync(PAGES_DIR, { recursive: true });
     if (!fs.existsSync(MEDIA_ROOT_DIR)) fs.mkdirSync(MEDIA_ROOT_DIR, { recursive: true });
@@ -624,16 +570,7 @@ async function main() {
       }
     }
 
-    if (fs.existsSync(LEGACY_OUTPUT_DIR)) {
-      const legacyFiles = fs.readdirSync(LEGACY_OUTPUT_DIR);
-      for (const file of legacyFiles) {
-        if (!file.startsWith('blocks-') || !file.endsWith('.json')) continue;
-        const id = file.replace('blocks-', '').replace('.json', '');
-        if (!pageIds.has(id)) {
-          fs.unlinkSync(path.join(LEGACY_OUTPUT_DIR, file));
-        }
-      }
-    }
+    // Legacy public/data blocks-*.json cleanup removed
 
     const pagesToFetchBlocks: NotionPageResponse[] = [];
     for (const page of pagesData.results) {
@@ -682,10 +619,6 @@ async function main() {
         JSON.stringify(page, null, 2)
       );
 
-      fs.writeFileSync(
-        path.join(LEGACY_OUTPUT_DIR, `blocks-${page.id}.json`),
-        JSON.stringify({ results: blocks }, null, 2)
-      );
     }
 
     for (const page of pagesData.results) {
@@ -714,11 +647,6 @@ async function main() {
       JSON.stringify(manifest, null, 2)
     );
 
-    fs.writeFileSync(
-      path.join(LEGACY_OUTPUT_DIR, 'notion-pages.json'),
-      JSON.stringify({ results: pagesData.results }, null, 2)
-    );
-    console.log(`✅ Legacy notion-pages.json saved for compatibility`);
 
     if (failedDownloads.length > 0) {
       const failedList = failedDownloads.join('\n');
