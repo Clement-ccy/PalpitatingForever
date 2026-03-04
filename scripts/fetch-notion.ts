@@ -570,11 +570,7 @@ async function main() {
       }
     }
 
-<<<<<<< HEAD
     // Legacy cleanup removed
-=======
-    // Legacy public/data blocks-*.json cleanup removed
->>>>>>> d5d41a437c1a220e380985f2e82db94531233894
 
     const pagesToFetchBlocks: NotionPageResponse[] = [];
     for (const page of pagesData.results) {
@@ -623,10 +619,7 @@ async function main() {
         JSON.stringify(page, null, 2)
       );
 
-<<<<<<< HEAD
       // Legacy blocks-<id>.json output removed
-=======
->>>>>>> d5d41a437c1a220e380985f2e82db94531233894
     }
 
     for (const page of pagesData.results) {
@@ -655,10 +648,7 @@ async function main() {
       JSON.stringify(manifest, null, 2)
     );
 
-<<<<<<< HEAD
     // Legacy notion-pages.json output removed
-=======
->>>>>>> d5d41a437c1a220e380985f2e82db94531233894
 
     if (failedDownloads.length > 0) {
       const failedList = failedDownloads.join('\n');
