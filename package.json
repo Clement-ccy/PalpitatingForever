@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "preview": "opennextjs-cloudflare build && wrangler dev --config wrangler.jsonc",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
     "deploy:api": "wrangler deploy --config worker/wrangler.toml",
     "start": "next start",
     "lint": "eslint",
@@ -33,7 +31,6 @@
     "tailwind-merge": "^3.4.0"
   },
   "devDependencies": {
-    "@opennextjs/cloudflare": "^1.17.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/prismjs": "^1.26.5",
