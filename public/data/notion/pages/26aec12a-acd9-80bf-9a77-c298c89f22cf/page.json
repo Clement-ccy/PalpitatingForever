@@ -2,7 +2,7 @@
   "object": "page",
   "id": "26aec12a-acd9-80bf-9a77-c298c89f22cf",
   "created_time": "2025-09-10T08:49:00.000Z",
-  "last_edited_time": "2026-02-27T10:38:00.000Z",
+  "last_edited_time": "2026-03-05T11:24:00.000Z",
   "created_by": {
     "object": "user",
     "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
@@ -123,8 +123,8 @@
       "id": "q%3Fks",
       "type": "status",
       "status": {
-        "id": "7358a141-271b-49ca-8240-4893b6b02c24",
-        "name": "Published",
+        "id": "v[RQ",
+        "name": "Archived",
         "color": "green"
       }
     },
@@ -141,7 +141,7 @@
     "Last edited time": {
       "id": "%7B~pX",
       "type": "last_edited_time",
-      "last_edited_time": "2026-02-27T10:38:00.000Z"
+      "last_edited_time": "2026-03-05T11:24:00.000Z"
     },
     "Name": {
       "id": "title",

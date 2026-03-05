@@ -200,6 +200,16 @@ const getExpectedFileNameFromUrl = (
   return buildLocalFileName(fileStem, ext, originalName);
 };
 
+const readPageStatusName = (page: NotionPageResponse): string | null => {
+  const props = readNested(page, 'properties');
+  const statusProp = props ? readNested(props, 'Status') : null;
+  if (!statusProp) return null;
+  const statusValue = readNested(statusProp, 'status');
+  return readString(statusValue ?? statusProp, 'name');
+};
+
+const isLocalMediaUrl = (url: string, prefix: string) => url.startsWith(prefix);
+
 const readJsonFile = <T,>(filePath: string): T | null => {
   if (!fs.existsSync(filePath)) return null;
   try {
@@ -219,7 +229,7 @@ const rewriteMediaUrlsInBlock = (block: NotionBlockResponse) => {
   const externalSource = readNested(blockData, 'external');
   const mediaSource = externalSource ?? fileSource;
   const url = mediaSource ? readUrl(mediaSource) : null;
-  if (!url) return;
+  if (!url || isLocalMediaUrl(url, BLOCK_MEDIA_URL_PREFIX)) return;
 
   const originalName = readName(blockData) ?? readName(mediaSource) ?? getUrlFileName(url);
   const expectedFileName = getExpectedFileNameFromUrl(block.id, url, originalName);
@@ -404,7 +414,7 @@ const rewriteMediaBlock = async (
 
   const mediaSource = readNested(blockData, 'file') ?? readNested(blockData, 'external');
   const url = mediaSource ? readUrl(mediaSource) : null;
-  if (!url) return;
+  if (!url || isLocalMediaUrl(url, BLOCK_MEDIA_URL_PREFIX)) return;
 
   const originalName = readName(blockData) ?? readName(mediaSource) ?? getUrlFileName(url);
 
@@ -598,6 +608,21 @@ async function main() {
     console.log(`1. Querying data source: ${DATA_SOURCE_ID}`);
     const pagesData = await fetchNotion<NotionListResponse<NotionPageResponse>>(`/data_sources/${DATA_SOURCE_ID}/query`, {
       method: 'POST',
+      body: JSON.stringify({
+        page_size: 100,
+        filter: {
+          or: [
+            { property: 'Status', status: { equals: 'Published' } },
+            { property: 'Status', status: { equals: 'Archived' } },
+          ],
+        },
+      }),
+    });
+
+    const allowedStatuses = new Set(['Published', 'Archived']);
+    pagesData.results = pagesData.results.filter((page) => {
+      const status = readPageStatusName(page);
+      return status ? allowedStatuses.has(status) : false;
     });
     
     if (!fs.existsSync(DATA_ROOT_DIR)) fs.mkdirSync(DATA_ROOT_DIR, { recursive: true });

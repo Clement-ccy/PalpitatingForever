@@ -2,7 +2,7 @@
   "object": "page",
   "id": "271ec12a-acd9-80de-819d-e6c5e30ad25d",
   "created_time": "2025-09-17T10:16:00.000Z",
-  "last_edited_time": "2026-02-27T10:38:00.000Z",
+  "last_edited_time": "2026-03-05T11:25:00.000Z",
   "created_by": {
     "object": "user",
     "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
@@ -123,9 +123,9 @@
       "id": "q%3Fks",
       "type": "status",
       "status": {
-        "id": "d3662bae-dbad-4987-a59f-00c834cd4bf2",
-        "name": "In progress",
-        "color": "blue"
+        "id": "7358a141-271b-49ca-8240-4893b6b02c24",
+        "name": "Published",
+        "color": "green"
       }
     },
     "Category": {
@@ -141,7 +141,7 @@
     "Last edited time": {
       "id": "%7B~pX",
       "type": "last_edited_time",
-      "last_edited_time": "2026-02-27T10:38:00.000Z"
+      "last_edited_time": "2026-03-05T11:25:00.000Z"
     },
     "Name": {
       "id": "title",
