@@ -1,4 +1,5 @@
 import type { AnalyticsItem, AnalyticsOverview, CommentOverview } from './types';
+import { buildApiUrl } from '../utils';
 export type { AnalyticsItem, AnalyticsOverview, CommentOverview };
 
 export type TimeseriesPoint = {
@@ -32,7 +33,7 @@ const buildQuery = (params?: { start?: number; end?: number; limit?: number }) =
 };
 
 export async function fetchUmamiOverview(csrf: string, params?: { start?: number; end?: number }): Promise<AnalyticsOverview | null> {
-  const response = await fetch(`/api/admin/analytics/umami/overview${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/overview')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return null;
@@ -41,7 +42,7 @@ export async function fetchUmamiOverview(csrf: string, params?: { start?: number
 }
 
 export async function fetchUmamiPages(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/analytics/umami/pages${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/pages')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -50,7 +51,7 @@ export async function fetchUmamiPages(csrf: string, params?: { start?: number; e
 }
 
 export async function fetchUmamiReferrers(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/analytics/umami/referrers${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/referrers')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -59,7 +60,7 @@ export async function fetchUmamiReferrers(csrf: string, params?: { start?: numbe
 }
 
 export async function fetchUmamiEvents(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/analytics/umami/events${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/events')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -68,7 +69,7 @@ export async function fetchUmamiEvents(csrf: string, params?: { start?: number; 
 }
 
 export async function fetchUmamiDevices(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/analytics/umami/devices${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/devices')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -77,7 +78,7 @@ export async function fetchUmamiDevices(csrf: string, params?: { start?: number;
 }
 
 export async function fetchUmamiOs(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/analytics/umami/os${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/os')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -86,7 +87,7 @@ export async function fetchUmamiOs(csrf: string, params?: { start?: number; end?
 }
 
 export async function fetchUmamiBrowsers(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/analytics/umami/browsers${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/browsers')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -95,7 +96,7 @@ export async function fetchUmamiBrowsers(csrf: string, params?: { start?: number
 }
 
 export async function fetchUmamiCountries(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/analytics/umami/countries${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/countries')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -104,7 +105,7 @@ export async function fetchUmamiCountries(csrf: string, params?: { start?: numbe
 }
 
 export async function fetchUmamiTimeseries(csrf: string, params?: { start?: number; end?: number }): Promise<TimeseriesPoint[]> {
-  const response = await fetch(`/api/admin/analytics/umami/timeseries${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/timeseries')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -113,7 +114,7 @@ export async function fetchUmamiTimeseries(csrf: string, params?: { start?: numb
 }
 
 export async function fetchUmamiRetention(csrf: string, params?: { start?: number; end?: number }): Promise<RetentionPoint[]> {
-  const response = await fetch(`/api/admin/analytics/umami/retention${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/analytics/umami/retention')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -122,7 +123,7 @@ export async function fetchUmamiRetention(csrf: string, params?: { start?: numbe
 }
 
 export async function fetchCommentReferrers(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/comments/analytics/referrers${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments/analytics/referrers')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -131,7 +132,7 @@ export async function fetchCommentReferrers(csrf: string, params?: { start?: num
 }
 
 export async function fetchCommentTimeseries(csrf: string, params?: { start?: number; end?: number }): Promise<CommentTimeseriesPoint[]> {
-  const response = await fetch(`/api/admin/comments/analytics/timeseries${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments/analytics/timeseries')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -140,7 +141,7 @@ export async function fetchCommentTimeseries(csrf: string, params?: { start?: nu
 }
 
 export async function fetchCommentOverview(csrf: string, params?: { start?: number; end?: number }): Promise<CommentOverview | null> {
-  const response = await fetch(`/api/admin/comments/analytics/overview${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments/analytics/overview')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return null;
@@ -149,7 +150,7 @@ export async function fetchCommentOverview(csrf: string, params?: { start?: numb
 }
 
 export async function fetchCommentPages(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/comments/analytics/pages${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments/analytics/pages')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -158,7 +159,7 @@ export async function fetchCommentPages(csrf: string, params?: { start?: number;
 }
 
 export async function fetchCommentDevices(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/comments/analytics/devices${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments/analytics/devices')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -167,7 +168,7 @@ export async function fetchCommentDevices(csrf: string, params?: { start?: numbe
 }
 
 export async function fetchCommentOs(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/comments/analytics/os${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments/analytics/os')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -176,7 +177,7 @@ export async function fetchCommentOs(csrf: string, params?: { start?: number; en
 }
 
 export async function fetchCommentBrowsers(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/comments/analytics/browsers${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments/analytics/browsers')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -185,7 +186,7 @@ export async function fetchCommentBrowsers(csrf: string, params?: { start?: numb
 }
 
 export async function fetchCommentCountries(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/comments/analytics/countries${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments/analytics/countries')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -194,7 +195,7 @@ export async function fetchCommentCountries(csrf: string, params?: { start?: num
 }
 
 export async function fetchCommentEvents(csrf: string, params?: { start?: number; end?: number; limit?: number }): Promise<AnalyticsItem[]> {
-  const response = await fetch(`/api/admin/comments/analytics/events${buildQuery(params)}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments/analytics/events')}${buildQuery(params)}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];

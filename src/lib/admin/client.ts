@@ -1,15 +1,16 @@
 import type { AdminComment, AdminCommentAction, AdminLoginResponse, AdminOverview, AdminSettingsItem, AdminSetupStatus } from './types';
+import { buildApiUrl } from '../utils';
 
 const csrfHeader = (csrf: string) => ({ 'X-CSRF-Token': csrf });
 
 export async function fetchSetupStatus(): Promise<AdminSetupStatus | null> {
-  const response = await fetch('/api/admin/setup-status');
+  const response = await fetch(buildApiUrl('/v1/admin/auth/setup-status'));
   if (!response.ok) return null;
   return response.json() as Promise<AdminSetupStatus>;
 }
 
 export async function loginAdmin(payload: { username: string; password: string }): Promise<AdminLoginResponse | null> {
-  const response = await fetch('/api/admin/login', {
+  const response = await fetch(buildApiUrl('/v1/admin/auth/login'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -21,10 +22,16 @@ export async function loginAdmin(payload: { username: string; password: string }
 }
 
 export async function setupAdmin(payload: { username: string; password: string }): Promise<AdminLoginResponse | null> {
-  const response = await fetch('/api/admin/setup', {
+  const setupToken = process.env.NEXT_PUBLIC_ADMIN_SETUP_TOKEN;
+  if (!setupToken) {
+    console.error('Missing NEXT_PUBLIC_ADMIN_SETUP_TOKEN');
+    return null;
+  }
+  const response = await fetch(buildApiUrl('/v1/admin/auth/setup'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      'Authorization': `Bearer ${setupToken}`,
     },
     body: JSON.stringify(payload),
   });
@@ -33,7 +40,7 @@ export async function setupAdmin(payload: { username: string; password: string }
 }
 
 export async function fetchAdminOverview(csrf: string): Promise<AdminOverview | null> {
-  const response = await fetch('/api/admin/analytics/overview', {
+  const response = await fetch(buildApiUrl('/v1/admin/analytics/overview'), {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return null;
@@ -42,7 +49,7 @@ export async function fetchAdminOverview(csrf: string): Promise<AdminOverview | 
 }
 
 export async function fetchAdminComments(status: string, csrf: string): Promise<AdminComment[]> {
-  const response = await fetch(`/api/admin/comments?status=${status}`, {
+  const response = await fetch(`${buildApiUrl('/v1/admin/comments')}?status=${status}`, {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -51,7 +58,7 @@ export async function fetchAdminComments(status: string, csrf: string): Promise<
 }
 
 export async function updateAdminComment(id: string, action: AdminCommentAction, csrf: string): Promise<boolean> {
-  const response = await fetch(`/api/admin/comments/${id}/${action}`, {
+  const response = await fetch(buildApiUrl(`/v1/admin/comments/${id}/${action}`), {
     method: 'POST',
     headers: csrfHeader(csrf),
   });
@@ -59,7 +66,7 @@ export async function updateAdminComment(id: string, action: AdminCommentAction,
 }
 
 export async function fetchAdminSettings(csrf: string): Promise<AdminSettingsItem[]> {
-  const response = await fetch('/api/admin/settings', {
+  const response = await fetch(buildApiUrl('/v1/admin/settings'), {
     headers: csrfHeader(csrf),
   });
   if (!response.ok) return [];
@@ -68,7 +75,7 @@ export async function fetchAdminSettings(csrf: string): Promise<AdminSettingsIte
 }
 
 export async function updateAdminSetting(key: string, value: unknown, csrf: string): Promise<boolean> {
-  const response = await fetch('/api/admin/settings', {
+  const response = await fetch(buildApiUrl('/v1/admin/settings'), {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

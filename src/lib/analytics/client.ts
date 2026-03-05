@@ -1,4 +1,5 @@
 import type { AnalyticsCollectPayload, AnalyticsEventPayload } from './types';
+import { buildApiUrl } from '../utils';
 
 const PAGEVIEW_KEY_VERSION = 2;
 const pageviewKey = (site: string, path: string) => `pf:pv:${PAGEVIEW_KEY_VERSION}:${site}:${path}`;
@@ -30,7 +31,7 @@ export async function collectAnalytics(payload: AnalyticsCollectPayload): Promis
     if (inFlightPageviews.has(key)) return;
     if (hasTrackedPageview(payload.site, payload.path)) return;
     inFlightPageviews.add(key);
-    const response = await fetch('/api/analytics/collect', {
+    const response = await fetch(buildApiUrl('/v1/analytics/collect'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -57,7 +58,7 @@ export async function trackEvent(payload: AnalyticsEventPayload): Promise<void> 
   try {
     if (!payload.site || !payload.name || !payload.path) return;
     const finalPayload = payload;
-    await fetch('/api/analytics/event', {
+    await fetch(buildApiUrl('/v1/analytics/event'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

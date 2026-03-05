@@ -24,7 +24,7 @@ Next.js App Router portfolio (React 19) with Notion-sourced content, Tailwind v4
 | App shell | `src/app/layout.tsx` | Global layout + aurora/noise background |
 | Proxy routing | `src/proxy.ts` | Admin subdomain rewrite |
 | Admin UI | `src/app/admin/*` | Guarded dashboard + settings + comments |
-| Admin API proxy | `src/app/api/admin/*` | Proxies to worker + forwards CSRF/cookies |
+| Admin API proxy | Removed | Direct worker calls via lib clients |
 | Admin client | `src/lib/admin/client.ts` | Admin UI request wrappers |
 | Notion data client | `src/lib/notion/client.ts` | Fetches `/public/data` JSON |
 | Notion mapping | `src/lib/notion/{utils,mappers,types}.ts` | Map pages/blocks + helpers |

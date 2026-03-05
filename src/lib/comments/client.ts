@@ -1,4 +1,5 @@
 import type { CommentItem, CommentPayload, FetchCommentsResponse, CreateCommentResponse, CommentThread } from './types';
+import { buildApiUrl } from '../utils';
 
 export async function fetchComments(params: {
   site: string;
@@ -9,7 +10,7 @@ export async function fetchComments(params: {
       site: params.site,
       pageKey: params.pageKey,
     });
-    const response = await fetch(`/api/comments/thread?${search.toString()}`);
+    const response = await fetch(`${buildApiUrl('/v1/comments/thread')}?${search.toString()}`);
     if (!response.ok) return { thread: null, comments: [] };
     const data = (await response.json()) as { thread?: CommentThread | null; comments?: CommentItem[] };
     return {
@@ -25,7 +26,7 @@ export async function fetchComments(params: {
 export async function createComment(payload: CommentPayload): Promise<CreateCommentResponse> {
   try {
     if (!payload.content) return {};
-    const response = await fetch('/api/comments/submit', {
+    const response = await fetch(buildApiUrl('/v1/comments/submit'), {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -42,7 +43,7 @@ export async function createComment(payload: CommentPayload): Promise<CreateComm
 
 export async function fetchCommentTotal(site: string): Promise<number> {
   try {
-    const response = await fetch(`/api/comments/total?site=${encodeURIComponent(site)}`);
+    const response = await fetch(`${buildApiUrl('/v1/comments/total')}?site=${encodeURIComponent(site)}`);
     if (!response.ok) return 0;
     const data = (await response.json()) as { total?: number };
     return data.total ?? 0;
