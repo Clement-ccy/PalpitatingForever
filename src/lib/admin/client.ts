@@ -35,7 +35,15 @@ export async function setupAdmin(payload: { username: string; password: string }
     },
     body: JSON.stringify(payload),
   });
-  if (!response.ok) return null;
+  if (!response.ok) {
+    try {
+      const errorBody = await response.json() as { error?: string; message?: string; step?: string };
+      console.error('Admin setup failed', { status: response.status, ...errorBody });
+    } catch {
+      console.error('Admin setup failed', { status: response.status });
+    }
+    return null;
+  }
   return response.json() as Promise<AdminLoginResponse>;
 }
 

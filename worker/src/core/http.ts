@@ -22,10 +22,13 @@ export const withCors = (request: Request, env: Env, response: Response) => {
   const requestHost = new URL(request.url).hostname;
   const isLocalHost = requestHost === '127.0.0.1' || requestHost === 'localhost';
   const allowOrigin = origin
-    ? (env.DEV_MODE === 'true' || isLocalHost || allowedOrigins.includes(origin))
+    ? (env.DEV_MODE === 'true'
+        || isLocalHost
+        || allowedOrigins.length === 0
+        || allowedOrigins.includes(origin))
       ? origin
       : ''
-    : (env.DEV_MODE === 'true' ? '*' : (allowedOrigins.length === 0 ? '*' : ''));
+    : (env.DEV_MODE === 'true' || allowedOrigins.length === 0 ? '*' : '');
 
   const headers = new Headers(response.headers);
   if (allowOrigin) {
@@ -33,6 +36,9 @@ export const withCors = (request: Request, env: Env, response: Response) => {
     headers.set('Vary', 'Origin');
     headers.set('Access-Control-Allow-Methods', 'GET,POST,OPTIONS');
     headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-CSRF-Token');
+    if (allowOrigin !== '*') {
+      headers.set('Access-Control-Allow-Credentials', 'true');
+    }
   }
   return new Response(response.body, { status: response.status, statusText: response.statusText, headers });
 };

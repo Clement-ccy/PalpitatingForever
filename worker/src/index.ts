@@ -82,7 +82,12 @@ const worker = {
     }
 
     if (pathname === '/v1/admin/auth/setup' && request.method === 'POST') {
-      return handleAdminSetup(request, env);
+      try {
+        return await handleAdminSetup(request, env);
+      } catch (error) {
+        const message = error instanceof Error ? error.message : String(error);
+        return withCors(request, env, jsonResponse({ error: 'Setup failed', message }, 500));
+      }
     }
 
     if (pathname === '/v1/admin/auth/setup-status' && request.method === 'GET') {

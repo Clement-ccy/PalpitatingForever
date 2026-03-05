@@ -97,36 +97,57 @@ export const handleAdminLogin = async (request: Request, env: Env) => {
 };
 
 export const handleAdminSetup = async (request: Request, env: Env) => {
-  const setupDisabled = (await readSetting(env.DATABASE, 'admin.setup_disabled')) === 'true';
-  if (setupDisabled) {
-    return withCors(request, env, jsonResponse({ error: 'Setup disabled' }, 403));
+  if (!env.DATABASE) {
+    return withCors(request, env, jsonResponse({ error: 'Database binding missing' }, 500));
   }
-  if (!hasValidSetupToken(request, env)) {
-    return withCors(request, env, jsonResponse({ error: 'Unauthorized' }, 401));
+  if (!env.ADMIN_SETUP_TOKEN) {
+    return withCors(request, env, jsonResponse({ error: 'ADMIN_SETUP_TOKEN missing' }, 500));
   }
-  if (await hasAdminUser(env.DATABASE)) {
-    return withCors(request, env, jsonResponse({ error: 'Admin already exists' }, 409));
+
+  let step = 'init';
+  try {
+    step = 'read_setup_flag';
+    const setupDisabled = (await readSetting(env.DATABASE, 'admin.setup_disabled')) === 'true';
+    if (setupDisabled) {
+      return withCors(request, env, jsonResponse({ error: 'Setup disabled' }, 403));
+    }
+    step = 'validate_token';
+    if (!hasValidSetupToken(request, env)) {
+      return withCors(request, env, jsonResponse({ error: 'Unauthorized' }, 401));
+    }
+    step = 'check_existing_admin';
+    if (await hasAdminUser(env.DATABASE)) {
+      return withCors(request, env, jsonResponse({ error: 'Admin already exists' }, 409));
+    }
+    step = 'parse_payload';
+    const payload = await parseBody<AdminLoginPayload>(request);
+    if (!payload?.username || !payload.password) {
+      return withCors(request, env, jsonResponse({ error: 'Invalid payload' }, 400));
+    }
+    step = 'hash_password';
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iterations = 120000;
+    const hash = await generatePasswordHash(payload.password, salt, iterations);
+    const saltBase64 = encodeBase64(salt.buffer);
+    step = 'insert_admin_user';
+    await env.DATABASE.prepare(
+      'INSERT INTO admin_users (id, username, pw_hash, pw_salt, pw_iters, created_at) VALUES (?, ?, ?, ?, ?, ?)'
+    ).bind(
+      crypto.randomUUID(),
+      payload.username,
+      hash,
+      saltBase64,
+      iterations,
+      nowSec()
+    ).run();
+    step = 'write_setup_flag';
+    await writeSetting(env.DATABASE, 'admin.setup_disabled', 'true');
+    return withCors(request, env, jsonResponse({ ok: true }));
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error('Admin setup failed', { step, message });
+    return withCors(request, env, jsonResponse({ error: 'Setup failed', message, step }, 500));
   }
-  const payload = await parseBody<AdminLoginPayload>(request);
-  if (!payload?.username || !payload.password) {
-    return withCors(request, env, jsonResponse({ error: 'Invalid payload' }, 400));
-  }
-  const salt = crypto.getRandomValues(new Uint8Array(16));
-  const iterations = 120000;
-  const hash = await generatePasswordHash(payload.password, salt, iterations);
-  const saltBase64 = encodeBase64(salt.buffer);
-  await env.DATABASE.prepare(
-    'INSERT INTO admin_users (id, username, pw_hash, pw_salt, pw_iters, created_at) VALUES (?, ?, ?, ?, ?, ?)'
-  ).bind(
-    crypto.randomUUID(),
-    payload.username,
-    hash,
-    saltBase64,
-    iterations,
-    nowSec()
-  ).run();
-  await writeSetting(env.DATABASE, 'admin.setup_disabled', 'true');
-  return withCors(request, env, jsonResponse({ ok: true }));
 };
 
 export const handleAdminSetupStatus = async (request: Request, env: Env) => {

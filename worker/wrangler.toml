@@ -9,14 +9,18 @@ crons = ["10 0 * * *"]
 RESEND_FROM = "no-reply@notification.ccy.asia"
 ADMIN_EMAIL = "319788356@qq.com"
 COMMENTS_AUTO_APPROVE = "true"
-ALLOWED_ORIGINS = "https://ccy.asia,https://www.ccy.asia,http://localhost:3000"
+ALLOWED_ORIGINS = "https://ccy.asia,https://www.ccy.asia,https://admin.ccy.asia,https://palpitating-forever.vercel.app,http://localhost:3000"
 SITE_SLUG = "main"
-ADMIN_SESSION_SECRET = ""
+ADMIN_SESSION_SECRET = "611ec057791c77bc7e21eca88d424b2f"
 DATA_SECRET = ""
-ADMIN_SETUP_TOKEN = ""
+ADMIN_SETUP_TOKEN = "start-from-pf-admin"
 
 [[d1_databases]]
 binding = "DATABASE"
 database_name = "pf-database"
 migrations_dir = "worker/migrations"
 database_id = "c68920a5-c7e2-4743-9247-79d540ed4f6c"
+
+[observability]
+enabled = true
+head_sampling_rate = 1
