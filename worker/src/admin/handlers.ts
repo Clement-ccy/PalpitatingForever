@@ -126,7 +126,7 @@ export const handleAdminSetup = async (request: Request, env: Env) => {
     }
     step = 'hash_password';
     const salt = crypto.getRandomValues(new Uint8Array(16));
-    const iterations = 120000;
+    const iterations = 100000;
     const hash = await generatePasswordHash(payload.password, salt, iterations);
     const saltBase64 = encodeBase64(salt.buffer);
     step = 'insert_admin_user';
