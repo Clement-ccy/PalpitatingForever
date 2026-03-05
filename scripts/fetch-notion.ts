@@ -43,6 +43,7 @@ type NotionPageResponse = Record<string, unknown> & { id: string };
 type PageIndexEntry = {
   id: string;
   lastEditedTime: string | null;
+  coverFile: string | null;
   pageFile: string;
   blocksFile: string;
 };
@@ -50,7 +51,6 @@ type PageIndexEntry = {
 type MediaIndexEntry = {
   id: string;
   type: 'block' | 'page-cover';
-  sourceUrl: string;
   localFile: string;
   lastEditedTime: string | null;
 };
@@ -210,6 +210,62 @@ const readJsonFile = <T,>(filePath: string): T | null => {
   }
 };
 
+const rewriteMediaUrlsInBlock = (block: NotionBlockResponse) => {
+  const blockType = block.type;
+  if (!MEDIA_BLOCK_TYPES.includes(blockType as typeof MEDIA_BLOCK_TYPES[number])) return;
+  const blockData = block[blockType] as Record<string, unknown> | undefined;
+  if (!blockData || typeof blockData !== 'object') return;
+  const fileSource = readNested(blockData, 'file');
+  const externalSource = readNested(blockData, 'external');
+  const mediaSource = externalSource ?? fileSource;
+  const url = mediaSource ? readUrl(mediaSource) : null;
+  if (!url) return;
+
+  const originalName = readName(blockData) ?? readName(mediaSource) ?? getUrlFileName(url);
+  const expectedFileName = getExpectedFileNameFromUrl(block.id, url, originalName);
+  if (!expectedFileName) return;
+  const localUrl = `${BLOCK_MEDIA_URL_PREFIX}/${expectedFileName}`;
+  block[blockType] = {
+    ...blockData,
+    type: 'external',
+    external: { url: localUrl },
+  };
+  delete (block[blockType] as Record<string, unknown>).file;
+  delete (block[blockType] as Record<string, unknown>).expiry_time;
+};
+
+const rewriteMediaUrlsInBlocks = (blocks: NotionBlockResponse[]) => {
+  const stack = [...blocks];
+  while (stack.length > 0) {
+    const block = stack.pop();
+    if (!block) continue;
+    rewriteMediaUrlsInBlock(block);
+    const children = Array.isArray(block.children) ? block.children : [];
+    for (const child of children) {
+      stack.push(child);
+    }
+  }
+};
+
+const processCachedBlocks = async (
+  blocks: NotionBlockResponse[],
+  usedFiles: Set<string>,
+  failedDownloads: string[],
+  mediaIndex: MediaIndexEntry[]
+) => {
+  const stack = [...blocks];
+  while (stack.length > 0) {
+    const block = stack.pop();
+    if (!block) continue;
+    const cachedEditedTime = readLastEditedTime(block) ?? undefined;
+    await rewriteMediaBlock(block, usedFiles, failedDownloads, cachedEditedTime, mediaIndex);
+    const children = Array.isArray(block.children) ? block.children : [];
+    for (const child of children) {
+      stack.push(child);
+    }
+  }
+};
+
 const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const fetchWithRetry = async (url: string, attempts = 3): Promise<Response> => {
@@ -269,7 +325,6 @@ const collectBlockMedia = (
         mediaIndex.push({
           id: block.id,
           type: 'block',
-          sourceUrl: url,
           localFile: fileName,
           lastEditedTime: readLastEditedTime(block),
         });
@@ -298,15 +353,12 @@ const collectPageCoverMedia = (
   const fileName = expectedName || (url ? getLocalFileName(url, PAGE_MEDIA_URL_PREFIX) : null);
   if (fileName) {
     usedFiles.add(fileName);
-    if (url) {
-      mediaIndex.push({
-        id: page.id,
-        type: 'page-cover',
-        sourceUrl: url,
-        localFile: fileName,
-        lastEditedTime: readLastEditedTime(page),
-      });
-    }
+    mediaIndex.push({
+      id: page.id,
+      type: 'page-cover',
+      localFile: fileName,
+      lastEditedTime: readLastEditedTime(page),
+    });
   }
 };
 
@@ -360,16 +412,23 @@ const rewriteMediaBlock = async (
   if (cachedEditedTime && currentEditedTime && cachedEditedTime === currentEditedTime) {
     const expectedFileName = getExpectedFileNameFromUrl(block.id, url, originalName);
     if (expectedFileName && fs.existsSync(path.join(BLOCK_MEDIA_DIR, expectedFileName))) {
+      const localUrl = `${BLOCK_MEDIA_URL_PREFIX}/${expectedFileName}`;
       usedFiles.add(expectedFileName);
       if (mediaIndex) {
         mediaIndex.push({
           id: block.id,
           type: 'block',
-          sourceUrl: url,
           localFile: expectedFileName,
           lastEditedTime: currentEditedTime,
         });
       }
+      block[blockType] = {
+        ...blockData,
+        type: 'external',
+        external: { url: localUrl },
+      };
+      delete (block[blockType] as Record<string, unknown>).file;
+      delete (block[blockType] as Record<string, unknown>).expiry_time;
       return;
     }
   }
@@ -391,7 +450,6 @@ const rewriteMediaBlock = async (
       mediaIndex.push({
         id: block.id,
         type: 'block',
-        sourceUrl: url,
         localFile: result.fileName,
         lastEditedTime: currentEditedTime ?? null,
       });
@@ -399,7 +457,7 @@ const rewriteMediaBlock = async (
     block[blockType] = {
       ...blockData,
       type: 'external',
-      external: { url: result.publicUrl },
+      external: { url: `${BLOCK_MEDIA_URL_PREFIX}/${result.fileName}` },
     };
     delete (block[blockType] as Record<string, unknown>).file;
     delete (block[blockType] as Record<string, unknown>).expiry_time;
@@ -432,16 +490,20 @@ const rewritePageCover = async (
   if (cachedEditedTime && currentEditedTime && cachedEditedTime === currentEditedTime) {
     const expectedFileName = getExpectedFileNameFromUrl(page.id, url, originalName);
     if (expectedFileName && fs.existsSync(path.join(PAGE_MEDIA_DIR, expectedFileName))) {
+      const localUrl = `${PAGE_MEDIA_URL_PREFIX}/${expectedFileName}`;
       usedFiles.add(expectedFileName);
       if (mediaIndex) {
         mediaIndex.push({
           id: page.id,
           type: 'page-cover',
-          sourceUrl: url,
           localFile: expectedFileName,
           lastEditedTime: currentEditedTime,
         });
       }
+      page.cover = {
+        type: 'external',
+        external: { url: localUrl },
+      };
       return;
     }
   }
@@ -463,14 +525,13 @@ const rewritePageCover = async (
       mediaIndex.push({
         id: page.id,
         type: 'page-cover',
-        sourceUrl: url,
         localFile: result.fileName,
         lastEditedTime: currentEditedTime ?? null,
       });
     }
     page.cover = {
       type: 'external',
-      external: { url: result.publicUrl },
+      external: { url: `${PAGE_MEDIA_URL_PREFIX}/${result.fileName}` },
     };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
@@ -511,6 +572,7 @@ async function fetchBlockChildren(
       await rewriteMediaBlock(block, usedFiles, failedDownloads, cachedEditedTime, mediaIndex);
     }
     
+    rewriteMediaUrlsInBlocks(results);
     blocks = blocks.concat(results);
     cursor = data.next_cursor ?? undefined;
   } while (cursor);
@@ -583,7 +645,12 @@ async function main() {
           path.join(PAGES_DIR, page.id, 'blocks.json')
         );
         if (cachedBlocks?.results) {
-          collectBlockMedia(cachedBlocks.results, usedBlockFiles, mediaIndex);
+          await processCachedBlocks(cachedBlocks.results, usedBlockFiles, failedDownloads, mediaIndex);
+          rewriteMediaUrlsInBlocks(cachedBlocks.results);
+          fs.writeFileSync(
+            path.join(PAGES_DIR, page.id, 'blocks.json'),
+            JSON.stringify({ results: cachedBlocks.results }, null, 2)
+          );
           continue;
         }
       }
@@ -628,12 +695,24 @@ async function main() {
       }
     }
 
-    const pageIndex: PageIndexEntry[] = pagesData.results.map((page) => ({
-      id: page.id,
-      lastEditedTime: readLastEditedTime(page),
-      pageFile: `pages/${page.id}/page.json`,
-      blocksFile: `pages/${page.id}/blocks.json`,
-    }));
+    const pageIndex: PageIndexEntry[] = pagesData.results.map((page) => {
+      const cover = page.cover;
+      const coverType = cover ? readType(cover) : null;
+      const coverSource = coverType ? readNested(cover, coverType) : null;
+      const coverUrl = coverSource ? readUrl(coverSource) : null;
+      const coverName = coverSource ? readName(coverSource) ?? (coverUrl ? getUrlFileName(coverUrl) : null) : null;
+      const coverFile = coverUrl
+        ? getExpectedFileNameFromUrl(page.id, coverUrl, coverName)
+        : null;
+
+      return {
+        id: page.id,
+        lastEditedTime: readLastEditedTime(page),
+        coverFile,
+        pageFile: `pages/${page.id}/page.json`,
+        blocksFile: `pages/${page.id}/blocks.json`,
+      };
+    });
 
     const manifest: Manifest = {
       generatedAt: new Date().toISOString(),
