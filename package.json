@@ -9,7 +9,7 @@
     "deploy:api": "wrangler deploy --config worker/wrangler.toml",
     "start": "next start",
     "lint": "eslint",
-    "fetch-notion": "node --no-warnings=ExperimentalWarning --loader ts-node/esm scripts/fetch-notion.ts"
+    "fetch-notion": "node scripts/fetch-notion.ts"
   },
   "dependencies": {
     "clsx": "^2.1.1",

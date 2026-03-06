@@ -12,8 +12,8 @@
     "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
   },
   "cover": {
-    "type": "external",
-    "external": {
+    "type": "file",
+    "file": {
       "url": "/media/notion/pages/1b7ec12a-acd9-80ef-bab5-e6925ceed244-generative-models-deep-dive-cover.jpg"
     }
   },

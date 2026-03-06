@@ -1757,8 +1757,8 @@
       "type": "image",
       "image": {
         "caption": [],
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/blocks/314ec12a-acd9-8000-ac06-f2a34c2cb6fc-llm-ui-design-skill-prompting-rpg-theme.png"
         }
       }

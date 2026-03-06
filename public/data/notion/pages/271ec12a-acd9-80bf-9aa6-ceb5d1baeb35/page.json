@@ -12,8 +12,8 @@
     "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
   },
   "cover": {
-    "type": "external",
-    "external": {
+    "type": "file",
+    "file": {
       "url": "/media/notion/pages/271ec12a-acd9-80bf-9aa6-ceb5d1baeb35-bambu_a1c.jpg"
     }
   },

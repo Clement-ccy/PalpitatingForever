@@ -1,7 +1,7 @@
 'use client';
 
 import React, { memo } from 'react';
-import type { NotionBlock } from '@/lib/notion/types';
+import type { NotionBlock, NotionImageBlockContent, NotionMediaBlockContent } from '@/lib/notion/types';
 import { getSlug } from '@/lib/notion/utils';
 import { RichText, type RichTextItem } from './RichText';
 import Image from 'next/image';
@@ -30,7 +30,6 @@ interface RenderOptions {
 type TodoContent = { rich_text?: RichTextItem[]; checked?: boolean };
 type CalloutContent = { rich_text?: RichTextItem[]; icon?: string; color?: string };
 type CodeContent = { rich_text?: RichTextItem[]; language?: string; caption?: RichTextItem[] };
-type MediaContent = { url?: string; caption?: RichTextItem[] };
 type TableContent = { has_column_header?: boolean; has_row_header?: boolean };
 type TableRowContent = { cells?: RichTextItem[][] };
 
@@ -255,7 +254,8 @@ export const NotionBlockRenderer = memo(({
       case 'code':
         return <CodeBlock content={asContent<CodeContent>(content)} />;
       case 'image':
-        const imageContent = asContent<MediaContent & { alt?: string }>(content);
+        // Image block now carries source union info from mapper (`file` vs `external`).
+        const imageContent = asContent<NotionImageBlockContent>(content);
         const imageCaption = asRichText(imageContent.caption);
         const imageAlt = imageContent.alt || imageCaption[0]?.plain_text || '';
         return (
@@ -337,7 +337,7 @@ export const NotionBlockRenderer = memo(({
           </ErrorBoundary>
         );
       case 'bookmark':
-        const bookmarkContent = asContent<MediaContent>(content);
+        const bookmarkContent = asContent<NotionMediaBlockContent>(content);
         const bookmarkCaption = asRichText(bookmarkContent.caption);
         return (
           <a 
@@ -358,7 +358,7 @@ export const NotionBlockRenderer = memo(({
           </a>
         );
       case 'embed':
-        const embedContent = asContent<MediaContent>(content);
+        const embedContent = asContent<NotionMediaBlockContent>(content);
         if (!embedContent.url) return null;
         return (
           <div className="my-12 rounded-3xl overflow-hidden border border-card-border aspect-video bg-card/30">
@@ -371,7 +371,7 @@ export const NotionBlockRenderer = memo(({
           </div>
         );
       case 'video':
-        const videoContent = asContent<MediaContent>(content);
+        const videoContent = asContent<NotionMediaBlockContent>(content);
         if (!videoContent.url) return null;
         const isYoutube = videoContent.url.includes('youtube.com') || videoContent.url.includes('youtu.be/');
         const isVimeo = videoContent.url.includes('vimeo.com');
@@ -405,7 +405,7 @@ export const NotionBlockRenderer = memo(({
           </figure>
         );
       case 'file':
-        const fileContent = asContent<MediaContent>(content);
+        const fileContent = asContent<NotionMediaBlockContent>(content);
         if (!fileContent.url) return null;
         return (
           <div className="my-8 p-6 rounded-3xl border border-card-border bg-card/30 flex items-center gap-4 group hover:border-accent-blogs/30 transition-all">
@@ -425,7 +425,7 @@ export const NotionBlockRenderer = memo(({
           </div>
         );
       case 'pdf':
-        const pdfContent = asContent<MediaContent>(content);
+        const pdfContent = asContent<NotionMediaBlockContent>(content);
         if (!pdfContent.url) return null;
         return (
           <div className="my-10 space-y-4">
@@ -448,7 +448,7 @@ export const NotionBlockRenderer = memo(({
           </div>
         );
       case 'audio':
-        const audioContent = asContent<MediaContent>(content);
+        const audioContent = asContent<NotionMediaBlockContent>(content);
         if (!audioContent.url) return null;
         return (
           <div className="my-8 space-y-3">

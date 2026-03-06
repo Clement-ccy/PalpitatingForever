@@ -12,8 +12,8 @@
     "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
   },
   "cover": {
-    "type": "external",
-    "external": {
+    "type": "file",
+    "file": {
       "url": "/media/notion/pages/26dec12a-acd9-800c-9753-f716992e9f4d-zerotier-windows-file-sharing-cover.jpg"
     }
   },

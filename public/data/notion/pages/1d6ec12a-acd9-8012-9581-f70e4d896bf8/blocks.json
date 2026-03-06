@@ -148,8 +148,8 @@
       "type": "image",
       "image": {
         "caption": [],
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/blocks/311ec12a-acd9-806b-b547-ea0972857e2b-ai-closed-loop-learning-overload-anxiety.jpg"
         }
       }

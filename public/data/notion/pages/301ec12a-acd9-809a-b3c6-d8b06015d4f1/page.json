@@ -12,8 +12,8 @@
     "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
   },
   "cover": {
-    "type": "external",
-    "external": {
+    "type": "file",
+    "file": {
       "url": "/media/notion/pages/301ec12a-acd9-809a-b3c6-d8b06015d4f1-茉莉小栈.svg"
     }
   },

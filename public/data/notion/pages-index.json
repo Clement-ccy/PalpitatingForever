@@ -14,8 +14,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/1b7ec12a-acd9-80ef-bab5-e6925ceed244-generative-models-deep-dive-cover.jpg"
         }
       },
@@ -216,8 +216,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/1d6ec12a-acd9-8012-9581-f70e4d896bf8-ai-closed-loop-learning-cover.jpg"
         }
       },
@@ -415,7 +415,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "/media/notion/pages/1e3ec12a-acd9-806c-b666-c70d46cdef80-webb2.jpg"
+          "url": "https://www.notion.so/images/page-cover/webb2.jpg"
         }
       },
       "icon": null,
@@ -597,7 +597,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "/media/notion/pages/1eaec12a-acd9-809b-bba1-df084c6c2573-met_georges_seurat_1884.jpg"
+          "url": "https://www.notion.so/images/page-cover/met_georges_seurat_1884.jpg"
         }
       },
       "icon": null,
@@ -771,8 +771,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/204ec12a-acd9-8098-b7a5-cbcf197114d5-从兴庆到浐灞.jpg"
         }
       },
@@ -955,7 +955,7 @@
       "cover": {
         "type": "external",
         "external": {
-          "url": "/media/notion/pages/20aec12a-acd9-80f6-992e-edc813ee2936-webb4.jpg"
+          "url": "https://www.notion.so/images/page-cover/webb4.jpg"
         }
       },
       "icon": null,
@@ -1119,8 +1119,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/22cec12a-acd9-80ae-85d2-c88c02d9af15-generative-ai-architecture-2026-cover.jpg"
         }
       },
@@ -1352,8 +1352,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/269ec12a-acd9-8044-8ee1-e064bb720bf0-equation-modelling-deep-dive-cover.jpg"
         }
       },
@@ -1544,8 +1544,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/26aec12a-acd9-809f-b03d-d89b0e6da1ed-hp_Pavilion6.png"
         }
       },
@@ -1716,8 +1716,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/26aec12a-acd9-80bf-9a77-c298c89f22cf-mi11pro.webp"
         }
       },
@@ -1888,8 +1888,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/26bec12a-acd9-8014-817e-c65e1763b763-MaicongG7.jpg"
         }
       },
@@ -2060,8 +2060,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/26bec12a-acd9-80cd-907a-c6e5db0227aa-HonorBands.jpg"
         }
       },
@@ -2232,8 +2232,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/26dec12a-acd9-800c-9753-f716992e9f4d-zerotier-windows-file-sharing-cover.jpg"
         }
       },
@@ -2434,8 +2434,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-8000-86ec-d5aa1823e854-SAMA新境界.webp"
         }
       },
@@ -2606,8 +2606,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-800d-a2a6-f29c856163d4-KTC_H25T7-2.jpg"
         }
       },
@@ -2778,8 +2778,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-804f-b14c-f8f662ec0d7f-ipad_air4.jpg"
         }
       },
@@ -2954,8 +2954,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-805f-b375-e40c25284a4f-TOSHIBA_A5.png"
         }
       },
@@ -3126,8 +3126,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-8074-91f2-cff0c437a967-UGREEN_Charger.webp"
         }
       },
@@ -3298,8 +3298,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-809d-a457-f291014e800e-NBH180.png"
         }
       },
@@ -3470,8 +3470,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-80a2-8fbb-c9b874d9ef8d-airpods_pro.jpg"
         }
       },
@@ -3642,8 +3642,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-80b5-aba4-f9175d5f57c2-g502wl.webp"
         }
       },
@@ -3814,8 +3814,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-80bf-9aa6-ceb5d1baeb35-bambu_a1c.jpg"
         }
       },
@@ -3986,8 +3986,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-80de-819d-e6c5e30ad25d-LEVEL8.jpg"
         }
       },
@@ -4158,8 +4158,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-80ec-ab51-fe4210145884-rk84.jpg"
         }
       },
@@ -4330,8 +4330,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/271ec12a-acd9-80fe-9fa2-dad05bd310a8-g502_hero.jpg"
         }
       },
@@ -4502,8 +4502,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/2adec12a-acd9-80e0-8206-e56734087a8c-theorem-lemma-corollary-cover.jpg"
         }
       },
@@ -4699,8 +4699,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/2baec12a-acd9-809c-885b-f32eeed993fb-llm-ui-design-skill-prompting-cover.jpg"
         }
       },
@@ -4901,8 +4901,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/2d0ec12a-acd9-80ce-bb76-c4efa83a3905-vscode-platformio-mirror-config-cover.jpg"
         }
       },
@@ -5274,8 +5274,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/301ec12a-acd9-8067-b37d-fd61db8af82f-zhheo.png"
         }
       },
@@ -5442,8 +5442,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/301ec12a-acd9-8082-8fca-f85f61d0b2f6-DIYgod.ico"
         }
       },
@@ -5610,8 +5610,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/301ec12a-acd9-809a-b3c6-d8b06015d4f1-茉莉小栈.svg"
         }
       },
@@ -5778,8 +5778,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/301ec12a-acd9-80a3-a92e-dcceb0238392-snhere.ico"
         }
       },
@@ -5946,8 +5946,8 @@
         "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
       },
       "cover": {
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/pages/301ec12a-acd9-80ef-be76-f582e180c34c-Evilrabbit.png"
         }
       },

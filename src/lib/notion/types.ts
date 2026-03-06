@@ -25,6 +25,25 @@ export interface NotionBlock {
 }
 
 /**
+ * Notion-like media source union used by local mapped blocks.
+ * - `file` means local mirror or notion-hosted file shape.
+ * - `external` means true remote URL that should not be mirrored.
+ */
+export type NotionMediaSource =
+  | { type: 'file'; file: { url: string } }
+  | { type: 'external'; external: { url: string } };
+
+export interface NotionMediaBlockContent {
+  url?: string;
+  caption?: unknown;
+  source?: NotionMediaSource;
+}
+
+export interface NotionImageBlockContent extends NotionMediaBlockContent {
+  alt?: string;
+}
+
+/**
  * Clean version of a Blog Post
  */
 export interface BlogPost {

@@ -12,8 +12,8 @@
     "id": "02ad76c7-c57f-4001-a41c-fef09a1b9b83"
   },
   "cover": {
-    "type": "external",
-    "external": {
+    "type": "file",
+    "file": {
       "url": "/media/notion/pages/22cec12a-acd9-80ae-85d2-c88c02d9af15-generative-ai-architecture-2026-cover.jpg"
     }
   },

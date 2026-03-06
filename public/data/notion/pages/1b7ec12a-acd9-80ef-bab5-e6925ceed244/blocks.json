@@ -256,8 +256,8 @@
       "type": "image",
       "image": {
         "caption": [],
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/blocks/30eec12a-acd9-8002-89da-d23b749a0643-generative-models-discriminative-vs-generative.jpg"
         }
       }
@@ -1727,8 +1727,8 @@
       "type": "image",
       "image": {
         "caption": [],
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/blocks/30eec12a-acd9-807e-ad58-f145400ac8df-generative-models-deep-learning-evolution.jpg"
         }
       }

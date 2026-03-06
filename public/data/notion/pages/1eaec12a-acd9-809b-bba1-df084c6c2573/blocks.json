@@ -23,8 +23,8 @@
       "type": "audio",
       "audio": {
         "caption": [],
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/blocks/2f7ec12a-acd9-80c5-893f-dfdd6cc78a1e-星見る頃を過ぎても_-_HG.mp3"
         }
       }

@@ -23,8 +23,8 @@
       "type": "audio",
       "audio": {
         "caption": [],
-        "type": "external",
-        "external": {
+        "type": "file",
+        "file": {
           "url": "/media/notion/blocks/2f7ec12a-acd9-80fc-81e5-c0abf00548d7-HG_-_君に聴かせたかった歌_(Original_Artist6_is_MINE).mp3"
         }
       }

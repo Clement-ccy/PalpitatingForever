@@ -1,4 +1,4 @@
-import type { NotionBlock } from './types';
+import type { NotionBlock, NotionImageBlockContent, NotionMediaBlockContent, NotionMediaSource } from './types';
 
 /**
  * Maps a raw Notion Block object to a clean NotionBlock interface
@@ -21,7 +21,7 @@ const isRawNotionBlock = (value: unknown): value is RawNotionBlock => {
 
 const getImageAltFromUrl = (url: string): string => {
   try {
-    const pathname = new URL(url).pathname;
+    const pathname = url.startsWith('/') ? url : new URL(url).pathname;
     const baseName = pathname.split('/').pop();
     if (!baseName) return '';
     const decoded = decodeURIComponent(baseName);
@@ -87,11 +87,20 @@ export function mapNotionBlock(rawBlock: unknown): NotionBlock {
       const url = imageType === 'external'
         ? asString(imageExternal.url)
         : asString(imageFile.url);
-      content = {
+
+      const source: NotionMediaSource | undefined = imageType === 'external' && url
+        ? { type: 'external', external: { url } }
+        : imageType === 'file' && url
+          ? { type: 'file', file: { url } }
+          : undefined;
+
+      const imageContent: NotionImageBlockContent = {
         url,
         caption: imageValue.caption ?? [],
         alt: url ? getImageAltFromUrl(url) : undefined,
+        source,
       };
+      content = imageContent;
       break;
     }
     case 'callout': {
@@ -124,12 +133,22 @@ export function mapNotionBlock(rawBlock: unknown): NotionBlock {
       const mediaType = asString(mediaValue.type);
       const mediaExternal = asRecord(mediaValue.external);
       const mediaFile = asRecord(mediaValue.file);
-      content = {
-        url: mediaType === 'external'
+      const url = mediaType === 'external'
           ? asString(mediaExternal.url)
-          : asString(mediaFile.url),
+          : asString(mediaFile.url);
+
+      const source: NotionMediaSource | undefined = mediaType === 'external' && url
+        ? { type: 'external', external: { url } }
+        : mediaType === 'file' && url
+          ? { type: 'file', file: { url } }
+          : undefined;
+
+      const mediaContent: NotionMediaBlockContent = {
+        url,
         caption: mediaValue.caption ?? [],
+        source,
       };
+      content = mediaContent;
       break;
     }
     case 'table_of_contents':
