@@ -90,7 +90,12 @@ export const handleAdminLogin = async (request: Request, env: Env) => {
     session.uaPlain
   ).run();
 
-  const cookie = `pf_admin_session=${encodeURIComponent(session.sessionToken)}; HttpOnly; Path=/; SameSite=Lax; Max-Age=604800`;
+  const requestHost = new URL(request.url).hostname;
+  const isCcyDomain = requestHost.endsWith('ccy.asia');
+  const sameSite = isCcyDomain ? 'None' : 'Lax';
+  const secure = isCcyDomain ? '; Secure' : '';
+  const domain = isCcyDomain ? '; Domain=.ccy.asia' : '';
+  const cookie = `pf_admin_session=${encodeURIComponent(session.sessionToken)}; HttpOnly; Path=/; SameSite=${sameSite}${secure}${domain}; Max-Age=604800`;
   return withCors(request, env, jsonResponse({ ok: true, csrf: session.csrfToken }, 200, {
     'Set-Cookie': cookie,
   }));

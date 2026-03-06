@@ -255,14 +255,15 @@ export const NotionBlockRenderer = memo(({
       case 'code':
         return <CodeBlock content={asContent<CodeContent>(content)} />;
       case 'image':
-        const imageContent = asContent<MediaContent>(content);
+        const imageContent = asContent<MediaContent & { alt?: string }>(content);
         const imageCaption = asRichText(imageContent.caption);
+        const imageAlt = imageContent.alt || imageCaption[0]?.plain_text || '';
         return (
           <figure className="my-12 space-y-4">
             <div className="relative aspect-video w-full rounded-3xl overflow-hidden border border-card-border group">
               <Image 
                 src={imageContent.url ?? ''} 
-                alt={imageCaption[0]?.plain_text || ''} 
+                alt={imageAlt} 
                 fill 
                 className="object-cover transition-transform duration-700 group-hover:scale-105" 
               />

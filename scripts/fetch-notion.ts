@@ -220,55 +220,56 @@ const readJsonFile = <T,>(filePath: string): T | null => {
   }
 };
 
-const rewriteMediaUrlsInBlock = (block: NotionBlockResponse) => {
-  const blockType = block.type;
-  if (!MEDIA_BLOCK_TYPES.includes(blockType as typeof MEDIA_BLOCK_TYPES[number])) return;
-  const blockData = block[blockType] as Record<string, unknown> | undefined;
-  if (!blockData || typeof blockData !== 'object') return;
-  const fileSource = readNested(blockData, 'file');
-  const externalSource = readNested(blockData, 'external');
-  const mediaSource = externalSource ?? fileSource;
-  const url = mediaSource ? readUrl(mediaSource) : null;
-  if (!url || isLocalMediaUrl(url, BLOCK_MEDIA_URL_PREFIX)) return;
+const readFailedDownloads = () => (
+  readJsonFile<{ failed?: string[] }>(path.join(OUTPUT_DIR, 'failed-downloads.json'))?.failed ?? []
+);
 
-  const originalName = readName(blockData) ?? readName(mediaSource) ?? getUrlFileName(url);
-  const expectedFileName = getExpectedFileNameFromUrl(block.id, url, originalName);
-  if (!expectedFileName) return;
-  const localUrl = `${BLOCK_MEDIA_URL_PREFIX}/${expectedFileName}`;
-  block[blockType] = {
-    ...blockData,
-    type: 'external',
-    external: { url: localUrl },
-  };
-  delete (block[blockType] as Record<string, unknown>).file;
-  delete (block[blockType] as Record<string, unknown>).expiry_time;
-};
-
-const rewriteMediaUrlsInBlocks = (blocks: NotionBlockResponse[]) => {
-  const stack = [...blocks];
-  while (stack.length > 0) {
-    const block = stack.pop();
-    if (!block) continue;
-    rewriteMediaUrlsInBlock(block);
-    const children = Array.isArray(block.children) ? block.children : [];
-    for (const child of children) {
-      stack.push(child);
+const parseFailedEntries = (entries: string[]) => {
+  const failedBlockIds = new Set<string>();
+  const failedCoverPageIds = new Set<string>();
+  for (const entry of entries) {
+    if (entry.startsWith('cover:')) {
+      const parts = entry.split(':');
+      const pageId = parts[1]?.trim();
+      if (pageId) failedCoverPageIds.add(pageId);
+      continue;
     }
+    const blockId = entry.split(':')[0]?.trim();
+    if (blockId) failedBlockIds.add(blockId);
   }
+  return { failedBlockIds, failedCoverPageIds };
 };
 
 const processCachedBlocks = async (
   blocks: NotionBlockResponse[],
   usedFiles: Set<string>,
   failedDownloads: string[],
-  mediaIndex: MediaIndexEntry[]
+  mediaIndex: MediaIndexEntry[],
+  failedBlockIds?: Set<string>
 ) => {
   const stack = [...blocks];
   while (stack.length > 0) {
     const block = stack.pop();
     if (!block) continue;
     const cachedEditedTime = readLastEditedTime(block) ?? undefined;
+    const forceRetry = failedBlockIds?.has(block.id);
+    if (forceRetry) {
+      failedBlockIds?.delete(block.id);
+    }
     await rewriteMediaBlock(block, usedFiles, failedDownloads, cachedEditedTime, mediaIndex);
+    if (forceRetry) {
+      const blockType = block.type;
+      if (MEDIA_BLOCK_TYPES.includes(blockType as typeof MEDIA_BLOCK_TYPES[number])) {
+        const blockData = block[blockType] as Record<string, unknown> | undefined;
+        if (blockData && typeof blockData === 'object') {
+          const mediaSource = readNested(blockData, 'file') ?? readNested(blockData, 'external');
+          const url = mediaSource ? readUrl(mediaSource) : null;
+          if (url && !isLocalMediaUrl(url, BLOCK_MEDIA_URL_PREFIX)) {
+            await rewriteMediaBlock(block, usedFiles, failedDownloads, undefined, mediaIndex);
+          }
+        }
+      }
+    }
     const children = Array.isArray(block.children) ? block.children : [];
     for (const child of children) {
       stack.push(child);
@@ -554,7 +555,8 @@ async function fetchBlockChildren(
   usedFiles: Set<string>,
   failedDownloads: string[],
   cachedBlocksById?: Map<string, NotionBlockResponse>,
-  mediaIndex?: MediaIndexEntry[]
+  mediaIndex?: MediaIndexEntry[],
+  failedBlockIds?: Set<string>
 ): Promise<NotionBlockResponse[]> {
   console.log(`  - Fetching children for block: ${blockId}`);
   let blocks: NotionBlockResponse[] = [];
@@ -574,15 +576,32 @@ async function fetchBlockChildren(
           usedFiles,
           failedDownloads,
           cachedBlocksById,
-          mediaIndex
+          mediaIndex,
+          failedBlockIds
         );
       }
       const cachedBlock = cachedBlocksById?.get(block.id);
       const cachedEditedTime = cachedBlock ? readLastEditedTime(cachedBlock) ?? undefined : undefined;
+      const forceRetry = failedBlockIds?.has(block.id);
+      if (forceRetry) {
+        failedBlockIds?.delete(block.id);
+      }
       await rewriteMediaBlock(block, usedFiles, failedDownloads, cachedEditedTime, mediaIndex);
+      if (forceRetry) {
+        const blockType = block.type;
+        if (MEDIA_BLOCK_TYPES.includes(blockType as typeof MEDIA_BLOCK_TYPES[number])) {
+          const blockData = block[blockType] as Record<string, unknown> | undefined;
+          if (blockData && typeof blockData === 'object') {
+            const mediaSource = readNested(blockData, 'file') ?? readNested(blockData, 'external');
+            const url = mediaSource ? readUrl(mediaSource) : null;
+            if (url && !isLocalMediaUrl(url, BLOCK_MEDIA_URL_PREFIX)) {
+              await rewriteMediaBlock(block, usedFiles, failedDownloads, undefined, mediaIndex);
+            }
+          }
+        }
+      }
     }
     
-    rewriteMediaUrlsInBlocks(results);
     blocks = blocks.concat(results);
     cursor = data.next_cursor ?? undefined;
   } while (cursor);
@@ -636,6 +655,8 @@ async function main() {
     const usedPageFiles = new Set<string>();
     const failedDownloads: string[] = [];
     const mediaIndex: MediaIndexEntry[] = [];
+    const previousFailed = readFailedDownloads();
+    const { failedBlockIds, failedCoverPageIds } = parseFailedEntries(previousFailed);
 
     const existingPagesData = readJsonFile<NotionListResponse<NotionPageResponse>>(
       path.join(OUTPUT_DIR, 'pages-index.json')
@@ -665,13 +686,16 @@ async function main() {
       const currentEditedTime = readLastEditedTime(page);
       const cachedEditedTime = cachedPage ? readLastEditedTime(cachedPage) ?? undefined : undefined;
       await rewritePageCover(page, usedPageFiles, failedDownloads, cachedEditedTime, mediaIndex);
-      if (cachedEditedTime && currentEditedTime && cachedEditedTime === currentEditedTime) {
+      const forceCoverRetry = failedCoverPageIds.has(page.id);
+      if (forceCoverRetry) {
+        failedCoverPageIds.delete(page.id);
+      }
+      if (cachedEditedTime && currentEditedTime && cachedEditedTime === currentEditedTime && !forceCoverRetry) {
         const cachedBlocks = readJsonFile<{ results: NotionBlockResponse[] }>(
           path.join(PAGES_DIR, page.id, 'blocks.json')
         );
         if (cachedBlocks?.results) {
-          await processCachedBlocks(cachedBlocks.results, usedBlockFiles, failedDownloads, mediaIndex);
-          rewriteMediaUrlsInBlocks(cachedBlocks.results);
+          await processCachedBlocks(cachedBlocks.results, usedBlockFiles, failedDownloads, mediaIndex, failedBlockIds);
           fs.writeFileSync(
             path.join(PAGES_DIR, page.id, 'blocks.json'),
             JSON.stringify({ results: cachedBlocks.results }, null, 2)
@@ -698,7 +722,7 @@ async function main() {
         path.join(pageDir, 'blocks.json')
       );
       const cachedBlocksById = cachedBlocks?.results ? buildBlockIndex(cachedBlocks.results) : undefined;
-      const blocks = await fetchBlockChildren(page.id, usedBlockFiles, failedDownloads, cachedBlocksById, mediaIndex);
+      const blocks = await fetchBlockChildren(page.id, usedBlockFiles, failedDownloads, cachedBlocksById, mediaIndex, failedBlockIds);
 
       // Save individual page blocks
       fs.writeFileSync(

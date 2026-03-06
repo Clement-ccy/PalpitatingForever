@@ -19,6 +19,19 @@ const isRawNotionBlock = (value: unknown): value is RawNotionBlock => {
   return typeof value.id === 'string' && typeof value.type === 'string';
 };
 
+const getImageAltFromUrl = (url: string): string => {
+  try {
+    const pathname = new URL(url).pathname;
+    const baseName = pathname.split('/').pop();
+    if (!baseName) return '';
+    const decoded = decodeURIComponent(baseName);
+    const strippedPrefix = decoded.replace(/^[a-f0-9-]+-/, '');
+    return strippedPrefix.replace(/\.[^/.]+$/, '');
+  } catch {
+    return '';
+  }
+};
+
 export function mapNotionBlock(rawBlock: unknown): NotionBlock {
   if (!isRawNotionBlock(rawBlock)) {
     return {
@@ -71,11 +84,13 @@ export function mapNotionBlock(rawBlock: unknown): NotionBlock {
       const imageType = asString(imageValue.type);
       const imageExternal = asRecord(imageValue.external);
       const imageFile = asRecord(imageValue.file);
+      const url = imageType === 'external'
+        ? asString(imageExternal.url)
+        : asString(imageFile.url);
       content = {
-        url: imageType === 'external'
-          ? asString(imageExternal.url)
-          : asString(imageFile.url),
+        url,
         caption: imageValue.caption ?? [],
+        alt: url ? getImageAltFromUrl(url) : undefined,
       };
       break;
     }
